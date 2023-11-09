@@ -8,6 +8,8 @@ import {
 	useState
 } from 'react'
 
+import Layout from '~/components/layout/Layout'
+
 import { auth, login, logout, register } from '~/services/_firebase'
 import { UserService } from '~/services/user.service'
 
@@ -47,6 +49,7 @@ export const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 		try {
 			await login(email, password).then(data => {
 				setUser(data.user)
+				console.log(data.user)
 			})
 		} catch (error: any) {
 			console.log('Error login:', error)
@@ -87,7 +90,7 @@ export const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 
 	return (
 		<AuthContext.Provider value={value}>
-			{!isLoadingInitial && children}
+			<Layout>{!isLoadingInitial && children}</Layout>
 		</AuthContext.Provider>
 	)
 }
