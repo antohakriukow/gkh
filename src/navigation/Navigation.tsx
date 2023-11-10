@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import Home from '~/components/screens/home/Home'
+import Auth from '~/components/screens/auth/Auth'
 import Workspace from '~/components/screens/workspace/Workspace'
 
 import ProtectedRoute from './ProtectedRoute'
@@ -9,7 +9,7 @@ import ProtectedRoute from './ProtectedRoute'
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <Home />
+		element: <Auth />
 	},
 	{
 		path: 'workspace',

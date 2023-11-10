@@ -1,0 +1,8 @@
+.header {
+	@apply flex flex-row justify-between items-center px-8 py-2;
+}
+.title {
+}
+.button {
+	@apply text-sm bg-danger-500 px-4;
+}
