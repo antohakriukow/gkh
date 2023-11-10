@@ -1,0 +1,23 @@
+@import '../../../styles/colors.scss';
+
+.workspace__overlay {
+	@apply grid h-screen pt-10;
+	grid-template-columns: 320px 1fr;
+}
+
+.workspace__leftSide {
+	@apply bg-primary-50;
+}
+
+.user__idContainer {
+	@apply flex flex-row h-12 items-center;
+
+	border-bottom: 1px solid $primary-500;
+}
+
+.user__idTitle {
+	@apply my-0 text-lg;
+}
+.user__id {
+	@apply ml-2 my-0 text-lg;
+}

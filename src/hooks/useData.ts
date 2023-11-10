@@ -1,0 +1,76 @@
+import { NextOrObserver, User, onAuthStateChanged } from 'firebase/auth'
+import { off, onValue, ref } from 'firebase/database'
+import { useEffect, useMemo, useState } from 'react'
+
+import { IData } from '~/shared/types/data.interface'
+
+import { auth, db } from '~/services/_firebase'
+
+export const useData = () => {
+	const [data, setData] = useState({
+		userId: '',
+		displayName: '',
+		email: '',
+		companies: [],
+		reports: []
+	} as IData)
+	const [isLoading, setIsLoading] = useState(true)
+
+	useEffect(() => {
+		//NextOrObserver<User>
+		const handleAuthStateChanged: NextOrObserver<User> = user => {
+			if (user) {
+				const dataRef = ref(db, `users/${user.uid}`)
+
+				// prettier-ignore
+				const unsubscribe = onValue(dataRef, snapshot => {
+					let dataFromDB = {} as IData
+					if (snapshot.exists()) {
+						dataFromDB = {
+							userId: snapshot.val().shortId,
+							displayName: snapshot.val().displayName,
+							email: snapshot.val().email,
+							companies: snapshot.val().todos ? snapshot.val().todos : [],
+							reports: snapshot.val().todos ? snapshot.val().todos : []
+						}
+					}
+					if (dataFromDB) {
+						setData(dataFromDB)
+					} else {
+						setData({
+							userId: '',
+							displayName: '',
+							email: '',
+							companies: [],
+							reports: []
+						})
+					}
+				})
+
+				return () => {
+					off(dataRef, 'value', unsubscribe)
+				}
+			}
+		}
+
+		const unsubscribeAuth = onAuthStateChanged(auth, handleAuthStateChanged)
+
+		setIsLoading(false)
+
+		return () => {
+			if (unsubscribeAuth) unsubscribeAuth()
+		}
+	}, [])
+
+	return useMemo(
+		() => ({
+			isLoading,
+			userId: data.userId,
+			companies: data.companies,
+			reports: data.reports,
+			displayName: data.displayName,
+			email: data.email
+		}),
+		[data, isLoading]
+	)
+}
