@@ -11,7 +11,7 @@ const Header: FC = () => {
 
 	return (
 		<div className={styles.header}>
-			<div className={styles.title}>Header</div>
+			<div className={styles.title}>Генератор отчетов 22-ЖКХ</div>
 			{!!user && (
 				<Button onClick={logout} className={styles.button}>
 					Выйти
