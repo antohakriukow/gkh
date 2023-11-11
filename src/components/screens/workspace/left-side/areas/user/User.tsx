@@ -2,9 +2,9 @@ import { FC } from 'react'
 
 import { useData } from '~/hooks/useData'
 
-import styles from '../../Workspace.module.scss'
+import styles from '../../../Workspace.module.scss'
 
-const User: FC = () => {
+const UserArea: FC = () => {
 	const { userId } = useData()
 	return (
 		<div className={styles.user__idContainer}>
@@ -13,4 +13,4 @@ const User: FC = () => {
 		</div>
 	)
 }
-export default User
+export default UserArea

@@ -8,9 +8,6 @@ export const useAuthRedirect = () => {
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		if (user) {
-			navigate('/workspace')
-			console.log('REDIRECT')
-		}
+		if (user) navigate('/workspace')
 	}, [user, navigate])
 }

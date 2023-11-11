@@ -1,6 +1,6 @@
-import Company from './components/Company'
-import Reports from './components/Reports'
-import User from './components/User'
+import CompanyArea from './areas/company/Company'
+import ReportsArea from './areas/reports/Reports'
+import UserArea from './areas/user/User'
 import { FC } from 'react'
 
 import styles from '../Workspace.module.scss'
@@ -8,9 +8,9 @@ import styles from '../Workspace.module.scss'
 const LeftSide: FC = () => {
 	return (
 		<div className={styles.workspace__leftSide}>
-			<User />
-			<Company />
-			<Reports />
+			<UserArea />
+			<CompanyArea />
+			<ReportsArea />
 		</div>
 	)
 }

@@ -1,0 +1,18 @@
+.overlay {
+	@apply absolute top-0 left-0 h-screen w-screen;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.container {
+	@apply relative top-1/2 left-1/2 bg-white max-w-xl inline-flex justify-center items-center p-6 rounded-md;
+	transform: translate(-50%, -50%);
+}
+
+.closeBtn {
+	@apply absolute top-0 right-0 hover:cursor-pointer;
+	transform: translate(40px, -40px);
+}
+
+.component {
+	@apply z-20;
+}

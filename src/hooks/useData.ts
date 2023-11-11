@@ -30,8 +30,8 @@ export const useData = () => {
 							userId: snapshot.val().shortId,
 							displayName: snapshot.val().displayName,
 							email: snapshot.val().email,
-							companies: snapshot.val().todos ? snapshot.val().todos : [],
-							reports: snapshot.val().todos ? snapshot.val().todos : []
+							companies: snapshot.val().companies ? snapshot.val().companies : [],
+							reports: snapshot.val().reports ? snapshot.val().reports : []
 						}
 					}
 					if (dataFromDB) {
@@ -66,7 +66,7 @@ export const useData = () => {
 		() => ({
 			isLoading,
 			userId: data.userId,
-			companies: data.companies,
+			companies: Object.values(data.companies),
 			reports: data.reports,
 			displayName: data.displayName,
 			email: data.email

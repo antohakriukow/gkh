@@ -49,7 +49,6 @@ export const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 		try {
 			await login(email, password).then(data => {
 				setUser(data.user)
-				console.log(data.user)
 			})
 		} catch (error: any) {
 			console.log('Error login:', error)

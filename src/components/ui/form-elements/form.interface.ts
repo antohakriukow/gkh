@@ -4,8 +4,9 @@ import { FieldError } from 'react-hook-form'
 export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export interface IFieldProps {
-	placeholder: string
+	placeholder?: string
 	error?: FieldError | undefined
+	color?: 'danger' | 'success'
 }
 
 type TypeInputPropsField = InputHTMLAttributes<HTMLInputElement> & IFieldProps
