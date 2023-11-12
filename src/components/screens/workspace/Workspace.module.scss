@@ -1,23 +1,16 @@
 @import '../../../styles/colors.scss';
 
 .workspace__overlay {
-	@apply grid h-screen pt-10;
-	grid-template-columns: 320px 1fr;
+	@apply grid h-screen pt-4 overflow-y-hidden;
+	grid-template-columns: 288px 1fr;
+	max-height: calc(100vh - 100px);
 }
 
 .workspace__leftSide {
-	@apply bg-primary-50;
+	@apply w-60;
 }
 
-.user__idContainer {
-	@apply flex flex-row h-12 items-center;
-
-	border-bottom: 1px solid $primary-500;
-}
-
-.user__idTitle {
-	@apply my-0 text-lg;
-}
-.user__id {
-	@apply ml-2 my-0 text-lg;
+.workspace__rightSide {
+	@apply air-block bg-white;
+	height: calc(100vh - 114px);
 }

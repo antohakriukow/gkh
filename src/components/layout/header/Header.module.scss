@@ -1,7 +1,12 @@
 .header {
-	@apply flex flex-row justify-between items-center py-2;
+	@apply air-block p-4 bg-white flex flex-row justify-between items-center;
+}
+
+.header__container {
+	@apply pt-2;
 }
 .title {
+	@apply text-lg text-primary-800;
 }
 .button {
 	@apply text-sm bg-danger-500 px-4;

@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { useData } from '~/hooks/useData'
 
-import styles from '../../../Workspace.module.scss'
+import styles from './User.module.scss'
 
 const UserArea: FC = () => {
 	const { userId } = useData()

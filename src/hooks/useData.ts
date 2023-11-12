@@ -67,7 +67,7 @@ export const useData = () => {
 			isLoading,
 			userId: data.userId,
 			companies: Object.values(data.companies),
-			reports: data.reports,
+			reports: Object.values(data.reports),
 			displayName: data.displayName,
 			email: data.email
 		}),

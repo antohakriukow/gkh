@@ -3,16 +3,21 @@ import { IDropDown } from './drop-down.interface'
 import { FC, useState } from 'react'
 import { FaChevronDown, FaChevronUp, FaPlus } from 'react-icons/fa'
 
-import { useTypedSelector } from '~/hooks/useTypedSelector'
+import AddCompanyBtn from '../AddCompanyBtn'
+import { useCompany } from '../useCompany'
 
-import AddBtn from '../AddBtn'
-import styles from '../Company.module.scss'
+import styles from './DropDown.module.scss'
 
 const DropDown: FC<IDropDown> = ({ data, onClick }) => {
 	const [isDropDownOpened, setIsDropDownOpened] = useState(false)
-	const { currentCompany } = useTypedSelector(state => state.ui)
+	const { handleSetCurrentCompany, currentCompany } = useCompany()
 
 	const toggleDropDown = () => setIsDropDownOpened(!isDropDownOpened)
+
+	const handleClick = (inn: number) => {
+		handleSetCurrentCompany(inn)
+		setIsDropDownOpened(false)
+	}
 
 	if (data.length === 1)
 		return (
@@ -29,9 +34,13 @@ const DropDown: FC<IDropDown> = ({ data, onClick }) => {
 
 	if (currentCompany)
 		return (
-			<>
-				<div className={styles.dropDown__item}>
-					<DropDownItem inn={currentCompany?.inn} name={currentCompany.name} />
+			<div className={styles.dropDown}>
+				<div className={styles.dropDown__first}>
+					<DropDownItem
+						onClick={inn => handleClick(inn)}
+						inn={currentCompany?.inn}
+						name={currentCompany.name}
+					/>
 					{isDropDownOpened ? (
 						<FaChevronUp
 							color='#23c3ab'
@@ -48,17 +57,25 @@ const DropDown: FC<IDropDown> = ({ data, onClick }) => {
 						/>
 					)}
 				</div>
+
 				{isDropDownOpened && (
-					<div>
+					<>
 						{data
 							.filter(company => company.inn !== currentCompany.inn)
 							.map(item => (
-								<DropDownItem key={item.inn} inn={item.inn} name={item.name} />
+								<DropDownItem
+									onClick={inn => handleClick(inn)}
+									key={item.inn}
+									inn={item.inn}
+									name={item.name}
+								/>
 							))}
-						<AddBtn onClick={onClick} />
-					</div>
+						<div className={styles.dropDown__btnDecorator}>
+							<AddCompanyBtn onClick={onClick} />
+						</div>
+					</>
 				)}
-			</>
+			</div>
 		)
 	return null
 }

@@ -1,7 +1,15 @@
-import { clearUI, setCurrentCompany, setNewCompany } from './ui/ui.slice'
+import {
+	clearUI,
+	setCurrentCompany,
+	setNewCompany,
+	setNewReportPeriod,
+	setNewReportYear
+} from './ui/ui.slice'
 
 export const allActions = {
 	clearUI,
 	setNewCompany,
-	setCurrentCompany
+	setCurrentCompany,
+	setNewReportYear,
+	setNewReportPeriod
 }

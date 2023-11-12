@@ -1,0 +1,21 @@
+.companyForm {
+	@apply p-6;
+}
+
+.adder__title {
+	@apply text-center text-lg;
+	line-height: 12px;
+}
+
+.adder__company {
+	@apply text-center font-bold text-primary-600;
+	line-height: 12px;
+}
+
+.adder__buttons {
+	@apply pt-3;
+
+	> button:nth-of-type(2) {
+		@apply ml-4;
+	}
+}

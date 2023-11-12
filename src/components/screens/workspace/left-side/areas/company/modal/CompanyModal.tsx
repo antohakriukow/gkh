@@ -10,7 +10,7 @@ import { ICompanyInn } from '~/shared/types/company.interface'
 
 import { DadataService } from '~/services/dadata.external.service'
 
-const ModalContent: FC = () => {
+const CompanyModal: FC = () => {
 	const { setNewCompany } = useActions()
 	const { newCompany } = useTypedSelector(state => state.ui)
 
@@ -38,4 +38,4 @@ const ModalContent: FC = () => {
 		/>
 	)
 }
-export default ModalContent
+export default CompanyModal

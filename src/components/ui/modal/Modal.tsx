@@ -1,4 +1,4 @@
-import { FC, MouseEvent, ReactNode, useEffect } from 'react'
+import { FC, MouseEvent, ReactNode, useCallback, useEffect } from 'react'
 import { MdClose } from 'react-icons/md'
 
 import { useModal } from '~/hooks/useModal'
@@ -22,11 +22,14 @@ const Modal: FC<ModalProps> = ({ component }) => {
 		e.stopPropagation()
 	}
 
-	const handleEscKey = (e: KeyboardEvent) => {
-		if (e.key === 'Escape') {
-			hideModal()
-		}
-	}
+	const handleEscKey = useCallback(
+		(e: KeyboardEvent) => {
+			if (e.key === 'Escape') {
+				hideModal()
+			}
+		},
+		[hideModal]
+	)
 
 	useEffect(() => {
 		document.addEventListener('keydown', handleEscKey)
@@ -34,7 +37,7 @@ const Modal: FC<ModalProps> = ({ component }) => {
 		return () => {
 			document.removeEventListener('keydown', handleEscKey)
 		}
-	}, [])
+	}, [handleEscKey])
 
 	return (
 		<div className={styles.overlay} onClick={handleOverlayClick}>

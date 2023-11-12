@@ -37,7 +37,6 @@ export const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 			await UserService.create(userResponse.user.uid, userResponse.user.email)
 		} catch (error: any) {
 			console.log('Error reg:', error)
-			console.log(error)
 		} finally {
 			setIsLoading(false)
 		}

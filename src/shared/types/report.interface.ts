@@ -1,4 +1,5 @@
 import { ICompany } from './company.interface'
+import { TypePeriod, TypeYear } from './period.interface'
 import {
 	IReport22gkhData,
 	Type22gkhReportTemplate
@@ -10,7 +11,17 @@ export type TypeReport = '22gkh' | 'annual'
 export interface IReport {
 	_id: number
 	type: TypeReport
+	year: TypeYear
+	period: TypePeriod
 	template: TypeAnnualReportTemplate | Type22gkhReportTemplate
 	company: ICompany
 	data: IReport22gkhData
+	createdAt: string
+	updatedAt: string
 }
+
+export interface IReportCreate
+	extends Pick<IReport, 'type' | 'year' | 'period' | 'company'> {}
+
+export interface IReportTableItem
+	extends Pick<IReport, 'type' | 'year' | 'period' | 'updatedAt' | '_id'> {}

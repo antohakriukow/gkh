@@ -9,7 +9,7 @@ import { Button, Field } from '~/components/ui'
 
 import { ICompanyInn } from '~/shared/types/company.interface'
 
-import styles from '../../Company.module.scss'
+import styles from '../CompanyModal.module.scss'
 
 interface ICompanyForm {
 	register: UseFormRegister<ICompanyInn>
