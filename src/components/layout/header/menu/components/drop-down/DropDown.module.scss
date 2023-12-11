@@ -1,0 +1,34 @@
+.anchor {
+	@apply relative;
+}
+
+.dropDown {
+	@apply relative mr-4;
+	min-width: 230px;
+	max-width: 300px;
+}
+
+.menu {
+	@apply bg-white absolute air-block;
+	top: 30px;
+	left: 0;
+	width: 100%;
+	z-index: 10;
+}
+
+.item {
+	@apply px-4 flex flex-row items-center justify-between hover:bg-secondary-200 cursor-pointer;
+}
+
+.noHover {
+	@apply hover:bg-transparent;
+}
+
+.title {
+	@apply pr-1 text-base whitespace-nowrap overflow-hidden overflow-ellipsis text-primary-800 m-0 py-1 w-full select-none;
+	min-width: 180px;
+}
+
+.first {
+	@apply flex flex-row items-center justify-between bg-white;
+}

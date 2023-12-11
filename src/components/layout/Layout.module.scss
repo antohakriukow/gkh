@@ -1,4 +1,12 @@
 .layout {
-	@apply bg-primary-50 h-screen px-4;
+	@apply bg-primary-50 px-4 h-screen;
 	position: relative;
+	min-width: 320px;
+}
+
+@media (max-width: 344px) {
+	.layout {
+		min-width: 344px;
+		padding: 0;
+	}
 }

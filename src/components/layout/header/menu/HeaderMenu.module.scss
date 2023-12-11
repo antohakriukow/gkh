@@ -1,0 +1,43 @@
+.button {
+	@apply flex flex-row items-center justify-start pl-4 py-2 bg-gray-50 hover:bg-secondary-100 cursor-pointer;
+}
+
+.buttonTitle {
+	@apply text-primary-700 pl-2 m-0;
+}
+
+.profileContainer {
+	@apply flex flex-row items-center px-4 py-2 hover:bg-secondary-100 cursor-pointer;
+	border-top: lightgray 1px solid;
+	border-bottom: lightgray 1px solid;
+}
+
+.profileTitle {
+	@apply my-0 ml-2 text-base text-primary-800;
+}
+
+.profileId {
+	@apply ml-2 my-0 text-base text-primary-800;
+}
+
+.adder__title {
+	@apply text-center text-lg;
+	line-height: 12px;
+}
+
+.adder__company {
+	@apply text-center font-bold text-primary-600;
+	line-height: 12px;
+}
+
+.adder__buttons {
+	@apply pt-3;
+
+	> button:nth-of-type(2) {
+		@apply ml-4;
+	}
+}
+
+.form {
+	@apply p-6;
+}

@@ -9,6 +9,7 @@ import { auth, db } from '~/services/_firebase'
 export const useData = () => {
 	const [data, setData] = useState({
 		userId: '',
+		userUid: '',
 		displayName: '',
 		email: '',
 		companies: [],
@@ -28,9 +29,12 @@ export const useData = () => {
 					if (snapshot.exists()) {
 						dataFromDB = {
 							userId: snapshot.val().shortId,
+							userUid: user.uid,
 							displayName: snapshot.val().displayName,
 							email: snapshot.val().email,
-							companies: snapshot.val().companies ? snapshot.val().companies : [],
+							companies: snapshot.val().companies
+								? snapshot.val().companies
+								: [],
 							reports: snapshot.val().reports ? snapshot.val().reports : []
 						}
 					}
@@ -39,6 +43,7 @@ export const useData = () => {
 					} else {
 						setData({
 							userId: '',
+							userUid: '',
 							displayName: '',
 							email: '',
 							companies: [],
@@ -66,6 +71,7 @@ export const useData = () => {
 		() => ({
 			isLoading,
 			userId: data.userId,
+			userUid: data.userUid,
 			companies: Object.values(data.companies),
 			reports: Object.values(data.reports),
 			displayName: data.displayName,

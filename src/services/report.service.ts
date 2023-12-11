@@ -5,6 +5,8 @@ import { IReport } from '~/shared/types/report.interface'
 
 import { db } from '~/services/_firebase'
 
+import { removeUndefinedAndNaNFields } from '~/utils/report.utils'
+
 export const ReportService = {
 	async _getAll(userId: string) {
 		try {
@@ -34,28 +36,50 @@ export const ReportService = {
 		}
 	},
 
-	async create(userId: string, data: IReportCreate) {
+	async create(userId: string, data: IReportCreate, reportId: string) {
 		if (!data) return
-		const reportId = Date.now()
 
 		const newReport = {
 			...data,
 			_id: reportId,
 			createdAt: reportId,
-			updatedAt: reportId
+			updatedAt: reportId,
+			template: '22gkh2023'
 		}
 
-		// console.log('NEW REPORT: ', newReport)
 		set(ref(db, `users/${userId}/reports/${reportId}`), newReport)
 	},
 
 	async update(userId: string, data: IReport) {
 		if (!data.data) return
-		const now = Date.now()
+		data.updatedAt = Date.now().toString()
+		removeUndefinedAndNaNFields(data)
 
-		const updatedReport = { ...data, updatedAt: now }
+		try {
+			await update(ref(db, `users/${userId}/reports/${data._id}`), data)
+		} catch (error) {
+			console.error('Ошибка при обновлении данных:', error)
+		}
+	},
 
-		update(ref(db, `users/${userId}/reports/${data._id}`), updatedReport)
+	async generate(userId: string, reportId: string, finalReport: object) {
+		try {
+			const snapshot = await get(
+				child(ref(db), `users/${userId}/reports/${reportId}`)
+			)
+			if (snapshot.exists()) {
+				// console.log('finalReport: ', finalReport)
+				update(
+					ref(db, `users/${userId}/reports/${reportId}/finalReport/xml`),
+					finalReport
+				)
+			} else {
+				console.log('NO DATA')
+				return []
+			}
+		} catch (error) {
+			console.log(error)
+		}
 	},
 
 	async remove(userId: string, reportId: string) {

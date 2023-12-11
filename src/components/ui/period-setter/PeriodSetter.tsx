@@ -3,8 +3,6 @@ import { FaMinus, FaPlus } from 'react-icons/fa'
 
 import { usePeriod } from '~/hooks/usePeriod'
 
-import { TypePeriod, TypeYear } from '~/shared/types/period.interface'
-
 import styles from './PeriodSetter.module.scss'
 
 interface IPeriodSetter {
@@ -13,7 +11,7 @@ interface IPeriodSetter {
 
 const PeriodSetter: FC<IPeriodSetter> = ({ type }) => {
 	const {
-		year,
+		reportYear,
 		reportPeriod,
 		incrementYear,
 		decrementYear,
@@ -39,11 +37,11 @@ const PeriodSetter: FC<IPeriodSetter> = ({ type }) => {
 
 	useEffect(() => {
 		if (type === 'year') {
-			setValue(year as TypeYear)
+			setValue(reportYear as TypeYear)
 		} else if (type === 'period') {
 			setValue(reportPeriod as TypePeriod)
 		}
-	}, [type, year, reportPeriod])
+	}, [type, reportYear, reportPeriod])
 
 	const handleIncrement = () => {
 		if (type === 'year') {

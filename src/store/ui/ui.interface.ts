@@ -1,10 +1,9 @@
 import { ICompany } from '~/shared/types/company.interface'
-import { TypePeriod, TypeYear } from '~/shared/types/period.interface'
+import { IReport } from '~/shared/types/report.interface'
 
 export interface IuiState {
-	newCompany: ICompany | null
 	currentCompany: ICompany | null
+	currentReport: IReport | null
 
-	newReportYear: TypeYear | null
-	newReportPeriod: TypePeriod | null
+	newCompany: ICompany | null
 }

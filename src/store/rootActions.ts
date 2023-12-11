@@ -1,15 +1,13 @@
 import {
 	clearUI,
 	setCurrentCompany,
-	setNewCompany,
-	setNewReportPeriod,
-	setNewReportYear
+	setCurrentReport,
+	setNewCompany
 } from './ui/ui.slice'
 
 export const allActions = {
 	clearUI,
-	setNewCompany,
 	setCurrentCompany,
-	setNewReportYear,
-	setNewReportPeriod
+	setCurrentReport,
+	setNewCompany
 }

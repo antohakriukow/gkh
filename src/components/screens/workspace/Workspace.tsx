@@ -1,14 +1,16 @@
-import LeftSide from './left-side/LeftSide'
-import RightSide from './right-side/RightSide'
+import ReportEditor from './components/report-editor/ReportEditor'
+import ReportList from './components/report-list/ReportList'
+import { useWorkspace } from './useWorkspace'
 import { FC } from 'react'
 
 import styles from './Workspace.module.scss'
 
 const Workspace: FC = () => {
+	const { currentReport } = useWorkspace()
+
 	return (
-		<div className={styles.workspace__overlay}>
-			<LeftSide />
-			<RightSide />
+		<div className={styles.overlay}>
+			{currentReport ? <ReportEditor /> : <ReportList />}
 		</div>
 	)
 }

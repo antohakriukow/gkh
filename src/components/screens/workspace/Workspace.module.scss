@@ -1,16 +1,5 @@
 @import '../../../styles/colors.scss';
 
-.workspace__overlay {
-	@apply grid h-screen pt-4 overflow-y-hidden;
-	grid-template-columns: 288px 1fr;
-	max-height: calc(100vh - 100px);
-}
-
-.workspace__leftSide {
-	@apply w-60;
-}
-
-.workspace__rightSide {
-	@apply air-block bg-white;
-	height: calc(100vh - 114px);
+.overlay {
+	@apply mt-4 bg-white p-4 pb-8 rounded-md;
 }

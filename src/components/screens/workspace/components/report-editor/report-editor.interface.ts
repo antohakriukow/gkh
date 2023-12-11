@@ -1,0 +1,51 @@
+import {
+	Control,
+	FieldError,
+	FormState,
+	UseFormRegister,
+	UseFormReset,
+	UseFormTrigger,
+	UseFormWatch
+} from 'react-hook-form'
+
+import { IOption } from '~/components/ui/form-elements/form.interface'
+
+import { IReport } from '~/shared/types/report.interface'
+
+export interface IReportForm {
+	register: UseFormRegister<IReport>
+	control: Control<IReport>
+	formState: FormState<IReport>
+	watch: UseFormWatch<IReport>
+	reset?: UseFormReset<IReport>
+	// trigger: UseFormTrigger<IReport>
+	// handleSubmit: UseFormHandleSubmit<IReport, undefined>
+	// onSubmit: (data: IReport) => Promise<void>
+	// errors: FieldErrors<IReport>
+}
+
+// type PathImpl<T, Key extends keyof T> = Key extends string
+// 	? T[Key] extends Record<string, any>
+// 		? T[Key] extends ArrayLike<any>
+// 			? Key
+// 			: Key | `${Key}.${PathImpl<T[Key], Exclude<keyof T[Key], keyof any[]>>}`
+// 		: Key
+// 	: never
+
+// type ReportFieldNames = PathImpl<IReport, keyof IReport>
+
+export interface IReportFieldNumber {
+	register: UseFormRegister<IReport>
+	control: Control<IReport>
+	placeholder: string
+	fieldName: string
+	error?: FieldError
+	isRequired?: boolean
+}
+
+export interface IReportSelect {
+	control: Control<IReport>
+	placeholder: string
+	fieldName: string
+	options: IOption[]
+}

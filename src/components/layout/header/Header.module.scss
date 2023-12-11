@@ -1,13 +1,41 @@
-.header {
-	@apply air-block p-4 bg-white flex flex-row justify-between items-center;
-}
-
-.header__container {
+.container {
 	@apply pt-2;
 }
+
+.header {
+	@apply air-block px-4 py-2 bg-white flex flex-row justify-between items-center;
+}
+
 .title {
 	@apply text-lg text-primary-800;
 }
-.button {
-	@apply text-sm bg-danger-500 px-4;
+
+.tools {
+	@apply flex flex-row justify-between items-center;
+	> svg:hover {
+		transform: scale(1.2);
+		z-index: 100;
+	}
+	> div:hover {
+		transform: scale(1.02);
+		z-index: 100;
+	}
+}
+
+@media (max-width: 600px) {
+	.header {
+		@apply flex-col items-start px-0;
+	}
+	.title {
+		@apply pl-4;
+	}
+}
+
+@media (max-width: 344px) {
+	.container {
+		@apply pt-0;
+	}
+	.header {
+		min-width: 344px;
+	}
 }

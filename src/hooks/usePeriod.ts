@@ -15,15 +15,17 @@ export const usePeriod = () => {
 		initialQuarter--
 	}
 
-	const [year, setYear] = useState(initialYear)
+	const [reportYear, setReportYear] = useState(initialYear)
 	const [reportPeriod, setReportPeriod] = useState(initialQuarter)
 
 	const incrementYear = () => {
-		setYear(prevYear => (prevYear < currentYear ? prevYear + 1 : prevYear))
+		setReportYear(prevYear =>
+			prevYear < currentYear ? prevYear + 1 : prevYear
+		)
 	}
 
 	const decrementYear = () => {
-		setYear(prevYear => (prevYear > 2020 ? prevYear - 1 : prevYear))
+		setReportYear(prevYear => (prevYear > 2020 ? prevYear - 1 : prevYear))
 	}
 
 	const incrementPeriod = () => {
@@ -35,7 +37,7 @@ export const usePeriod = () => {
 	}
 
 	return {
-		year,
+		reportYear,
 		reportPeriod,
 		incrementYear,
 		decrementYear,

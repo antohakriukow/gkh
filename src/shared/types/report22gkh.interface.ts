@@ -1,6 +1,54 @@
-export type Type22gkhReportTemplate = '2023' | '2024'
-export type TypeStove = 'gas' | 'electro'
-export type TypeGas = 'none' | 'network' | 'liquid'
+export type Type22gkhReportTemplate = '22gkh2023' | '22gkh2024'
+export type TypeElevator = 'yes' | 'no' | 'both'
+export type TypeStove = 'gas' | 'electro' | 'both'
+export type TypeGas = 'none' | 'network' | 'liquid' | 'both'
+export type TypeRenovation = 'yes' | 'no' | 'both'
+export type TypeBudgetFinancing = 'yes' | 'no'
+export type TypeRenovationCosts = 'yes' | 'no'
+
+export interface IArea {
+	residentialArea: number
+	nonResidentialArea: number
+	commonArea: number
+	electricityArea?: number
+}
+
+export interface IElevator {
+	status: TypeElevator
+	areaWith?: number
+	areaWithout?: number
+}
+
+export interface IStove {
+	status: TypeStove
+	areaElectro?: number
+	areaGas?: number
+}
+
+export interface IGas {
+	status: TypeGas
+	areaNone?: number
+	areaNetwork?: number
+	areaLiquid?: number
+}
+
+export interface IRenovation {
+	status: TypeRenovation
+	areaWith?: number
+	areaWithout?: number
+}
+
+export interface IBudgetFinancing {
+	status: TypeBudgetFinancing
+	totalAmount: number
+	tariffCompensation: number
+}
+
+export interface IRenovationCosts {
+	status: TypeRenovationCosts
+	totalAmount: number
+	budgetTransfers: number
+}
 
 export interface IIncome {
 	housing: number
@@ -29,29 +77,25 @@ export interface IAccruals {
 	waterDisposal: number
 	heat: number
 	gas: number
-	electricityDay: number
-	electricityNight: number
-	electricitySingle: number
+	electricity: number
 	solidWasteRemoval: number
 	coldWaterCommon: number
 	hotWaterCommon: number
 	waterDisposalCommon: number
-	electricityDayCommon: number
-	electricityNightCommon: number
-	electricitySingleCommon: number
+	electricityCommon: number
 	management: number
 	maintenance: number
 	renovation: number
 }
 
 export interface IReport22gkhData {
-	residentialArea: number
-	nonResidentialArea: number
-	commonArea: number
-	elevator: boolean
-	stove: TypeStove
-	gas: TypeGas
-	renovation: boolean
+	area: IArea
+	elevator: IElevator
+	stove: IStove
+	gas: IGas
+	renovation: IRenovation
+	budgetFinancing: IBudgetFinancing
+	renovationCosts: IRenovationCosts
 	income: IIncome
 	residentsDebts: IResidentsDebts
 	organizationDebts: IOrganizationDebts

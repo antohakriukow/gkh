@@ -2,13 +2,13 @@ import { IuiState } from './ui.interface'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 import { ICompany } from '~/shared/types/company.interface'
-import { TypePeriod, TypeYear } from '~/shared/types/period.interface'
+import { IReport } from '~/shared/types/report.interface'
 
 const initialState: IuiState = {
-	newCompany: null,
 	currentCompany: null,
-	newReportYear: null,
-	newReportPeriod: null
+	currentReport: null,
+
+	newCompany: null
 }
 
 export const uiSlice = createSlice({
@@ -18,26 +18,20 @@ export const uiSlice = createSlice({
 		clearUI: state => {
 			state.newCompany = null
 		},
-		setNewCompany: (state, action: PayloadAction<ICompany | null>) => {
-			state.newCompany = action.payload
-		},
 		setCurrentCompany: (state, action: PayloadAction<ICompany | null>) => {
+			state.currentReport = null
 			state.currentCompany = action.payload
 		},
-		setNewReportYear: (state, action: PayloadAction<TypeYear | null>) => {
-			state.newReportYear = action.payload
+		setCurrentReport: (state, action: PayloadAction<IReport | null>) => {
+			state.currentReport = action.payload
 		},
-		setNewReportPeriod: (state, action: PayloadAction<TypePeriod | null>) => {
-			state.newReportPeriod = action.payload
+		setNewCompany: (state, action: PayloadAction<ICompany | null>) => {
+			state.currentReport = null
+			state.newCompany = action.payload
 		}
 	}
 })
 
-export const {
-	clearUI,
-	setNewCompany,
-	setCurrentCompany,
-	setNewReportYear,
-	setNewReportPeriod
-} = uiSlice.actions
+export const { clearUI, setCurrentCompany, setCurrentReport, setNewCompany } =
+	uiSlice.actions
 export const uiReducer = uiSlice.reducer

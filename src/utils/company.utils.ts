@@ -4,7 +4,7 @@ export const prepareCompanyData = (data: any): ICompany => ({
 	inn: data.inn,
 	kpp: data.kpp,
 	ogrn: data.ogrn,
-	okpo: data.ogrn,
+	okpo: data.okpo,
 	name: {
 		short: data.name.short,
 		full: data.name.full
