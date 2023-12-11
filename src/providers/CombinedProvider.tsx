@@ -1,19 +1,22 @@
 import { User, onAuthStateChanged } from 'firebase/auth'
-import {
+import React, {
 	FC,
 	PropsWithChildren,
 	createContext,
+	useCallback,
 	useEffect,
 	useMemo,
 	useState
 } from 'react'
 
 import Layout from '~/components/layout/Layout'
+import Modal from '~/components/ui/modal/Modal'
 
 import { auth, login, logout, register } from '~/services/_firebase'
 import { UserService } from '~/services/user.service'
 
-interface IContext {
+// Определение интерфейсов для каждого контекста
+interface IAuthContext {
 	user: User | null
 	isLoading: boolean
 	register: (email: string, password: string) => Promise<void>
@@ -21,23 +24,39 @@ interface IContext {
 	logout: () => Promise<void>
 }
 
-export const AuthContext = createContext<IContext>({} as IContext)
+interface IModalContext {
+	showModal: (component: React.ReactNode | null) => void
+	hideModal: () => void
+}
 
-export const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
+// Объединенный интерфейс
+interface ICombinedContext extends IAuthContext, IModalContext {}
+
+// Создание контекста
+export const CombinedContext = createContext<ICombinedContext>(
+	{} as ICombinedContext
+)
+
+export const CombinedProvider: FC<PropsWithChildren<unknown>> = ({
+	children
+}) => {
 	const [user, setUser] = useState<User | null>(null)
 	const [isLoading, setIsLoading] = useState(false)
 	const [isLoadingInitial, setIsLoadingInitial] = useState(true)
+	const [modalComponent, setModalComponent] = useState<React.ReactNode | null>(
+		null
+	)
+	const [isModalOpen, setIsModalOpen] = useState(false)
 
+	// Обработчики для Auth
 	const registerHandler = async (email: string, password: string) => {
 		setIsLoading(true)
-
 		try {
 			const userResponse = await register(email, password)
 			if (!userResponse.user.email) return
 			await UserService.create(userResponse.user.uid, userResponse.user.email)
 		} catch (error: any) {
 			console.log('Error reg:', error)
-			console.log(error)
 		} finally {
 			setIsLoading(false)
 		}
@@ -45,11 +64,9 @@ export const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 
 	const loginHandler = async (email: string, password: string) => {
 		setIsLoading(true)
-
 		try {
 			await login(email, password).then(data => {
 				setUser(data.user)
-				console.log(data.user)
 			})
 		} catch (error: any) {
 			console.log('Error login:', error)
@@ -60,7 +77,6 @@ export const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 
 	const logoutHandler = async () => {
 		setIsLoading(true)
-
 		try {
 			await logout()
 		} catch (error: any) {
@@ -69,6 +85,17 @@ export const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 			setIsLoading(false)
 		}
 	}
+
+	// Обработчики для Modal
+	const showModal = useCallback((component: React.ReactNode | null) => {
+		setModalComponent(component)
+		setIsModalOpen(true)
+	}, [])
+
+	const hideModal = useCallback(() => {
+		setIsModalOpen(false)
+		setModalComponent(null)
+	}, [])
 
 	useEffect(() => {
 		onAuthStateChanged(auth, user => {
@@ -81,16 +108,20 @@ export const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 		() => ({
 			user,
 			isLoading,
+			register: registerHandler,
 			login: loginHandler,
 			logout: logoutHandler,
-			register: registerHandler
+			showModal,
+			hideModal
 		}),
-		[user, isLoading]
+		[user, isLoading, showModal, hideModal]
 	)
 
 	return (
-		<AuthContext.Provider value={value}>
+		<CombinedContext.Provider value={value}>
+			{/* {!isLoadingInitial && children} */}
 			<Layout>{!isLoadingInitial && children}</Layout>
-		</AuthContext.Provider>
+			{isModalOpen && <Modal component={modalComponent} />}
+		</CombinedContext.Provider>
 	)
 }

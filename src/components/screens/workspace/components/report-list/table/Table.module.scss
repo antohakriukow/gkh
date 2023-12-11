@@ -1,0 +1,23 @@
+@import '../../../../../../styles/colors.scss';
+
+.table {
+	@apply mt-4;
+	border: 1px $gray-300 solid;
+}
+
+.header {
+	@apply grid text-base text-center bg-gray-50;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 1px;
+}
+
+.item {
+	@apply grid text-base text-center hover:bg-secondary-50 cursor-pointer;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 1px;
+	border-top: 1px $gray-100 solid;
+}
+
+.cell {
+	@apply py-2 flex flex-row items-center justify-center font-semibold outline-none px-0 mx-0;
+}

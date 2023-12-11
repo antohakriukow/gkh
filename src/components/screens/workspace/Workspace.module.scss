@@ -1,0 +1,5 @@
+@import '../../../styles/colors.scss';
+
+.overlay {
+	@apply mt-4 bg-white p-4 pb-8 rounded-md;
+}

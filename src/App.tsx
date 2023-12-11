@@ -1,12 +1,16 @@
 import Navigation from './navigation/Navigation'
-import { AuthProvider } from './providers/auth/AuthProvider'
+import { CombinedProvider } from './providers/CombinedProvider'
+import { store } from './store/store'
+import { Provider } from 'react-redux'
 
 function App() {
 	return (
 		<div className='App'>
-			<AuthProvider>
-				<Navigation />
-			</AuthProvider>
+			<Provider store={store}>
+				<CombinedProvider>
+					<Navigation />
+				</CombinedProvider>
+			</Provider>
 		</div>
 	)
 }

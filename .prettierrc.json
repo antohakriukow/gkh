@@ -18,7 +18,9 @@
 		"^~/providers/(.*)$",
 		"^~/store/(.*)$",
 		"^../(.*)",
-		"^./(.*)"
+		"^./(.tsx)",
+		"^./(.ts)",
+		"(.scss)$"
 	],
 	"importOrderSeparation": true,
 	"importOrderSortSpecifiers": true,
