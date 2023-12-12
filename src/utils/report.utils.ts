@@ -18,6 +18,28 @@ export const convertPeriod = (period: number) => {
 	}
 }
 
+export const removeZeroAndUndefined = (obj: any): any => {
+	if (typeof obj !== 'object' || obj === null) {
+		return obj
+	}
+
+	const newObj: { [key: string]: any } = Array.isArray(obj) ? [] : {}
+
+	Object.keys(obj).forEach(key => {
+		const value = obj[key]
+		if (typeof value === 'object' && value !== null) {
+			const result = removeZeroAndUndefined(value)
+			if (Object.keys(result).length > 0) {
+				newObj[key] = result
+			}
+		} else if (value !== 0 && value !== undefined) {
+			newObj[key] = value
+		}
+	})
+
+	return newObj
+}
+
 export const removeUndefinedAndNaNFields = (obj: any): void => {
 	Object.keys(obj).forEach(key => {
 		if (typeof obj[key] === 'object' && obj[key] !== null) {
@@ -27,6 +49,19 @@ export const removeUndefinedAndNaNFields = (obj: any): void => {
 			(typeof obj[key] === 'number' && Number.isNaN(obj[key]))
 		) {
 			delete obj[key]
+		}
+	})
+}
+
+export const replaceUndefinedAndNaNWithZero = (obj: any): void => {
+	Object.keys(obj).forEach(key => {
+		if (typeof obj[key] === 'object' && obj[key] !== null) {
+			replaceUndefinedAndNaNWithZero(obj[key])
+		} else if (
+			obj[key] === undefined ||
+			(typeof obj[key] === 'number' && Number.isNaN(obj[key]))
+		) {
+			obj[key] = 0
 		}
 	})
 }
@@ -53,8 +88,9 @@ export const getReportTitle = (data: IReport) => [
 	{ _name: 'item', _attrs: { name: 'mail', value: 'NEED DATA' } }
 ]
 
-export const readReportSchema = (schemaChapterOne: Object) => {
-	return Object.entries(schemaChapterOne)
+export const readReportSchema = (schema?: Object) => {
+	if (!schema) return
+	return Object.entries(schema)
 		.filter(([key, value]) => {
 			return Object.values(value).some(
 				val => val !== undefined && val !== null && val !== 0

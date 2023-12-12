@@ -8,8 +8,10 @@ import { TypeAnnualReportTemplate } from './reportAnnual.interface'
 export type TypeReport = '22gkh' | 'annual'
 
 export interface IFinalReport {
-	xml: Object
-	pdf: Object
+	1: Object
+	2: Object
+	3: Object
+	4: Object
 }
 
 export interface IReport {

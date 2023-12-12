@@ -14,8 +14,8 @@ import {
 	distributeValues
 } from '~/utils/report.utils'
 
-export const use22gkhConstants = (report: IReport) => {
-	const { area, elevator, gas, stove, renovation } = report.data
+export const getConstants = (report: IReport) => {
+	const { area, elevator, gas, stove, renovation } = report?.data
 	const accruals = divideAndRoundNumbers(report.data.accruals) as IAccruals
 	const income = divideAndRoundNumbers(report.data.income) as IIncome
 	const residentsDebts = divideAndRoundNumbers(
@@ -225,7 +225,7 @@ export const use22gkhConstants = (report: IReport) => {
 		5: calculatePreviousPayments(payments, accruals),
 		6: accruals,
 		7: accruals,
-		8: !!area ? area : 0
+		8: !!accruals && !!area ? area : 0
 	})
 
 	const row66 = typicalRow(
@@ -250,6 +250,7 @@ export const use22gkhConstants = (report: IReport) => {
 	}
 
 	const distributeMaintenance = (row: 67 | 68) => {
+		const elevatorCopy = { ...elevator }
 		if (
 			(row === 67 && elevator.status === 'yes') ||
 			(row === 68 && elevator.status === 'no')
@@ -257,49 +258,54 @@ export const use22gkhConstants = (report: IReport) => {
 			return row66
 		}
 
-		if (!elevator.areaWith) elevator.areaWith = 0
-		if (!elevator.areaWithout) elevator.areaWithout = 0
+		if (!elevatorCopy.areaWith) elevatorCopy.areaWith = 0
+		if (!elevatorCopy.areaWithout) elevatorCopy.areaWithout = 0
 
 		const results = distributeValues(
 			row66,
-			elevator.areaWith,
-			elevator.areaWithout
+			elevatorCopy.areaWith,
+			elevatorCopy.areaWithout
 		)
 		return row === 67 ? results[0] : results[1]
 	}
 
 	const distributeElectricity = (row: 77 | 78) => {
+		const stoveCopy = { ...stove }
 		if (
 			(row === 77 && stove.status === 'gas') ||
 			(row === 78 && stove.status === 'electro')
 		)
 			return row76
 
-		if (!stove.areaGas) stove.areaGas = 0
-		if (!stove.areaElectro) stove.areaElectro = 0
+		if (!stoveCopy.areaGas) stoveCopy.areaGas = 0
+		if (!stoveCopy.areaElectro) stoveCopy.areaElectro = 0
 
-		const results = distributeValues(row76, stove.areaGas, stove.areaElectro)
+		const results = distributeValues(
+			row76,
+			stoveCopy.areaGas,
+			stoveCopy.areaElectro
+		)
 
 		return row === 77 ? results[0] : results[1]
 	}
 
 	const distributeGas = (row: 79 | 80) => {
-		const innerGas = { ...gas }
+		const gasCopy = { ...gas }
 		if (
 			(row === 79 && gas.status === 'network') ||
 			(row === 80 && gas.status === 'liquid')
 		)
 			return rowGas
 
-		if (!innerGas.areaNetwork) innerGas.areaNetwork = 0
-		if (!innerGas.areaLiquid) innerGas.areaLiquid = 0
-		if (!innerGas.areaNone) innerGas.areaNone = 0
+		if (!gasCopy.areaNetwork) gasCopy.areaNetwork = 0
+		if (!gasCopy.areaLiquid) gasCopy.areaLiquid = 0
+		if (!gasCopy.areaNone) gasCopy.areaNone = 0
 
 		const results = distributeValues(
 			rowGas,
-			innerGas.areaNetwork,
-			innerGas.areaLiquid,
-			innerGas.areaNone
+			gasCopy.areaNetwork,
+			gasCopy.areaLiquid,
+			gasCopy.areaNone
 		)
 
 		return row === 79 ? results[0] : results[1]

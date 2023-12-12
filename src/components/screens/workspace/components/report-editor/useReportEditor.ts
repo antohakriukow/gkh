@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, UseFormSetValue } from 'react-hook-form'
-import { use22gkhReport } from '~/report-logic/22gkh/use22gkhReport'
+import { downloadXML } from '~/report-logic/22gkh/downloadXML'
+import { generate22gkhReport } from '~/report-logic/22gkh/generate22gkhReport'
 
 import { useActions } from '~/hooks/useActions'
 import { useAuth } from '~/hooks/useAuth'
@@ -10,13 +11,10 @@ import { IReport } from '~/shared/types/report.interface'
 
 import { ReportService } from '~/services/report.service'
 
-import { downloadXML } from '~/utils/files.utils'
-
 export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 	const { user } = useAuth()
 	const { currentReport } = useTypedSelector(state => state.ui)
 	const { setCurrentReport } = useActions()
-	const { generate22GkgReport } = use22gkhReport()
 	const [isLoading, setIsLoading] = useState(false)
 
 	const setReportValues = useCallback(
@@ -67,7 +65,7 @@ export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 	const generateReport = async () => {
 		if (!user || !currentReport) return
 		setIsLoading(true)
-		const finalReport = generate22GkgReport(currentReport)
+		const finalReport = generate22gkhReport(currentReport)
 		try {
 			ReportService.generate(
 				user.uid,

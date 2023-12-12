@@ -2,6 +2,8 @@ import {
 	budgetFinancingOptions,
 	elevatorOptions,
 	gasOptions,
+	hasOneHouseOptions,
+	housesAreSameOptions,
 	renovationCostsOptions,
 	renovationOptions,
 	stoveOptions
@@ -30,6 +32,8 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 	const isRenovationBoth = watch('data.renovation.status') === 'both'
 	const isBudgetFinancing = watch('data.budgetFinancing.status') === 'yes'
 	const isRenovationCosts = watch('data.renovationCosts.status') === 'yes'
+	const isSimpleModeOn =
+		watch('data.settings.hasOneHouse') || watch('data.settings.housesAreSame')
 
 	return (
 		<>
@@ -37,6 +41,18 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 				Параметры Управляющей организации (УО)
 			</h3>
 			<div className={styles.fieldSet}>
+				<ReportSelect
+					control={control}
+					fieldName='data.settings.hasOneHouse'
+					placeholder='Количество домов в управлении'
+					options={hasOneHouseOptions}
+				/>
+				<ReportSelect
+					control={control}
+					fieldName='data.settings.housesAreSame'
+					placeholder='Количество домов в управлении'
+					options={housesAreSameOptions}
+				/>
 				<ReportFieldNumber
 					control={control}
 					fieldName='data.area.residentialArea'
