@@ -2,6 +2,7 @@ import ReportForm from './22gkh/ReportForm'
 import { useReportEditor } from './useReportEditor'
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
+import { AiOutlineCloseSquare } from 'react-icons/ai'
 
 import { Button, Heading } from '~/components/ui'
 
@@ -17,8 +18,15 @@ const ReportEditor: FC = () => {
 			mode: 'onSubmit'
 		})
 
-	const { onSubmit, generateReport, downloadReportXML, currentReport } =
-		useReportEditor(setValue)
+	const {
+		onSubmit,
+		generateReport,
+		downloadReportXML,
+		currentReport,
+		closeReport
+	} = useReportEditor(setValue)
+
+	const isGenerated = !!currentReport?.finalReport
 
 	const heading = currentReport
 		? `Отчет 22-ЖКХ (Жилище) за ${convertPeriod(
@@ -28,7 +36,10 @@ const ReportEditor: FC = () => {
 
 	return (
 		<div>
-			<Heading title={heading} className={styles.reportTitle} />
+			<div className={styles.header}>
+				<Heading title={heading} className={styles.title} />
+				<AiOutlineCloseSquare onClick={closeReport} color='#df4956' size={32} />
+			</div>
 			<ReportForm
 				register={register}
 				control={control}
@@ -36,15 +47,17 @@ const ReportEditor: FC = () => {
 				watch={watch}
 				setValue={setValue}
 			/>
-			<Button onClick={handleSubmit(onSubmit)} className={styles.reportBtn}>
+			<Button onClick={handleSubmit(onSubmit)} className={styles.button}>
 				Сохранить
 			</Button>
-			<Button onClick={generateReport} className={styles.reportBtn}>
+			<Button onClick={generateReport} className={styles.button}>
 				Сгенерировать отчет
 			</Button>
-			<Button onClick={downloadReportXML} className={styles.reportBtn}>
-				Скачать XML
-			</Button>
+			{isGenerated && (
+				<Button onClick={downloadReportXML} className={styles.button}>
+					Скачать XML
+				</Button>
+			)}
 		</div>
 	)
 }

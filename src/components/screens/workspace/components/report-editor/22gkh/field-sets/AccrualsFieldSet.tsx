@@ -43,7 +43,7 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 		}, 500)
 
 		return () => clearInterval(interval)
-	}) // TODO: Убрать костыль, сделать нормально
+	}) // TODO: Убрать костыль, сделать нормально. Возможно, вызов watch должен быть внутри useEffect
 
 	return (
 		<>

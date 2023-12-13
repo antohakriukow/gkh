@@ -66,6 +66,10 @@ export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 		}
 	}
 
+	const closeReport = () => {
+		setCurrentReport(null)
+	}
+
 	const generateReport = async () => {
 		if (!user || !currentReport) return
 		setIsLoading(true)
@@ -105,6 +109,7 @@ export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 		onSubmit,
 		generateReport,
 		downloadReportXML,
-		currentReport
+		currentReport,
+		closeReport
 	}
 }
