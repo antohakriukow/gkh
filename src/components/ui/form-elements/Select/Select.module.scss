@@ -1,0 +1,58 @@
+@import '../../../../styles/mixins.scss';
+@import '../../../../styles/colors.scss';
+
+.inputContainer {
+	@apply flex flex-col items-center justify-start;
+
+	input {
+		@apply px-2;
+		width: 146px;
+		height: 34px;
+
+		border: 1px solid rgb(204, 204, 204);
+		border-radius: 4px;
+	}
+}
+
+.error {
+	@apply text-danger-500 font-semibold;
+	font-size: 14px;
+	line-height: 14px;
+	margin-top: 1px;
+}
+
+.selectContainer {
+	@apply relative hover:bg-gray-50 py-2 px-2 rounded-md;
+
+	> label {
+		@apply flex items-center justify-between;
+
+		> span {
+			@apply block mb-0 mr-2 text-primary-800;
+			font-size: 16px;
+			line-height: 16px;
+		}
+
+		.custom-select__control {
+			@apply w-32;
+		}
+
+		.custom-select__option--is-selected {
+			background-color: $secondary-500 !important;
+		}
+
+		.custom-select__value-container {
+			@apply py-0;
+		}
+	}
+}
+
+@media (min-width: 1320px) {
+	.container {
+		max-width: 600px;
+	}
+
+	.selectContainer {
+		max-width: 600px;
+	}
+}

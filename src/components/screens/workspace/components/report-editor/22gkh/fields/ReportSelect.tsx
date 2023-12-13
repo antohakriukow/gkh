@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Controller } from 'react-hook-form'
 
-import Select from '~/components/ui/form-elements/Select'
+import { Select } from '~/components/ui'
 
 import { IReport } from '~/shared/types/report.interface'
 

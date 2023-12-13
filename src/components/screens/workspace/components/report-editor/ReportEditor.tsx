@@ -2,7 +2,7 @@ import ReportForm from './22gkh/ReportForm'
 import { useReportEditor } from './useReportEditor'
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import { AiOutlineCloseSquare } from 'react-icons/ai'
+import { AiOutlineCloseCircle } from 'react-icons/ai'
 
 import { Button, Heading } from '~/components/ui'
 
@@ -23,7 +23,8 @@ const ReportEditor: FC = () => {
 		generateReport,
 		downloadReportXML,
 		currentReport,
-		closeReport
+		closeReport,
+		downloadReportPDF
 	} = useReportEditor(setValue)
 
 	const isGenerated = !!currentReport?.finalReport
@@ -38,7 +39,7 @@ const ReportEditor: FC = () => {
 		<div>
 			<div className={styles.header}>
 				<Heading title={heading} className={styles.title} />
-				<AiOutlineCloseSquare onClick={closeReport} color='#df4956' size={32} />
+				<AiOutlineCloseCircle onClick={closeReport} color='#df4956' size={32} />
 			</div>
 			<ReportForm
 				register={register}
@@ -54,9 +55,14 @@ const ReportEditor: FC = () => {
 				Сгенерировать отчет
 			</Button>
 			{isGenerated && (
-				<Button onClick={downloadReportXML} className={styles.button}>
-					Скачать XML
-				</Button>
+				<>
+					<Button onClick={downloadReportPDF} className={styles.button}>
+						Скачать PDF
+					</Button>
+					<Button onClick={downloadReportXML} className={styles.button}>
+						Скачать XML
+					</Button>
+				</>
 			)}
 		</div>
 	)

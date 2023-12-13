@@ -87,6 +87,23 @@ export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 		}
 	}
 
+	const downloadReportPDF = async () => {
+		if (!user || !currentReport) return
+		setIsLoading(true)
+		try {
+			const report = await ReportService.getById(
+				user.uid,
+				currentReport._id.toString()
+			)
+
+			console.log(report)
+		} catch (error) {
+			// console.log(error)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
 	const downloadReportXML = async () => {
 		if (!user || !currentReport) return
 		setIsLoading(true)
@@ -108,6 +125,7 @@ export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 		isLoading,
 		onSubmit,
 		generateReport,
+		downloadReportPDF,
 		downloadReportXML,
 		currentReport,
 		closeReport

@@ -1,0 +1,49 @@
+.container {
+	@apply flex items-center justify-between p-2 rounded-md hover:bg-gray-50;
+
+	.placeholder {
+		@apply mr-2;
+	}
+
+	.checkbox {
+		@apply relative flex items-center cursor-pointer;
+
+		input[type='checkbox'] {
+			@apply absolute opacity-0 cursor-pointer h-0 w-0;
+
+			&:checked ~ .checkmark {
+				@apply bg-secondary-500 border-secondary-500;
+
+				&:after {
+					@apply flex;
+				}
+			}
+		}
+
+		.checkmark {
+			@apply relative;
+			height: 38px;
+			width: 38px;
+			border-radius: 4px;
+			transition: background-color 0.3s;
+			border: 1px solid rgb(204, 204, 204);
+
+			&:after {
+				@apply absolute hidden;
+				content: '';
+				position: absolute;
+				left: 14px;
+				top: 5px;
+				width: 7px;
+				height: 20px;
+				border: solid white;
+				border-width: 0 3px 3px 0;
+				transform: rotate(45deg);
+			}
+		}
+
+		&:hover input ~ .checkmark {
+			@apply bg-secondary-50;
+		}
+	}
+}

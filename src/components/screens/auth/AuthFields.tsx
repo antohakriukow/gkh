@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { FieldError, FormState, UseFormRegister } from 'react-hook-form'
 
-import { Field } from '~/components/ui'
+import { AuthField } from '~/components/ui'
 
 import { validEmail } from '~/shared/regex'
 
@@ -18,7 +18,7 @@ const AuthFields: FC<IAuthFields> = ({
 }) => {
 	return (
 		<>
-			<Field
+			<AuthField
 				{...register('email', {
 					required: 'Это обязательное поле',
 					pattern: {
@@ -30,7 +30,7 @@ const AuthFields: FC<IAuthFields> = ({
 				error={errors.email as FieldError}
 			/>
 
-			<Field
+			<AuthField
 				{...register(
 					'password',
 					isPasswordRequired

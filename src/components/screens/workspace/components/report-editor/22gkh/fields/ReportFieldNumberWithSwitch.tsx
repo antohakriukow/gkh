@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect } from 'react'
 
-import { Field } from '~/components/ui'
+import { Checkbox, Field } from '~/components/ui'
 
 import { IReport } from '~/shared/types/report.interface'
 
@@ -41,11 +41,9 @@ const ReportFieldNumberWithSwitch: FC<IReportFieldNumberWithSwitch> = ({
 					: styles.checkbox
 			}
 		>
-			<Field
+			<Checkbox
 				{...register(switcherName as keyof IReport)}
-				isString
 				placeholder={placeholder}
-				type='checkbox'
 			/>
 			{isChecked && isAdvancedModeOn && (
 				<Field

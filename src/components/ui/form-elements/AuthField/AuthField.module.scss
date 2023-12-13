@@ -1,0 +1,58 @@
+@import '../../../../styles/mixins.scss';
+@import '../../../../styles/colors.scss';
+
+.common {
+	@apply relative transition-colors;
+
+	> label {
+		@apply block;
+		> span {
+			@apply block text-primary-800;
+			font-size: 16px;
+			line-height: 16px;
+		}
+	}
+}
+
+.field {
+	@apply mb-1 text-left w-full flex flex-row;
+
+	input {
+		@apply w-full m-0 px-0 text-primary-700 text-lg border-primary-700 focus:ring-0;
+		border-bottom-width: 1px;
+		outline: none;
+		border-top: none;
+		border-right: none;
+		border-left: none;
+
+		&::-webkit-inner-spin-button,
+		&::-webkit-outer-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+
+		& {
+			-moz-appearance: textfield;
+		}
+	}
+}
+
+.inputContainer {
+	@apply flex flex-col items-center justify-start;
+
+	input {
+		@apply px-2;
+		width: 146px;
+		height: 34px;
+
+		border: 1px solid rgb(204, 204, 204);
+		border-radius: 4px;
+	}
+}
+
+.error {
+	@apply text-danger-500 font-semibold;
+	font-size: 14px;
+	line-height: 14px;
+	margin-top: 1px;
+}

@@ -9,12 +9,18 @@ export interface IFieldProps {
 	error?: FieldError | undefined
 	color?: 'danger' | 'success'
 	isString?: boolean
-	isSwitch?: boolean
+}
+
+export interface ICheckboxProps {
+	placeholder?: string
 }
 
 type TypeInputPropsField = InputHTMLAttributes<HTMLInputElement> & IFieldProps
+type TypeCheckboxPropsField = InputHTMLAttributes<HTMLInputElement> &
+	ICheckboxProps
 
 export interface IField extends TypeInputPropsField {}
+export interface ICheckbox extends TypeCheckboxPropsField {}
 
 export interface IOption {
 	label: string
