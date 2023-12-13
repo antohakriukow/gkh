@@ -27,3 +27,14 @@
 		margin-top: 8px;
 	}
 }
+
+.fieldWithCheckbox {
+	@apply flex flex-row items-center justify-between;
+	> div:first-child {
+		width: calc(100% - 164px);
+	}
+}
+
+.checkbox {
+	@apply w-full;
+}

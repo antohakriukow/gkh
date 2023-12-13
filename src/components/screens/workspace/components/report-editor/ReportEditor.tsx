@@ -34,6 +34,7 @@ const ReportEditor: FC = () => {
 				control={control}
 				formState={formState}
 				watch={watch}
+				setValue={setValue}
 			/>
 			<Button onClick={handleSubmit(onSubmit)} className={styles.reportBtn}>
 				Сохранить

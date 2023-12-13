@@ -6,18 +6,22 @@ import styles from './form.module.scss'
 
 const Field = forwardRef<HTMLInputElement, IField>(
 	({ placeholder, error, isString, type = 'text', style, ...props }, ref) => {
+		const isCheckbox = type === 'checkbox'
 		return (
-			<div className={cn({ [styles.container]: isString })}>
+			<div className={cn({ [styles.container]: isString })} style={style}>
 				<div
 					className={cn(styles.common, styles.field, {
 						[styles.string]: isString
 					})}
-					style={style}
 				>
 					<label className={cn({ [styles.stringLabel]: isString })}>
 						{!!placeholder && <span>{placeholder}</span>}
-						<div className={styles.inputContainer}>
-							<input ref={ref} type={type} {...props} />
+						<div
+							className={
+								isCheckbox ? styles.checkboxContainer : styles.inputContainer
+							}
+						>
+							{<input ref={ref} type={type} {...props} />}
 						</div>
 					</label>
 				</div>

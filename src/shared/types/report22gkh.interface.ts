@@ -5,6 +5,8 @@ export type TypeGas = 'none' | 'network' | 'liquid' | 'both'
 export type TypeRenovation = 'yes' | 'no' | 'both'
 export type TypeBudgetFinancing = 'yes' | 'no'
 export type TypeRenovationCosts = 'yes' | 'no'
+export type TypeHousesCount = 'one' | 'many'
+export type TypeHousesAreSame = 'yes' | 'no'
 
 export interface IService {
 	status: boolean
@@ -15,13 +17,6 @@ export interface IArea {
 	residentialArea: number
 	nonResidentialArea: number
 	commonArea: number
-	// coldWaterArea?: number
-	// waterDisposalArea?: number
-	// hotWaterArea?: number
-	// heatArea?: number
-	// electricityArea?: number
-	// gasArea?: number
-	// solidWasteRemovalArea?: number
 }
 
 export interface IServices {
@@ -40,8 +35,8 @@ export interface IServices {
 }
 
 export interface ISettings {
-	hasOneHouse: boolean
-	housesAreSame?: boolean
+	housesCount: TypeHousesCount
+	housesAreSame?: TypeHousesAreSame
 	services?: IServices
 }
 

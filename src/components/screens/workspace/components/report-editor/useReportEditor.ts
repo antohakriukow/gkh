@@ -28,8 +28,12 @@ export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 						!Array.isArray(value)
 					) {
 						setReportValues(value, fullKey)
-					} else if (typeof value === 'string' || typeof value === 'number') {
-						setValue(fullKey as keyof IReport, value)
+					} else if (
+						typeof value === 'string' ||
+						typeof value === 'number' ||
+						typeof value === 'boolean'
+					) {
+						setValue(fullKey as keyof IReport, value as any)
 					}
 				}
 			})

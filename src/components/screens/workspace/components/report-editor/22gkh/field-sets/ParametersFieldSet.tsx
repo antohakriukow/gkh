@@ -1,9 +1,13 @@
 import {
+	advancedElevatorOptions,
+	advancedGasOptions,
+	advancedRenovationOptions,
+	advancedStoveOptions,
 	budgetFinancingOptions,
 	elevatorOptions,
 	gasOptions,
-	hasOneHouseOptions,
 	housesAreSameOptions,
+	housesCountOptions,
 	renovationCostsOptions,
 	renovationOptions,
 	stoveOptions
@@ -32,8 +36,10 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 	const isRenovationBoth = watch('data.renovation.status') === 'both'
 	const isBudgetFinancing = watch('data.budgetFinancing.status') === 'yes'
 	const isRenovationCosts = watch('data.renovationCosts.status') === 'yes'
-	const isSimpleModeOn =
-		watch('data.settings.hasOneHouse') || watch('data.settings.housesAreSame')
+	const hasOneHouse = watch('data.settings.housesCount') === 'one'
+	const isAdvancedModeOn =
+		watch('data.settings.housesCount') === 'many' &&
+		watch('data.settings.housesAreSame') === 'no'
 
 	return (
 		<>
@@ -43,16 +49,18 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 			<div className={styles.fieldSet}>
 				<ReportSelect
 					control={control}
-					fieldName='data.settings.hasOneHouse'
+					fieldName='data.settings.housesCount'
 					placeholder='Количество домов в управлении'
-					options={hasOneHouseOptions}
+					options={housesCountOptions}
 				/>
-				<ReportSelect
-					control={control}
-					fieldName='data.settings.housesAreSame'
-					placeholder='Количество домов в управлении'
-					options={housesAreSameOptions}
-				/>
+				{!hasOneHouse && (
+					<ReportSelect
+						control={control}
+						fieldName='data.settings.housesAreSame'
+						placeholder='Единая методика начисления для всех домов'
+						options={housesAreSameOptions}
+					/>
+				)}
 				<ReportFieldNumber
 					control={control}
 					fieldName='data.area.residentialArea'
@@ -83,7 +91,9 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						control={control}
 						fieldName='data.elevator.status'
 						placeholder='Наличие лифтов'
-						options={elevatorOptions}
+						options={
+							isAdvancedModeOn ? advancedElevatorOptions : elevatorOptions
+						}
 					/>
 					{isElevatorBoth && (
 						<ReportFieldNumber
@@ -112,7 +122,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						control={control}
 						fieldName='data.stove.status'
 						placeholder='Тип плит'
-						options={stoveOptions}
+						options={isAdvancedModeOn ? advancedStoveOptions : stoveOptions}
 					/>
 					{isStoveBoth && (
 						<ReportFieldNumber
@@ -141,7 +151,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						control={control}
 						fieldName='data.gas.status'
 						placeholder='УО начисляет плату за газ'
-						options={gasOptions}
+						options={isAdvancedModeOn ? advancedGasOptions : gasOptions}
 					/>
 					{isGasBoth && (
 						<ReportFieldNumber
@@ -180,7 +190,9 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						control={control}
 						fieldName='data.renovation.status'
 						placeholder='УО начисляет капремонт'
-						options={renovationOptions}
+						options={
+							isAdvancedModeOn ? advancedRenovationOptions : renovationOptions
+						}
 					/>
 					{isRenovationBoth && (
 						<ReportFieldNumber

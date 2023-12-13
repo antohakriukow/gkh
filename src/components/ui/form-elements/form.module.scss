@@ -27,7 +27,7 @@
 }
 
 .field {
-	@apply mb-1 text-left w-full;
+	@apply mb-1 text-left w-full flex flex-row;
 
 	input {
 		@apply w-full m-0 px-0 text-primary-700 text-lg border-primary-700 focus:ring-0;
@@ -51,14 +51,6 @@
 
 .inputContainer {
 	@apply flex flex-col items-center justify-start;
-}
-
-.string {
-	@apply flex flex-row mb-0;
-
-	.stringLabel {
-		@apply flex flex-row items-center justify-between w-full mb-0;
-	}
 
 	input {
 		@apply px-2;
@@ -67,6 +59,27 @@
 
 		border: 1px solid rgb(204, 204, 204);
 		border-radius: 4px;
+	}
+}
+
+.checkboxContainer {
+	@apply flex flex-col items-center justify-start w-10;
+
+	input {
+		@apply px-2 cursor-pointer;
+		width: 34px;
+		height: 34px;
+
+		border: 1px solid rgb(204, 204, 204);
+		border-radius: 4px;
+	}
+}
+
+.string {
+	@apply flex flex-row mb-0;
+
+	.stringLabel {
+		@apply flex flex-row items-center justify-between w-full mb-0;
 	}
 }
 
@@ -103,7 +116,7 @@
 		}
 
 		.custom-select__option--is-selected {
-			background-color: $secondary-500;
+			background-color: $secondary-500 !important;
 		}
 
 		.custom-select__value-container {

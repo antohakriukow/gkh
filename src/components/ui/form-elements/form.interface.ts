@@ -9,6 +9,7 @@ export interface IFieldProps {
 	error?: FieldError | undefined
 	color?: 'danger' | 'success'
 	isString?: boolean
+	isSwitch?: boolean
 }
 
 type TypeInputPropsField = InputHTMLAttributes<HTMLInputElement> & IFieldProps

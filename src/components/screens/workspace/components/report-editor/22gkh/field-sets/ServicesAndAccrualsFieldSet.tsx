@@ -1,4 +1,5 @@
 import { accrualsFieldsData } from './mocks/accruals.fields.mock'
+import { servicesFieldsData } from './mocks/services.fields.mock'
 import { FC, useCallback, useEffect, useState } from 'react'
 
 import { IServices } from '~/shared/types/report22gkh.interface'
@@ -6,21 +7,27 @@ import { IServices } from '~/shared/types/report22gkh.interface'
 import { IReportForm } from '../../report-editor.interface'
 import styles from '../ReportForm.module.scss'
 import ReportFieldNumber from '../fields/ReportFieldNumber'
+import ReportFieldNumberWithSwitch from '../fields/ReportFieldNumberWithSwitch'
 
-interface IAccrualsFieldSet extends IReportForm {}
+interface IServicesAndAccrualsFieldSet extends IReportForm {}
 
 interface IFieldData {
 	name: string
 	placeholder: string
 }
 
-const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
+const ServicesAndAccrualsFieldSet: FC<IServicesAndAccrualsFieldSet> = ({
 	register,
 	control,
-	formState,
-	watch
+	watch,
+	setValue,
+	formState
 }) => {
 	const [providedServices, setProvidedServices] = useState<IFieldData[]>([])
+
+	const isAdvancedModeOn =
+		watch('data.settings.housesCount') === 'many' &&
+		watch('data.settings.housesAreSame') === 'no'
 
 	const errors = formState?.errors
 	const isRenovationRequired = watch('data.renovation.status') !== 'no'
@@ -28,25 +35,38 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 
 	const checkServices = useCallback(() => {
 		if (!settingsServices) return []
-		const result = accrualsFieldsData.filter(field => {
+		const response = accrualsFieldsData.filter(field => {
 			const serviceKey = field.name.split('.').pop() as keyof IServices
 			const service = settingsServices[serviceKey]
 
 			return service ? service.status : false
 		})
-		setProvidedServices(result)
+		setProvidedServices(response)
 	}, [settingsServices])
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			checkServices()
-		}, 500)
-
-		return () => clearInterval(interval)
-	}) // TODO: Убрать костыль, сделать нормально
+		checkServices()
+	}, [settingsServices, checkServices])
 
 	return (
 		<>
+			<h3 className={styles.blockTitle}>
+				Действующие услуги {isAdvancedModeOn ? 'и площади' : ''}
+			</h3>
+			<div className={styles.fieldSet}>
+				{servicesFieldsData.map(field => (
+					<ReportFieldNumberWithSwitch
+						key={field.name}
+						control={control}
+						fieldName={field.name}
+						switcherName={field.switcherName}
+						placeholder={field.placeholder}
+						register={register}
+						watch={watch}
+						setValue={setValue}
+					/>
+				))}
+			</div>
 			<h3 className={styles.blockTitle}>Начисления ЖКУ с 01.01</h3>
 			<div className={styles.fieldSet}>
 				{providedServices.map(field => (
@@ -77,4 +97,4 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 	)
 }
 
-export default AccrualsFieldSet
+export default ServicesAndAccrualsFieldSet

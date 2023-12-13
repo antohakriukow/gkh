@@ -1,45 +1,54 @@
-export const simpleElevatorOptions = [
-	{ label: 'Есть', value: 'yes' },
+export const housesCountOptions = [
+	{ label: 'Один', value: 'one' },
+	{ label: 'Несколько', value: 'many' }
+]
+
+export const housesAreSameOptions = [
+	{ label: 'Да', value: 'yes' },
 	{ label: 'Нет', value: 'no' }
 ]
 
 export const elevatorOptions = [
 	{ label: 'Есть', value: 'yes' },
+	{ label: 'Нет', value: 'no' }
+]
+
+export const advancedElevatorOptions = [
+	{ label: 'Есть', value: 'yes' },
 	{ label: 'Нет', value: 'no' },
 	{ label: 'Оба варианта', value: 'both' }
 ]
 
-export const simpleStoveOptions = [
+export const stoveOptions = [
 	{ label: 'Электро-', value: 'electro' },
 	{ label: 'Газовые', value: 'gas' }
 ]
 
-export const stoveOptions = [
+export const advancedStoveOptions = [
 	{ label: 'Электро-', value: 'electro' },
 	{ label: 'Газовые', value: 'gas' },
 	{ label: 'Оба варианта', value: 'both' }
 ]
 
-export const simpleGasOptions = [
+export const gasOptions = [
 	{ label: 'Нет', value: 'none' },
 	{ label: 'Сетевой', value: 'network' },
 	{ label: 'Сжиженный', value: 'liquid' }
 ]
 
-export const gasOptions = [
+export const advancedGasOptions = [
 	{ label: 'Нет', value: 'none' },
 	{ label: 'Сетевой', value: 'network' },
 	{ label: 'Сжиженный', value: 'liquid' },
 	{ label: 'Оба варианта', value: 'both' }
 ]
 
-export const simpleRenovationOptions = [
+export const renovationOptions = [
 	{ label: 'Да', value: 'yes' },
-	{ label: 'Нет', value: 'no' },
-	{ label: 'Оба варианта', value: 'both' }
+	{ label: 'Нет', value: 'no' }
 ]
 
-export const renovationOptions = [
+export const advancedRenovationOptions = [
 	{ label: 'Да', value: 'yes' },
 	{ label: 'Нет', value: 'no' },
 	{ label: 'Оба варианта', value: 'both' }
@@ -53,14 +62,4 @@ export const budgetFinancingOptions = [
 export const renovationCostsOptions = [
 	{ label: 'Да', value: 'yes' },
 	{ label: 'Нет', value: 'no' }
-]
-
-export const hasOneHouseOptions = [
-	{ label: 'Один', value: true },
-	{ label: 'Несколько', value: false }
-]
-
-export const housesAreSameOptions = [
-	{ label: 'Да', value: true },
-	{ label: 'Нет', value: false }
 ]

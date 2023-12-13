@@ -8,7 +8,7 @@ import { convertXmlAttributes } from '~/utils/string.utils'
 
 const _prepareToXML = (report: IReport) => {
 	if (!report.finalReport) return
-	console.log('report.finalReport: ', report.finalReport)
+
 	return {
 		_name: 'report',
 		_attrs: {
@@ -18,7 +18,7 @@ const _prepareToXML = (report: IReport) => {
 			year: report.year,
 			period: `040${report.period}`,
 			version: '21-11-2022',
-			formatVersion: '1.3' //TODO: by converting to XML convert formatVersion to format-version
+			formatVersion: '1.3'
 		},
 		_content: {
 			_name: 'title',

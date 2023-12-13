@@ -3,6 +3,7 @@ import IncomeFieldSet from './field-sets/IncomeFieldSet'
 import OrganizationDebtsFieldSet from './field-sets/OrganizationDebtsFieldSet'
 import ParametersFieldSet from './field-sets/ParametersFieldSet'
 import ResidentsDebtsFieldSet from './field-sets/ResidentsDebtsFieldSet'
+import ServicesFieldSet from './field-sets/ServicesFieldSet'
 import { FC } from 'react'
 
 import { IReportForm } from '../report-editor.interface'
@@ -13,14 +14,16 @@ const ReportForm: FC<IReportForm> = ({
 	register,
 	control,
 	formState,
+	setValue,
 	watch
 }) => {
 	const fieldSets = [
 		ParametersFieldSet,
+		ServicesFieldSet,
+		AccrualsFieldSet,
 		IncomeFieldSet,
 		ResidentsDebtsFieldSet,
-		OrganizationDebtsFieldSet,
-		AccrualsFieldSet
+		OrganizationDebtsFieldSet
 	]
 
 	return (
@@ -31,6 +34,7 @@ const ReportForm: FC<IReportForm> = ({
 					register={register}
 					control={control}
 					formState={formState}
+					setValue={setValue}
 					watch={watch}
 				/>
 			))}
