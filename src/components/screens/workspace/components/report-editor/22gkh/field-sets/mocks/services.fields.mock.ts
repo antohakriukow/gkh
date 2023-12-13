@@ -20,11 +20,11 @@ export const servicesFieldsData = [
 		name: 'data.settings.services.heat.area',
 		placeholder: 'Теплоснабжение'
 	},
-	// { 
-	// 	switcherName: 'data.settings.services.gas.status',
-	// 	name: 'data.settings.services.gas.area',
-	// 	placeholder: 'Газоснабжение'
-	// },
+	{ 
+		switcherName: 'data.settings.services.gas.status',
+		name: 'data.settings.services.gas.area',
+		placeholder: 'Газоснабжение'
+	},
 	{ 
 		switcherName: 'data.settings.services.electricity.status',
 		name: 'data.settings.services.electricity.area',

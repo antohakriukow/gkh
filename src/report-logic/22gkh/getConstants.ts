@@ -4,18 +4,21 @@ import {
 	IIncome,
 	IOrganizationDebts,
 	IRenovationCosts,
-	IResidentsDebts
+	IResidentsDebts,
+	IServices,
+	ISettings
 } from '~/shared/types/report22gkh.interface'
 import { IReport } from '~/shared/types/report.interface'
 
 import { divideAndRoundNumbers } from '~/utils/number.utils'
 import {
 	calculatePreviousPayments,
-	distributeValues
+	distributeValues,
+	generateServicesArea
 } from '~/utils/report.utils'
 
 export const getConstants = (report: IReport) => {
-	const { area, elevator, gas, stove, renovation } = report?.data
+	const { area, elevator, gas, stove, renovation, settings } = report?.data
 	const accruals = divideAndRoundNumbers(report.data.accruals) as IAccruals
 	const income = divideAndRoundNumbers(report.data.income) as IIncome
 	const residentsDebts = divideAndRoundNumbers(
@@ -32,6 +35,9 @@ export const getConstants = (report: IReport) => {
 	) as IRenovationCosts
 
 	const monetizedArea = area.residentialArea + area.nonResidentialArea
+
+	const calculatedAreas = generateServicesArea(settings, monetizedArea)
+
 	const renovationArea =
 		renovation.status === 'yes'
 			? monetizedArea
@@ -237,7 +243,7 @@ export const getConstants = (report: IReport) => {
 	const row76 = typicalRow(
 		accruals.electricity,
 		payments.electricity,
-		monetizedArea
+		calculatedAreas.electricity
 	)
 
 	const rowGas = {
@@ -312,6 +318,8 @@ export const getConstants = (report: IReport) => {
 	}
 
 	return {
+		settings,
+		calculatedAreas,
 		area,
 		monetizedArea,
 		renovationArea,

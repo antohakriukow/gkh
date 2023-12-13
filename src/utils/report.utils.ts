@@ -1,3 +1,4 @@
+import { IServices, ISettings } from '~/shared/types/report22gkh.interface'
 import { IReport, TypeReport } from '~/shared/types/report.interface'
 
 export const convertTypeReport = (type: TypeReport) =>
@@ -156,4 +157,20 @@ export const distributeValues = (
 	}
 
 	return resultArray
+}
+
+export const generateServicesArea = (
+	settings: ISettings,
+	defaultArea: number
+): { [key: string]: number } => {
+	const servicesArea: { [key: string]: number } = {}
+
+	if (settings.services) {
+		Object.keys(settings.services).forEach(key => {
+			const service = settings.services![key as keyof IServices]
+			servicesArea[key] = service && service.area ? service.area : defaultArea
+		})
+	}
+
+	return servicesArea
 }

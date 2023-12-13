@@ -9,6 +9,8 @@ import {
 
 export const generate22gkhReport = (report: IReport) => {
 	const {
+		settings,
+		calculatedAreas,
 		area,
 		monetizedArea,
 		renovationArea,
@@ -136,14 +138,22 @@ export const generate22gkhReport = (report: IReport) => {
 		69: typicalRow(accrualsCommon, commonPayments, monetizedArea),
 		70: typicalRow(accruals.renovation, income.renovation, renovationArea),
 		71: typicalRow(accrualsCommunal, communalPayments),
-		72: typicalRow(accruals.coldWater, payments.coldWater, monetizedArea),
+		72: typicalRow(
+			accruals.coldWater,
+			payments.coldWater,
+			calculatedAreas.coldWater
+		),
 		73: typicalRow(
 			accruals.waterDisposal,
 			payments.waterDisposal,
-			monetizedArea
+			calculatedAreas.waterDisposal
 		),
-		74: typicalRow(accruals.hotWater, payments.hotWater, monetizedArea),
-		75: typicalRow(accruals.heat, payments.heat, monetizedArea),
+		74: typicalRow(
+			accruals.hotWater,
+			payments.hotWater,
+			calculatedAreas.hotWater
+		),
+		75: typicalRow(accruals.heat, payments.heat, calculatedAreas.heat),
 		76: row76,
 		77: distributeElectricity(77),
 		78: distributeElectricity(78),
@@ -155,7 +165,7 @@ export const generate22gkhReport = (report: IReport) => {
 		84: typicalRow(
 			accruals.solidWasteRemoval,
 			payments.solidWasteRemoval,
-			monetizedArea
+			calculatedAreas.solidWasteRemoval
 		),
 		85: {
 			3: totalAccruals + accruals.renovation,
