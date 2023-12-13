@@ -62,7 +62,7 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 					<ReportFieldNumber
 						control={control}
 						fieldName='data.accruals.renovation'
-						placeholder='Взносы на капремонт'
+						placeholder='Взносы на капремонт, руб'
 						register={register}
 						error={
 							isRenovationRequired

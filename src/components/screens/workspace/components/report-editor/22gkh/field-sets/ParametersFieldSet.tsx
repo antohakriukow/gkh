@@ -64,7 +64,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 				<ReportFieldNumber
 					control={control}
 					fieldName='data.area.residentialArea'
-					placeholder='Площадь жилых помещений'
+					placeholder='Площадь жилых помещений, м2'
 					register={register}
 					error={errors?.data?.area?.residentialArea}
 					isRequired
@@ -72,7 +72,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 				<ReportFieldNumber
 					control={control}
 					fieldName='data..area.nonResidentialArea'
-					placeholder='Площадь нежилых помещений'
+					placeholder='Площадь нежилых помещений, м2'
 					register={register}
 					error={errors?.data?.area?.residentialArea}
 					isRequired
@@ -80,7 +80,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 				<ReportFieldNumber
 					control={control}
 					fieldName='data.area.commonArea'
-					placeholder='Площадь МОП'
+					placeholder='Площадь МОП, м2'
 					register={register}
 					error={errors?.data?.area?.residentialArea}
 					isRequired
@@ -99,7 +99,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						<ReportFieldNumber
 							control={control}
 							fieldName='data.elevator.areaWith'
-							placeholder='Площадь домов с лифтами'
+							placeholder='Площадь домов с лифтами, м2'
 							register={register}
 							error={errors?.data?.elevator?.areaWith}
 							isRequired={isElevatorBoth}
@@ -109,7 +109,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						<ReportFieldNumber
 							control={control}
 							fieldName='data.elevator.areaWithout'
-							placeholder='Площадь домов без лифтов'
+							placeholder='Площадь домов без лифтов, м2'
 							register={register}
 							error={errors?.data?.elevator?.areaWithout}
 							isRequired={isElevatorBoth}
@@ -128,7 +128,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						<ReportFieldNumber
 							control={control}
 							fieldName='data.stove.areaElectro'
-							placeholder='Площадь домов с электроплитами'
+							placeholder='Площадь домов с электроплитами, м2'
 							register={register}
 							error={errors?.data?.stove?.areaElectro}
 							isRequired={isStoveBoth}
@@ -138,7 +138,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						<ReportFieldNumber
 							control={control}
 							fieldName='data.stove.areaGas'
-							placeholder='Площадь домов с газовыми плитами'
+							placeholder='Площадь домов с газовыми плитами, м2'
 							register={register}
 							error={errors?.data?.stove?.areaGas}
 							isRequired={isStoveBoth}
@@ -157,7 +157,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						<ReportFieldNumber
 							control={control}
 							fieldName='data.gas.areaNone'
-							placeholder='Площадь домов без газа'
+							placeholder='Площадь домов без газа, м2'
 							register={register}
 							error={errors?.data?.gas?.areaNone}
 							isRequired={isGasBoth}
@@ -167,7 +167,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						<ReportFieldNumber
 							control={control}
 							fieldName='data.gas.areaNetwork'
-							placeholder='Площадь домов с сетевым газом'
+							placeholder='Площадь домов с сетевым газом, м2'
 							register={register}
 							error={errors?.data?.gas?.areaNetwork}
 							isRequired={isGasBoth}
@@ -177,7 +177,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						<ReportFieldNumber
 							control={control}
 							fieldName='data.gas.areaLiquid'
-							placeholder='Площадь домов со сжиженным газом'
+							placeholder='Площадь домов со сжиженным газом, м2'
 							register={register}
 							error={errors?.data?.gas?.areaLiquid}
 							isRequired={isGasBoth}
@@ -198,7 +198,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						<ReportFieldNumber
 							control={control}
 							fieldName='data.renovation.areaWith'
-							placeholder='Площадь домов, которым УО начисляет капремонт'
+							placeholder='Площадь домов, которым УО начисляет капремонт, м2'
 							register={register}
 							error={errors?.data?.renovation?.areaWith}
 							isRequired={isRenovationBoth}
@@ -208,7 +208,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						<ReportFieldNumber
 							control={control}
 							fieldName='data.renovation.areaWithout'
-							placeholder='Площадь домов, которым УО не начисляет капремонт'
+							placeholder='Площадь домов, которым УО не начисляет капремонт, м2'
 							register={register}
 							error={errors?.data?.renovation?.areaWithout}
 							isRequired={isRenovationBoth}
@@ -228,7 +228,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 							<ReportFieldNumber
 								control={control}
 								fieldName='data.renovationCosts.totalAmount'
-								placeholder='Сумма затрат на капитальный ремонт'
+								placeholder='Сумма затрат на капитальный ремонт, руб'
 								register={register}
 								error={errors?.data?.renovationCosts?.totalAmount}
 								isRequired={isRenovationCosts}
@@ -238,7 +238,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 							<ReportFieldNumber
 								control={control}
 								fieldName='data.renovationCosts.budgetTransfers'
-								placeholder='В том числе трансферы из бюджета'
+								placeholder='В том числе трансферы из бюджета, руб'
 								register={register}
 							/>
 						)}
@@ -256,7 +256,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						<ReportFieldNumber
 							control={control}
 							fieldName='data.budgetFinancing.totalAmount'
-							placeholder='Сумма трансферов из бюджета'
+							placeholder='Сумма трансферов из бюджета, руб'
 							register={register}
 							error={errors?.data?.budgetFinancing?.totalAmount}
 							isRequired={isBudgetFinancing}
@@ -266,7 +266,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						<ReportFieldNumber
 							control={control}
 							fieldName='data.budgetFinancing.tariffCompensation'
-							placeholder='В том числе компенсация разницы в тарифах'
+							placeholder='В том числе компенсация разницы в тарифах, руб'
 							register={register}
 						/>
 					)}

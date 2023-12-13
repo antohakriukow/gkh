@@ -40,7 +40,7 @@ const OrganizationDebtsFieldSet: FC<IOrganizationDebtsFieldSet> = ({
 					<ReportFieldNumber
 						control={control}
 						fieldName='data.organizationDebts.gas'
-						placeholder='Газоснабжение'
+						placeholder='Газоснабжение, руб'
 						register={register}
 						error={errors?.data?.organizationDebts?.gas}
 					/>
