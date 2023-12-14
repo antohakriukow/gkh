@@ -9,7 +9,6 @@ import {
 
 export const generate22gkhReport = (report: IReport) => {
 	const {
-		settings,
 		calculatedAreas,
 		area,
 		monetizedArea,
@@ -22,29 +21,21 @@ export const generate22gkhReport = (report: IReport) => {
 		totalAccruals,
 
 		payments,
-		currentYearPayments,
-		previousPeriodPayments,
 		communalPayments,
 		commonPayments,
 		commonAndMaintenancePayments,
 
 		debts,
-		residentsDebts,
 		maintenanceDebts,
 		communalDebts,
 		commonDebts,
-		currentYearDebts,
-		previousPeriodDebts,
 		organizationDebts,
 		totalOrganizationDebts,
 
 		income,
-		elevator,
-		gas,
-		stove,
-		renovation,
 		budgetFinancing,
 		renovationCosts,
+		natural,
 
 		typicalRow,
 		row66,
@@ -159,9 +150,9 @@ export const generate22gkhReport = (report: IReport) => {
 		78: distributeElectricity(78),
 		79: distributeGas(79),
 		80: distributeGas(80),
-		81: {}, // Добавить в форму "В том числе в баллонах". Возможно?
-		82: {}, // Добавить уголь. Возможно?
-		83: {}, // Добавить дрова. Возможно?
+		81: {}, // TODO: Добавить в форму "В том числе в баллонах".
+		82: {}, // TODO: Добавить уголь.
+		83: {}, // TODO: Добавить дрова.
 		84: typicalRow(
 			accruals.solidWasteRemoval,
 			payments.solidWasteRemoval,
@@ -182,7 +173,24 @@ export const generate22gkhReport = (report: IReport) => {
 		}
 	})
 
-	const sectionFour = {}
+	const sectionFour = removeZeroAndUndefined({
+		86: accruals.electricityCommon
+			? {
+					4: natural.electricityCommon,
+					6: area.commonArea ? area.commonArea : 0,
+					7: calculatedAreas.electricity
+						? calculatedAreas.electricity
+						: monetizedArea
+			  }
+			: {},
+		87: accruals.heat
+			? {
+					3: natural.heat,
+					5: calculatedAreas.heat ? calculatedAreas.heat : area.residentialArea,
+					7: calculatedAreas.heat ? calculatedAreas.heat : monetizedArea
+			  }
+			: {}
+	})
 
 	return { 1: sectionOne, 2: sectionTwo, 3: sectionThree, 4: sectionFour }
 }

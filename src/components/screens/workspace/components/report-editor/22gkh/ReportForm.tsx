@@ -1,5 +1,6 @@
 import AccrualsFieldSet from './field-sets/AccrualsFieldSet'
 import IncomeFieldSet from './field-sets/IncomeFieldSet'
+import NaturalFieldSet from './field-sets/NaturalFieldSet'
 import OrganizationDebtsFieldSet from './field-sets/OrganizationDebtsFieldSet'
 import ParametersFieldSet from './field-sets/ParametersFieldSet'
 import ResidentsDebtsFieldSet from './field-sets/ResidentsDebtsFieldSet'
@@ -23,7 +24,8 @@ const ReportForm: FC<IReportForm> = ({
 		AccrualsFieldSet,
 		IncomeFieldSet,
 		ResidentsDebtsFieldSet,
-		OrganizationDebtsFieldSet
+		OrganizationDebtsFieldSet,
+		NaturalFieldSet
 	]
 
 	return (

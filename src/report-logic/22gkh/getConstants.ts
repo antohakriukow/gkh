@@ -4,9 +4,7 @@ import {
 	IIncome,
 	IOrganizationDebts,
 	IRenovationCosts,
-	IResidentsDebts,
-	IServices,
-	ISettings
+	IResidentsDebts
 } from '~/shared/types/report22gkh.interface'
 import { IReport } from '~/shared/types/report.interface'
 
@@ -18,7 +16,8 @@ import {
 } from '~/utils/report.utils'
 
 export const getConstants = (report: IReport) => {
-	const { area, elevator, gas, stove, renovation, settings } = report?.data
+	const { area, elevator, gas, stove, renovation, settings, natural } =
+		report?.data
 	const accruals = divideAndRoundNumbers(report.data.accruals) as IAccruals
 	const income = divideAndRoundNumbers(report.data.income) as IIncome
 	const residentsDebts = divideAndRoundNumbers(
@@ -149,23 +148,6 @@ export const getConstants = (report: IReport) => {
 	}
 
 	//prettier-ignore
-	const currentYearDebts = {
-		coldWater: payments.coldWater < accruals.coldWater ? accruals.coldWater - payments.coldWater : 0,
-		hotWater: payments.hotWater < accruals.hotWater ? accruals.hotWater - payments.hotWater : 0,
-		waterDisposal: payments.waterDisposal < accruals.waterDisposal ? accruals.waterDisposal - payments.waterDisposal : 0,
-		heat: payments.heat < accruals.heat ? accruals.heat - payments.heat : 0,
-		electricity: payments.electricity < accruals.electricity ? accruals.electricity - payments.electricity : 0,
-		gas: payments.gas < accruals.gas ? accruals.gas - payments.gas : 0,
-		solidWasteRemoval: payments.solidWasteRemoval < accruals.solidWasteRemoval ? accruals.solidWasteRemoval - payments.solidWasteRemoval : 0,
-		coldWaterCommon: payments.coldWaterCommon < accruals.coldWaterCommon ? accruals.coldWaterCommon - payments.coldWaterCommon : 0,
-		hotWaterCommon: payments.hotWaterCommon < accruals.hotWaterCommon ? accruals.hotWaterCommon - payments.hotWaterCommon : 0,
-		waterDisposalCommon: payments.waterDisposalCommon < accruals.waterDisposalCommon ? accruals.waterDisposalCommon - payments.waterDisposalCommon : 0,
-		electricityCommon: payments.electricityCommon < accruals.electricityCommon ? accruals.electricityCommon - payments.electricityCommon : 0,
-		management: payments.management < accruals.management ? accruals.management - payments.management : 0,
-		maintenance: payments.maintenance < accruals.maintenance ? accruals.maintenance - payments.maintenance : 0
-	}
-
-	//prettier-ignore
 	let previousPeriodDebts = {
 		coldWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldWater),
 		hotWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.hotWater),
@@ -178,6 +160,7 @@ export const getConstants = (report: IReport) => {
 		hotWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.hotWaterCommon),
 		waterDisposalCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.waterDisposalCommon),
 		electricityCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.electricityCommon),
+
 		management: Math.round((residentsDebts.housing / totalAccruals) * accruals.management),
 		maintenance: 0
 	}
@@ -318,7 +301,6 @@ export const getConstants = (report: IReport) => {
 	}
 
 	return {
-		settings,
 		calculatedAreas,
 		area,
 		monetizedArea,
@@ -331,29 +313,21 @@ export const getConstants = (report: IReport) => {
 		totalAccruals,
 
 		payments,
-		currentYearPayments,
-		previousPeriodPayments,
 		communalPayments,
 		commonPayments,
 		commonAndMaintenancePayments,
 
 		debts,
-		residentsDebts,
 		maintenanceDebts,
 		communalDebts,
 		commonDebts,
-		currentYearDebts,
-		previousPeriodDebts,
 		organizationDebts,
 		totalOrganizationDebts,
 
 		income,
-		elevator,
-		gas,
-		stove,
-		renovation,
 		budgetFinancing,
 		renovationCosts,
+		natural,
 
 		typicalRow,
 		row66,

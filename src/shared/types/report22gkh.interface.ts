@@ -77,6 +77,11 @@ export interface IRenovationCosts {
 	budgetTransfers: number
 }
 
+export interface INatural {
+	electricityCommon: number
+	heat: number
+}
+
 export interface IIncome {
 	housing: number
 	renovation: number
@@ -128,6 +133,7 @@ export interface IReport22gkhData {
 	residentsDebts: IResidentsDebts
 	organizationDebts: IOrganizationDebts
 	accruals: IAccruals
+	natural: INatural
 	createdAt: Date
 	updatedAt: Date
 	ownerId: string
