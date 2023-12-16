@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, UseFormSetValue } from 'react-hook-form'
-import { downloadXML } from '~/report-logic/22gkh/downloadXML'
 import { generate22gkhReport } from '~/report-logic/22gkh/generate22gkhReport'
+import { downloadPDF } from '~/report-logic/22gkh/pdf/pdf.download'
+import { downloadXML } from '~/report-logic/22gkh/xml/xml.download'
 
 import { useActions } from '~/hooks/useActions'
 import { useAuth } from '~/hooks/useAuth'
@@ -95,8 +96,7 @@ export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 				user.uid,
 				currentReport._id.toString()
 			)
-
-			console.log(report)
+			downloadPDF(report)
 		} catch (error) {
 			// console.log(error)
 		} finally {

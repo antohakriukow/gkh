@@ -1,4 +1,4 @@
-import { accrualsFieldsData } from './mocks/accruals.fields.mock'
+import { accrualsFieldsData } from './data/accruals.fields.data'
 import { FC, useCallback, useEffect, useState } from 'react'
 
 import { IServices } from '~/shared/types/report22gkh.interface'
@@ -58,6 +58,22 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 						register={register}
 					/>
 				))}
+				<ReportFieldNumber
+					control={control}
+					fieldName='data.accruals.management'
+					placeholder='Управление МКД, руб'
+					register={register}
+					error={errors?.data?.accruals?.management}
+					isRequired={isRenovationRequired}
+				/>
+				<ReportFieldNumber
+					control={control}
+					fieldName='data.accruals.maintenance'
+					placeholder='Содержание и текущий ремонт ОИ, руб'
+					register={register}
+					error={errors?.data?.accruals?.maintenance}
+					isRequired={isRenovationRequired}
+				/>
 				{isRenovationRequired && (
 					<ReportFieldNumber
 						control={control}
@@ -66,7 +82,7 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 						register={register}
 						error={
 							isRenovationRequired
-								? errors?.data?.income?.renovation
+								? errors?.data?.accruals?.renovation
 								: undefined
 						}
 						isRequired={isRenovationRequired}

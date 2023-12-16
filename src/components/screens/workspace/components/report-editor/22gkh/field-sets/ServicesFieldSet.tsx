@@ -1,4 +1,4 @@
-import { servicesFieldsData } from './mocks/services.fields.mock'
+import { servicesFieldsData } from './data/services.fields.data'
 import { FC } from 'react'
 
 import { IReportForm } from '../../report-editor.interface'

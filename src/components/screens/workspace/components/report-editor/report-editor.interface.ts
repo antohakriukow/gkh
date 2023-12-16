@@ -36,7 +36,7 @@ export interface IReportForm {
 
 // type ReportFieldNames = PathImpl<IReport, keyof IReport>
 
-export interface IReportFieldNumber {
+export interface IReportField {
 	register: UseFormRegister<IReport>
 	control: Control<IReport>
 	placeholder?: string
@@ -46,7 +46,7 @@ export interface IReportFieldNumber {
 	isRequired?: boolean
 }
 
-export interface IReportFieldNumberWithSwitch extends IReportFieldNumber {
+export interface IReportFieldWithSwitch extends IReportField {
 	watch: UseFormWatch<IReport>
 	setValue: UseFormSetValue<IReport>
 }

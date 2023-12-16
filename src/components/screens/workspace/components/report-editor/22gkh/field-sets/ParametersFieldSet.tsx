@@ -11,13 +11,14 @@ import {
 	renovationCostsOptions,
 	renovationOptions,
 	stoveOptions
-} from './mocks/parameters.select-options.mock'
+} from './data/parameters.select-options.data'
 import { FC } from 'react'
 
 import { IReportForm } from '../../report-editor.interface'
 import styles from '../ReportForm.module.scss'
 import FieldGroup from '../fields/FieldGroup'
 import ReportFieldNumber from '../fields/ReportFieldNumber'
+import ReportFieldText from '../fields/ReportFieldText'
 import ReportSelect from '../fields/ReportSelect'
 
 interface IParametersFieldSet extends IReportForm {}
@@ -271,6 +272,23 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						/>
 					)}
 				</FieldGroup>
+
+				<ReportFieldText
+					control={control}
+					fieldName='company.email'
+					placeholder='Email для указания в отчете'
+					register={register}
+					error={errors?.company?.email}
+					isRequired
+				/>
+				<ReportFieldText
+					control={control}
+					fieldName='company.phone'
+					placeholder='Телефон для указания в отчете'
+					register={register}
+					error={errors?.company?.phone}
+					isRequired
+				/>
 			</div>
 		</>
 	)

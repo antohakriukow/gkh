@@ -85,8 +85,14 @@ export const getReportTitle = (data: IReport) => [
 		_name: 'item',
 		_attrs: { name: 'responsible_fio', value: data.company.leader_name }
 	},
-	{ _name: 'item', _attrs: { name: 'phone', value: 'NEED DATA' } },
-	{ _name: 'item', _attrs: { name: 'mail', value: 'NEED DATA' } }
+	{
+		_name: 'item',
+		_attrs: { name: 'phone', value: data.company.phone.toString() }
+	},
+	{
+		_name: 'item',
+		_attrs: { name: 'mail', value: data.company.email.toString() }
+	}
 ]
 
 export const readReportSchema = (schema?: Object) => {

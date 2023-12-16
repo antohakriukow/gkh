@@ -64,6 +64,13 @@ export const getConstants = (report: IReport) => {
 
 	const totalAccruals = accrualsCommunal + accrualsMaintenance
 
+	console.log(
+		'accruals.management, accruals.maintenance, accrualsCommon: ',
+		accruals.management,
+		accruals.maintenance,
+		accrualsCommon
+	)
+
 	const totalOrganizationDebts = Object.values(organizationDebts).reduce(
 		(sum, value) => sum + value,
 		0

@@ -22,9 +22,9 @@ const ReportEditor: FC = () => {
 		onSubmit,
 		generateReport,
 		downloadReportXML,
+		downloadReportPDF,
 		currentReport,
-		closeReport,
-		downloadReportPDF
+		closeReport
 	} = useReportEditor(setValue)
 
 	const isGenerated = !!currentReport?.finalReport

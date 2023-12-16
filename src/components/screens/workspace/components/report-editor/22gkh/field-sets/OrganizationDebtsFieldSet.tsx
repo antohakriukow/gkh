@@ -1,4 +1,4 @@
-import { organizationDebtsFieldsData } from './mocks/organization-debts.fields.mock'
+import { organizationDebtsFieldsData } from './data/organization-debts.fields.data'
 import { FC } from 'react'
 import { FieldError } from 'react-hook-form'
 

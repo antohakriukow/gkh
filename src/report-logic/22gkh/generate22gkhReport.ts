@@ -174,22 +174,26 @@ export const generate22gkhReport = (report: IReport) => {
 	})
 
 	const sectionFour = removeZeroAndUndefined({
-		86: accruals.electricityCommon
-			? {
-					4: natural.electricityCommon,
-					6: area.commonArea ? area.commonArea : 0,
-					7: calculatedAreas.electricity
-						? calculatedAreas.electricity
-						: monetizedArea
-			  }
-			: {},
-		87: accruals.heat
-			? {
-					3: natural.heat,
-					5: calculatedAreas.heat ? calculatedAreas.heat : area.residentialArea,
-					7: calculatedAreas.heat ? calculatedAreas.heat : monetizedArea
-			  }
-			: {}
+		86:
+			!!accruals.electricityCommon && !!natural && !!natural.electricityCommon
+				? {
+						4: !!natural.electricityCommon ? natural.electricityCommon : 0,
+						6: area.commonArea ? area.commonArea : 0,
+						7: calculatedAreas.electricity
+							? calculatedAreas.electricity
+							: monetizedArea
+				  }
+				: {},
+		87:
+			!!accruals.heat && !!natural && !!natural.heat
+				? {
+						3: natural.heat,
+						5: calculatedAreas.heat
+							? calculatedAreas.heat
+							: area.residentialArea,
+						7: calculatedAreas.heat ? calculatedAreas.heat : monetizedArea
+				  }
+				: {}
 	})
 
 	return { 1: sectionOne, 2: sectionTwo, 3: sectionThree, 4: sectionFour }

@@ -4,10 +4,10 @@ import { Checkbox, Field } from '~/components/ui'
 
 import { IReport } from '~/shared/types/report.interface'
 
-import { IReportFieldNumberWithSwitch } from '../../report-editor.interface'
+import { IReportFieldWithSwitch } from '../../report-editor.interface'
 import styles from '../ReportForm.module.scss'
 
-const ReportFieldNumberWithSwitch: FC<IReportFieldNumberWithSwitch> = ({
+const ReportFieldNumberWithSwitch: FC<IReportFieldWithSwitch> = ({
 	register,
 	watch,
 	placeholder,
@@ -52,7 +52,6 @@ const ReportFieldNumberWithSwitch: FC<IReportFieldNumberWithSwitch> = ({
 						required: 'Обязательное поле'
 					})}
 					error={error}
-					isString
 					type='number'
 					autoComplete='off'
 				/>

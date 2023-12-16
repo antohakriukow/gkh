@@ -16,7 +16,7 @@ const NaturalFieldSet: FC<INaturalFieldSet> = ({
 }) => {
 	const { currentReport } = useTypedSelector(state => state.ui)
 
-	if (currentReport?.period !== 3) return null
+	if (currentReport?.period !== 4) return null
 
 	const errors = formState?.errors
 	const isElectricityRequired = watch('data.accruals.electricityCommon') > 0
