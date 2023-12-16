@@ -1,11 +1,15 @@
-import { use22gkhConstants } from './use22gkhConstants'
+import { getConstants } from './getConstants'
 
 import { IReport } from '~/shared/types/report.interface'
 
-import { calculatePreviousPayments } from '~/utils/report.utils'
+import {
+	calculatePreviousPayments,
+	removeZeroAndUndefined
+} from '~/utils/report.utils'
 
-export const use22gkhSchema = (report: IReport) => {
+export const generate22gkhReport = (report: IReport) => {
 	const {
+		calculatedAreas,
 		area,
 		monetizedArea,
 		renovationArea,
@@ -17,29 +21,21 @@ export const use22gkhSchema = (report: IReport) => {
 		totalAccruals,
 
 		payments,
-		currentYearPayments,
-		previousPeriodPayments,
 		communalPayments,
 		commonPayments,
 		commonAndMaintenancePayments,
 
 		debts,
-		residentsDebts,
 		maintenanceDebts,
 		communalDebts,
 		commonDebts,
-		currentYearDebts,
-		previousPeriodDebts,
 		organizationDebts,
 		totalOrganizationDebts,
 
 		income,
-		elevator,
-		gas,
-		stove,
-		renovation,
 		budgetFinancing,
 		renovationCosts,
+		natural,
 
 		typicalRow,
 		row66,
@@ -47,9 +43,9 @@ export const use22gkhSchema = (report: IReport) => {
 		distributeMaintenance,
 		distributeElectricity,
 		distributeGas
-	} = use22gkhConstants(report)
+	} = getConstants(report)
 
-	const schemaChapterOne = {
+	const sectionOne = removeZeroAndUndefined({
 		1: { 3: totalAccruals + income.commerce },
 		2: { 3: totalAccruals },
 		3: { 3: accrualsCommunal },
@@ -115,48 +111,96 @@ export const use22gkhSchema = (report: IReport) => {
 		57: { 3: 0 },
 		58: { 3: 0 },
 		59: { 3: 0 }
-	}
+	})
 
-	const schemaChapterTwo = {
+	const sectionTwo = removeZeroAndUndefined({
 		60: { 4: accruals.renovation },
 		61: { 4: income.renovation },
-		62: { 4: renovationCosts.totalAmount }, // Разделить на 1000
-		63: { 4: renovationCosts.budgetTransfers } // Разделить на 1000
-	}
+		62: { 4: renovationCosts.totalAmount },
+		63: { 4: renovationCosts.budgetTransfers }
+	})
 
 	//prettier-ignore
-	const schemaChapterThree = {
+	const sectionThree = removeZeroAndUndefined({
 		64: typicalRow(accrualsMaintenance, commonAndMaintenancePayments),
 		66: row66,
 		67: distributeMaintenance(67),
 		68: distributeMaintenance(68),
-		69: typicalRow(accruals.renovation, commonPayments, monetizedArea),
-		70: typicalRow(accrualsCommon, income.renovation, renovationArea),
+		69: typicalRow(accrualsCommon, commonPayments, monetizedArea),
+		70: typicalRow(accruals.renovation, income.renovation, renovationArea),
 		71: typicalRow(accrualsCommunal, communalPayments),
-		72: typicalRow(accruals.coldWater, payments.coldWater, monetizedArea),
-		73: typicalRow(accruals.waterDisposal, payments.waterDisposal, monetizedArea),
-		74: typicalRow(accruals.hotWater, payments.hotWater, monetizedArea),
-		75: typicalRow(accruals.heat, payments.heat, monetizedArea),
+		72: typicalRow(
+			accruals.coldWater,
+			payments.coldWater,
+			calculatedAreas.coldWater
+		),
+		73: typicalRow(
+			accruals.waterDisposal,
+			payments.waterDisposal,
+			calculatedAreas.waterDisposal
+		),
+		74: typicalRow(
+			accruals.hotWater,
+			payments.hotWater,
+			calculatedAreas.hotWater
+		),
+		75: typicalRow(accruals.heat, payments.heat, calculatedAreas.heat),
 		76: row76,
 		77: distributeElectricity(77),
 		78: distributeElectricity(78),
 		79: distributeGas(79),
 		80: distributeGas(80),
-		81: {}, // Добавить в форму "В том числе в баллонах". Возможно?
-		82: {}, // Добавить уголь. Возможно?
-		83: {}, // Добавить дрова. Возможно?
-		84: typicalRow(accruals.solidWasteRemoval, payments.solidWasteRemoval, monetizedArea),
+		81: {}, // TODO: Добавить в форму "В том числе в баллонах".
+		82: {}, // TODO: Добавить уголь.
+		83: {}, // TODO: Добавить дрова.
+		84: typicalRow(
+			accruals.solidWasteRemoval,
+			payments.solidWasteRemoval,
+			calculatedAreas.solidWasteRemoval
+		),
 		85: {
 			3: totalAccruals + accruals.renovation,
 			4: income.housing + income.renovation,
 			5:
-				calculatePreviousPayments(commonAndMaintenancePayments, accrualsMaintenance) +
+				calculatePreviousPayments(
+					commonAndMaintenancePayments,
+					accrualsMaintenance
+				) +
 				calculatePreviousPayments(income.renovation, accruals.renovation) +
 				calculatePreviousPayments(communalPayments, accrualsCommunal),
 			6: totalAccruals + accruals.renovation,
 			7: totalAccruals + accruals.renovation
 		}
-	}
+	})
 
-	return { schemaChapterOne, schemaChapterTwo, schemaChapterThree }
+	const sectionFour = removeZeroAndUndefined({
+		86:
+			!!accruals.electricityCommon && !!natural && !!natural.electricityCommon
+				? {
+						4: !!natural.electricityCommon ? natural.electricityCommon : 0,
+						6: area.commonArea ? area.commonArea : 0,
+						7: calculatedAreas.electricity
+							? calculatedAreas.electricity
+							: monetizedArea
+				  }
+				: {},
+		87:
+			!!accruals.heat && !!natural && !!natural.heat
+				? {
+						3: natural.heat,
+						5: calculatedAreas.heat
+							? calculatedAreas.heat
+							: area.residentialArea,
+						7: calculatedAreas.heat ? calculatedAreas.heat : monetizedArea
+				  }
+				: {}
+	})
+
+	return {
+		1: sectionOne,
+		2: sectionTwo,
+		3: sectionThree,
+		4: sectionFour,
+		generatedAt: Date.now().toString()
+	}
 }

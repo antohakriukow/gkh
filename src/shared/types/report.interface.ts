@@ -7,9 +7,20 @@ import { TypeAnnualReportTemplate } from './reportAnnual.interface'
 
 export type TypeReport = '22gkh' | 'annual'
 
+interface ISubSection {
+	[key: number]: any
+}
+
+interface ISection {
+	[key: number]: ISubSection
+}
+
 export interface IFinalReport {
-	xml: Object
-	pdf: Object
+	1: ISection
+	2: ISection
+	3: ISection
+	4: ISection
+	generatedAt: string
 }
 
 export interface IReport {

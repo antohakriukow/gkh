@@ -1,7 +1,28 @@
-.reportTitle {
+.header {
+	@apply flex flex-row justify-between items-center;
+	> h1 {
+		@apply m-0;
+	}
+
+	> svg {
+		@apply cursor-pointer;
+	}
+	> svg:hover {
+		transform: scale(1.1);
+		z-index: 100;
+	}
+}
+
+.title {
 	@apply pl-2;
 }
 
-.reportBtn {
-	@apply mt-4 mr-2;
+.button {
+	@apply mt-4 mr-2 px-4 text-xl;
+	@media (max-width: 800px) {
+		@apply text-base;
+	}
+	@media (max-width: 400px) {
+		@apply text-sm;
+	}
 }

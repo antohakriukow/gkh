@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
-import { SubmitHandler, UseFormSetValue } from 'react-hook-form'
-import { use22gkhReport } from '~/report-logic/22gkh/use22gkhReport'
+import { SubmitHandler, UseFormReset, UseFormSetValue } from 'react-hook-form'
+import { generate22gkhReport } from '~/report-logic/22gkh/generate22gkhReport'
+import { downloadPDF } from '~/report-logic/22gkh/pdf/pdf.download'
+import { downloadXML } from '~/report-logic/22gkh/xml/xml.download'
 
 import { useActions } from '~/hooks/useActions'
 import { useAuth } from '~/hooks/useAuth'
@@ -10,14 +12,22 @@ import { IReport } from '~/shared/types/report.interface'
 
 import { ReportService } from '~/services/report.service'
 
-import { downloadXML } from '~/utils/files.utils'
+import { convertPeriod } from '~/utils/report.utils'
 
-export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
+export const useReportEditor = (
+	setValue: UseFormSetValue<IReport>,
+	reset: UseFormReset<IReport>
+) => {
 	const { user } = useAuth()
 	const { currentReport } = useTypedSelector(state => state.ui)
 	const { setCurrentReport } = useActions()
-	const { generate22GkgReport } = use22gkhReport()
 	const [isLoading, setIsLoading] = useState(false)
+
+	const reportEditorHeading = currentReport
+		? `Отчет 22-ЖКХ (Жилище) за ${convertPeriod(
+				currentReport?.period
+		  )} ${currentReport?.year}`
+		: ''
 
 	const setReportValues = useCallback(
 		(report: any, parentKey = '') => {
@@ -30,8 +40,12 @@ export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 						!Array.isArray(value)
 					) {
 						setReportValues(value, fullKey)
-					} else if (typeof value === 'string' || typeof value === 'number') {
-						setValue(fullKey as keyof IReport, value)
+					} else if (
+						typeof value === 'string' ||
+						typeof value === 'number' ||
+						typeof value === 'boolean'
+					) {
+						setValue(fullKey as keyof IReport, value as any)
 					}
 				}
 			})
@@ -39,11 +53,31 @@ export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 		[setValue]
 	)
 
+	const closeReport = () => {
+		setCurrentReport(null)
+	}
+
+	const handleEscKey = useCallback(
+		(e: KeyboardEvent) => {
+			if (e.key === 'Escape') setCurrentReport(null)
+		},
+		[setCurrentReport]
+	)
+
+	useEffect(() => {
+		document.addEventListener('keydown', handleEscKey)
+
+		return () => {
+			document.removeEventListener('keydown', handleEscKey)
+		}
+	}, [handleEscKey])
+
 	useEffect(() => {
 		if (currentReport) {
 			setReportValues(currentReport)
+			reset(currentReport)
 		}
-	}, [currentReport, setReportValues])
+	}, [currentReport, setReportValues, reset])
 
 	const onSubmit: SubmitHandler<IReport> = async (reportData: IReport) => {
 		if (!user) return
@@ -57,6 +91,8 @@ export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 				reportData._id.toString()
 			)
 			await setCurrentReport(newReportData)
+
+			reset(newReportData)
 		} catch (error) {
 			// console.log(error)
 		} finally {
@@ -67,13 +103,36 @@ export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 	const generateReport = async () => {
 		if (!user || !currentReport) return
 		setIsLoading(true)
-		const finalReport = generate22GkgReport(currentReport)
+		const finalReport = generate22gkhReport(currentReport)
+
 		try {
-			ReportService.generate(
+			await ReportService.generate(
 				user.uid,
 				currentReport._id.toString(),
 				finalReport
 			)
+
+			const newReportData = await ReportService.getById(
+				user.uid,
+				currentReport._id.toString()
+			)
+			await setCurrentReport(newReportData)
+		} catch (error) {
+			// console.log(error)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	const downloadReportPDF = async () => {
+		if (!user || !currentReport) return
+		setIsLoading(true)
+		try {
+			const report = await ReportService.getById(
+				user.uid,
+				currentReport._id.toString()
+			)
+			downloadPDF(report)
 		} catch (error) {
 			// console.log(error)
 		} finally {
@@ -100,9 +159,12 @@ export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 
 	return {
 		isLoading,
+		reportEditorHeading,
 		onSubmit,
 		generateReport,
+		downloadReportPDF,
 		downloadReportXML,
-		currentReport
+		currentReport,
+		closeReport
 	}
 }

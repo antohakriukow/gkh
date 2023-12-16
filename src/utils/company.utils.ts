@@ -11,5 +11,7 @@ export const prepareCompanyData = (data: any): ICompany => ({
 	},
 	leader_name: data.management.name,
 	leader_post: data.management.post,
-	address: data.address.value
+	address: data.address.value,
+	phone: '',
+	email: ''
 })

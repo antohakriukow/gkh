@@ -1,5 +1,6 @@
 .layout {
-	@apply bg-primary-50 px-4 h-screen;
+	@apply bg-primary-50 px-4 h-full;
+	min-height: 100vh;
 	position: relative;
 	min-width: 320px;
 }

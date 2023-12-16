@@ -5,12 +5,39 @@ export type TypeGas = 'none' | 'network' | 'liquid' | 'both'
 export type TypeRenovation = 'yes' | 'no' | 'both'
 export type TypeBudgetFinancing = 'yes' | 'no'
 export type TypeRenovationCosts = 'yes' | 'no'
+export type TypeHousesCount = 'one' | 'many'
+export type TypeAreasAreDifferent = 'yes' | 'no'
+
+export interface IService {
+	status: boolean
+	area: number
+}
 
 export interface IArea {
 	residentialArea: number
 	nonResidentialArea: number
 	commonArea: number
-	electricityArea?: number
+}
+
+export interface IServices {
+	coldWater: IService
+	hotWater: IService
+	waterDisposal: IService
+	heat: IService
+	gas: IService
+	electricity: IService
+	solidWasteRemoval: IService
+	coldWaterCommon: IService
+	hotWaterCommon: IService
+	waterDisposalCommon: IService
+	electricityCommon: IService
+	renovation: IService
+}
+
+export interface ISettings {
+	housesCount: TypeHousesCount
+	areasAreDifferent?: TypeAreasAreDifferent
+	services?: IServices
 }
 
 export interface IElevator {
@@ -48,6 +75,11 @@ export interface IRenovationCosts {
 	status: TypeRenovationCosts
 	totalAmount: number
 	budgetTransfers: number
+}
+
+export interface INatural {
+	electricityCommon: number
+	heat: number
 }
 
 export interface IIncome {
@@ -90,6 +122,7 @@ export interface IAccruals {
 
 export interface IReport22gkhData {
 	area: IArea
+	settings: ISettings
 	elevator: IElevator
 	stove: IStove
 	gas: IGas
@@ -100,6 +133,7 @@ export interface IReport22gkhData {
 	residentsDebts: IResidentsDebts
 	organizationDebts: IOrganizationDebts
 	accruals: IAccruals
+	natural: INatural
 	createdAt: Date
 	updatedAt: Date
 	ownerId: string

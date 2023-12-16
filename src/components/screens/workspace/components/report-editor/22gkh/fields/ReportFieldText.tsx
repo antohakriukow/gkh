@@ -6,7 +6,7 @@ import { IReport } from '~/shared/types/report.interface'
 
 import { IReportField } from '../../report-editor.interface'
 
-const ReportFieldNumber: FC<IReportField> = ({
+const ReportFieldText: FC<IReportField> = ({
 	register,
 	placeholder,
 	fieldName,
@@ -17,18 +17,13 @@ const ReportFieldNumber: FC<IReportField> = ({
 		<Field
 			{...register(
 				fieldName as keyof IReport,
-				isRequired
-					? {
-							valueAsNumber: true,
-							required: 'Обязательное поле'
-					  }
-					: { valueAsNumber: true }
+				isRequired ? { required: 'Обязательное поле' } : {}
 			)}
 			error={error}
 			placeholder={placeholder}
-			type='number'
+			type='text'
 			autoComplete='off'
 		/>
 	)
 }
-export default ReportFieldNumber
+export default ReportFieldText

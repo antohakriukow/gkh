@@ -4,6 +4,7 @@ import {
 	FormState,
 	UseFormRegister,
 	UseFormReset,
+	UseFormSetValue,
 	UseFormTrigger,
 	UseFormWatch
 } from 'react-hook-form'
@@ -17,6 +18,7 @@ export interface IReportForm {
 	control: Control<IReport>
 	formState: FormState<IReport>
 	watch: UseFormWatch<IReport>
+	setValue: UseFormSetValue<IReport>
 	reset?: UseFormReset<IReport>
 	// trigger: UseFormTrigger<IReport>
 	// handleSubmit: UseFormHandleSubmit<IReport, undefined>
@@ -34,13 +36,19 @@ export interface IReportForm {
 
 // type ReportFieldNames = PathImpl<IReport, keyof IReport>
 
-export interface IReportFieldNumber {
+export interface IReportField {
 	register: UseFormRegister<IReport>
 	control: Control<IReport>
-	placeholder: string
+	placeholder?: string
 	fieldName: string
+	switcherName?: string
 	error?: FieldError
 	isRequired?: boolean
+}
+
+export interface IReportFieldWithSwitch extends IReportField {
+	watch: UseFormWatch<IReport>
+	setValue: UseFormSetValue<IReport>
 }
 
 export interface IReportSelect {
@@ -48,4 +56,5 @@ export interface IReportSelect {
 	placeholder: string
 	fieldName: string
 	options: IOption[]
+	isRequired?: boolean
 }

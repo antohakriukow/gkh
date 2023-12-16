@@ -24,7 +24,7 @@ const ResidentsDebtsFieldSet: FC<IResidentsDebtsFieldSet> = ({
 				<ReportFieldNumber
 					control={control}
 					fieldName='data.residentsDebts.housing'
-					placeholder='Долг собственников за ЖКУ'
+					placeholder='Долг собственников за ЖКУ, руб'
 					register={register}
 					error={errors?.data?.residentsDebts?.housing}
 					isRequired
@@ -33,7 +33,7 @@ const ResidentsDebtsFieldSet: FC<IResidentsDebtsFieldSet> = ({
 					<ReportFieldNumber
 						control={control}
 						fieldName='data.residentsDebts.renovation'
-						placeholder='Долг собственников за капремонт'
+						placeholder='Долг собственников за капремонт, руб'
 						register={register}
 						error={
 							isRenovationRequired

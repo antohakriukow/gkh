@@ -18,6 +18,8 @@ export interface ICompany {
 	leader_post: string
 	address: string
 	billingData?: IBankAccount
+	phone: string
+	email: string
 }
 
 export interface ICompanyInn extends Pick<ICompany, 'inn'> {}

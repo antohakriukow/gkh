@@ -1,4 +1,7 @@
-export { default as Field } from './form-elements/Field'
+export { default as Field } from './form-elements/Field/Field'
+export { default as AuthField } from './form-elements/AuthField/AuthField'
+export { default as Checkbox } from './form-elements/Checkbox/Checkbox'
+export { default as Select } from './form-elements/Select/Select'
 export { default as Button } from './form-elements/Button'
 export { default as Heading } from '../ui/heading/Heading'
 export { default as Loader } from '../ui/Loader'

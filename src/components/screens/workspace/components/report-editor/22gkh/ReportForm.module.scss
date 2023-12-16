@@ -3,11 +3,11 @@
 	@apply grid gap-x-2 gap-y-0.5  rounded-lg;
 	border: 1px solid $secondary-200;
 
-	@media (min-width: 800px) {
+	@media (min-width: 865px) {
 		grid-template-columns: repeat(2, 1fr);
 	}
 
-	@media (min-width: 1200px) {
+	@media (min-width: 1270px) {
 		grid-template-columns: repeat(3, 1fr);
 	}
 }
@@ -26,4 +26,15 @@
 	&:not(:first-child) {
 		margin-top: 8px;
 	}
+}
+
+.fieldWithCheckbox {
+	@apply flex flex-row items-center justify-between;
+	> div:first-child {
+		width: calc(100% - 164px);
+	}
+}
+
+.checkbox {
+	@apply w-full;
 }

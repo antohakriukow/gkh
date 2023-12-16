@@ -1,9 +1,10 @@
-import { IOption, ISelect } from './form.interface'
 import { FC } from 'react'
 import ReactSelect, { OnChangeValue, StylesConfig } from 'react-select'
 import makeAnimated from 'react-select/animated'
 
-import styles from './form.module.scss'
+import { IOption, ISelect } from '../form.interface'
+
+import styles from './Select.module.scss'
 
 const animatedComponents = makeAnimated()
 
@@ -16,6 +17,14 @@ const customStyles: StylesConfig<IOption, boolean> = {
 	container: provided => ({
 		...provided,
 		width: 164
+	}),
+	valueContainer: provided => ({
+		...provided,
+		height: 38,
+		fontSize: 16,
+		lineHeight: 1,
+		paddingTop: 0,
+		paddingBottom: 0
 	})
 }
 
@@ -25,7 +34,8 @@ const Select: FC<ISelect> = ({
 	isMulti,
 	options,
 	field,
-	isLoading
+	isLoading,
+	isRequired
 }) => {
 	const onChange = (newValue: OnChangeValue<IOption, boolean>) => {
 		field.onChange(
@@ -64,7 +74,8 @@ const Select: FC<ISelect> = ({
 						isMulti={isMulti}
 						components={animatedComponents}
 						isLoading={isLoading}
-						styles={customStyles} // Добавление пользовательских стилей
+						styles={customStyles}
+						required={isRequired}
 					/>
 					{error && <div className={styles.error}>{error.message}</div>}
 				</div>

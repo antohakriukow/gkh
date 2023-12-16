@@ -11,11 +11,13 @@ import { IReport } from '~/shared/types/report.interface'
 import { divideAndRoundNumbers } from '~/utils/number.utils'
 import {
 	calculatePreviousPayments,
-	distributeValues
+	distributeValues,
+	generateServicesArea
 } from '~/utils/report.utils'
 
-export const use22gkhConstants = (report: IReport) => {
-	const { area, elevator, gas, stove, renovation } = report.data
+export const getConstants = (report: IReport) => {
+	const { area, elevator, gas, stove, renovation, settings, natural } =
+		report?.data
 	const accruals = divideAndRoundNumbers(report.data.accruals) as IAccruals
 	const income = divideAndRoundNumbers(report.data.income) as IIncome
 	const residentsDebts = divideAndRoundNumbers(
@@ -32,6 +34,9 @@ export const use22gkhConstants = (report: IReport) => {
 	) as IRenovationCosts
 
 	const monetizedArea = area.residentialArea + area.nonResidentialArea
+
+	const calculatedAreas = generateServicesArea(settings, monetizedArea)
+
 	const renovationArea =
 		renovation.status === 'yes'
 			? monetizedArea
@@ -143,23 +148,6 @@ export const use22gkhConstants = (report: IReport) => {
 	}
 
 	//prettier-ignore
-	const currentYearDebts = {
-		coldWater: payments.coldWater < accruals.coldWater ? accruals.coldWater - payments.coldWater : 0,
-		hotWater: payments.hotWater < accruals.hotWater ? accruals.hotWater - payments.hotWater : 0,
-		waterDisposal: payments.waterDisposal < accruals.waterDisposal ? accruals.waterDisposal - payments.waterDisposal : 0,
-		heat: payments.heat < accruals.heat ? accruals.heat - payments.heat : 0,
-		electricity: payments.electricity < accruals.electricity ? accruals.electricity - payments.electricity : 0,
-		gas: payments.gas < accruals.gas ? accruals.gas - payments.gas : 0,
-		solidWasteRemoval: payments.solidWasteRemoval < accruals.solidWasteRemoval ? accruals.solidWasteRemoval - payments.solidWasteRemoval : 0,
-		coldWaterCommon: payments.coldWaterCommon < accruals.coldWaterCommon ? accruals.coldWaterCommon - payments.coldWaterCommon : 0,
-		hotWaterCommon: payments.hotWaterCommon < accruals.hotWaterCommon ? accruals.hotWaterCommon - payments.hotWaterCommon : 0,
-		waterDisposalCommon: payments.waterDisposalCommon < accruals.waterDisposalCommon ? accruals.waterDisposalCommon - payments.waterDisposalCommon : 0,
-		electricityCommon: payments.electricityCommon < accruals.electricityCommon ? accruals.electricityCommon - payments.electricityCommon : 0,
-		management: payments.management < accruals.management ? accruals.management - payments.management : 0,
-		maintenance: payments.maintenance < accruals.maintenance ? accruals.maintenance - payments.maintenance : 0
-	}
-
-	//prettier-ignore
 	let previousPeriodDebts = {
 		coldWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldWater),
 		hotWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.hotWater),
@@ -172,6 +160,7 @@ export const use22gkhConstants = (report: IReport) => {
 		hotWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.hotWaterCommon),
 		waterDisposalCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.waterDisposalCommon),
 		electricityCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.electricityCommon),
+
 		management: Math.round((residentsDebts.housing / totalAccruals) * accruals.management),
 		maintenance: 0
 	}
@@ -225,7 +214,7 @@ export const use22gkhConstants = (report: IReport) => {
 		5: calculatePreviousPayments(payments, accruals),
 		6: accruals,
 		7: accruals,
-		8: !!area ? area : 0
+		8: !!accruals && !!area ? area : 0
 	})
 
 	const row66 = typicalRow(
@@ -237,7 +226,7 @@ export const use22gkhConstants = (report: IReport) => {
 	const row76 = typicalRow(
 		accruals.electricity,
 		payments.electricity,
-		monetizedArea
+		calculatedAreas.electricity
 	)
 
 	const rowGas = {
@@ -250,6 +239,7 @@ export const use22gkhConstants = (report: IReport) => {
 	}
 
 	const distributeMaintenance = (row: 67 | 68) => {
+		const elevatorCopy = { ...elevator }
 		if (
 			(row === 67 && elevator.status === 'yes') ||
 			(row === 68 && elevator.status === 'no')
@@ -257,55 +247,61 @@ export const use22gkhConstants = (report: IReport) => {
 			return row66
 		}
 
-		if (!elevator.areaWith) elevator.areaWith = 0
-		if (!elevator.areaWithout) elevator.areaWithout = 0
+		if (!elevatorCopy.areaWith) elevatorCopy.areaWith = 0
+		if (!elevatorCopy.areaWithout) elevatorCopy.areaWithout = 0
 
 		const results = distributeValues(
 			row66,
-			elevator.areaWith,
-			elevator.areaWithout
+			elevatorCopy.areaWith,
+			elevatorCopy.areaWithout
 		)
 		return row === 67 ? results[0] : results[1]
 	}
 
 	const distributeElectricity = (row: 77 | 78) => {
+		const stoveCopy = { ...stove }
 		if (
 			(row === 77 && stove.status === 'gas') ||
 			(row === 78 && stove.status === 'electro')
 		)
 			return row76
 
-		if (!stove.areaGas) stove.areaGas = 0
-		if (!stove.areaElectro) stove.areaElectro = 0
+		if (!stoveCopy.areaGas) stoveCopy.areaGas = 0
+		if (!stoveCopy.areaElectro) stoveCopy.areaElectro = 0
 
-		const results = distributeValues(row76, stove.areaGas, stove.areaElectro)
+		const results = distributeValues(
+			row76,
+			stoveCopy.areaGas,
+			stoveCopy.areaElectro
+		)
 
 		return row === 77 ? results[0] : results[1]
 	}
 
 	const distributeGas = (row: 79 | 80) => {
-		const innerGas = { ...gas }
+		const gasCopy = { ...gas }
 		if (
 			(row === 79 && gas.status === 'network') ||
 			(row === 80 && gas.status === 'liquid')
 		)
 			return rowGas
 
-		if (!innerGas.areaNetwork) innerGas.areaNetwork = 0
-		if (!innerGas.areaLiquid) innerGas.areaLiquid = 0
-		if (!innerGas.areaNone) innerGas.areaNone = 0
+		if (!gasCopy.areaNetwork) gasCopy.areaNetwork = 0
+		if (!gasCopy.areaLiquid) gasCopy.areaLiquid = 0
+		if (!gasCopy.areaNone) gasCopy.areaNone = 0
 
 		const results = distributeValues(
 			rowGas,
-			innerGas.areaNetwork,
-			innerGas.areaLiquid,
-			innerGas.areaNone
+			gasCopy.areaNetwork,
+			gasCopy.areaLiquid,
+			gasCopy.areaNone
 		)
 
 		return row === 79 ? results[0] : results[1]
 	}
 
 	return {
+		calculatedAreas,
 		area,
 		monetizedArea,
 		renovationArea,
@@ -317,29 +313,21 @@ export const use22gkhConstants = (report: IReport) => {
 		totalAccruals,
 
 		payments,
-		currentYearPayments,
-		previousPeriodPayments,
 		communalPayments,
 		commonPayments,
 		commonAndMaintenancePayments,
 
 		debts,
-		residentsDebts,
 		maintenanceDebts,
 		communalDebts,
 		commonDebts,
-		currentYearDebts,
-		previousPeriodDebts,
 		organizationDebts,
 		totalOrganizationDebts,
 
 		income,
-		elevator,
-		gas,
-		stove,
-		renovation,
 		budgetFinancing,
 		renovationCosts,
+		natural,
 
 		typicalRow,
 		row66,

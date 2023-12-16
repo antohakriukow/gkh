@@ -1,4 +1,4 @@
-import { organizationDebtsFieldsData } from './mocks/organization-debts.fields.mock'
+import { organizationDebtsFieldsData } from './data/organization-debts.fields.data'
 import { FC } from 'react'
 import { FieldError } from 'react-hook-form'
 
@@ -40,7 +40,7 @@ const OrganizationDebtsFieldSet: FC<IOrganizationDebtsFieldSet> = ({
 					<ReportFieldNumber
 						control={control}
 						fieldName='data.organizationDebts.gas'
-						placeholder='Газоснабжение'
+						placeholder='Газоснабжение, руб'
 						register={register}
 						error={errors?.data?.organizationDebts?.gas}
 					/>

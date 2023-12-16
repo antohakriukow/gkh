@@ -1,11 +1,11 @@
-import { IReportCreate } from './../shared/types/report.interface'
+import { IFinalReport, IReportCreate } from './../shared/types/report.interface'
 import { child, get, ref, remove, set, update } from 'firebase/database'
 
 import { IReport } from '~/shared/types/report.interface'
 
 import { db } from '~/services/_firebase'
 
-import { removeUndefinedAndNaNFields } from '~/utils/report.utils'
+import { replaceUndefinedAndNaNWithZero } from '~/utils/report.utils'
 
 export const ReportService = {
 	async _getAll(userId: string) {
@@ -53,7 +53,7 @@ export const ReportService = {
 	async update(userId: string, data: IReport) {
 		if (!data.data) return
 		data.updatedAt = Date.now().toString()
-		removeUndefinedAndNaNFields(data)
+		replaceUndefinedAndNaNWithZero(data)
 
 		try {
 			await update(ref(db, `users/${userId}/reports/${data._id}`), data)
@@ -62,15 +62,14 @@ export const ReportService = {
 		}
 	},
 
-	async generate(userId: string, reportId: string, finalReport: object) {
+	async generate(userId: string, reportId: string, finalReport: IFinalReport) {
 		try {
 			const snapshot = await get(
 				child(ref(db), `users/${userId}/reports/${reportId}`)
 			)
 			if (snapshot.exists()) {
-				// console.log('finalReport: ', finalReport)
 				update(
-					ref(db, `users/${userId}/reports/${reportId}/finalReport/xml`),
+					ref(db, `users/${userId}/reports/${reportId}/finalReport`),
 					finalReport
 				)
 			} else {

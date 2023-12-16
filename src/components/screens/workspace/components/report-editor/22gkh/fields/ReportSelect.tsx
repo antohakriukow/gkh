@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Controller } from 'react-hook-form'
 
-import Select from '~/components/ui/form-elements/Select'
+import { Select } from '~/components/ui'
 
 import { IReport } from '~/shared/types/report.interface'
 
@@ -11,7 +11,8 @@ const ReportSelect: FC<IReportSelect> = ({
 	control,
 	fieldName,
 	placeholder,
-	options
+	options,
+	isRequired
 }) => {
 	return (
 		<Controller
@@ -26,6 +27,7 @@ const ReportSelect: FC<IReportSelect> = ({
 					field={field}
 					placeholder={placeholder}
 					options={options}
+					isRequired={isRequired}
 				/>
 			)}
 		/>

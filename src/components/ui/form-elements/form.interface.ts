@@ -11,9 +11,16 @@ export interface IFieldProps {
 	isString?: boolean
 }
 
+export interface ICheckboxProps {
+	placeholder?: string
+}
+
 type TypeInputPropsField = InputHTMLAttributes<HTMLInputElement> & IFieldProps
+type TypeCheckboxPropsField = InputHTMLAttributes<HTMLInputElement> &
+	ICheckboxProps
 
 export interface IField extends TypeInputPropsField {}
+export interface ICheckbox extends TypeCheckboxPropsField {}
 
 export interface IOption {
 	label: string
@@ -25,4 +32,5 @@ export interface ISelect extends IFieldProps {
 	isMulti?: boolean
 	field: ControllerRenderProps<any, any>
 	isLoading?: boolean
+	isRequired?: boolean
 }
