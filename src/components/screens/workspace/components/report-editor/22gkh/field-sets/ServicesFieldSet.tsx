@@ -15,7 +15,7 @@ const ServicesFieldSet: FC<IServicesFieldSet> = ({
 }) => {
 	const isAdvancedModeOn =
 		watch('data.settings.housesCount') === 'many' &&
-		watch('data.settings.housesAreSame') === 'no'
+		watch('data.settings.areasAreDifferent') === 'yes'
 
 	return (
 		<>

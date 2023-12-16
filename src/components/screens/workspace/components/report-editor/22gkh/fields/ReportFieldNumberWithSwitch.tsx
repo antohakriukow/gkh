@@ -18,7 +18,7 @@ const ReportFieldNumberWithSwitch: FC<IReportFieldWithSwitch> = ({
 }) => {
 	const isAdvancedModeOn =
 		watch('data.settings.housesCount') === 'many' &&
-		watch('data.settings.housesAreSame') === 'no'
+		watch('data.settings.areasAreDifferent') === 'yes'
 
 	const isChecked = watch(switcherName as keyof IReport)
 	const monetizedArea =

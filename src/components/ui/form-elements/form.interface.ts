@@ -32,4 +32,5 @@ export interface ISelect extends IFieldProps {
 	isMulti?: boolean
 	field: ControllerRenderProps<any, any>
 	isLoading?: boolean
+	isRequired?: boolean
 }

@@ -20,6 +20,7 @@ export interface IFinalReport {
 	2: ISection
 	3: ISection
 	4: ISection
+	generatedAt: string
 }
 
 export interface IReport {

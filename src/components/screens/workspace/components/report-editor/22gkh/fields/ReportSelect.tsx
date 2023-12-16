@@ -11,7 +11,8 @@ const ReportSelect: FC<IReportSelect> = ({
 	control,
 	fieldName,
 	placeholder,
-	options
+	options,
+	isRequired
 }) => {
 	return (
 		<Controller
@@ -26,6 +27,7 @@ const ReportSelect: FC<IReportSelect> = ({
 					field={field}
 					placeholder={placeholder}
 					options={options}
+					isRequired={isRequired}
 				/>
 			)}
 		/>

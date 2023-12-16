@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { SubmitHandler, UseFormSetValue } from 'react-hook-form'
+import { SubmitHandler, UseFormReset, UseFormSetValue } from 'react-hook-form'
 import { generate22gkhReport } from '~/report-logic/22gkh/generate22gkhReport'
 import { downloadPDF } from '~/report-logic/22gkh/pdf/pdf.download'
 import { downloadXML } from '~/report-logic/22gkh/xml/xml.download'
@@ -12,11 +12,22 @@ import { IReport } from '~/shared/types/report.interface'
 
 import { ReportService } from '~/services/report.service'
 
-export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
+import { convertPeriod } from '~/utils/report.utils'
+
+export const useReportEditor = (
+	setValue: UseFormSetValue<IReport>,
+	reset: UseFormReset<IReport>
+) => {
 	const { user } = useAuth()
 	const { currentReport } = useTypedSelector(state => state.ui)
 	const { setCurrentReport } = useActions()
 	const [isLoading, setIsLoading] = useState(false)
+
+	const reportEditorHeading = currentReport
+		? `Отчет 22-ЖКХ (Жилище) за ${convertPeriod(
+				currentReport?.period
+		  )} ${currentReport?.year}`
+		: ''
 
 	const setReportValues = useCallback(
 		(report: any, parentKey = '') => {
@@ -42,11 +53,31 @@ export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 		[setValue]
 	)
 
+	const closeReport = () => {
+		setCurrentReport(null)
+	}
+
+	const handleEscKey = useCallback(
+		(e: KeyboardEvent) => {
+			if (e.key === 'Escape') setCurrentReport(null)
+		},
+		[setCurrentReport]
+	)
+
+	useEffect(() => {
+		document.addEventListener('keydown', handleEscKey)
+
+		return () => {
+			document.removeEventListener('keydown', handleEscKey)
+		}
+	}, [handleEscKey])
+
 	useEffect(() => {
 		if (currentReport) {
 			setReportValues(currentReport)
+			reset(currentReport)
 		}
-	}, [currentReport, setReportValues])
+	}, [currentReport, setReportValues, reset])
 
 	const onSubmit: SubmitHandler<IReport> = async (reportData: IReport) => {
 		if (!user) return
@@ -60,6 +91,8 @@ export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 				reportData._id.toString()
 			)
 			await setCurrentReport(newReportData)
+
+			reset(newReportData)
 		} catch (error) {
 			// console.log(error)
 		} finally {
@@ -67,20 +100,23 @@ export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 		}
 	}
 
-	const closeReport = () => {
-		setCurrentReport(null)
-	}
-
 	const generateReport = async () => {
 		if (!user || !currentReport) return
 		setIsLoading(true)
 		const finalReport = generate22gkhReport(currentReport)
+
 		try {
-			ReportService.generate(
+			await ReportService.generate(
 				user.uid,
 				currentReport._id.toString(),
 				finalReport
 			)
+
+			const newReportData = await ReportService.getById(
+				user.uid,
+				currentReport._id.toString()
+			)
+			await setCurrentReport(newReportData)
 		} catch (error) {
 			// console.log(error)
 		} finally {
@@ -123,6 +159,7 @@ export const useReportEditor = (setValue: UseFormSetValue<IReport>) => {
 
 	return {
 		isLoading,
+		reportEditorHeading,
 		onSubmit,
 		generateReport,
 		downloadReportPDF,

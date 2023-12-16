@@ -196,5 +196,11 @@ export const generate22gkhReport = (report: IReport) => {
 				: {}
 	})
 
-	return { 1: sectionOne, 2: sectionTwo, 3: sectionThree, 4: sectionFour }
+	return {
+		1: sectionOne,
+		2: sectionTwo,
+		3: sectionThree,
+		4: sectionFour,
+		generatedAt: Date.now().toString()
+	}
 }

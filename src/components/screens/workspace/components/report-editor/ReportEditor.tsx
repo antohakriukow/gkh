@@ -8,37 +8,33 @@ import { Button, Heading } from '~/components/ui'
 
 import { IReport } from '~/shared/types/report.interface'
 
-import { convertPeriod } from '~/utils/report.utils'
-
 import styles from './ReportEditor.module.scss'
 
 const ReportEditor: FC = () => {
-	const { register, setValue, control, formState, watch, handleSubmit } =
+	const { register, setValue, control, formState, watch, reset, handleSubmit } =
 		useForm<IReport>({
 			mode: 'onSubmit'
 		})
 
 	const {
+		reportEditorHeading,
 		onSubmit,
 		generateReport,
 		downloadReportXML,
 		downloadReportPDF,
 		currentReport,
 		closeReport
-	} = useReportEditor(setValue)
+	} = useReportEditor(setValue, reset)
 
-	const isGenerated = !!currentReport?.finalReport
-
-	const heading = currentReport
-		? `Отчет 22-ЖКХ (Жилище) за ${convertPeriod(
-				currentReport?.period
-		  )} ${currentReport?.year}`
-		: ''
+	const isReadyToGenerate = !formState.isDirty
+	const isReadyToDownload =
+		currentReport?.finalReport?.generatedAt &&
+		currentReport?.finalReport?.generatedAt >= currentReport?.updatedAt
 
 	return (
 		<div>
 			<div className={styles.header}>
-				<Heading title={heading} className={styles.title} />
+				<Heading title={reportEditorHeading} className={styles.title} />
 				<AiOutlineCloseCircle onClick={closeReport} color='#df4956' size={32} />
 			</div>
 			<ReportForm
@@ -48,20 +44,28 @@ const ReportEditor: FC = () => {
 				watch={watch}
 				setValue={setValue}
 			/>
-			<Button onClick={handleSubmit(onSubmit)} className={styles.button}>
-				Сохранить
-			</Button>
-			<Button onClick={generateReport} className={styles.button}>
-				Сгенерировать отчет
-			</Button>
-			{isGenerated && (
+			{!isReadyToGenerate && (
+				<Button onClick={handleSubmit(onSubmit)} className={styles.button}>
+					Сохранить
+				</Button>
+			)}
+			{isReadyToGenerate && (
 				<>
-					<Button onClick={downloadReportPDF} className={styles.button}>
-						Скачать PDF
-					</Button>
-					<Button onClick={downloadReportXML} className={styles.button}>
-						Скачать XML
-					</Button>
+					{!isReadyToDownload && (
+						<Button onClick={generateReport} className={styles.button}>
+							Сгенерировать отчет
+						</Button>
+					)}
+					{isReadyToDownload && (
+						<>
+							<Button onClick={downloadReportPDF} className={styles.button}>
+								Скачать PDF
+							</Button>
+							<Button onClick={downloadReportXML} className={styles.button}>
+								Скачать XML
+							</Button>
+						</>
+					)}
 				</>
 			)}
 		</div>

@@ -34,7 +34,8 @@ const Select: FC<ISelect> = ({
 	isMulti,
 	options,
 	field,
-	isLoading
+	isLoading,
+	isRequired
 }) => {
 	const onChange = (newValue: OnChangeValue<IOption, boolean>) => {
 		field.onChange(
@@ -74,6 +75,7 @@ const Select: FC<ISelect> = ({
 						components={animatedComponents}
 						isLoading={isLoading}
 						styles={customStyles}
+						required={isRequired}
 					/>
 					{error && <div className={styles.error}>{error.message}</div>}
 				</div>

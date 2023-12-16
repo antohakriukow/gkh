@@ -1,4 +1,4 @@
-import { IReportCreate } from './../shared/types/report.interface'
+import { IFinalReport, IReportCreate } from './../shared/types/report.interface'
 import { child, get, ref, remove, set, update } from 'firebase/database'
 
 import { IReport } from '~/shared/types/report.interface'
@@ -62,13 +62,12 @@ export const ReportService = {
 		}
 	},
 
-	async generate(userId: string, reportId: string, finalReport: object) {
+	async generate(userId: string, reportId: string, finalReport: IFinalReport) {
 		try {
 			const snapshot = await get(
 				child(ref(db), `users/${userId}/reports/${reportId}`)
 			)
 			if (snapshot.exists()) {
-				console.log('finalReport: ', finalReport)
 				update(
 					ref(db, `users/${userId}/reports/${reportId}/finalReport`),
 					finalReport

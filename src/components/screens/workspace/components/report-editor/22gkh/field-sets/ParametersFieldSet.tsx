@@ -3,10 +3,10 @@ import {
 	advancedGasOptions,
 	advancedRenovationOptions,
 	advancedStoveOptions,
+	areasAreDifferentOptions,
 	budgetFinancingOptions,
 	elevatorOptions,
 	gasOptions,
-	housesAreSameOptions,
 	housesCountOptions,
 	renovationCostsOptions,
 	renovationOptions,
@@ -38,9 +38,8 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 	const isBudgetFinancing = watch('data.budgetFinancing.status') === 'yes'
 	const isRenovationCosts = watch('data.renovationCosts.status') === 'yes'
 	const hasOneHouse = watch('data.settings.housesCount') === 'one'
-	const isAdvancedModeOn =
-		watch('data.settings.housesCount') === 'many' &&
-		watch('data.settings.housesAreSame') === 'no'
+	const isAdvancedModeOn = watch('data.settings.housesCount') === 'many'
+	// watch('data.settings.areasAreDifferent') === 'yes'
 
 	return (
 		<>
@@ -57,9 +56,10 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 				{!hasOneHouse && (
 					<ReportSelect
 						control={control}
-						fieldName='data.settings.housesAreSame'
-						placeholder='Единая методика начисления для всех домов'
-						options={housesAreSameOptions}
+						fieldName='data.settings.areasAreDifferent'
+						placeholder='Разные площади для разных услуг'
+						options={areasAreDifferentOptions}
+						isRequired={!hasOneHouse}
 					/>
 				)}
 				<ReportFieldNumber

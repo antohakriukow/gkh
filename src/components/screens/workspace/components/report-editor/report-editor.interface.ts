@@ -56,4 +56,5 @@ export interface IReportSelect {
 	placeholder: string
 	fieldName: string
 	options: IOption[]
+	isRequired?: boolean
 }

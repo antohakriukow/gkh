@@ -6,7 +6,7 @@ export type TypeRenovation = 'yes' | 'no' | 'both'
 export type TypeBudgetFinancing = 'yes' | 'no'
 export type TypeRenovationCosts = 'yes' | 'no'
 export type TypeHousesCount = 'one' | 'many'
-export type TypeHousesAreSame = 'yes' | 'no'
+export type TypeAreasAreDifferent = 'yes' | 'no'
 
 export interface IService {
 	status: boolean
@@ -36,7 +36,7 @@ export interface IServices {
 
 export interface ISettings {
 	housesCount: TypeHousesCount
-	housesAreSame?: TypeHousesAreSame
+	areasAreDifferent?: TypeAreasAreDifferent
 	services?: IServices
 }
 

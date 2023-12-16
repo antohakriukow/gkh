@@ -3,7 +3,7 @@ export const housesCountOptions = [
 	{ label: 'Несколько', value: 'many' }
 ]
 
-export const housesAreSameOptions = [
+export const areasAreDifferentOptions = [
 	{ label: 'Да', value: 'yes' },
 	{ label: 'Нет', value: 'no' }
 ]
