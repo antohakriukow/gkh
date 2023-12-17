@@ -1,3 +1,4 @@
+import { cloudFunction } from './_functions'
 import {
 	EmailAuthProvider,
 	User,
@@ -15,6 +16,7 @@ export const UserService = {
 			displayName: 'No name',
 			email: email
 		})
+		cloudFunction.addShortIdToUser()
 	},
 
 	async updateUserEmail(user: User, newEmail: string, currentPassword: string) {

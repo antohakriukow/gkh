@@ -6,6 +6,7 @@ import {
 	signOut
 } from 'firebase/auth'
 import { getDatabase } from 'firebase/database'
+import { getFunctions, httpsCallable } from 'firebase/functions'
 
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -21,6 +22,7 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig)
 export const auth = getAuth(app)
 export const db = getDatabase(app)
+export const functions = getFunctions(app)
 
 export const register = (email: string, password: string) =>
 	createUserWithEmailAndPassword(auth, email, password)
@@ -29,3 +31,5 @@ export const login = (email: string, password: string) =>
 	signInWithEmailAndPassword(auth, email, password)
 
 export const logout = () => signOut(auth)
+
+export const addShortIdToUserCF = httpsCallable(functions, 'addShortIdToUser')
