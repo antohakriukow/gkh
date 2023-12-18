@@ -17,7 +17,7 @@ const Header: FC = () => {
 				{!!user && (
 					<div className={styles.tools}>
 						<HeaderMenu />
-						<SettingsButton />
+						{/* <SettingsButton /> */}
 					</div>
 				)}
 			</div>

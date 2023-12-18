@@ -1,5 +1,6 @@
 .button {
-	@apply flex flex-row items-center justify-start pl-4 py-2 bg-gray-50 hover:bg-secondary-100 cursor-pointer;
+	@apply flex flex-row items-center justify-start pl-4 py-2  hover:bg-secondary-100 cursor-pointer;
+	// bg-gray-50
 }
 
 .buttonTitle {

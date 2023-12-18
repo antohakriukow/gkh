@@ -1,4 +1,5 @@
 import AddCompanyBtn from './components/buttons/AddCompanyButton'
+import LogoutButton from './components/buttons/LogoutButton'
 import { FC, useEffect } from 'react'
 
 import DropDown from '~/components/layout/header/menu/components/drop-down/DropDown'
@@ -16,7 +17,7 @@ const HeaderMenu: FC = () => {
 	return (
 		<>
 			{!companies || companies.length === 0 ? (
-				<AddCompanyBtn />
+				<LogoutButton />
 			) : (
 				<DropDown data={companies} />
 			)}

@@ -33,3 +33,4 @@ export const login = (email: string, password: string) =>
 export const logout = () => signOut(auth)
 
 export const addShortIdToUserCF = httpsCallable(functions, 'addShortIdToUser')
+export const getCompanyByInnCF = httpsCallable(functions, 'getCompanyByInn')

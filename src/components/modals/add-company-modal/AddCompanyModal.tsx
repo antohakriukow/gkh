@@ -7,7 +7,7 @@ import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { ICompanyInn } from '~/shared/types/company.interface'
 
-import { DadataService } from '~/services/dadata.external.service'
+import { DadataService } from '~/services/dadata.service'
 
 import CompanyAdder from '../../layout/header/menu/components/CompanyAdder'
 
