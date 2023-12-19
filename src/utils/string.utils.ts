@@ -10,3 +10,5 @@ export const convertXmlAttributes = (xmlStr: string): string => {
 		}
 	)
 }
+
+export const extractLastLink = (string: string) => string.split('.').pop()

@@ -22,5 +22,9 @@ export const organizationDebtsFieldsData = [
 	{
 		name: 'data.organizationDebts.solidWasteRemoval',
 		placeholder: 'Обращение с ТКО, руб'
+	},
+	{
+		name: 'data.organizationDebts.gas',
+		placeholder: 'Газоснабжение, руб'
 	}
 ]

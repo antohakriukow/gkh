@@ -2,6 +2,10 @@ import { organizationDebtsFieldsData } from './data/organization-debts.fields.da
 import { FC } from 'react'
 import { FieldError } from 'react-hook-form'
 
+import { IServices } from '~/shared/types/report22gkh.interface'
+
+import { extractLastLink } from '~/utils/string.utils'
+
 import { IReportForm } from '../../report-editor.interface'
 import styles from '../ReportForm.module.scss'
 import ReportFieldNumber from '../fields/ReportFieldNumber'
@@ -15,13 +19,21 @@ const OrganizationDebtsFieldSet: FC<IOrganizationDebtsFieldSet> = ({
 	watch
 }) => {
 	const errors = formState?.errors
-	const isGasRequired = watch('data.gas.status') !== 'none'
+
+	const fieldsToShow = organizationDebtsFieldsData.filter(field => {
+		const service = extractLastLink(field.name)
+		return watch(`data.settings.services.${service as keyof IServices}.status`)
+	})
+
+	if (fieldsToShow.length === 0) {
+		return null
+	}
 
 	return (
 		<>
 			<h3 className={styles.blockTitle}>Долги УО за коммунальные ресурсы</h3>
 			<div className={styles.fieldSet}>
-				{organizationDebtsFieldsData.map(field => (
+				{fieldsToShow.map(field => (
 					<ReportFieldNumber
 						key={field.name}
 						control={control}
@@ -35,16 +47,6 @@ const OrganizationDebtsFieldSet: FC<IOrganizationDebtsFieldSet> = ({
 						}
 					/>
 				))}
-
-				{isGasRequired && (
-					<ReportFieldNumber
-						control={control}
-						fieldName='data.organizationDebts.gas'
-						placeholder='Газоснабжение, руб'
-						register={register}
-						error={errors?.data?.organizationDebts?.gas}
-					/>
-				)}
 			</div>
 		</>
 	)
