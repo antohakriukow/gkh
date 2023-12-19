@@ -1,3 +1,4 @@
+import { FirebaseError } from 'firebase/app'
 import { User, onAuthStateChanged } from 'firebase/auth'
 import React, {
 	FC,
@@ -8,12 +9,15 @@ import React, {
 	useMemo,
 	useState
 } from 'react'
+import { toast } from 'react-toastify'
 
 import Layout from '~/components/layout/Layout'
 import Modal from '~/components/ui/modal/Modal'
 
 import { auth, login, logout, register } from '~/services/_firebase'
 import { UserService } from '~/services/user.service'
+
+import { handleAuthErrors } from '~/utils/error.utils'
 
 // Определение интерфейсов для каждого контекста
 interface IAuthContext {
@@ -55,8 +59,9 @@ export const CombinedProvider: FC<PropsWithChildren<unknown>> = ({
 			const userResponse = await register(email, password)
 			if (!userResponse.user.email) return
 			await UserService.create(userResponse.user.uid, userResponse.user.email)
-		} catch (error: any) {
-			console.log('Error reg:', error)
+			toast.success('Регистрация прошла успешно.', { autoClose: 1500 })
+		} catch (error) {
+			if (error instanceof FirebaseError) handleAuthErrors(error)
 		} finally {
 			setIsLoading(false)
 		}
@@ -68,8 +73,9 @@ export const CombinedProvider: FC<PropsWithChildren<unknown>> = ({
 			await login(email, password).then(data => {
 				setUser(data.user)
 			})
-		} catch (error: any) {
-			console.log('Error login:', error)
+			toast.success('Добро пожаловать!', { autoClose: 1500 })
+		} catch (error) {
+			if (error instanceof FirebaseError) handleAuthErrors(error)
 		} finally {
 			setIsLoading(false)
 		}
@@ -79,8 +85,9 @@ export const CombinedProvider: FC<PropsWithChildren<unknown>> = ({
 		setIsLoading(true)
 		try {
 			await logout()
-		} catch (error: any) {
-			console.log('Error logout:', error)
+			toast.info('Вы успешно вышли из аккаунта', { autoClose: 1500 })
+		} catch (error) {
+			if (error instanceof FirebaseError) handleAuthErrors(error)
 		} finally {
 			setIsLoading(false)
 		}

@@ -53,6 +53,8 @@ export const getConstants = (report: IReport) => {
 		accruals.gas +
 		accruals.solidWasteRemoval
 
+	console.log('accruals.coldWater: ', accruals.coldWater)
+
 	const accrualsCommon =
 		accruals.coldWaterCommon +
 		accruals.hotWaterCommon +
@@ -63,6 +65,8 @@ export const getConstants = (report: IReport) => {
 		accruals.management + accruals.maintenance + accrualsCommon
 
 	const totalAccruals = accrualsCommunal + accrualsMaintenance
+
+	// console.log(accrualsCommunal, accrualsMaintenance)
 
 	const totalOrganizationDebts = Object.values(organizationDebts).reduce(
 		(sum, value) => sum + value,

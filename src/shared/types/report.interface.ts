@@ -1,5 +1,6 @@
 import { ICompany } from './company.interface'
 import {
+	IAccruals,
 	IReport22gkhData,
 	Type22gkhReportTemplate
 } from './report22gkh.interface'
@@ -37,7 +38,9 @@ export interface IReport {
 }
 
 export interface IReportCreate
-	extends Pick<IReport, 'type' | 'year' | 'period' | 'company'> {}
+	extends Pick<IReport, 'type' | 'year' | 'period' | 'company'> {
+	data?: { accruals: IAccruals }
+}
 
 export interface IReportTableItem
 	extends Pick<IReport, 'type' | 'year' | 'period' | 'updatedAt' | '_id'> {}

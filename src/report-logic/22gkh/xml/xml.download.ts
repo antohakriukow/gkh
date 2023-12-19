@@ -20,44 +20,45 @@ const _prepareToXML = (report: IReport) => {
 			version: '21-11-2022',
 			formatVersion: '1.3'
 		},
-		_content: {
-			_name: 'title',
-			_content: [
-				...getReportTitle(report),
-				{
-					_name: 'sections',
-					_content: [
-						{
-							_name: 'section',
-							_attrs: { code: '1' },
-							_content: readReportSchema(report.finalReport[1])
-						},
-						{
-							_name: 'section',
-							_attrs: { code: '2' },
-							_content: readReportSchema(report.finalReport[2])
-						},
-						{
-							_name: 'section',
-							_attrs: { code: '3' },
-							_content: readReportSchema(report.finalReport[3])
-						},
-						{
-							_name: 'section',
-							_attrs: { code: '4' },
-							_content: readReportSchema(report.finalReport[4])
-						}
-					]
-				}
-			]
-		}
+		_content: [
+			{
+				_name: 'title',
+				_content: getReportTitle(report)
+			},
+			{
+				_name: 'sections',
+				_content: [
+					{
+						_name: 'section',
+						_attrs: { code: '1' },
+						_content: readReportSchema(report.finalReport[1])
+					},
+					{
+						_name: 'section',
+						_attrs: { code: '2' },
+						_content: readReportSchema(report.finalReport[2])
+					},
+					{
+						_name: 'section',
+						_attrs: { code: '3' },
+						_content: readReportSchema(report.finalReport[3])
+					},
+					{
+						_name: 'section',
+						_attrs: { code: '4' },
+						_content: readReportSchema(report.finalReport[4])
+					}
+				]
+			}
+		]
 	}
 }
 
 export const downloadXML = (report: IReport) => {
 	const now = dayjs()
 	const config = {
-		header: false,
+		// header: false,
+		header: '<?xml version="1.0" encoding="UTF-8"?>',
 		indent: '    '
 	}
 	const XMLData = convertXmlAttributes(
@@ -70,9 +71,9 @@ export const downloadXML = (report: IReport) => {
 
 	const downloadLink = document.createElement('a')
 	downloadLink.href = url
-	downloadLink.download = `0609226_005_004_19278933_${report.year}_040${
-		report.period
-	}__${now.format('YYYYMMDD')}.xml`
+	downloadLink.download = `0609226_005_004_${report.company.okpo}_${
+		report.year
+	}_040${report.period}__${now.format('YYYYMMDD')}.xml`
 
 	downloadLink.click()
 

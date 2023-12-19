@@ -1,11 +1,15 @@
 import { useActions } from './useActions'
 import { useData } from './useData'
 import { useModal } from './useModal'
+import { FirebaseError } from 'firebase/app'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { IReportCreate } from '~/shared/types/report.interface'
 
 import { ReportService } from '~/services/report.service'
+
+import { handleDBErrors } from '~/utils/error.utils'
 
 export const useReport = () => {
 	const { userUid } = useData()
@@ -24,8 +28,10 @@ export const useReport = () => {
 			const createdReport = await ReportService.getById(userUid, reportId)
 
 			setCurrentReport(createdReport)
+
+			toast.success('Отчет создан', { autoClose: 3000 })
 		} catch (error) {
-			console.log(error)
+			if (error instanceof FirebaseError) handleDBErrors(error)
 		} finally {
 			hideModal()
 			setIsLoading(false)

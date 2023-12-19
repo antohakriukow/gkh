@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { clear22gkhReportData } from '~/data/clear22gkhReportData'
 
 import { Button } from '~/components/ui'
 
@@ -21,7 +22,8 @@ const ReportModal: FC = () => {
 			type: '22gkh',
 			year: newReportYear,
 			period: newReportPeriod,
-			company: currentCompany
+			company: currentCompany,
+			data: clear22gkhReportData
 		})
 	}
 

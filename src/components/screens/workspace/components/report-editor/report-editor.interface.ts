@@ -49,6 +49,7 @@ export interface IReportField {
 export interface IReportFieldWithSwitch extends IReportField {
 	watch: UseFormWatch<IReport>
 	setValue: UseFormSetValue<IReport>
+	showInput?: boolean
 }
 
 export interface IReportSelect {

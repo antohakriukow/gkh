@@ -29,12 +29,11 @@ const ServicesFieldSet: FC<IServicesFieldSet> = ({
 						control={control}
 						fieldName={field.name}
 						switcherName={field.switcherName}
-						placeholder={
-							isAdvancedModeOn ? `${field.placeholder}, м2` : field.placeholder
-						}
+						placeholder={field.placeholder}
 						register={register}
 						watch={watch}
 						setValue={setValue}
+						showInput={isAdvancedModeOn}
 					/>
 				))}
 			</div>

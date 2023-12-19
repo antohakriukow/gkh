@@ -14,12 +14,9 @@ const ReportFieldNumberWithSwitch: FC<IReportFieldWithSwitch> = ({
 	fieldName,
 	switcherName,
 	setValue,
+	showInput,
 	error
 }) => {
-	const isAdvancedModeOn =
-		watch('data.settings.housesCount') === 'many' &&
-		watch('data.settings.areasAreDifferent') === 'yes'
-
 	const isChecked = watch(switcherName as keyof IReport)
 	const monetizedArea =
 		watch('data.area.residentialArea') + watch('data.area.nonResidentialArea')
@@ -36,16 +33,16 @@ const ReportFieldNumberWithSwitch: FC<IReportFieldWithSwitch> = ({
 	return (
 		<div
 			className={
-				isChecked && isAdvancedModeOn
-					? styles.fieldWithCheckbox
-					: styles.checkbox
+				isChecked && showInput ? styles.fieldWithCheckbox : styles.checkbox
 			}
 		>
 			<Checkbox
 				{...register(switcherName as keyof IReport)}
-				placeholder={placeholder}
+				placeholder={
+					isChecked && showInput ? `${placeholder}, м2` : placeholder
+				}
 			/>
-			{isChecked && isAdvancedModeOn && (
+			{isChecked && showInput && (
 				<Field
 					{...register(fieldName as keyof IReport, {
 						valueAsNumber: true,

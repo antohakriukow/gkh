@@ -1,5 +1,7 @@
+import { FirebaseError } from 'firebase/app'
 import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, UseFormReset, UseFormSetValue } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import { generate22gkhReport } from '~/report-logic/22gkh/generate22gkhReport'
 import { downloadPDF } from '~/report-logic/22gkh/pdf/pdf.download'
 import { downloadXML } from '~/report-logic/22gkh/xml/xml.download'
@@ -12,6 +14,7 @@ import { IReport } from '~/shared/types/report.interface'
 
 import { ReportService } from '~/services/report.service'
 
+import { handleDBErrors } from '~/utils/error.utils'
 import { convertPeriod } from '~/utils/report.utils'
 
 export const useReportEditor = (
@@ -93,8 +96,10 @@ export const useReportEditor = (
 			await setCurrentReport(newReportData)
 
 			reset(newReportData)
+
+			toast.success('Данные сохранены', { autoClose: 3000 })
 		} catch (error) {
-			// console.log(error)
+			if (error instanceof FirebaseError) handleDBErrors(error)
 		} finally {
 			setIsLoading(false)
 		}
@@ -103,6 +108,7 @@ export const useReportEditor = (
 	const generateReport = async () => {
 		if (!user || !currentReport) return
 		setIsLoading(true)
+		console.log('currentReport: ', currentReport)
 		const finalReport = generate22gkhReport(currentReport)
 
 		try {
@@ -117,8 +123,10 @@ export const useReportEditor = (
 				currentReport._id.toString()
 			)
 			await setCurrentReport(newReportData)
+
+			toast.success('Генерация отчета завершена', { autoClose: 3000 })
 		} catch (error) {
-			// console.log(error)
+			if (error instanceof FirebaseError) handleDBErrors(error)
 		} finally {
 			setIsLoading(false)
 		}

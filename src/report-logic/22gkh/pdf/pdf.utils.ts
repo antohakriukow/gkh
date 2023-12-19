@@ -70,7 +70,7 @@ export const getSectionTwoRow = (
 
 	const rows = []
 	for (let i = startRow; i <= endRow; i++) {
-		if (report.finalReport[2][i]) {
+		if (report.finalReport[2] && report.finalReport[2][i]) {
 			rows.push([
 				{ text: sectionNames[i], ...getMarginLeft(indent) },
 				{

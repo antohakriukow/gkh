@@ -114,9 +114,11 @@ export const readReportSchema = (schema?: Object) => {
 					_content: val
 				}))
 
+			const formattedKey = key.padStart(2, '0')
+
 			return {
 				_name: 'row',
-				_attrs: { code: key },
+				_attrs: { code: formattedKey },
 				_content: contentArray
 			}
 		})

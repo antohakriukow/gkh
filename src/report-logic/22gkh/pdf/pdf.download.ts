@@ -19,7 +19,7 @@ import { getSignature } from './data/signature.data';
 
 export const downloadPDF = (report:IReport) => {
 	if (!report.finalReport) return
-
+  console.log(report.finalReport)
 
 	const document = {
 		pageOrientation: 'landscape',
@@ -131,6 +131,7 @@ export const downloadPDF = (report:IReport) => {
   ]
 
 }
+  console.log('document: ')
 
 	pdfMake.createPdf(document).open()
 }

@@ -38,7 +38,8 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 	const isBudgetFinancing = watch('data.budgetFinancing.status') === 'yes'
 	const isRenovationCosts = watch('data.renovationCosts.status') === 'yes'
 	const hasOneHouse = watch('data.settings.housesCount') === 'one'
-	const isAdvancedModeOn = watch('data.settings.housesCount') === 'many'
+	const hasManyHouses = watch('data.settings.housesCount') === 'many'
+	const isAdvancedModeOn = hasManyHouses
 	// watch('data.settings.areasAreDifferent') === 'yes'
 
 	return (
@@ -53,7 +54,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 					placeholder='Количество домов в управлении'
 					options={housesCountOptions}
 				/>
-				{!hasOneHouse && (
+				{hasManyHouses && (
 					<ReportSelect
 						control={control}
 						fieldName='data.settings.areasAreDifferent'
