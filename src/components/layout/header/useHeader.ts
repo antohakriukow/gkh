@@ -3,21 +3,27 @@ import { useAuth } from '~/hooks/useAuth'
 import { useData } from '~/hooks/useData'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
 
+import { CompanyService } from '~/services/company.service'
+
 export const useHeader = () => {
 	const { logout } = useAuth()
-	const { companies, userId, isLoading: isDataLoading } = useData()
+	const {
+		companies,
+		userId,
+		userUid,
+		currentCompanyInn,
+		isLoading: isDataLoading
+	} = useData()
 	const { currentCompany } = useTypedSelector(state => state.ui)
 	const { setCurrentCompany } = useActions()
 
-	const handleSetCurrentCompany = async (inn: number) => {
-		const current = companies.find(company => company.inn === inn)
-		if (!current) return
-		await setCurrentCompany(current)
-	}
+	const handleSetCurrentCompany = (inn: number) =>
+		CompanyService.updateCurrentCompanyInn(userUid, inn.toString())
 
 	return {
 		isDataLoading,
 		userId,
+		currentCompanyInn,
 		companies,
 		currentCompany,
 		setCurrentCompany,

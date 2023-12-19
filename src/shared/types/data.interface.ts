@@ -6,6 +6,7 @@ export interface IData {
 	userUid: string
 	displayName?: string
 	email: string
+	currentCompanyInn: string
 	companies: ICompany[]
 	reports: IReport[]
 }

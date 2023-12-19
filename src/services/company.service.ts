@@ -46,6 +46,14 @@ export const CompanyService = {
 		update(ref(db, `users/${userId}/companies/${data.inn}`), data)
 	},
 
+	async updateCurrentCompanyInn(userId: string, currentCompanyInn: string) {
+		if (!currentCompanyInn) return
+
+		update(ref(db, `users/${userId}`), {
+			currentCompanyInn: +currentCompanyInn
+		})
+	},
+
 	async remove(userId: string, companyId: string) {
 		remove(ref(db, `users/${userId}/companies/${companyId}`))
 	}

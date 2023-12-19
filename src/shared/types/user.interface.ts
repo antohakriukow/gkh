@@ -2,6 +2,7 @@ export interface IUser {
 	uid: string
 	email: string
 	password: string
+	currentCompanyInn: string
 	createdAt?: string
 	isSubscribed?: boolean
 }

@@ -12,6 +12,7 @@ export const useData = () => {
 		userUid: '',
 		displayName: '',
 		email: '',
+		currentCompanyInn: '',
 		companies: [],
 		reports: []
 	} as IData)
@@ -32,6 +33,7 @@ export const useData = () => {
 							userUid: user.uid,
 							displayName: snapshot.val().displayName,
 							email: snapshot.val().email,
+							currentCompanyInn: snapshot.val().currentCompanyInn,
 							companies: snapshot.val().companies
 								? snapshot.val().companies
 								: [],
@@ -46,6 +48,7 @@ export const useData = () => {
 							userUid: '',
 							displayName: '',
 							email: '',
+							currentCompanyInn: '',
 							companies: [],
 							reports: []
 						})
@@ -72,6 +75,7 @@ export const useData = () => {
 			isLoading,
 			userId: data.userId,
 			userUid: data.userUid,
+			currentCompanyInn: data.currentCompanyInn,
 			companies: Object.values(data.companies),
 			reports: Object.values(data.reports),
 			displayName: data.displayName,
