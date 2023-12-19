@@ -1,6 +1,6 @@
 import DropDownItem from './DropDownItem'
 import { IDropDown } from './drop-down.interface'
-import { FC, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md'
 
 import { Loader } from '~/components/ui'
@@ -17,6 +17,7 @@ import styles from './DropDown.module.scss'
 const DropDown: FC<IDropDown> = ({ data }) => {
 	const [isDropDownOpened, setIsDropDownOpened] = useState(false)
 	const { isDataLoading, handleSetCurrentCompany, currentCompany } = useHeader()
+	const dropDownRef = useRef<HTMLDivElement>(null)
 
 	const toggleDropDown = () => setIsDropDownOpened(!isDropDownOpened)
 	const handleClickOnItem = (inn: number) => {
@@ -34,10 +35,26 @@ const DropDown: FC<IDropDown> = ({ data }) => {
 		/>
 	)
 
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				dropDownRef.current &&
+				!dropDownRef.current.contains(event.target as Node)
+			) {
+				setIsDropDownOpened(false)
+			}
+		}
+
+		document.addEventListener('mousedown', handleClickOutside)
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside)
+		}
+	}, [dropDownRef])
+
 	if (isDataLoading) return <Loader />
 
 	return (
-		<div className={styles.anchor}>
+		<div ref={dropDownRef} className={styles.anchor}>
 			<div className={styles.dropDown}>
 				<div className={styles.first}>
 					{currentCompany && renderDropDownItem(currentCompany, true)}

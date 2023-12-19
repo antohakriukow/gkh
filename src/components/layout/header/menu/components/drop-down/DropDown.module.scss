@@ -27,6 +27,7 @@
 .title {
 	@apply pr-1 text-base whitespace-nowrap overflow-hidden overflow-ellipsis text-primary-800 m-0 py-1 w-full select-none;
 	min-width: 180px;
+	max-width: 250px;
 }
 
 .first {
