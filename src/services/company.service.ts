@@ -33,25 +33,26 @@ export const CompanyService = {
 		}
 	},
 
-	async create(userId: string, data: ICompany) {
-		if (!data.inn) return
-		const companyId = data.inn
-
-		set(ref(db, `users/${userId}/companies/${companyId}`), data)
-	},
-
-	async update(userId: string, data: ICompany) {
-		if (!data.inn) return
-
-		update(ref(db, `users/${userId}/companies/${data.inn}`), data)
-	},
-
 	async updateCurrentCompanyInn(userId: string, currentCompanyInn: string) {
 		if (!currentCompanyInn) return
 
 		update(ref(db, `users/${userId}`), {
 			currentCompanyInn: +currentCompanyInn
 		})
+	},
+
+	async create(userId: string, data: ICompany) {
+		if (!data.inn) return
+		const companyId = data.inn
+
+		set(ref(db, `users/${userId}/companies/${companyId}`), data)
+		this.updateCurrentCompanyInn(userId, companyId.toString())
+	},
+
+	async update(userId: string, data: ICompany) {
+		if (!data.inn) return
+
+		update(ref(db, `users/${userId}/companies/${data.inn}`), data)
 	},
 
 	async remove(userId: string, companyId: string) {

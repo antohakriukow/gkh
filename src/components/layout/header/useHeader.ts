@@ -15,7 +15,13 @@ export const useHeader = () => {
 		isLoading: isDataLoading
 	} = useData()
 	const { currentCompany } = useTypedSelector(state => state.ui)
-	const { setCurrentCompany } = useActions()
+	const { setCurrentCompany, setCurrentReport } = useActions()
+
+	const handleLogout = () => {
+		setCurrentReport(null)
+		setCurrentCompany(null)
+		logout()
+	}
 
 	const handleSetCurrentCompany = (inn: number) =>
 		CompanyService.updateCurrentCompanyInn(userUid, inn.toString())
@@ -28,6 +34,6 @@ export const useHeader = () => {
 		currentCompany,
 		setCurrentCompany,
 		handleSetCurrentCompany,
-		logout
+		handleLogout
 	}
 }

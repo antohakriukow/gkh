@@ -5,10 +5,10 @@ import { useHeader } from '../../../useHeader'
 import styles from '../../HeaderMenu.module.scss'
 
 const LogoutButton: FC = () => {
-	const { logout } = useHeader()
+	const { handleLogout } = useHeader()
 
 	return (
-		<div onClick={logout} className={styles.button}>
+		<div onClick={handleLogout} className={styles.button}>
 			<RiLogoutBoxLine
 				color='#df4956'
 				size={20}
