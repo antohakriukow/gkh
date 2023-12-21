@@ -8,29 +8,22 @@
 
 	> p {
 		@apply p-0 m-0;
-		font-size: 20px;
-		line-height: 22px;
-		color: $secondary-600;
+		font-size: 16px;
+		line-height: 18px;
+		color: $primary-600;
 	}
 	> svg {
-		@apply py-4;
-		color: $secondary-600;
+		@apply py-2;
+		color: $primary-600;
 	}
 	&:hover {
 		> p,
 		> svg {
 			transform: scale(1.02);
-			color: $secondary-500;
+			color: $primary-500;
 		}
 	}
 }
-
-// .scroll:hover {
-// 	> p,
-// 	> svg {
-// 		transform: scale(1.02);
-// 	}
-// }
 
 @media (max-width: 800px) {
 	.landing {
