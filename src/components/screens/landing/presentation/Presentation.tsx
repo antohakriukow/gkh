@@ -22,7 +22,8 @@ const Presentation: FC = () => {
 	return (
 		<div className={styles.container}>
 			<div className={styles.presentation}>
-				<h3 className={styles.heading}>Экспресс 22 - это:</h3>
+				<h3 className={styles.heading}>Экспресс 22 -</h3>
+				<p className={styles.description}>Ваш помощник в заполнении 22-ЖКХ.</p>
 				<ul>
 					{benefitsData.map((benefit: IBenefit) => (
 						<Benefit

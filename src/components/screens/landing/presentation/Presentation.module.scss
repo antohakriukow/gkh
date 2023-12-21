@@ -22,6 +22,11 @@
 	color: $gray-700;
 }
 
+.description {
+	@apply m-0 text-2xl font-extralight text-left;
+	color: $gray-700;
+}
+
 .title {
 	@apply mb-2 text-xl font-extralight text-left;
 	color: $gray-700;
