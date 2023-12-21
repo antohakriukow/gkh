@@ -1,5 +1,9 @@
-.heading {
+.headingDefault {
 	@apply text-primary-800 font-semibold text-2xl;
+}
+
+.subheading {
+	@apply text-xl mb-5 font-semibold;
 }
 
 @media (max-width: 600px) {

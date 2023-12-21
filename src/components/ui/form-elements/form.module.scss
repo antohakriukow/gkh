@@ -26,6 +26,10 @@
 	@apply bg-danger-600 hover:bg-danger-400;
 }
 
+.disabled {
+	@apply bg-gray-300;
+}
+
 .field {
 	@apply mb-1 text-left w-full flex flex-row;
 

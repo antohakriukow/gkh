@@ -9,7 +9,7 @@ interface IHeading {
 }
 
 const Heading: FC<IHeading> = ({ title, className }) => {
-	return <h1 className={cn(styles.heading, className)}>{title}</h1>
+	return <h1 className={cn(className, styles.headingDefault)}>{title}</h1>
 }
 
 export default Heading

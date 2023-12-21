@@ -11,7 +11,8 @@ const Button: FC<IButton> = ({ children, className, color, ...props }) => {
 				styles.button,
 				{
 					[styles.success]: color === 'success',
-					[styles.danger]: color === 'danger'
+					[styles.danger]: color === 'danger',
+					[styles.disabled]: props.disabled
 				},
 				className
 			)}

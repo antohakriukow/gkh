@@ -1,13 +1,1 @@
-.layout {
-	@apply bg-primary-50 px-4 h-full;
-	min-height: 100vh;
-	position: relative;
-	min-width: 320px;
-}
 
-@media (max-width: 344px) {
-	.layout {
-		min-width: 344px;
-		padding: 0;
-	}
-}

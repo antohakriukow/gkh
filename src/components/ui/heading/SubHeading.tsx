@@ -1,7 +1,15 @@
+import cn from 'clsx'
 import { FC } from 'react'
 
-const SubHeading: FC<{ title: string }> = ({ title }) => {
-	return <h2 className='text-xl mb-5 font-semibold'>{title}</h2>
+import styles from './Heading.module.scss'
+
+interface ISubHeading {
+	title: string
+	className?: string
+}
+
+const SubHeading: FC<ISubHeading> = ({ title, className }) => {
+	return <h2 className={cn(styles.heading, className)}>{title}</h2>
 }
 
 export default SubHeading

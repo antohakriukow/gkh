@@ -1,5 +1,10 @@
 import { FC } from 'react'
-import { FieldError, FormState, UseFormRegister } from 'react-hook-form'
+import {
+	FieldError,
+	FormState,
+	UseFormRegister,
+	UseFormWatch
+} from 'react-hook-form'
 
 import { AuthField } from '~/components/ui'
 
@@ -8,14 +13,20 @@ import { validEmail } from '~/shared/regex'
 interface IAuthFields {
 	register: UseFormRegister<any>
 	formState: FormState<any>
+	watch: UseFormWatch<any>
 	isPasswordRequired?: boolean
+	isReg: boolean
 }
 
 const AuthFields: FC<IAuthFields> = ({
 	register,
 	formState: { errors },
+	watch,
+	isReg,
 	isPasswordRequired = false
 }) => {
+	const isPasswordValid = watch('password')?.length >= 6
+
 	return (
 		<>
 			<AuthField
@@ -47,6 +58,18 @@ const AuthFields: FC<IAuthFields> = ({
 				type='password'
 				error={errors.password as FieldError}
 			/>
+
+			{isReg && isPasswordValid && (
+				<AuthField
+					{...register('passwordConfirm', {
+						validate: value =>
+							value === watch('password') || 'Пароли не совпадают'
+					})}
+					placeholder='Подтвердите пароль'
+					type='password'
+					error={errors.passwordConfirm as FieldError}
+				/>
+			)}
 		</>
 	)
 }

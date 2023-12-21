@@ -1,0 +1,41 @@
+@import '../../../../styles/colors.scss';
+
+.container {
+	@apply flex flex-col flex-1 h-full;
+}
+
+.form {
+	@apply m-auto text-center max-w-md w-4/5;
+}
+
+@media (max-width: 800px) {
+	.container {
+		@apply w-full h-1/2;
+		min-height: 100vh;
+	}
+}
+
+.heading {
+	@apply text-4xl font-light text-left;
+	color: $gray-700;
+}
+
+.subheading {
+	@apply mb-8 text-xl font-extralight text-left;
+	color: $gray-600;
+}
+
+.switcherTitle {
+	@apply mt-5;
+}
+
+.switcherPressable {
+	@apply text-primary-500 mt-1 font-bold hover:cursor-pointer;
+	&:hover {
+		transform: scale(1.05);
+	}
+}
+
+.button {
+	@apply mt-10 w-full;
+}

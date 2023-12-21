@@ -1,15 +1,14 @@
+import ProtectedRoute from './ProtectedRoute'
 import { FC } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import Auth from '~/components/screens/auth/Auth'
+import Landing from '~/components/screens/landing/Landing'
 import Workspace from '~/components/screens/workspace/Workspace'
-
-import ProtectedRoute from './ProtectedRoute'
 
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <Auth />
+		element: <Landing />
 	},
 	{
 		path: 'workspace',

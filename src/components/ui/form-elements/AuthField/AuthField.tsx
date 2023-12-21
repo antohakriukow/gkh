@@ -1,4 +1,3 @@
-import cn from 'classnames'
 import { forwardRef } from 'react'
 
 import { IField } from '../form.interface'
@@ -9,14 +8,13 @@ const AuthField = forwardRef<HTMLInputElement, IField>(
 	({ placeholder, error, type = 'text', style, ...props }, ref) => {
 		return (
 			<div style={style}>
-				<div className={cn(styles.common, styles.field)}>
-					<label>
-						{!!placeholder && <span>{placeholder}</span>}
-						<div className={styles.inputContainer}>
-							<input ref={ref} type={type} {...props} />
-						</div>
-					</label>
-				</div>
+				<input
+					className={styles.input}
+					placeholder={placeholder}
+					ref={ref}
+					type={type}
+					{...props}
+				/>
 				{error && <div className={styles.error}>{error.message}</div>}
 			</div>
 		)

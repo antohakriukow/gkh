@@ -1,0 +1,52 @@
+@import '../../../../styles/colors.scss';
+
+.container {
+	@apply flex flex-col justify-between items-center flex-1 h-full bg-primary-50;
+}
+
+.presentation {
+	@apply flex flex-col m-auto max-w-md w-4/5;
+	max-width: 600px;
+	> li {
+		@apply mb-6;
+	}
+	> ul {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+	}
+}
+
+.heading {
+	@apply mb-2 mt-2 text-4xl font-light text-left;
+	color: $gray-700;
+}
+
+.title {
+	@apply mb-2 text-xl font-extralight text-left;
+	color: $gray-700;
+}
+
+.subTitle {
+	@apply mb-2 text-xl font-extralight text-left;
+	color: $gray-600;
+}
+
+.benefit {
+	@apply mb-6;
+}
+
+.benefit .title {
+	@apply text-lg font-semibold mb-2;
+}
+
+.benefit .subTitle {
+	@apply text-sm font-light;
+}
+
+@media (max-width: 800px) {
+	.container {
+		@apply w-full h-1/2;
+		min-height: 100vh;
+	}
+}
