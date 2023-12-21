@@ -28,11 +28,11 @@ const AddCompanyForm: FC<IAddCompanyForm> = ({
 				{...register('inn', {
 					minLength: {
 						value: 10,
-						message: 'Длина ИНН должна быть равна 10 цифрам'
+						message: 'Невалидный ИНН'
 					},
 					maxLength: {
 						value: 10,
-						message: 'Длина ИНН должна быть равна 10 цифрам'
+						message: 'Невалидный ИНН'
 					}
 				})}
 				error={errors.inn}

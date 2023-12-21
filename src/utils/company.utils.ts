@@ -1,7 +1,6 @@
 import { ICompany } from '~/shared/types/company.interface'
 
 export const prepareCompanyData = (data: any): ICompany => {
-	console.log(data)
 	return {
 		inn: !!data?.inn ? data?.inn : '',
 		kpp: !!data?.kpp ? data?.kpp : '',
@@ -17,4 +16,14 @@ export const prepareCompanyData = (data: any): ICompany => {
 		phone: '',
 		email: ''
 	}
+}
+
+export const hasEmptyFields = (obj: ICompany) => {
+	return Object.entries(obj).some(([key, value]) => {
+		if (key === 'email' || key === 'phone') {
+			return false
+		}
+
+		return value === null || value === undefined || value === ''
+	})
 }

@@ -16,10 +16,11 @@ export const useData = () => {
 		companies: [],
 		reports: []
 	} as IData)
-	const [isLoading, setIsLoading] = useState(true)
+	const [isLoading, setIsLoading] = useState(false)
 
 	useEffect(() => {
 		//NextOrObserver<User>
+		setIsLoading(true)
 		const handleAuthStateChanged: NextOrObserver<User> = user => {
 			if (user) {
 				const dataRef = ref(db, `users/${user.uid}`)

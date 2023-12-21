@@ -14,6 +14,8 @@ import { toast } from 'react-toastify'
 import Layout from '~/components/layout/Layout'
 import Modal from '~/components/ui/modal/Modal'
 
+import { useActions } from '~/hooks/useActions'
+
 import { auth, login, logout, register } from '~/services/_firebase'
 import { UserService } from '~/services/user.service'
 
@@ -44,6 +46,7 @@ export const CombinedContext = createContext<ICombinedContext>(
 export const CombinedProvider: FC<PropsWithChildren<unknown>> = ({
 	children
 }) => {
+	const { setNewCompany } = useActions()
 	const [user, setUser] = useState<User | null>(null)
 	const [isLoading, setIsLoading] = useState(false)
 	const [isLoadingInitial, setIsLoadingInitial] = useState(true)
@@ -102,6 +105,7 @@ export const CombinedProvider: FC<PropsWithChildren<unknown>> = ({
 	const hideModal = useCallback(() => {
 		setIsModalOpen(false)
 		setModalComponent(null)
+		setNewCompany(null)
 	}, [])
 
 	useEffect(() => {
