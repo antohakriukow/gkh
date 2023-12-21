@@ -8,15 +8,19 @@ import {
 } from 'firebase/auth'
 import { ref, set } from 'firebase/database'
 
-import { db } from '~/services/_firebase'
+import { auth, db, verifyEmail } from '~/services/_firebase'
 
 export const UserService = {
 	async create(userId: string, email: string) {
-		set(ref(db, `users/${userId}`), {
+		await set(ref(db, `users/${userId}`), {
 			displayName: 'No name',
 			email: email
 		})
-		cloudFunction.addShortIdToUser()
+		await cloudFunction.addShortIdToUser()
+		// const currentUser = auth.currentUser
+		// if (currentUser) {
+		// 	await verifyEmail(currentUser)
+		// }
 	},
 
 	async updateUserEmail(user: User, newEmail: string, currentPassword: string) {

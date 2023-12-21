@@ -16,7 +16,13 @@ import Modal from '~/components/ui/modal/Modal'
 
 import { useActions } from '~/hooks/useActions'
 
-import { auth, login, logout, register } from '~/services/_firebase'
+import {
+	auth,
+	login,
+	logout,
+	register,
+	verifyEmail
+} from '~/services/_firebase'
 import { UserService } from '~/services/user.service'
 
 import { handleAuthErrors } from '~/utils/error.utils'
@@ -62,7 +68,11 @@ export const CombinedProvider: FC<PropsWithChildren<unknown>> = ({
 			const userResponse = await register(email, password)
 			if (!userResponse.user.email) return
 			await UserService.create(userResponse.user.uid, userResponse.user.email)
-			toast.success('Регистрация прошла успешно.', { autoClose: 1500 })
+			await verifyEmail(userResponse.user)
+			toast.success(
+				`Добро пожаловать! Не забудьте подтвердить электронную почту. Письмо уже отправлено на ${email}.`,
+				{ autoClose: false }
+			)
 		} catch (error) {
 			if (error instanceof FirebaseError) handleAuthErrors(error)
 		} finally {
