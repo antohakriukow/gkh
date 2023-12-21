@@ -2,9 +2,9 @@ import { FirebaseError } from 'firebase/app'
 import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, UseFormReset, UseFormSetValue } from 'react-hook-form'
 import { toast } from 'react-toastify'
-import { generate22gkhReport } from '~/report-logic/22gkh/generate22gkhReport'
-import { downloadPDF } from '~/report-logic/22gkh/pdf/pdf.download'
-import { downloadXML } from '~/report-logic/22gkh/xml/xml.download'
+import { generate22gkhReport } from '~/core/22gkh/generate22gkhReport'
+import { downloadPDF } from '~/core/22gkh/pdf/pdf.download'
+import { downloadXML } from '~/core/22gkh/xml/xml.download'
 
 import { useActions } from '~/hooks/useActions'
 import { useAuth } from '~/hooks/useAuth'
@@ -108,7 +108,6 @@ export const useReportEditor = (
 	const generateReport = async () => {
 		if (!user || !currentReport) return
 		setIsLoading(true)
-		console.log('currentReport: ', currentReport)
 		const finalReport = generate22gkhReport(currentReport)
 
 		try {

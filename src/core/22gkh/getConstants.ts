@@ -15,7 +15,17 @@ import {
 	generateServicesArea
 } from '~/utils/report.utils'
 
+/**
+ * Получает и обрабатывает данные отчета для последующего использования в отчете.
+ * @param report - Объект отчета, содержащий необходимые данные.
+ * @returns Объект с обработанными данными для отчета.
+ * @throws Ошибка, если данные отчета отсутствуют.
+ */
 export const getConstants = (report: IReport) => {
+	if (!report?.data) {
+		throw new Error('Отсутствуют данные отчета')
+	}
+
 	const { area, elevator, gas, stove, renovation, settings, natural } =
 		report?.data
 	const accruals = divideAndRoundNumbers(report.data.accruals) as IAccruals
@@ -33,10 +43,24 @@ export const getConstants = (report: IReport) => {
 		report.data.renovationCosts
 	) as IRenovationCosts
 
+	// Монетизируемая площадь
 	const monetizedArea = area.residentialArea + area.nonResidentialArea
 
+	/**
+	 * Генерирует объект с площадями услуг, основываясь на настройках и заданной общей площади.
+	 *
+	 * Эта функция принимает объект настроек и общую монетизированную площадь, затем генерирует
+	 * и возвращает объект, в котором каждому ключу услуги соответствует её площадь. Если для услуги
+	 * указана конкретная площадь в настройках, используется она; в противном случае используется
+	 * общая монетизированная площадь.
+	 *
+	 * @param settings - Объект настроек, содержащий информацию о площадях различных услуг.
+	 * @param monetizedArea - Общая монетизированная площадь, используемая по умолчанию.
+	 * @returns Объект, где ключи - это услуги, а значения - соответствующие площади.
+	 */
 	const calculatedAreas = generateServicesArea(settings, monetizedArea)
 
+	//Площадь, на которую начисляется капремонт
 	const renovationArea =
 		renovation.status === 'yes'
 			? monetizedArea
@@ -44,6 +68,7 @@ export const getConstants = (report: IReport) => {
 			? renovation.areaWith
 			: 0
 
+	// Общая сумма начислений КУ
 	const accrualsCommunal =
 		accruals.coldWater +
 		accruals.hotWater +
@@ -53,26 +78,26 @@ export const getConstants = (report: IReport) => {
 		accruals.gas +
 		accruals.solidWasteRemoval
 
-	console.log('accruals.coldWater: ', accruals.coldWater)
-
+	// Общая сумма начислений коммунальных ресурсов (КР) на СОИ
 	const accrualsCommon =
 		accruals.coldWaterCommon +
 		accruals.hotWaterCommon +
 		accruals.waterDisposalCommon +
 		accruals.electricityCommon
 
+	// Общая сумма начислений за ЖУ (Управление МКД, Содержание и текущий ремонт, КР на СОИ)
 	const accrualsMaintenance =
 		accruals.management + accruals.maintenance + accrualsCommon
 
+	// Сумма начислений за коммунальные услуги и жилищные услуги
 	const totalAccruals = accrualsCommunal + accrualsMaintenance
-
-	// console.log(accrualsCommunal, accrualsMaintenance)
 
 	const totalOrganizationDebts = Object.values(organizationDebts).reduce(
 		(sum, value) => sum + value,
 		0
 	)
 
+	// Распределяем платежи за ЖКУ по услугам пропорционально суммам начисления
 	//prettier-ignore
 	let payments = {
     coldWater: Math.round((income.housing / totalAccruals) * accruals.coldWater),
@@ -99,6 +124,7 @@ export const getConstants = (report: IReport) => {
 	// Перезаписываем maintenance
 	payments.maintenance = income.housing - totalPaymentsWithoutMaintenance
 
+	// Общая сумма оплат за КУ
 	const communalPayments =
 		payments.coldWater +
 		payments.hotWater +
@@ -108,15 +134,18 @@ export const getConstants = (report: IReport) => {
 		payments.gas +
 		payments.solidWasteRemoval
 
+	// Общая сумма оплат за КР на СОИ
 	const commonPayments =
 		payments.coldWaterCommon +
 		payments.hotWaterCommon +
 		payments.waterDisposalCommon +
 		payments.electricityCommon
 
+	// Общая сумма оплат за ЖУ ("Управление МКД", "Содержание и текущий ремонт", КР на СОИ)
 	const commonAndMaintenancePayments =
 		payments.maintenance + payments.management + commonPayments
 
+	// Устанавливаем размер оплат за текущий период в размере суммы начисления, если оплачено больше чем начислено. Если оплата меньше начисления, то в размере суммы оплаты.
 	//prettier-ignore
 	const currentYearPayments = {
 		coldWater: payments.coldWater >= accruals.coldWater ? accruals.coldWater : payments.coldWater,
@@ -134,6 +163,7 @@ export const getConstants = (report: IReport) => {
 		maintenance: payments.maintenance >= accruals.maintenance ? accruals.maintenance : payments.maintenance
 	}
 
+	// Устанавливаем размер оплат в счет предыдущих периодов как разницу между оплатами и начислениями по каждой услуге. Если оплачено меньше, то возвращаем ноль
 	//prettier-ignore
 	const previousPeriodPayments = {
 		coldWater: payments.coldWater >= accruals.coldWater ? payments.coldWater - accruals.coldWater : 0,
@@ -151,6 +181,7 @@ export const getConstants = (report: IReport) => {
 		maintenance: payments.maintenance >= accruals.maintenance ? payments.maintenance - accruals.maintenance : 0
 	}
 
+	// Распределение долгов прошлых периодов пропорционально начислениям
 	//prettier-ignore
 	let previousPeriodDebts = {
 		coldWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldWater),
@@ -178,6 +209,7 @@ export const getConstants = (report: IReport) => {
 	previousPeriodDebts.maintenance =
 		residentsDebts.housing - totalPreviousPeriodDebtsWithoutMaintenance
 
+	// Расчет долгов. По каждой услуге: Начислено - оплачено за текущий период + долг за прошлый период - оплачен за прошлый период
 	//prettier-ignore
 	const debts = {
 		coldWater: accruals.coldWater - currentYearPayments.coldWater + previousPeriodDebts.coldWater - previousPeriodPayments.coldWater,
@@ -195,6 +227,7 @@ export const getConstants = (report: IReport) => {
 		maintenance: accruals.maintenance - currentYearPayments.maintenance + previousPeriodDebts.maintenance - previousPeriodPayments.maintenance,
 	}
 
+	// Общий долг за КУ
 	const communalDebts =
 		debts.coldWater +
 		debts.hotWater +
@@ -204,14 +237,23 @@ export const getConstants = (report: IReport) => {
 		debts.gas +
 		debts.solidWasteRemoval
 
+	// Общий долг за КР на СОИ
 	const commonDebts =
 		debts.coldWaterCommon +
 		debts.hotWaterCommon +
 		debts.waterDisposalCommon +
 		debts.electricityCommon
 
+	// Общий долг за ЖУ
 	const maintenanceDebts = debts.maintenance + debts.management + commonDebts
 
+	/**
+	 * Создает типичную строку данных с учетом начислений и платежей.
+	 * @param accruals - Начисления за услугу.
+	 * @param payments - Платежи за услугу.
+	 * @param area - Площадь, к которой применяются начисления и платежи.
+	 * @returns Объект со значениями для строки отчета.
+	 */
 	const typicalRow = (accruals: number, payments: number, area?: number) => ({
 		3: accruals,
 		4: payments,
@@ -221,18 +263,21 @@ export const getConstants = (report: IReport) => {
 		8: !!accruals && !!area ? area : 0
 	})
 
+	//Строка отчета №66. Вынесена в константу, так как используется в коде несколько раз
 	const row66 = typicalRow(
 		accrualsMaintenance,
 		commonAndMaintenancePayments,
 		monetizedArea
 	)
 
+	//Строка отчета №76. Вынесена в константу, так как используется в коде несколько раз
 	const row76 = typicalRow(
 		accruals.electricity,
 		payments.electricity,
 		calculatedAreas.electricity
 	)
 
+	//Строка отчета с данными о газоснабжении. Вынесена в константу, так как используется в коде несколько раз
 	const rowGas = {
 		3: accruals.gas,
 		4: payments.gas,
@@ -242,6 +287,13 @@ export const getConstants = (report: IReport) => {
 		8: monetizedArea // TODO: поработать с площадью
 	}
 
+	/**
+	 * Распределяет значения по услугам на основе заданных площадей.
+	 * @param row - Строка данных для распределения.
+	 * @param areaWith - Площадь с услугой.
+	 * @param areaWithout - Площадь без услуги.
+	 * @returns Объект с распределенными значениями.
+	 */
 	const distributeMaintenance = (row: 67 | 68) => {
 		const elevatorCopy = { ...elevator }
 		if (
@@ -262,6 +314,11 @@ export const getConstants = (report: IReport) => {
 		return row === 67 ? results[0] : results[1]
 	}
 
+	/**
+	 * Распределяет электричество в зависимости от типа плиты.
+	 * @param row - Строка данных для распределения.
+	 * @returns Объект с распределенными значениями.
+	 */
 	const distributeElectricity = (row: 77 | 78) => {
 		const stoveCopy = { ...stove }
 		if (
@@ -282,6 +339,11 @@ export const getConstants = (report: IReport) => {
 		return row === 77 ? results[0] : results[1]
 	}
 
+	/**
+	 * Распределяет расходы на газ в зависимости от его источника.
+	 * @param row - Строка данных для распределения.
+	 * @returns Объект с распределенными значениями.
+	 */
 	const distributeGas = (row: 79 | 80) => {
 		const gasCopy = { ...gas }
 		if (

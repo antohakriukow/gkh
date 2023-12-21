@@ -26,7 +26,7 @@ const ReportEditor: FC = () => {
 		closeReport
 	} = useReportEditor(setValue, reset)
 
-	const isReadyToGenerate = !formState.isDirty
+	const isReadyToGenerate = !formState.isDirty && formState.isValid
 	const isReadyToDownload =
 		currentReport?.finalReport?.generatedAt &&
 		currentReport?.finalReport?.generatedAt >= currentReport?.updatedAt

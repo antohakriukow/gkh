@@ -2,6 +2,16 @@ const _camelCaseToKebabCase = (str: string): string => {
 	return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 }
 
+/**
+ * Конвертирует атрибуты XML из camelCase в kebab-case.
+ *
+ * Эта функция используется для преобразования строковых XML-данных,
+ * изменяя формат именования атрибутов из camelCase (например, "someAttribute")
+ * в kebab-case (например, "some-attribute").
+ *
+ * @param xmlStr - Строка XML для преобразования.
+ * @returns Преобразованная строка XML с атрибутами в формате kebab-case.
+ */
 export const convertXmlAttributes = (xmlStr: string): string => {
 	return xmlStr.replace(
 		/([a-zA-Z]+)="([^"]*)"/g,

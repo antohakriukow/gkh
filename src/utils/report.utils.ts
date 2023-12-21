@@ -19,6 +19,12 @@ export const convertPeriod = (period: number) => {
 	}
 }
 
+/**
+ * Удаляет из объекта все поля со значением 0 или undefined.
+ *
+ * @param obj - Объект для обработки.
+ * @returns Новый объект без полей со значением 0 или undefined.
+ */
 export const removeZeroAndUndefined = (obj: any): any => {
 	if (typeof obj !== 'object' || obj === null) {
 		return obj
@@ -41,6 +47,11 @@ export const removeZeroAndUndefined = (obj: any): any => {
 	return newObj
 }
 
+/**
+ * Удаляет из объекта все поля со значением undefined или NaN.
+ *
+ * @param obj - Объект для обработки.
+ */
 export const removeUndefinedAndNaNFields = (obj: any): void => {
 	Object.keys(obj).forEach(key => {
 		if (typeof obj[key] === 'object' && obj[key] !== null) {
@@ -54,6 +65,11 @@ export const removeUndefinedAndNaNFields = (obj: any): void => {
 	})
 }
 
+/**
+ * Заменяет все поля объекта со значением undefined или NaN на 0.
+ *
+ * @param obj - Объект для обработки.
+ */
 export const replaceUndefinedAndNaNWithZero = (obj: any): void => {
 	Object.keys(obj).forEach(key => {
 		if (typeof obj[key] === 'object' && obj[key] !== null) {
@@ -67,6 +83,12 @@ export const replaceUndefinedAndNaNWithZero = (obj: any): void => {
 	})
 }
 
+/**
+ * Генерирует заголовок отчета на основе данных компании.
+ *
+ * @param data - Объект отчета.
+ * @returns Массив объектов с информацией для заголовка отчета.
+ */
 export const getReportTitle = (data: IReport) => [
 	{ _name: 'item', _attrs: { name: 'okpo', value: data.company.okpo } },
 	{
@@ -95,6 +117,12 @@ export const getReportTitle = (data: IReport) => [
 	}
 ]
 
+/**
+ * Читает схему отчета и возвращает структурированный массив данных.
+ *
+ * @param schema - Схема отчета.
+ * @returns Массив объектов с данными отчета.
+ */
 export const readReportSchema = (schema?: Object) => {
 	if (!schema) return
 	return Object.entries(schema)
@@ -124,11 +152,27 @@ export const readReportSchema = (schema?: Object) => {
 		})
 }
 
+/**
+ * Вычисляет платежи за предыдущий период.
+ *
+ * @param payments - Сумма платежей за текущий период.
+ * @param accruals - Начисления за текущий период.
+ * @returns Сумма платежей за предыдущий период.
+ */
 export const calculatePreviousPayments = (
 	payments: number,
 	accruals: number
 ) => (payments > accruals ? payments - accruals : 0)
 
+/**
+ * Распределяет значения по заданным областям.
+ *
+ * @param inputObject - Объект со значениями для распределения.
+ * @param areaOne - Первая область для распределения.
+ * @param areaTwo - Вторая область для распределения.
+ * @param areaThree - Третья область для распределения (необязательно).
+ * @returns Массив объектов с распределенными значениями.
+ */
 export const distributeValues = (
 	inputObject: { [key: string]: number },
 	areaOne: number,
@@ -167,6 +211,18 @@ export const distributeValues = (
 	return resultArray
 }
 
+/**
+ * Генерирует объект с площадями для различных услуг.
+ *
+ * Эта функция принимает настройки услуг и стандартную площадь,
+ * а затем создает объект, в котором каждому ключу услуги соответствует
+ * его площадь. Если для конкретной услуги площадь не указана в настройках,
+ * используется стандартная площадь.
+ *
+ * @param settings - Объект настроек, содержащий информацию об услугах и их площадях.
+ * @param defaultArea - Стандартная площадь, используемая, если площадь услуги не указана.
+ * @returns Объект, где ключи - это названия услуг, а значения - соответствующие площади.
+ */
 export const generateServicesArea = (
 	settings: ISettings,
 	defaultArea: number

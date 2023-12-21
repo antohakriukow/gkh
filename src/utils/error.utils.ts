@@ -6,6 +6,7 @@ interface ErrorMapping {
 	message: string
 }
 
+// Показывает уведомление об ошибке firebase
 export const handleFirebaseError = (
 	error: FirebaseError,
 	errorMappings: ErrorMapping[]
@@ -24,6 +25,7 @@ export const handleFirebaseError = (
 	}
 }
 
+// Ошибки аутентификации
 export const handleAuthErrors = (error: FirebaseError) =>
 	handleFirebaseError(error, [
 		{
@@ -45,6 +47,7 @@ export const handleAuthErrors = (error: FirebaseError) =>
 		}
 	])
 
+// Ошибки базы данных
 export const handleDBErrors = (error: FirebaseError) =>
 	handleFirebaseError(error, [
 		{

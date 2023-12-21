@@ -17,6 +17,11 @@ import { getSignature } from './data/signature.data';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
+/**
+ * При вызове функция генерирует шаблон для библиотеки pdfmake, затем на его основе создает PDF и
+ * открывает его в новом окне. 
+ * @param report - объект отчета, содержащий финальные данные.
+*/
 export const downloadPDF = (report:IReport) => {
 	if (!report.finalReport) return
   console.log(report.finalReport)
@@ -104,6 +109,7 @@ export const downloadPDF = (report:IReport) => {
 			]
 		},
 	},
+  
   report.period === 4 ? sectionFourTitle : {},
   report.period === 4
   ? {

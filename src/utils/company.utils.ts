@@ -1,5 +1,6 @@
 import { ICompany } from '~/shared/types/company.interface'
 
+// Адаптирует полученный от API Dadata объект путем удаления лишних полей
 export const prepareCompanyData = (data: any): ICompany => {
 	return {
 		inn: !!data?.inn ? data?.inn : '',
@@ -18,6 +19,7 @@ export const prepareCompanyData = (data: any): ICompany => {
 	}
 }
 
+// Определяет, есть ли в незаполненные поля в данных о компании. Игнорирует поля email и phone
 export const hasEmptyFields = (obj: ICompany) => {
 	return Object.entries(obj).some(([key, value]) => {
 		if (key === 'email' || key === 'phone') {

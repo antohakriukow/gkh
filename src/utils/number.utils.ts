@@ -7,6 +7,7 @@ import {
 	IResidentsDebts
 } from '~/shared/types/report22gkh.interface'
 
+// Рекурсивно обходит объект и делит каждое число на 1000, после чего округляет до целого
 export const divideAndRoundNumbers = (
 	obj:
 		| IAccruals

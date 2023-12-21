@@ -45,6 +45,7 @@ export const generate22gkhReport = (report: IReport) => {
 		distributeGas
 	} = getConstants(report)
 
+	// Секция отчета №1
 	const sectionOne = removeZeroAndUndefined({
 		1: { 3: totalAccruals + income.commerce },
 		2: { 3: totalAccruals },
@@ -113,6 +114,7 @@ export const generate22gkhReport = (report: IReport) => {
 		59: { 3: 0 }
 	})
 
+	// Секция отчета №2
 	const sectionTwo = removeZeroAndUndefined({
 		60: { 4: accruals.renovation },
 		61: { 4: income.renovation },
@@ -120,6 +122,7 @@ export const generate22gkhReport = (report: IReport) => {
 		63: { 4: renovationCosts.budgetTransfers }
 	})
 
+	// Секция отчета №3
 	//prettier-ignore
 	const sectionThree = removeZeroAndUndefined({
 		64: typicalRow(accrualsMaintenance, commonAndMaintenancePayments),
@@ -173,6 +176,7 @@ export const generate22gkhReport = (report: IReport) => {
 		}
 	})
 
+	// Секция отчета №4.
 	const sectionFour = removeZeroAndUndefined({
 		86:
 			!!accruals.electricityCommon && !!natural && !!natural.electricityCommon

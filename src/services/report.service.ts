@@ -68,8 +68,8 @@ export const ReportService = {
 				child(ref(db), `users/${userId}/reports/${reportId}`)
 			)
 			if (snapshot.exists()) {
-				// console.log(`users/${userId}/reports/${reportId}/finalReport`)
-				// console.log('finalReport: ', finalReport)
+				replaceUndefinedAndNaNWithZero(finalReport)
+				console.log(finalReport)
 				update(
 					ref(db, `users/${userId}/reports/${reportId}/finalReport`),
 					finalReport
