@@ -18,14 +18,13 @@ const ScrollButton: FC<IScrollButton> = ({ scrollDirection }) => {
 
 	return scrollDirection === 'down' ? (
 		<button className={styles.scroll} onClick={handleScroll}>
-			<p>Зарегистрироваться</p>
-			<p>за 30 секунд</p>
-			<FaChevronCircleDown size={40} />
+			<p>Далее</p>
+			<FaChevronCircleDown size={30} />
 		</button>
 	) : (
 		<button className={styles.scroll} onClick={handleScroll}>
-			<FaChevronCircleUp size={40} />
-			<p>Наверх</p>
+			<FaChevronCircleUp size={30} />
+			<p>Назад</p>
 		</button>
 	)
 }

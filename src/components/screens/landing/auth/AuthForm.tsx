@@ -36,7 +36,10 @@ const AuthForm: FC = () => {
 		reset,
 		watch
 	} = useForm<IAuthInput>({
-		mode: 'onChange'
+		mode: 'onChange',
+		defaultValues: {
+			agreements: true
+		}
 	})
 
 	const onSubmit: SubmitHandler<IAuthInput> = ({ email, password }) => {
@@ -50,6 +53,7 @@ const AuthForm: FC = () => {
 	}
 
 	const isValid = formState.isValid
+	const hasAgreement = watch('agreements')
 
 	const toggleReg = () => setIsReg(!isReg)
 
@@ -81,7 +85,7 @@ const AuthForm: FC = () => {
 				<Button
 					className={styles.button}
 					type='submit'
-					disabled={isLoading || !isValid}
+					disabled={isLoading || !isValid || !hasAgreement}
 				>
 					{isReg ? `Получить доступ` : `Войти`}
 				</Button>

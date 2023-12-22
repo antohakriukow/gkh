@@ -27,7 +27,7 @@
 }
 
 .disabled {
-	@apply bg-gray-300 hover:bg-gray-300;
+	@apply bg-gray-300 hover:bg-gray-300 cursor-default;
 }
 
 .field {

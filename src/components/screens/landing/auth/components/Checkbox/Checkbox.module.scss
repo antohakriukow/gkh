@@ -1,0 +1,45 @@
+.container {
+	@apply flex items-center justify-between rounded-md m-0;
+
+	.checkbox {
+		@apply relative flex items-center cursor-pointer;
+
+		input[type='checkbox'] {
+			@apply absolute opacity-0 cursor-pointer h-0 w-0;
+
+			&:checked ~ .checkmark {
+				@apply bg-primary-500 border-primary-500;
+
+				&:after {
+					@apply flex;
+				}
+			}
+		}
+
+		.checkmark {
+			@apply relative;
+			height: 28px;
+			width: 28px;
+			border-radius: 4px;
+			transition: background-color 0.3s;
+			border: 1px solid rgb(204, 204, 204);
+
+			&:after {
+				@apply absolute hidden;
+				content: '';
+				position: absolute;
+				left: 9px;
+				top: 3px;
+				width: 7px;
+				height: 14px;
+				border: solid white;
+				border-width: 0 3px 3px 0;
+				transform: rotate(45deg);
+			}
+		}
+
+		&:hover input ~ .checkmark {
+			@apply bg-primary-50;
+		}
+	}
+}

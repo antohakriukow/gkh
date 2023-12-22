@@ -1,3 +1,4 @@
+import Checkbox from './components/Checkbox/Checkbox'
 import { FC } from 'react'
 import {
 	FieldError,
@@ -5,10 +6,16 @@ import {
 	UseFormRegister,
 	UseFormWatch
 } from 'react-hook-form'
+import { personalDataPolicy } from '~/data/law-docs/personal-data-policy'
+import { saasContract } from '~/data/law-docs/saas-contract'
 
 import { AuthField } from '~/components/ui'
 
+import { usePDF } from '~/hooks/usePDF'
+
 import { validEmail } from '~/shared/regex'
+
+import styles from './Auth.module.scss'
 
 interface IAuthFields {
 	register: UseFormRegister<any>
@@ -25,7 +32,11 @@ const AuthFields: FC<IAuthFields> = ({
 	isReg,
 	isPasswordRequired = false
 }) => {
+	const { printSimplePDF } = usePDF()
 	const isPasswordValid = watch('password')?.length >= 6
+
+	const handlePrintContract = () => printSimplePDF(saasContract)
+	const handlePrintPersonalDataPolicy = () => printSimplePDF(personalDataPolicy)
 
 	return (
 		<>
@@ -69,6 +80,20 @@ const AuthFields: FC<IAuthFields> = ({
 					type='password'
 					error={errors.passwordConfirm as FieldError}
 				/>
+			)}
+
+			{isReg && (
+				<div className={styles.agreements}>
+					<Checkbox {...register('agreements')} defaultChecked />
+					<p>
+						Согласен с условиями{' '}
+						<span onClick={handlePrintContract}>Договора-оферты</span> и{' '}
+						<span onClick={handlePrintPersonalDataPolicy}>
+							Политикой обработки персональных данных
+						</span>{' '}
+						.
+					</p>
+				</div>
 			)}
 		</>
 	)
