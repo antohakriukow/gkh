@@ -1,6 +1,5 @@
 import AuthFields from './AuthFields'
 import { IAuthInput } from './auth.interface'
-import { useAuthRedirect } from './useAuthRedirect'
 import { FC, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
@@ -9,13 +8,14 @@ import SubHeading from '~/components/ui/heading/SubHeading'
 
 import { useAuth } from '~/hooks/useAuth'
 
+import { useRedirect } from '../../../../hooks/useRedirect'
 import ScrollButton from '../ScrollButton'
 
 import styles from './Auth.module.scss'
 
 const AuthForm: FC = () => {
 	const [isReg, setIsReg] = useState(true)
-	useAuthRedirect()
+	const { navigateToResetPassword } = useRedirect()
 
 	const [width, setWidth] = useState(window.innerWidth)
 
@@ -40,6 +40,7 @@ const AuthForm: FC = () => {
 	})
 
 	const onSubmit: SubmitHandler<IAuthInput> = ({ email, password }) => {
+		if (!password) return
 		if (isReg) {
 			register(email, password)
 		} else {
@@ -89,6 +90,12 @@ const AuthForm: FC = () => {
 				</div>
 				<div onClick={toggleReg} className={styles.switcherPressable}>
 					{isReg ? 'Войти' : 'Зарегистрироваться'}
+				</div>
+				<div
+					onClick={navigateToResetPassword}
+					className={styles.resetPasswordButton}
+				>
+					Забыли пароль?
 				</div>
 			</form>
 			{isNarrow && <ScrollButton scrollDirection='up' />}

@@ -38,12 +38,25 @@ export const handleAuthErrors = (error: FirebaseError) =>
 				'Превышено допустимое количество попыток входа. Попробуйте позже.'
 		},
 		{
+			code: 'auth/network-request-failed',
+			message:
+				'Произошла ошибка сети при попытке отправить запрос. Попробуйте позже.'
+		},
+		{
 			code: 'auth/email-already-in-use',
 			message: 'Пользователь с таким email уже зарегистрирован.'
 		},
 		{
 			code: 'auth/wrong-password',
 			message: 'Неверный пароль.'
+		},
+		{
+			code: 'auth/invalid-email',
+			message: 'Невалидный email.'
+		},
+		{
+			code: 'auth/user-not-found',
+			message: 'Пользователь с таким email не найден.'
 		}
 	])
 

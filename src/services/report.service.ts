@@ -1,5 +1,6 @@
 import { IFinalReport, IReportCreate } from './../shared/types/report.interface'
 import { child, get, ref, remove, set, update } from 'firebase/database'
+import { toast } from 'react-toastify'
 
 import { IReport } from '~/shared/types/report.interface'
 
@@ -17,7 +18,7 @@ export const ReportService = {
 				return []
 			}
 		} catch (error) {
-			console.log(error)
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		}
 	},
 
@@ -32,7 +33,7 @@ export const ReportService = {
 				return []
 			}
 		} catch (error) {
-			console.log(error)
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		}
 	},
 
@@ -69,17 +70,19 @@ export const ReportService = {
 			)
 			if (snapshot.exists()) {
 				replaceUndefinedAndNaNWithZero(finalReport)
-				console.log(finalReport)
 				update(
 					ref(db, `users/${userId}/reports/${reportId}/finalReport`),
 					finalReport
 				)
 			} else {
-				console.log('NO DATA')
+				toast(
+					'Ошибка генерации отчета. Проверьте корректность данных отчета.',
+					{ autoClose: 3000 }
+				)
 				return []
 			}
 		} catch (error) {
-			console.log(error)
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		}
 	},
 

@@ -2,7 +2,6 @@ import Benefit from './Benefit'
 import { benefitsData } from './benefits.data'
 import { IBenefit } from './interface.presentation'
 import { FC, useEffect, useState } from 'react'
-import { FaChevronDown } from 'react-icons/fa6'
 
 import ScrollButton from '../ScrollButton'
 

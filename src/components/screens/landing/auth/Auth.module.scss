@@ -30,9 +30,18 @@
 }
 
 .switcherPressable {
-	@apply text-primary-500 mt-1 font-bold hover:cursor-pointer;
+	@apply text-primary-500 mt-1 font-bold hover:cursor-pointer mx-auto;
+	width: 200px;
 	&:hover {
-		transform: scale(1.05);
+		transform: scale(1.02);
+	}
+}
+
+.resetPasswordButton {
+	@apply text-secondary-600 mt-4 font-bold hover:cursor-pointer mx-auto;
+	width: 200px;
+	&:hover {
+		transform: scale(1.02);
 	}
 }
 

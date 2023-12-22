@@ -8,7 +8,7 @@ import {
 } from 'firebase/auth'
 import { ref, set } from 'firebase/database'
 
-import { auth, db, verifyEmail } from '~/services/_firebase'
+import { db, resetPassword } from '~/services/_firebase'
 
 export const UserService = {
 	async create(userId: string, email: string) {
@@ -17,10 +17,6 @@ export const UserService = {
 			email: email
 		})
 		await cloudFunction.addShortIdToUser()
-		// const currentUser = auth.currentUser
-		// if (currentUser) {
-		// 	await verifyEmail(currentUser)
-		// }
 	},
 
 	async updateUserEmail(user: User, newEmail: string, currentPassword: string) {
@@ -29,6 +25,11 @@ export const UserService = {
 
 		await reauthenticateWithCredential(user, credential)
 		updateEmail(user, newEmail)
+	},
+
+	async restorePassword(email: string) {
+		if (!email) return
+		await resetPassword(email)
 	},
 
 	async updateUserPassword(

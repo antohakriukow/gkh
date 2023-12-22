@@ -15,7 +15,7 @@ const ScrollButton: FC<IScrollButton> = ({ scrollDirection }) => {
 			behavior: 'smooth'
 		})
 	}
-	console.log(window.innerHeight)
+
 	return scrollDirection === 'down' ? (
 		<button className={styles.scroll} onClick={handleScroll}>
 			<p>Зарегистрироваться</p>

@@ -4,6 +4,7 @@ import {
 	createUserWithEmailAndPassword,
 	getAuth,
 	sendEmailVerification,
+	sendPasswordResetEmail,
 	signInWithEmailAndPassword,
 	signOut
 } from 'firebase/auth'
@@ -36,6 +37,9 @@ export const logout = () => signOut(auth)
 
 export const verifyEmail = async (user: User) =>
 	await sendEmailVerification(user)
+
+export const resetPassword = async (email: string) =>
+	await sendPasswordResetEmail(auth, email)
 
 export const addShortIdToUserCF = httpsCallable(functions, 'addShortIdToUser')
 export const getCompanyByInnCF = httpsCallable(functions, 'getCompanyByInn')

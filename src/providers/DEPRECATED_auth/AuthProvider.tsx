@@ -7,6 +7,7 @@ import {
 	useMemo,
 	useState
 } from 'react'
+import { toast } from 'react-toastify'
 
 import Layout from '~/components/layout/Layout'
 
@@ -35,8 +36,8 @@ export const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 			const userResponse = await register(email, password)
 			if (!userResponse.user.email) return
 			await UserService.create(userResponse.user.uid, userResponse.user.email)
-		} catch (error: any) {
-			console.log('Error reg:', error)
+		} catch (error) {
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		} finally {
 			setIsLoading(false)
 		}
@@ -49,8 +50,8 @@ export const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 			await login(email, password).then(data => {
 				setUser(data.user)
 			})
-		} catch (error: any) {
-			console.log('Error login:', error)
+		} catch (error) {
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		} finally {
 			setIsLoading(false)
 		}
@@ -61,8 +62,8 @@ export const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 
 		try {
 			await logout()
-		} catch (error: any) {
-			console.log('Error logout:', error)
+		} catch (error) {
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		} finally {
 			setIsLoading(false)
 		}

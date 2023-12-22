@@ -11,7 +11,6 @@ const HeaderMenu: FC = () => {
 
 	useEffect(() => {
 		if (!!currentCompany && !currentCompanyInn) return
-		console.log('RENDER')
 
 		companies.length
 			? setCurrentCompany(

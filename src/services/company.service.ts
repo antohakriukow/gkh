@@ -1,4 +1,5 @@
 import { child, get, ref, remove, set, update } from 'firebase/database'
+import { toast } from 'react-toastify'
 
 import { ICompany } from '~/shared/types/company.interface'
 
@@ -14,7 +15,7 @@ export const CompanyService = {
 				return []
 			}
 		} catch (error) {
-			console.log(error)
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		}
 	},
 
@@ -29,7 +30,7 @@ export const CompanyService = {
 				return []
 			}
 		} catch (error) {
-			console.log(error)
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		}
 	},
 

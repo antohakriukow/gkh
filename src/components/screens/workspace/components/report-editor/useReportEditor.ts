@@ -141,7 +141,7 @@ export const useReportEditor = (
 			)
 			downloadPDF(report)
 		} catch (error) {
-			// console.log(error)
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		} finally {
 			setIsLoading(false)
 		}
@@ -158,7 +158,7 @@ export const useReportEditor = (
 
 			downloadXML(report)
 		} catch (error) {
-			// console.log(error)
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		} finally {
 			setIsLoading(false)
 		}

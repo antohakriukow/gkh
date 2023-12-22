@@ -1,0 +1,23 @@
+@import '../../../styles/colors.scss';
+
+.button {
+	@apply absolute top-8 left-8 flex items-center justify-center bg-transparent border-none font-bold cursor-pointer;
+
+	> p {
+		@apply p-0 m-0 ml-2;
+		font-size: 16px;
+		line-height: 16px;
+		color: $primary-600;
+	}
+	> svg {
+		@apply py-2;
+		color: $primary-600;
+	}
+	&:hover {
+		> p,
+		> svg {
+			transform: scale(1.02);
+			color: $primary-500;
+		}
+	}
+}
