@@ -3,6 +3,7 @@ import { useAuth } from '~/hooks/useAuth'
 import { useData } from '~/hooks/useData'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
 
+import { cloudFunction } from '~/services/_functions'
 import { CompanyService } from '~/services/company.service'
 
 export const useHeader = () => {
@@ -20,7 +21,12 @@ export const useHeader = () => {
 	const handleLogout = () => {
 		setCurrentReport(null)
 		setCurrentCompany(null)
-		logout()
+		try {
+			logout()
+			cloudFunction.createLog(userUid, 'info', 'auth/logout')
+		} catch (error) {
+			cloudFunction.createLog(userUid, 'error', 'auth/logout', { error })
+		}
 	}
 
 	const handleSetCurrentCompany = (inn: number) =>

@@ -12,6 +12,7 @@ import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { IReport } from '~/shared/types/report.interface'
 
+import { cloudFunction } from '~/services/_functions'
 import { ReportService } from '~/services/report.service'
 
 import { handleDBErrors } from '~/utils/error.utils'
@@ -140,8 +141,15 @@ export const useReportEditor = (
 				currentReport._id.toString()
 			)
 			downloadPDF(report)
+			cloudFunction.createLog(user.uid, 'info', 'report22/pdf', {
+				data: report
+			})
 		} catch (error) {
 			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
+			cloudFunction.createLog(user.uid, 'error', 'report22/pdf', {
+				data: currentReport,
+				error
+			})
 		} finally {
 			setIsLoading(false)
 		}
@@ -157,8 +165,15 @@ export const useReportEditor = (
 			)
 
 			downloadXML(report)
+			cloudFunction.createLog(user.uid, 'info', 'report22/xml', {
+				data: report
+			})
 		} catch (error) {
 			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
+			cloudFunction.createLog(user.uid, 'error', 'report22/xml', {
+				data: currentReport,
+				error
+			})
 		} finally {
 			setIsLoading(false)
 		}

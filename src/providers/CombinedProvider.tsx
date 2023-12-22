@@ -23,6 +23,7 @@ import {
 	register,
 	verifyEmail
 } from '~/services/_firebase'
+import { cloudFunction } from '~/services/_functions'
 import { UserService } from '~/services/user.service'
 
 import { handleAuthErrors } from '~/utils/error.utils'
@@ -73,8 +74,13 @@ export const CombinedProvider: FC<PropsWithChildren<unknown>> = ({
 				`Добро пожаловать! Не забудьте подтвердить электронную почту. Письмо уже отправлено на ${email}.`,
 				{ autoClose: false }
 			)
+			cloudFunction.createLog(userResponse.user.uid, 'info', 'auth/register')
 		} catch (error) {
 			if (error instanceof FirebaseError) handleAuthErrors(error)
+			cloudFunction.createLog(email, 'error', 'auth/register', {
+				data: email,
+				error
+			})
 		} finally {
 			setIsLoading(false)
 		}
@@ -85,10 +91,15 @@ export const CombinedProvider: FC<PropsWithChildren<unknown>> = ({
 		try {
 			await login(email, password).then(data => {
 				setUser(data.user)
+				cloudFunction.createLog(data.user.uid, 'info', 'auth/login')
 			})
 			toast.success('Добро пожаловать!', { autoClose: 1500 })
 		} catch (error) {
 			if (error instanceof FirebaseError) handleAuthErrors(error)
+			cloudFunction.createLog(email, 'error', 'auth/login', {
+				data: email,
+				error
+			})
 		} finally {
 			setIsLoading(false)
 		}

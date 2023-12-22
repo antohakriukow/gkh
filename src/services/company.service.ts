@@ -1,3 +1,4 @@
+import { cloudFunction } from './_functions'
 import { child, get, ref, remove, set, update } from 'firebase/database'
 import { toast } from 'react-toastify'
 
@@ -46,17 +47,43 @@ export const CompanyService = {
 		if (!data.inn) return
 		const companyId = data.inn
 
-		set(ref(db, `users/${userId}/companies/${companyId}`), data)
-		this.updateCurrentCompanyInn(userId, companyId.toString())
+		try {
+			set(ref(db, `users/${userId}/companies/${companyId}`), data)
+			this.updateCurrentCompanyInn(userId, companyId.toString())
+			cloudFunction.createLog(userId, 'info', 'company/create', { data })
+		} catch (error) {
+			cloudFunction.createLog(userId, 'error', 'company/create', {
+				data,
+				error
+			})
+		}
 	},
 
 	async update(userId: string, data: ICompany) {
 		if (!data.inn) return
 
-		update(ref(db, `users/${userId}/companies/${data.inn}`), data)
+		try {
+			update(ref(db, `users/${userId}/companies/${data.inn}`), data)
+			cloudFunction.createLog(userId, 'info', 'company/update', { data })
+		} catch (error) {
+			cloudFunction.createLog(userId, 'error', 'company/update', {
+				data,
+				error
+			})
+		}
 	},
 
 	async remove(userId: string, companyId: string) {
-		remove(ref(db, `users/${userId}/companies/${companyId}`))
+		try {
+			remove(ref(db, `users/${userId}/companies/${companyId}`))
+			cloudFunction.createLog(userId, 'info', 'company/update', {
+				data: companyId
+			})
+		} catch (error) {
+			cloudFunction.createLog(userId, 'error', 'company/update', {
+				data: companyId,
+				error
+			})
+		}
 	}
 }
