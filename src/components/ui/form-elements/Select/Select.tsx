@@ -11,7 +11,7 @@ const animatedComponents = makeAnimated()
 const customStyles: StylesConfig<IOption, boolean> = {
 	option: (provided, state) => ({
 		...provided,
-		backgroundColor: state.isSelected ? '#93ecde' : provided.backgroundColor,
+		backgroundColor: state.isSelected ? '#c9cee8' : provided.backgroundColor,
 		color: '#171c36'
 	}),
 	container: provided => ({

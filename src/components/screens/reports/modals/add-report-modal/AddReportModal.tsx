@@ -6,9 +6,11 @@ import { Button } from '~/components/ui'
 import { useReport } from '~/hooks/useReport'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
 
+import { IReport } from '~/shared/types/report.interface'
+
 import styles from './AddReportModal.module.scss'
 
-const ReportModal: FC = () => {
+const ReportModal: FC<{ handler: (_id: number) => void }> = ({ handler }) => {
 	const now = new Date()
 	const newReportYear = now.getFullYear()
 	const newReportPeriod = Math.floor(((now.getMonth() + 9) % 12) / 3) + 1
@@ -16,15 +18,17 @@ const ReportModal: FC = () => {
 	const { currentCompany } = useTypedSelector(state => state.ui)
 	const { create } = useReport()
 
-	const handleCreateReport = () => {
+	const handleCreateReport = async () => {
 		if (!currentCompany) return
-		create({
+		const newReport = (await create({
 			type: '22gkh',
 			year: newReportYear,
 			period: newReportPeriod,
 			company: currentCompany,
 			data: clear22gkhReportData
-		})
+		})) as IReport
+		console.log(newReport)
+		if (!!newReport && !!newReport._id) handler(newReport._id)
 	}
 
 	const convertPeriod = (period: number) => {

@@ -1,7 +1,10 @@
 @import '../../../../styles/colors.scss';
+
+.reportForm {
+	@apply w-full;
+}
 .fieldSet {
-	@apply grid gap-x-2 gap-y-0.5  rounded-lg;
-	border: 1px solid $secondary-200;
+	@apply grid gap-x-2 gap-y-0.5  rounded-sm;
 
 	@media (min-width: 865px) {
 		grid-template-columns: repeat(2, 1fr);
@@ -13,15 +16,15 @@
 }
 
 .blockTitle {
-	@apply ml-2 mb-2 text-xl text-secondary-600 underline;
+	@apply ml-2 mb-2 text-xl text-primary-600 underline;
 	@media (max-width: 600px) {
 		@apply text-lg;
 	}
 }
 
 .fieldGroup {
-	@apply rounded-lg;
-	border: 1px solid $secondary-200;
+	@apply rounded-sm;
+	border: 1px solid $primary-200;
 
 	&:not(:first-child) {
 		margin-top: 8px;

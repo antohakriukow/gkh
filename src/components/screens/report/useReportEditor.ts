@@ -72,13 +72,13 @@ export const useReportEditor = (
 		[setValue]
 	)
 
-	const closeReport = () => navigate(`/reports`)
+	const closeReport = useCallback(() => navigate(`/reports`), [])
 
 	const handleEscKey = useCallback(
 		(e: KeyboardEvent) => {
-			if (e.key === 'Escape') setCurrentReport(null)
+			if (e.key === 'Escape') closeReport()
 		},
-		[setCurrentReport]
+		[closeReport]
 	)
 
 	useEffect(() => {

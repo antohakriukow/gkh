@@ -1,6 +1,15 @@
+@import '../../../styles/colors.scss';
+
 .container {
-	@apply flex justify-center items-center mt-4 bg-white p-4 pb-8 rounded-md;
-	min-height: calc(100vh - 130px);
+	@apply flex flex-col justify-center items-start bg-white p-4 pb-8 rounded-md box-border;
+	height: calc(100vh - 50px);
+}
+
+.report {
+	@apply p-2 rounded-sm w-full box-border;
+	border: 1px solid $primary-200;
+	max-height: calc(100vh - 150px);
+	overflow-y: auto;
 }
 
 .header {
@@ -10,7 +19,7 @@
 	}
 
 	> svg {
-		@apply cursor-pointer;
+		@apply cursor-pointer ml-2;
 	}
 	> svg:hover {
 		transform: scale(1.1);
@@ -19,15 +28,16 @@
 }
 
 .title {
-	@apply pl-2;
+	@apply mb-0 mt-2 text-3xl font-light text-left;
+	color: $gray-700;
 }
 
-.button {
-	@apply mt-4 mr-2 px-4 text-xl;
-	@media (max-width: 800px) {
-		@apply text-base;
+@media (max-width: 500px) {
+	.container {
+		height: calc(100vh - 80px);
 	}
-	@media (max-width: 400px) {
-		@apply text-sm;
+
+	.title {
+		@apply text-2xl;
 	}
 }

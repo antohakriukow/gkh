@@ -1,4 +1,3 @@
-import { useActions } from './useActions'
 import { useData } from './useData'
 import { useModal } from './useModal'
 import { FirebaseError } from 'firebase/app'
@@ -14,7 +13,6 @@ import { handleDBErrors } from '~/utils/error.utils'
 export const useReport = () => {
 	const { userUid } = useData()
 	const { hideModal } = useModal()
-	const { setCurrentReport } = useActions()
 	const [isLoading, setIsLoading] = useState(false)
 
 	const create = async (data: IReportCreate) => {
@@ -27,9 +25,10 @@ export const useReport = () => {
 
 			const createdReport = await ReportService.getById(userUid, reportId)
 
-			setCurrentReport(createdReport)
-
-			toast.success('Отчет создан', { autoClose: 3000 })
+			if (createdReport) {
+				toast.success('Отчет создан', { autoClose: 3000 })
+				return createdReport
+			}
 		} catch (error) {
 			if (error instanceof FirebaseError) handleDBErrors(error)
 		} finally {

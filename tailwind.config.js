@@ -121,7 +121,6 @@ module.exports = {
 		plugin(function ({ addComponents, theme }) {
 			addComponents({
 				'.air-block': {
-					borderRadius: theme('borderRadius.layout'),
 					backgroundColor: theme('colors.gray.950'),
 					color: theme('colors.white'),
 					boxShadow: theme('boxShadow.lg')

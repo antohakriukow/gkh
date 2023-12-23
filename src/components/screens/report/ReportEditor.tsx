@@ -1,11 +1,12 @@
 import ReportForm from './22gkh/ReportForm'
+import ReportButtons from './buttons/ReportButtons'
 import ConfirmGenerationModal from './modals/confirm-report-generation-module/ConfirmGenerationModal'
 import { useReportEditor } from './useReportEditor'
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 
-import { Button, Heading, Loader } from '~/components/ui'
+import { Heading, Loader } from '~/components/ui'
 
 import { useModal } from '~/hooks/useModal'
 
@@ -40,59 +41,36 @@ const ReportEditor: FC = () => {
 		showModal(<ConfirmGenerationModal generateReport={generateReport} />)
 	}
 
-	if (isLoading)
-		return (
-			<div className={styles.container}>
-				<Loader loaderType='large' />
-			</div>
-		)
-
 	return (
 		<div className={styles.container}>
-			<div className={styles.report}>
-				<div className={styles.header}>
-					<Heading title={reportEditorHeading} className={styles.title} />
-					<AiOutlineCloseCircle
-						onClick={closeReport}
-						color='#df4956'
-						size={32}
-					/>
-				</div>
-				<ReportForm
-					register={register}
-					control={control}
-					formState={formState}
-					watch={watch}
-					setValue={setValue}
-				/>
-				{!isReadyToGenerate && (
-					<Button onClick={handleSubmit(saveReport)} className={styles.button}>
-						Сохранить
-					</Button>
-				)}
-				{isReadyToGenerate && (
-					<>
-						{!isReadyToDownload && (
-							<Button
-								onClick={handleShowReportConfirmationModal}
-								className={styles.button}
-							>
-								Сгенерировать отчет
-							</Button>
-						)}
-						{isReadyToDownload && (
-							<>
-								<Button onClick={downloadReportPDF} className={styles.button}>
-									Скачать PDF
-								</Button>
-								<Button onClick={downloadReportXML} className={styles.button}>
-									Скачать XML
-								</Button>
-							</>
-						)}
-					</>
-				)}
+			<div className={styles.header}>
+				<Heading title={reportEditorHeading} className={styles.title} />
+				<AiOutlineCloseCircle onClick={closeReport} color='#df4956' size={32} />
 			</div>
+			<ReportButtons
+				isReadyToGenerate={isReadyToGenerate}
+				isReadyToDownload={isReadyToDownload}
+				handleSubmit={handleSubmit}
+				saveReport={saveReport}
+				handleShowReportConfirmationModal={handleShowReportConfirmationModal}
+				downloadReportPDF={downloadReportPDF}
+				downloadReportXML={downloadReportXML}
+			/>
+			{isLoading ? (
+				<Loader loaderType='large' />
+			) : (
+				<>
+					<div className={styles.report}>
+						<ReportForm
+							register={register}
+							control={control}
+							formState={formState}
+							watch={watch}
+							setValue={setValue}
+						/>
+					</div>
+				</>
+			)}
 		</div>
 	)
 }

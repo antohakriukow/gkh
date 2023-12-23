@@ -9,7 +9,7 @@
 }
 
 .menu {
-	@apply bg-white absolute air-block;
+	@apply bg-primary-50 absolute air-block;
 	top: 30px;
 	left: 0;
 	width: 100%;
@@ -31,5 +31,5 @@
 }
 
 .first {
-	@apply flex flex-row items-center justify-between bg-white;
+	@apply flex flex-row items-center justify-between bg-primary-50;
 }

@@ -11,12 +11,12 @@ import styles from '../Table.module.scss'
 const TableItem: FC<{ report: IReport }> = ({ report }) => {
 	const navigate = useNavigate()
 
-	const handleClick = () => {
+	const handleOpenReport = () => {
 		navigate(`/reports/edit/${report._id}`)
 	}
 
 	return (
-		<div key={report._id} onClick={handleClick} className={styles.item}>
+		<div key={report._id} onClick={handleOpenReport} className={styles.item}>
 			<div className={styles.cell}>{convertTypeReport(report.type)}</div>
 			<div className={styles.cell}>{`${convertPeriod(report.period)} ${
 				report.year

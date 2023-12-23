@@ -1,4 +1,22 @@
+@import '../../../styles/colors.scss';
+
 .container {
-	@apply mt-4 bg-white p-4 pb-8 rounded-md;
-	min-height: calc(100vh - 130px);
+	@apply bg-white p-4 pb-8 rounded-md box-border;
+	min-height: calc(100vh - 50px);
+}
+
+.heading {
+	@apply mb-0 mt-2 text-3xl font-light text-left;
+	color: $gray-700;
+}
+
+@media (max-width: 500px) {
+	.heading {
+		@apply text-2xl;
+	}
+	.container {
+		> button {
+			@apply text-sm;
+		}
+	}
 }

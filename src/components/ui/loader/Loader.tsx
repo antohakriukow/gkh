@@ -1,6 +1,8 @@
 import { FC } from 'react'
 import { ProgressBar } from 'react-loader-spinner'
 
+import styles from './Loader.module.scss'
+
 type TypeLoader = 'small' | 'medium' | 'large'
 
 const Loader: FC<{ loaderType?: TypeLoader }> = ({ loaderType }) => {
@@ -20,15 +22,17 @@ const Loader: FC<{ loaderType?: TypeLoader }> = ({ loaderType }) => {
 	const size = loaderType ? getSize(loaderType) : 48
 
 	return (
-		<ProgressBar
-			height={size}
-			width={size}
-			ariaLabel='progress-bar-loading'
-			wrapperStyle={{}}
-			wrapperClass='progress-bar-wrapper'
-			borderColor='#df4956'
-			barColor='#23c3ab'
-		/>
+		<div className={styles.loader}>
+			<ProgressBar
+				height={size}
+				width={size}
+				ariaLabel='progress-bar-loading'
+				wrapperStyle={{}}
+				wrapperClass='progress-bar-wrapper'
+				borderColor='#df4956'
+				barColor='#23c3ab'
+			/>
+		</div>
 	)
 }
 export default Loader

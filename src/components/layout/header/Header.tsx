@@ -1,4 +1,4 @@
-import SettingsButton from './settings/SettingsButton'
+import SettingsButton from './menu/settings/SettingsButton'
 import { FC } from 'react'
 
 import HeaderMenu from '~/components/layout/header/menu/HeaderMenu'
@@ -13,7 +13,7 @@ const Header: FC = () => {
 	return (
 		<div className={styles.container}>
 			<div className={styles.header}>
-				<div className={styles.title}>Генератор отчетов 22-ЖКХ</div>
+				<div className={styles.title}>Экспресс 22</div>
 				{!!user && (
 					<div className={styles.tools}>
 						<HeaderMenu />
