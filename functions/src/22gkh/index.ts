@@ -33,7 +33,15 @@ export const generateFinalReport = functions.https.onCall(
 					.database()
 					.ref(`/users/${userId}/reports/${reportId}/finalReport`)
 					.set(finalReport)
-				return { message: 'Генерация отчета прошла успешно' }
+
+				// Получаем обновленные данные отчета
+				const reportRef = admin
+					.database()
+					.ref(`/users/${userId}/reports/${reportId}`)
+				const snapshot = await reportRef.once('value')
+				const updatedReport = snapshot.val()
+
+				return updatedReport
 			} else {
 				throw new Error(
 					'Результат генерации не соответствует ожидаемому формату'

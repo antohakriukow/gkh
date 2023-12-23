@@ -1,4 +1,9 @@
-import { addShortIdToUserCF, createLogCF, getCompanyByInnCF } from './_firebase'
+import {
+	addShortIdToUserCF,
+	createLogCF,
+	generateFinalReportCF,
+	getCompanyByInnCF
+} from './_firebase'
 
 import {
 	ILogDTO,
@@ -13,6 +18,11 @@ export const cloudFunction = {
 
 	async getCompanyByInn(inn: string) {
 		const response = await getCompanyByInnCF({ inn })
+		return response
+	},
+
+	async generateFinalReport(reportId: string) {
+		const response = await generateFinalReportCF({ reportId })
 		return response
 	},
 

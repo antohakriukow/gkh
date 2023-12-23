@@ -44,3 +44,7 @@ export const resetPassword = async (email: string) =>
 export const addShortIdToUserCF = httpsCallable(functions, 'addShortIdToUser')
 export const getCompanyByInnCF = httpsCallable(functions, 'getCompanyByInn')
 export const createLogCF = httpsCallable(functions, 'createLog')
+export const generateFinalReportCF = httpsCallable(
+	functions,
+	'generateFinalReport'
+)

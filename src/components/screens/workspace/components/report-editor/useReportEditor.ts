@@ -2,7 +2,6 @@ import { FirebaseError } from 'firebase/app'
 import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, UseFormReset, UseFormSetValue } from 'react-hook-form'
 import { toast } from 'react-toastify'
-import { generate22gkhReport } from '~/core/22gkh/generate22gkhReport'
 import { downloadPDF } from '~/core/22gkh/pdf/pdf.download'
 import { downloadXML } from '~/core/22gkh/xml/xml.download'
 
@@ -109,20 +108,17 @@ export const useReportEditor = (
 	const generateReport = async () => {
 		if (!user || !currentReport) return
 		setIsLoading(true)
-		const finalReport = generate22gkhReport(currentReport)
 
 		try {
-			await ReportService.generate(
-				user.uid,
-				currentReport._id.toString(),
-				finalReport
-			)
-
-			const newReportData = await ReportService.getById(
-				user.uid,
+			const newReportData = (await cloudFunction.generateFinalReport(
 				currentReport._id.toString()
-			)
-			await setCurrentReport(newReportData)
+			)) as { data: IReport }
+
+			setCurrentReport(newReportData.data)
+
+			cloudFunction.createLog(user.uid, 'info', 'report22/generate', {
+				data: newReportData.data.finalReport
+			})
 
 			toast.success('Генерация отчета завершена', { autoClose: 3000 })
 		} catch (error) {

@@ -75,36 +75,6 @@ export const ReportService = {
 		}
 	},
 
-	async generate(userId: string, reportId: string, finalReport: IFinalReport) {
-		try {
-			const snapshot = await get(
-				child(ref(db), `users/${userId}/reports/${reportId}`)
-			)
-			if (snapshot.exists()) {
-				replaceUndefinedAndNaNWithZero(finalReport)
-				update(
-					ref(db, `users/${userId}/reports/${reportId}/finalReport`),
-					finalReport
-				)
-				cloudFunction.createLog(userId, 'info', 'report22/generate', {
-					data: finalReport
-				})
-			} else {
-				toast(
-					'Ошибка генерации отчета. Проверьте корректность данных отчета.',
-					{ autoClose: 3000 }
-				)
-				return []
-			}
-		} catch (error) {
-			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
-			cloudFunction.createLog(userId, 'error', 'report22/generate', {
-				data: finalReport,
-				error
-			})
-		}
-	},
-
 	async remove(userId: string, reportId: string) {
 		try {
 			remove(ref(db, `users/${userId}/reports/${reportId}`))
