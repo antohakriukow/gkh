@@ -3,8 +3,9 @@ import { FC } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import Landing from '~/components/screens/landing/Landing'
+import ReportEditor from '~/components/screens/report/ReportEditor'
+import Reports from '~/components/screens/reports/Reports'
 import ResetPassword from '~/components/screens/reset-password/ResetPassword'
-import Workspace from '~/components/screens/workspace/Workspace'
 
 const router = createBrowserRouter([
 	{
@@ -16,10 +17,18 @@ const router = createBrowserRouter([
 		element: <ResetPassword />
 	},
 	{
-		path: 'workspace',
+		path: 'reports',
 		element: (
 			<ProtectedRoute>
-				<Workspace />
+				<Reports />
+			</ProtectedRoute>
+		)
+	},
+	{
+		path: '/reports/edit/:reportId',
+		element: (
+			<ProtectedRoute>
+				<ReportEditor />
 			</ProtectedRoute>
 		)
 	}

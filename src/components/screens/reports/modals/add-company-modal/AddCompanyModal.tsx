@@ -1,5 +1,6 @@
 import AddCompanyDetailsForm from './AddCompanyDetailsForm'
 import AddCompanyForm from './AddCompanyForm'
+import CompanyAdder from './CompanyAdder'
 import { useAddCompanyModal } from './useAddCompanyModal'
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
@@ -9,8 +10,6 @@ import { Loader } from '~/components/ui'
 import { ICompany, ICompanyInn } from '~/shared/types/company.interface'
 
 import { hasEmptyFields } from '~/utils/company.utils'
-
-import CompanyAdder from '../../layout/header/menu/components/CompanyAdder'
 
 const AddCompanyModal: FC = () => {
 	const {

@@ -4,7 +4,7 @@ import { FC } from 'react'
 
 import SubHeading from '~/components/ui/heading/SubHeading'
 
-import { useWorkspace } from '../../../useWorkspace'
+import { useWorkspace } from '../../workspace/useWorkspace'
 
 import styles from './Table.module.scss'
 

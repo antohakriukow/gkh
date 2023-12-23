@@ -8,7 +8,7 @@ import { useModal } from '~/hooks/useModal'
 
 import { ICompany } from '~/shared/types/company.interface'
 
-import styles from '../../Header.module.scss'
+import styles from './CompanyModal.module.scss'
 
 const CompanyAdder: FC<{ company: ICompany }> = ({ company }) => {
 	const { setNewCompany } = useActions()

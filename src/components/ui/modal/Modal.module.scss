@@ -1,10 +1,10 @@
 .overlay {
-	@apply absolute top-0 left-0 h-screen w-screen;
+	@apply fixed top-0 left-0 h-screen w-screen;
 	background-color: rgba(0, 0, 0, 0.5);
 }
 
 .container {
-	@apply relative top-1/2 left-1/2 bg-white max-w-xl inline-flex justify-center items-center p-6 rounded-md;
+	@apply relative top-1/2 left-1/2 bg-white w-2/3 max-w-xl inline-flex justify-center items-center p-6 rounded-md;
 	transform: translate(-50%, -50%);
 }
 

@@ -1,12 +1,14 @@
 import { FirebaseError } from 'firebase/app'
 import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, UseFormReset, UseFormSetValue } from 'react-hook-form'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { downloadPDF } from '~/core/22gkh/pdf/pdf.download'
 import { downloadXML } from '~/core/22gkh/xml/xml.download'
 
 import { useActions } from '~/hooks/useActions'
 import { useAuth } from '~/hooks/useAuth'
+import { useData } from '~/hooks/useData'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { IReport } from '~/shared/types/report.interface'
@@ -24,6 +26,8 @@ export const useReportEditor = (
 	const { user } = useAuth()
 	const { currentReport } = useTypedSelector(state => state.ui)
 	const { setCurrentReport } = useActions()
+	const { reports } = useData()
+	const navigate = useNavigate()
 	const [isLoading, setIsLoading] = useState(false)
 
 	const reportEditorHeading = currentReport
@@ -31,6 +35,18 @@ export const useReportEditor = (
 				currentReport?.period
 		  )} ${currentReport?.year}`
 		: ''
+
+	const { reportId } = useParams<{ reportId: string }>()
+
+	useEffect(() => {
+		const reportFromUrl = reportId
+			? reports.find(report => report._id.toString() === reportId.toString())
+			: null
+
+		if (currentReport?._id !== reportId && reportFromUrl) {
+			setCurrentReport(reportFromUrl)
+		}
+	}, [reportId, reports, currentReport, setCurrentReport])
 
 	const setReportValues = useCallback(
 		(report: any, parentKey = '') => {
@@ -56,9 +72,7 @@ export const useReportEditor = (
 		[setValue]
 	)
 
-	const closeReport = () => {
-		setCurrentReport(null)
-	}
+	const closeReport = () => navigate(`/reports`)
 
 	const handleEscKey = useCallback(
 		(e: KeyboardEvent) => {
@@ -82,7 +96,7 @@ export const useReportEditor = (
 		}
 	}, [currentReport, setReportValues, reset])
 
-	const onSubmit: SubmitHandler<IReport> = async (reportData: IReport) => {
+	const saveReport: SubmitHandler<IReport> = async (reportData: IReport) => {
 		if (!user) return
 		setIsLoading(true)
 		try {
@@ -178,7 +192,7 @@ export const useReportEditor = (
 	return {
 		isLoading,
 		reportEditorHeading,
-		onSubmit,
+		saveReport,
 		generateReport,
 		downloadReportPDF,
 		downloadReportXML,

@@ -1,18 +1,18 @@
 import { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { IReport } from '~/shared/types/report.interface'
 
 import { convertPeriod, convertTypeReport } from '~/utils/report.utils'
 import { convertTimestampToDate } from '~/utils/time.utils'
 
-import { useWorkspace } from '../../../../useWorkspace'
 import styles from '../Table.module.scss'
 
 const TableItem: FC<{ report: IReport }> = ({ report }) => {
-	const { setCurrentReport } = useWorkspace()
+	const navigate = useNavigate()
 
 	const handleClick = () => {
-		setCurrentReport(report)
+		navigate(`/reports/edit/${report._id}`)
 	}
 
 	return (

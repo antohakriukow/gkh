@@ -19,7 +19,7 @@ const HeaderMenu: FC = () => {
 					) || null
 			  )
 			: setCurrentCompany(null)
-	}, [currentCompanyInn])
+	}, [currentCompanyInn, currentCompany, companies, setCurrentCompany])
 
 	return (
 		<>

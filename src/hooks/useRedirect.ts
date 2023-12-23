@@ -8,7 +8,7 @@ export const useRedirect = () => {
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		if (user) navigate('/workspace')
+		if (user) navigate('/reports')
 	}, [user, navigate])
 
 	const navigateToResetPassword = () => navigate('/reset-password')

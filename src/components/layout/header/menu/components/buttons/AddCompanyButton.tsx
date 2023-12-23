@@ -3,7 +3,7 @@ import { BsHouseAddFill } from 'react-icons/bs'
 
 import { useModal } from '~/hooks/useModal'
 
-import AddCompanyModal from '../../../../../modals/add-company-modal/AddCompanyModal'
+import AddCompanyModal from '../../../../../screens/reports/modals/add-company-modal/AddCompanyModal'
 import styles from '../../HeaderMenu.module.scss'
 
 const AddCompanyButton: FC<{ onClick?: () => void }> = ({ onClick }) => {

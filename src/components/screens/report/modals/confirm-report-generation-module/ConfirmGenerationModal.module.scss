@@ -1,0 +1,21 @@
+.container {
+	@apply flex flex-col items-center;
+}
+
+.title {
+	@apply text-center text-lg m-0;
+}
+
+.list {
+}
+
+.item {
+}
+
+.buttons {
+	@apply pt-3;
+
+	> button:nth-of-type(2) {
+		@apply ml-4;
+	}
+}

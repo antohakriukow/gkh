@@ -1,7 +1,8 @@
-import ReportEditor from './components/report-editor/ReportEditor'
-import ReportList from './components/report-list/ReportList'
 import { useWorkspace } from './useWorkspace'
 import { FC } from 'react'
+
+import ReportEditor from '../report/ReportEditor'
+import Reports from '../reports/Reports'
 
 import styles from './Workspace.module.scss'
 
@@ -10,7 +11,7 @@ const Workspace: FC = () => {
 
 	return (
 		<div className={styles.overlay}>
-			{currentReport ? <ReportEditor /> : <ReportList />}
+			{currentReport === null ? <Reports /> : <ReportEditor />}
 		</div>
 	)
 }

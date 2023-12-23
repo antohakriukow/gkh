@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import AddCompanyModal from '~/components/modals/add-company-modal/AddCompanyModal'
+import AddCompanyModal from '~/components/screens/reports/modals/add-company-modal/AddCompanyModal'
 import { Button } from '~/components/ui'
 
 import { useData } from '~/hooks/useData'
