@@ -2,8 +2,8 @@ import * as admin from 'firebase-admin'
 import * as functions from 'firebase-functions'
 import { CallableContext } from 'firebase-functions/v1/https'
 
-import { ILogDTO } from '../types/log.interface'
-import { generateLogMessage } from '../utils/log.utils'
+import { ILogDTO } from '../../types/log.interface'
+import { generateLogMessage } from '../../utils/log.utils'
 
 export const createLog = functions.https.onCall(
 	(data: ILogDTO, context: CallableContext) => {
