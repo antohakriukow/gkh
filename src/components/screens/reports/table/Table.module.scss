@@ -17,7 +17,7 @@
 }
 
 .item {
-	@apply grid text-base text-center hover:bg-secondary-50 cursor-pointer;
+	@apply grid text-base text-center hover:bg-primary-200 cursor-pointer;
 	grid-template-columns: 1fr 1fr 1fr;
 	gap: 1px;
 	border-top: 1px $gray-100 solid;

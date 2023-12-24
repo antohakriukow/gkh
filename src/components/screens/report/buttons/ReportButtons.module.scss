@@ -1,13 +1,16 @@
 .buttons {
 	@apply mb-4;
+	@media (max-width: 450px) {
+		@apply mb-2;
+	}
 }
 
 .button {
-	@apply mt-4 mr-2 px-4 text-xl;
+	@apply mt-2 mr-2 px-4 text-xl;
 	@media (max-width: 800px) {
 		@apply text-base;
 	}
-	@media (max-width: 400px) {
-		@apply text-sm;
+	@media (max-width: 450px) {
+		@apply text-sm px-2;
 	}
 }

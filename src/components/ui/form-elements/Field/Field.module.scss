@@ -90,3 +90,28 @@
 		max-width: 865px;
 	}
 }
+
+@media (max-width: 450px) {
+	.common {
+		> label {
+			> span {
+				font-size: 14px;
+				line-height: 14px;
+			}
+		}
+	}
+
+	.inputContainer {
+		input {
+			@apply ml-1;
+			width: 120px;
+			font-size: 14px;
+			line-height: 14px;
+		}
+	}
+	.narrow {
+		input {
+			width: 70px;
+		}
+	}
+}

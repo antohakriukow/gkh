@@ -51,6 +51,7 @@ const ReportFieldNumberWithSwitch: FC<IReportFieldWithSwitch> = ({
 					error={error}
 					type='number'
 					autoComplete='off'
+					isNarrow
 				/>
 			)}
 		</div>

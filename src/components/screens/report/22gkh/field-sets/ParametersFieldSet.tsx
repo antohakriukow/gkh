@@ -40,7 +40,6 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 	const hasOneHouse = watch('data.settings.housesCount') === 'one'
 	const hasManyHouses = watch('data.settings.housesCount') === 'many'
 	const isAdvancedModeOn = hasManyHouses
-	// watch('data.settings.areasAreDifferent') === 'yes'
 
 	return (
 		<>

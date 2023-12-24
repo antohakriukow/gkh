@@ -7,15 +7,40 @@
 }
 
 .list {
+	@apply list-none p-0;
+	max-height: 50vh;
+	overflow-y: scroll;
 }
 
 .item {
+	@apply text-base mb-1;
 }
 
 .buttons {
-	@apply pt-3;
-
 	> button:nth-of-type(2) {
 		@apply ml-4;
+	}
+}
+
+@media (max-width: 500px) {
+	.title {
+		@apply text-base;
+	}
+	.item {
+		@apply text-sm;
+	}
+}
+
+@media (max-width: 400px) {
+	.title {
+		@apply text-sm;
+	}
+	.item {
+		@apply text-xs;
+	}
+	.buttons {
+		> button {
+			@apply text-sm px-2;
+		}
 	}
 }

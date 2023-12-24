@@ -4,7 +4,7 @@ import ConfirmGenerationModal from './modals/confirm-report-generation-module/Co
 import { useReportEditor } from './useReportEditor'
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import { AiOutlineCloseCircle } from 'react-icons/ai'
+import { AiOutlineCloseSquare } from 'react-icons/ai'
 
 import { Heading, Loader } from '~/components/ui'
 
@@ -45,7 +45,7 @@ const ReportEditor: FC = () => {
 		<div className={styles.container}>
 			<div className={styles.header}>
 				<Heading title={reportEditorHeading} className={styles.title} />
-				<AiOutlineCloseCircle onClick={closeReport} color='#df4956' size={32} />
+				<AiOutlineCloseSquare onClick={closeReport} color='#df4956' size={40} />
 			</div>
 			<ReportButtons
 				isReadyToGenerate={isReadyToGenerate}
