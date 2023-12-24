@@ -19,9 +19,11 @@ const Table: FC = () => {
 		<>
 			<div className={styles.table}>
 				<TableHeader />
-				{filteredReports.map(report => (
-					<TableItem key={report._id} report={report} />
-				))}
+				<div className={styles.body}>
+					{filteredReports.map(report => (
+						<TableItem key={report._id} report={report} />
+					))}
+				</div>
 			</div>
 		</>
 	)

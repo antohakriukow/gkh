@@ -3,8 +3,6 @@
 .table {
 	@apply mt-4;
 	border: 1px $gray-300 solid;
-	max-height: calc(100vh - 200px);
-	overflow-y: auto;
 }
 
 .header {
@@ -14,6 +12,11 @@
 	> div {
 		@apply p-1 self-center;
 	}
+}
+
+.body {
+	max-height: calc(100vh - 230px);
+	overflow-y: auto;
 }
 
 .item {
@@ -28,10 +31,6 @@
 }
 
 @media (max-width: 500px) {
-	.table {
-		max-height: calc(100vh - 230px);
-	}
-
 	.cell {
 		@apply text-sm;
 	}
