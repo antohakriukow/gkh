@@ -12,21 +12,4 @@
 
 .tools {
 	@apply flex flex-row justify-between items-center;
-	> svg:hover {
-		transform: scale(1.02);
-		z-index: 100;
-	}
-	> div:hover {
-		transform: scale(1.01);
-		z-index: 100;
-	}
-}
-
-@media (max-width: 500px) {
-	.header {
-		@apply flex-col items-center;
-	}
-	.title {
-		@apply pb-2;
-	}
 }

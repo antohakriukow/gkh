@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import ReactSelect, { OnChangeValue, StylesConfig } from 'react-select'
 import makeAnimated from 'react-select/animated'
 
@@ -7,26 +7,6 @@ import { IOption, ISelect } from '../form.interface'
 import styles from './Select.module.scss'
 
 const animatedComponents = makeAnimated()
-
-const customStyles: StylesConfig<IOption, boolean> = {
-	option: (provided, state) => ({
-		...provided,
-		backgroundColor: state.isSelected ? '#c9cee8' : provided.backgroundColor,
-		color: '#171c36'
-	}),
-	container: provided => ({
-		...provided,
-		width: 164
-	}),
-	valueContainer: provided => ({
-		...provided,
-		height: 38,
-		fontSize: 16,
-		lineHeight: 1,
-		paddingTop: 0,
-		paddingBottom: 0
-	})
-}
 
 const Select: FC<ISelect> = ({
 	placeholder,
@@ -37,6 +17,34 @@ const Select: FC<ISelect> = ({
 	isLoading,
 	isRequired
 }) => {
+	const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+	const customStyles: StylesConfig<IOption, boolean> = {
+		option: (provided, state) => ({
+			...provided,
+			backgroundColor: state.isSelected ? '#c9cee8' : provided.backgroundColor,
+			fontSize: windowWidth <= 450 ? '14px' : '16px',
+			color: '#171c36'
+		}),
+		container: provided => ({
+			...provided,
+			width: windowWidth <= 450 ? 140 : 164
+		}),
+		valueContainer: provided => ({
+			...provided,
+			fontSize: windowWidth <= 450 ? '14px' : '16px',
+			lineHeight: 1,
+			paddingTop: 0,
+			paddingBottom: 0
+		})
+	}
+
+	useEffect(() => {
+		const handleResize = () => setWindowWidth(window.innerWidth)
+		window.addEventListener('resize', handleResize)
+		return () => window.removeEventListener('resize', handleResize)
+	}, [])
+
 	const onChange = (newValue: OnChangeValue<IOption, boolean>) => {
 		field.onChange(
 			isMulti

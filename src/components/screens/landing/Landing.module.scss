@@ -30,3 +30,9 @@
 		@apply flex-col;
 	}
 }
+
+@media (max-width: 600px) {
+	.scroll {
+		@apply pb-24;
+	}
+}

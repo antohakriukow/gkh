@@ -28,9 +28,4 @@ export const accrualsFieldsData = [
 		name: 'data.accruals.electricityCommon',
 		placeholder: 'Электроэнергия СОИ, руб'
 	}
-	// { name: 'data.accruals.management', placeholder: 'Управление МКД, руб' },
-	// {
-	// 	name: 'data.accruals.maintenance',
-	// 	placeholder: 'Содержание и текущий ремонт ОИ, руб'
-	// }
 ]

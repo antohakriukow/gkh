@@ -8,12 +8,12 @@
 .report {
 	@apply p-2 rounded-sm w-full box-border;
 	border: 1px solid $primary-200;
-	max-height: calc(100vh - 150px);
+	max-height: calc(100vh - 140px);
 	overflow-y: auto;
 }
 
 .header {
-	@apply flex flex-row justify-between items-center;
+	@apply w-full flex flex-row justify-between items-center;
 	> h1 {
 		@apply m-0;
 	}
@@ -28,16 +28,18 @@
 }
 
 .title {
-	@apply mb-0 mt-2 text-3xl font-light text-left;
+	@apply mb-0 mt-2 font-light text-left;
+	font-size: 24px;
+	line-height: 28px;
 	color: $gray-700;
 }
 
-@media (max-width: 500px) {
-	.container {
-		height: calc(100vh - 80px);
+@media (max-width: 450px) {
+	.report {
+		@apply pr-4;
 	}
-
 	.title {
-		@apply text-2xl;
+		font-size: 16px;
+		line-height: 18px;
 	}
 }

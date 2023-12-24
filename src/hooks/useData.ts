@@ -19,7 +19,6 @@ export const useData = () => {
 	const [isLoading, setIsLoading] = useState(false)
 
 	useEffect(() => {
-		//NextOrObserver<User>
 		setIsLoading(true)
 		const handleAuthStateChanged: NextOrObserver<User> = user => {
 			if (user) {

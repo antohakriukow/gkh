@@ -47,3 +47,26 @@
 		}
 	}
 }
+
+@media (max-width: 450px) {
+	.container {
+		.placeholder {
+			font-size: 14px;
+			line-height: 14px;
+		}
+
+		.checkbox {
+			.checkmark {
+				height: 28px;
+				width: 28px;
+
+				&:after {
+					left: 10px;
+					top: 3px;
+					width: 6px;
+					height: 14px;
+				}
+			}
+		}
+	}
+}

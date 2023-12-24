@@ -1,15 +1,15 @@
-import AuthForm from './auth/AuthForm'
+import LoginForm from './auth/LoginForm'
 import Presentation from './presentation/Presentation'
 import { FC } from 'react'
 
 import styles from './Landing.module.scss'
 
-const Landing: FC = () => {
+const LoginPage: FC = () => {
 	return (
 		<section className={styles.landing}>
 			<Presentation />
-			<AuthForm />
+			<LoginForm />
 		</section>
 	)
 }
-export default Landing
+export default LoginPage

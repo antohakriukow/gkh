@@ -57,7 +57,6 @@ const _prepareToXML = (report: IReport) => {
 export const downloadXML = (report: IReport) => {
 	const now = dayjs()
 	const config = {
-		// header: false,
 		header: '<?xml version="1.0" encoding="UTF-8"?>',
 		indent: '    '
 	}

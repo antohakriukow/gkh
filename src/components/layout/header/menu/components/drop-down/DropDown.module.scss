@@ -3,33 +3,46 @@
 }
 
 .dropDown {
-	@apply relative mr-4;
-	min-width: 230px;
+	@apply relative mr-4 flex flex-row justify-end;
 	max-width: 300px;
 }
 
 .menu {
 	@apply bg-primary-50 absolute air-block;
-	top: 30px;
-	left: 0;
+	top: 0px;
+	right: 0px;
 	width: 100%;
 	z-index: 10;
+	min-width: 260px;
+	max-width: 300px;
+}
+
+.iconContainer {
+	@apply inline-flex cursor-pointer z-50;
+	> svg:hover {
+		transform: scale(1.05);
+		z-index: 100;
+	}
 }
 
 .item {
-	@apply px-4 flex flex-row items-center justify-between hover:bg-secondary-200 cursor-pointer;
+	@apply px-4 flex flex-row items-center justify-between hover:bg-primary-200 cursor-pointer;
 }
 
 .noHover {
-	@apply hover:bg-transparent;
+	@apply bg-primary-100 hover:bg-transparent;
 }
 
 .title {
 	@apply pr-1 text-base whitespace-nowrap overflow-hidden overflow-ellipsis text-primary-800 m-0 py-1 w-full select-none;
-	min-width: 180px;
-	max-width: 250px;
 }
 
 .first {
 	@apply flex flex-row items-center justify-between bg-primary-50;
+}
+
+@media (max-width: 450px) {
+	.title {
+		max-width: 200px;
+	}
 }

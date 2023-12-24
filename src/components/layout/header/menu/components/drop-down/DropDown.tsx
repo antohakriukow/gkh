@@ -1,7 +1,7 @@
 import DropDownItem from './DropDownItem'
 import { IDropDown } from './drop-down.interface'
 import { FC, useEffect, useRef, useState } from 'react'
-import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md'
+import { MdOutlineMenu } from 'react-icons/md'
 
 import { Loader } from '~/components/ui'
 
@@ -56,19 +56,14 @@ const DropDown: FC<IDropDown> = ({ data }) => {
 	return (
 		<div ref={dropDownRef} className={styles.anchor}>
 			<div className={styles.dropDown}>
-				<div className={styles.first}>
-					{currentCompany && renderDropDownItem(currentCompany, true)}
-					<div onClick={toggleDropDown} style={{ cursor: 'pointer' }}>
-						{isDropDownOpened ? (
-							<MdArrowDropUp color='#23c3ab' size={30} />
-						) : (
-							<MdArrowDropDown color='#23c3ab' size={30} />
-						)}
-					</div>
+				<div onClick={toggleDropDown} className={styles.iconContainer}>
+					<MdOutlineMenu color='#4553a1' size={30} />
 				</div>
+				{/* {currentCompany && renderDropDownItem(currentCompany, true)} */}
 
 				{isDropDownOpened && (
 					<div className={styles.menu}>
+						{currentCompany && renderDropDownItem(currentCompany, true)}
 						{data
 							.filter(company => company.inn !== currentCompany?.inn)
 							.map(company => renderDropDownItem(company))}

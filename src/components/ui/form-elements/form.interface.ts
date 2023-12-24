@@ -9,6 +9,7 @@ export interface IFieldProps {
 	error?: FieldError | undefined
 	color?: 'danger' | 'success'
 	isString?: boolean
+	isNarrow?: boolean
 }
 
 export interface ICheckboxProps {

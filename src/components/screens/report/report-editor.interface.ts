@@ -20,21 +20,7 @@ export interface IReportForm {
 	watch: UseFormWatch<IReport>
 	setValue: UseFormSetValue<IReport>
 	reset?: UseFormReset<IReport>
-	// trigger: UseFormTrigger<IReport>
-	// handleSubmit: UseFormHandleSubmit<IReport, undefined>
-	// onSubmit: (data: IReport) => Promise<void>
-	// errors: FieldErrors<IReport>
 }
-
-// type PathImpl<T, Key extends keyof T> = Key extends string
-// 	? T[Key] extends Record<string, any>
-// 		? T[Key] extends ArrayLike<any>
-// 			? Key
-// 			: Key | `${Key}.${PathImpl<T[Key], Exclude<keyof T[Key], keyof any[]>>}`
-// 		: Key
-// 	: never
-
-// type ReportFieldNames = PathImpl<IReport, keyof IReport>
 
 export interface IReportField {
 	register: UseFormRegister<IReport>

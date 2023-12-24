@@ -13,9 +13,8 @@ import ScrollButton from '../ScrollButton'
 
 import styles from './Auth.module.scss'
 
-const AuthForm: FC = () => {
-	const [isReg, setIsReg] = useState(true)
-	const { navigateToResetPassword } = useRedirect()
+const RegisterForm: FC = () => {
+	const { navigateToResetPassword, navigateToLogin } = useRedirect()
 
 	const [width, setWidth] = useState(window.innerWidth)
 
@@ -27,7 +26,7 @@ const AuthForm: FC = () => {
 
 	const isNarrow = width <= 800
 
-	const { login, register, isLoading } = useAuth()
+	const { register, isLoading } = useAuth()
 
 	const {
 		register: registerInput,
@@ -44,33 +43,20 @@ const AuthForm: FC = () => {
 
 	const onSubmit: SubmitHandler<IAuthInput> = ({ email, password }) => {
 		if (!password) return
-		if (isReg) {
-			register(email, password)
-		} else {
-			login(email, password)
-		}
+		register(email, password)
 		reset()
 	}
 
 	const isValid = formState.isValid
 	const hasAgreement = watch('agreements')
 
-	const toggleReg = () => setIsReg(!isReg)
-
 	return (
 		<div className={styles.container}>
 			<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-				<Heading
-					title={isReg ? `Добро пожаловать` : `Вход`}
-					className={styles.heading}
-				/>
+				<Heading title='Добро пожаловать' />
 
 				<SubHeading
-					title={
-						isReg
-							? `Зарегистрируйте новый аккаунт`
-							: `Введите Ваш логин и пароль`
-					}
+					title='Зарегистрируйте новый аккаунт'
 					className={styles.subheading}
 				/>
 
@@ -78,7 +64,7 @@ const AuthForm: FC = () => {
 					formState={formState}
 					register={registerInput}
 					watch={watch}
-					isReg={isReg}
+					isReg
 					isPasswordRequired
 				/>
 
@@ -87,13 +73,11 @@ const AuthForm: FC = () => {
 					type='submit'
 					disabled={isLoading || !isValid || !hasAgreement}
 				>
-					{isReg ? `Получить доступ` : `Войти`}
+					Получить доступ
 				</Button>
-				<div className={styles.switcherTitle}>
-					{isReg ? 'У меня уже есть аккаунт.' : 'У меня еще нет аккаунта.'}
-				</div>
-				<div onClick={toggleReg} className={styles.switcherPressable}>
-					{isReg ? 'Войти' : 'Зарегистрироваться'}
+				<div className={styles.switcherTitle}>У меня уже есть аккаунт</div>
+				<div onClick={navigateToLogin} className={styles.switcherPressable}>
+					Войти
 				</div>
 				<div
 					onClick={navigateToResetPassword}
@@ -106,4 +90,4 @@ const AuthForm: FC = () => {
 		</div>
 	)
 }
-export default AuthForm
+export default RegisterForm

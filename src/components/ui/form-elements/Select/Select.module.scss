@@ -32,18 +32,6 @@
 			font-size: 16px;
 			line-height: 16px;
 		}
-
-		.custom-select__control {
-			@apply w-32;
-		}
-
-		.custom-select__option--is-selected {
-			background-color: $primary-100;
-		}
-
-		.custom-select__value-container {
-			@apply py-0;
-		}
 	}
 }
 
@@ -54,5 +42,24 @@
 
 	.selectContainer {
 		max-width: 600px;
+	}
+}
+
+@media (max-width: 450px) {
+	.selectContainer {
+		> label {
+			> span {
+				font-size: 14px;
+				line-height: 14px;
+			}
+		}
+	}
+	.inputContainer {
+		@apply flex flex-col items-center justify-start;
+
+		input {
+			@apply px-2;
+			height: 28px;
+		}
 	}
 }

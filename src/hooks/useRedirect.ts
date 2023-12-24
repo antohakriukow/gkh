@@ -11,8 +11,9 @@ export const useRedirect = () => {
 		if (user) navigate('/reports')
 	}, [user, navigate])
 
-	const navigateToResetPassword = () => navigate('/reset-password')
 	const navigateToHome = () => navigate('/')
+	const navigateToResetPassword = () => navigate('/reset-password')
+	const navigateToLogin = () => navigate('/login')
 
-	return { navigateToResetPassword, navigateToHome }
+	return { navigateToHome, navigateToResetPassword, navigateToLogin }
 }
