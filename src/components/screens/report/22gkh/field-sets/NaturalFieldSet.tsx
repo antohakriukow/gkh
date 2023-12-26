@@ -16,7 +16,7 @@ const NaturalFieldSet: FC<INaturalFieldSet> = ({
 }) => {
 	const { currentReport } = useTypedSelector(state => state.ui)
 
-	if (currentReport?.period !== 4) return null
+	// if (currentReport?.period !== 4) return null
 
 	const errors = formState?.errors
 	const isElectricityRequired = watch('data.accruals.electricityCommon') > 0
@@ -29,7 +29,7 @@ const NaturalFieldSet: FC<INaturalFieldSet> = ({
 				<ReportFieldNumber
 					control={control}
 					fieldName='data.natural.heat'
-					placeholder='Начислено тепловой энергии, Гкал'
+					placeholder='Начислено отопление, Гкал'
 					register={register}
 					error={errors?.data?.natural?.heat}
 					isRequired={isHeatRequired}

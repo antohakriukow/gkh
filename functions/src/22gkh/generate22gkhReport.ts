@@ -12,7 +12,6 @@ export const generate22gkhReport = async (
 ): Promise<IFinalReport> => {
 	const {
 		calculatedAreas,
-		area,
 		monetizedArea,
 		renovationArea,
 
@@ -44,7 +43,10 @@ export const generate22gkhReport = async (
 		row76,
 		distributeMaintenance,
 		distributeElectricity,
-		distributeGas
+		distributeGas,
+
+		row86,
+		row87
 	} = await getConstants(userId, reportId)
 
 	// Секция отчета №1
@@ -182,24 +184,9 @@ export const generate22gkhReport = async (
 	const sectionFour = removeZeroAndUndefined({
 		86:
 			!!accruals.electricityCommon && !!natural && !!natural.electricityCommon
-				? {
-						4: !!natural.electricityCommon ? natural.electricityCommon : 0,
-						6: area.commonArea ? area.commonArea : 0,
-						7: calculatedAreas.electricity
-							? calculatedAreas.electricity
-							: monetizedArea
-				  }
+				? row86
 				: {},
-		87:
-			!!accruals.heat && !!natural && !!natural.heat
-				? {
-						3: natural.heat,
-						5: calculatedAreas.heat
-							? calculatedAreas.heat
-							: area.residentialArea,
-						7: calculatedAreas.heat ? calculatedAreas.heat : monetizedArea
-				  }
-				: {}
+		87: !!accruals.heat && !!natural && !!natural.heat ? row87 : {}
 	})
 
 	return {

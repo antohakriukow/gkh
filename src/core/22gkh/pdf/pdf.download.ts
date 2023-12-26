@@ -109,9 +109,12 @@ export const downloadPDF = (report:IReport) => {
 		},
 	},
   
-  report.period === 4 ? sectionFourTitle : {},
-  report.period === 4
-  ? {
+  // report.period === 4 ?
+  sectionFourTitle
+    // : {}
+  ,
+  // report.period === 4 ? 
+  {
 		table: {
 			widths: ['*', 45, 90, 90, 90, 90, 90],
 			body: [
@@ -121,10 +124,11 @@ export const downloadPDF = (report:IReport) => {
 			]
 		},
 	}
-  : {},
+  // : {}
+  ,
 
   {
-    pageBreak: report.period === 4 ? '' : 'before',
+    // pageBreak: report.period === 4 ? '' : 'before',
     margin: report.period === 4 ? [0,50,0,0] : [0, 0, 0, 0],
 		table: {
 			widths: [180, 20, 190, 20, 190, 20, 78],

@@ -272,6 +272,27 @@ export const getConstants = async (userId: string, reportId: string) => {
 		calculatedAreas.electricity
 	)
 
+	const row86 = {
+		4: !!natural.electricityCommon ? natural.electricityCommon : 0,
+		6: area.commonArea ? area.commonArea : 0,
+		7:
+			settings.areasAreDifferent === 'yes' && !!calculatedAreas.electricity
+				? calculatedAreas.electricity
+				: monetizedArea
+	}
+
+	const row87 = {
+		3: natural.heat,
+		5:
+			settings.areasAreDifferent === 'yes' && !!calculatedAreas.heat
+				? calculatedAreas.heat
+				: area.residentialArea,
+		7:
+			settings.areasAreDifferent === 'yes' && !!calculatedAreas.heat
+				? calculatedAreas.heat
+				: monetizedArea
+	}
+
 	//Строка отчета с данными о газоснабжении. Вынесена в константу, так как используется в коде несколько раз
 	const rowGas = {
 		3: accruals.gas,
@@ -395,6 +416,9 @@ export const getConstants = async (userId: string, reportId: string) => {
 		row76,
 		distributeMaintenance,
 		distributeElectricity,
-		distributeGas
+		distributeGas,
+
+		row86,
+		row87
 	}
 }
