@@ -5,7 +5,6 @@ import {
 	UseFormRegister,
 	UseFormReset,
 	UseFormSetValue,
-	UseFormTrigger,
 	UseFormWatch
 } from 'react-hook-form'
 
@@ -28,6 +27,7 @@ export interface IReportField {
 	placeholder?: string
 	fieldName: string
 	switcherName?: string
+	formState?: FormState<IReport>
 	error?: FieldError
 	isRequired?: boolean
 }

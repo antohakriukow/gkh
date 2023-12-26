@@ -7,6 +7,7 @@ import {
 	areasAreDifferentOptions,
 	budgetFinancingOptions,
 	elevatorOptions,
+	gasBoilerOptions,
 	gasOptions,
 	housesCountOptions,
 	renovationCostsOptions,
@@ -156,6 +157,18 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 					options={
 						isAdvancedModeOn ? advancedWaterHeatingOptions : waterHeatingOptions
 					}
+					isRequired
+				/>
+
+				<ReportSelect
+					control={control}
+					fieldName='data.gasBoiler.status'
+					placeholder={
+						isAdvancedModeOn
+							? 'Есть дома с газовой котельной'
+							: 'УО имеет газовую котельную'
+					}
+					options={gasBoilerOptions}
 					isRequired
 				/>
 

@@ -8,6 +8,8 @@ export type TypeBudgetFinancing = 'yes' | 'no'
 export type TypeRenovationCosts = 'yes' | 'no'
 export type TypeHousesCount = 'one' | 'many'
 export type TypeAreasAreDifferent = 'yes' | 'no'
+export type TypeNDS = 'yes' | 'no'
+export type TypeGasBoiler = 'yes' | 'no'
 
 export interface IService {
 	status: boolean
@@ -64,6 +66,10 @@ export interface IGas {
 }
 
 export interface IWaterHeating {
+	status: TypeWaterHeating
+}
+
+export interface IGasBoiler {
 	status: TypeWaterHeating
 }
 
@@ -138,6 +144,7 @@ export interface IReport22gkhData {
 	stove: IStove
 	gas: IGas
 	waterHeating: IWaterHeating
+	gasBoiler: IGasBoiler
 	renovation: IRenovation
 	budgetFinancing: IBudgetFinancing
 	renovationCosts: IRenovationCosts

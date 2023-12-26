@@ -26,7 +26,8 @@ const ServicesFieldSet: FC<IServicesFieldSet> = ({
 	register,
 	control,
 	watch,
-	setValue
+	setValue,
+	formState
 }) => {
 	const isAdvancedModeOn =
 		watch('data.settings.housesCount') === 'many' &&
@@ -36,6 +37,9 @@ const ServicesFieldSet: FC<IServicesFieldSet> = ({
 		watch('data.gas.status') === 'liquid' ||
 		watch('data.gas.status') === 'network' ||
 		watch('data.gas.status') === 'both'
+
+	const hasGasBoiler = watch('data.gasBoiler.status') === 'yes'
+	const hasNoGasBoiler = watch('data.gasBoiler.status') === 'no'
 
 	const renderFields = (fieldsData: IFieldsData[]) =>
 		fieldsData.map(field => (
@@ -48,17 +52,21 @@ const ServicesFieldSet: FC<IServicesFieldSet> = ({
 				register={register}
 				watch={watch}
 				setValue={setValue}
+				formState={formState}
 				showInput={isAdvancedModeOn}
 			/>
 		))
 
 	let fieldsToRender = [
 		...requiredServicesFieldsData,
-		...heatingServicesData,
 		...requiredCommonServicesFieldsData
 	]
 
-	if (isGas) {
+	if (hasNoGasBoiler) {
+		fieldsToRender = [...fieldsToRender, ...heatingServicesData]
+	}
+
+	if (isGas || hasGasBoiler) {
 		fieldsToRender = [...fieldsToRender, ...gasServicesData]
 	}
 
