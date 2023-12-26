@@ -2,15 +2,15 @@
 
 .reportForm {
 	@apply w-full;
-	max-height: calc(100vh - 274px);
+	max-height: calc(100vh - 294px);
 	@media (max-width: 800px) {
-		max-height: calc(100vh - 270px);
+		max-height: calc(100vh - 290px);
 	}
 	@media (max-width: 560px) {
-		max-height: calc(100vh - 286px);
+		max-height: calc(100vh - 306px);
 	}
 	@media (max-width: 450px) {
-		max-height: calc(100vh - 258px);
+		max-height: calc(100vh - 278px);
 	}
 }
 
