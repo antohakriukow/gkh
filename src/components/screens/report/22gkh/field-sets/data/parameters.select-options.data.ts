@@ -48,6 +48,12 @@ export const waterHeatingOptions = [
 	{ label: 'Нет', value: 'no' }
 ]
 
+export const advancedWaterHeatingOptions = [
+	{ label: 'Да', value: 'yes' },
+	{ label: 'Нет', value: 'no' },
+	{ label: 'Оба варианта', value: 'both' }
+]
+
 export const renovationOptions = [
 	{ label: 'Да', value: 'yes' },
 	{ label: 'Нет', value: 'no' }

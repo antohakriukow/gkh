@@ -2,6 +2,7 @@
 
 .container {
 	@apply flex flex-col justify-center items-start bg-white p-4 pb-8 rounded-md box-border;
+	height: calc(100vh - 112px);
 }
 
 .report {

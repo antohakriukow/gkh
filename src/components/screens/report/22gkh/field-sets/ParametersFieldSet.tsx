@@ -3,6 +3,7 @@ import {
 	advancedGasOptions,
 	advancedRenovationOptions,
 	advancedStoveOptions,
+	advancedWaterHeatingOptions,
 	areasAreDifferentOptions,
 	budgetFinancingOptions,
 	elevatorOptions,
@@ -152,7 +153,9 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 					control={control}
 					fieldName='data.waterHeating.status'
 					placeholder='УО осуществляет подогрев воды'
-					options={waterHeatingOptions}
+					options={
+						isAdvancedModeOn ? advancedWaterHeatingOptions : waterHeatingOptions
+					}
 					isRequired
 				/>
 
