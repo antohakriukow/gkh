@@ -10,7 +10,8 @@ import {
 	housesCountOptions,
 	renovationCostsOptions,
 	renovationOptions,
-	stoveOptions
+	stoveOptions,
+	waterHeatingOptions
 } from './data/parameters.select-options.data'
 import { FC } from 'react'
 
@@ -146,6 +147,14 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						/>
 					)}
 				</FieldGroup>
+
+				<ReportSelect
+					control={control}
+					fieldName='data.waterHeating.status'
+					placeholder='УО осуществляет подогрев воды'
+					options={waterHeatingOptions}
+					isRequired
+				/>
 
 				<FieldGroup isVisible={isGasBoth}>
 					<ReportSelect

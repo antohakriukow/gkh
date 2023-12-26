@@ -2,6 +2,7 @@ export type Type22gkhReportTemplate = '22gkh2023' | '22gkh2024'
 export type TypeElevator = 'yes' | 'no' | 'both'
 export type TypeStove = 'gas' | 'electro' | 'both'
 export type TypeGas = 'none' | 'network' | 'liquid' | 'both'
+export type TypeWaterHeating = 'yes' | 'no' | 'both'
 export type TypeRenovation = 'yes' | 'no' | 'both'
 export type TypeBudgetFinancing = 'yes' | 'no'
 export type TypeRenovationCosts = 'yes' | 'no'
@@ -21,13 +22,16 @@ export interface IArea {
 
 export interface IServices {
 	coldWater: IService
+	coldToHotWater: IService
 	hotWater: IService
 	waterDisposal: IService
 	heat: IService
+	heatToHotWater: IService
 	gas: IService
 	electricity: IService
 	solidWasteRemoval: IService
 	coldWaterCommon: IService
+	coldToHotWaterCommon: IService
 	hotWaterCommon: IService
 	waterDisposalCommon: IService
 	electricityCommon: IService
@@ -57,6 +61,10 @@ export interface IGas {
 	areaNone?: number
 	areaNetwork?: number
 	areaLiquid?: number
+}
+
+export interface IWaterHeating {
+	status: TypeWaterHeating
 }
 
 export interface IRenovation {
@@ -105,13 +113,16 @@ export interface IOrganizationDebts {
 
 export interface IAccruals {
 	coldWater: number
+	coldToHotWater: number
 	hotWater: number
 	waterDisposal: number
 	heat: number
+	heatToHotWater: number
 	gas: number
 	electricity: number
 	solidWasteRemoval: number
 	coldWaterCommon: number
+	coldToHotWaterCommon: number
 	hotWaterCommon: number
 	waterDisposalCommon: number
 	electricityCommon: number
@@ -126,6 +137,7 @@ export interface IReport22gkhData {
 	elevator: IElevator
 	stove: IStove
 	gas: IGas
+	waterHeating: TypeWaterHeating
 	renovation: IRenovation
 	budgetFinancing: IBudgetFinancing
 	renovationCosts: IRenovationCosts

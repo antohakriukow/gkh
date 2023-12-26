@@ -16,12 +16,12 @@
 
 .body {
 	overflow-y: auto;
-	max-height: calc(100vh - 310px);
+	height: calc(100vh - 310px);
 	@media (max-width: 500px) {
-		max-height: calc(100vh - 298px);
+		height: calc(100vh - 298px);
 	}
 	@media (max-width: 390px) {
-		max-height: calc(100vh - 318px);
+		height: calc(100vh - 318px);
 	}
 }
 

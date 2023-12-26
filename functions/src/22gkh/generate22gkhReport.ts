@@ -54,10 +54,10 @@ export const generate22gkhReport = async (
 		1: { 3: totalAccruals + income.commerce },
 		2: { 3: totalAccruals },
 		3: { 3: accrualsCommunal },
-		4: { 3: accruals.coldWater },
+		4: { 3: accruals.coldWater + accruals.coldToHotWater },
 		5: { 3: accruals.hotWater },
 		6: { 3: accruals.waterDisposal },
-		7: { 3: accruals.heat },
+		7: { 3: accruals.heat + accruals.heatToHotWater },
 		8: { 3: accruals.electricity },
 		9: { 3: accruals.gas },
 		10: { 3: accruals.solidWasteRemoval },
@@ -70,10 +70,10 @@ export const generate22gkhReport = async (
 		16: { 3: totalAccruals },
 		17: { 3: totalAccruals },
 		18: { 3: accrualsCommunal },
-		19: { 3: accruals.coldWater },
+		19: { 3: accruals.coldWater + accruals.coldToHotWater },
 		20: { 3: accruals.hotWater },
 		21: { 3: accruals.waterDisposal },
-		22: { 3: accruals.heat },
+		22: { 3: accruals.heat + accruals.heatToHotWater },
 		23: { 3: accruals.electricity },
 		24: { 3: accruals.gas },
 		25: { 3: accruals.solidWasteRemoval },
@@ -87,10 +87,10 @@ export const generate22gkhReport = async (
 
 		32: { 3: communalDebts + maintenanceDebts },
 		33: { 3: communalDebts },
-		34: { 3: debts.coldWater },
+		34: { 3: debts.coldWater + debts.coldToHotWater },
 		35: { 3: debts.hotWater },
 		36: { 3: debts.waterDisposal },
-		37: { 3: debts.heat },
+		37: { 3: debts.heat + debts.heatToHotWater },
 		38: { 3: debts.electricity },
 		39: { 3: debts.gas },
 		40: { 3: debts.solidWasteRemoval },
@@ -137,9 +137,11 @@ export const generate22gkhReport = async (
 		70: typicalRow(accruals.renovation, income.renovation, renovationArea),
 		71: typicalRow(accrualsCommunal, communalPayments),
 		72: typicalRow(
-			accruals.coldWater,
-			payments.coldWater,
-			calculatedAreas.coldWater
+			accruals.coldWater + accruals.coldToHotWater,
+			payments.coldWater + payments.coldToHotWater,
+			calculatedAreas.coldWater > calculatedAreas.coldToHotWater
+				? calculatedAreas.coldWater
+				: calculatedAreas.coldToHotWater
 		),
 		73: typicalRow(
 			accruals.waterDisposal,
@@ -151,7 +153,13 @@ export const generate22gkhReport = async (
 			payments.hotWater,
 			calculatedAreas.hotWater
 		),
-		75: typicalRow(accruals.heat, payments.heat, calculatedAreas.heat),
+		75: typicalRow(
+			accruals.heat + accruals.heatToHotWater,
+			payments.heat + payments.heatToHotWater,
+			calculatedAreas.heat > calculatedAreas.heatToHotWater
+				? calculatedAreas.heat
+				: calculatedAreas.heatToHotWater
+		),
 		76: row76,
 		77: distributeElectricity(77),
 		78: distributeElectricity(78),

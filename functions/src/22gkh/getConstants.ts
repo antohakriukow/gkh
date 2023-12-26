@@ -66,9 +66,11 @@ export const getConstants = async (userId: string, reportId: string) => {
 	// Общая сумма начислений КУ
 	const accrualsCommunal =
 		accruals.coldWater +
+		accruals.coldToHotWater +
 		accruals.hotWater +
 		accruals.waterDisposal +
 		accruals.heat +
+		accruals.heatToHotWater +
 		accruals.electricity +
 		accruals.gas +
 		accruals.solidWasteRemoval
@@ -76,6 +78,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 	// Общая сумма начислений коммунальных ресурсов (КР) на СОИ
 	const accrualsCommon =
 		accruals.coldWaterCommon +
+		accruals.coldToHotWaterCommon +
 		accruals.hotWaterCommon +
 		accruals.waterDisposalCommon +
 		accruals.electricityCommon
@@ -96,13 +99,16 @@ export const getConstants = async (userId: string, reportId: string) => {
 	//prettier-ignore
 	let payments = {
     coldWater: Math.round((income.housing / totalAccruals) * accruals.coldWater),
+    coldToHotWater: Math.round((income.housing / totalAccruals) * accruals.coldToHotWater),
     hotWater: Math.round((income.housing / totalAccruals) * accruals.hotWater),
     waterDisposal: Math.round((income.housing / totalAccruals) * accruals.waterDisposal),
     heat: Math.round((income.housing / totalAccruals) * accruals.heat),
+    heatToHotWater: Math.round((income.housing / totalAccruals) * accruals.heatToHotWater),
     electricity: Math.round((income.housing / totalAccruals) * accruals.electricity),
     gas: Math.round((income.housing / totalAccruals) * accruals.gas),
     solidWasteRemoval: Math.round((income.housing / totalAccruals) * accruals.solidWasteRemoval),
     coldWaterCommon: Math.round((income.housing / totalAccruals) * accruals.coldWaterCommon),
+    coldToHotWaterCommon: Math.round((income.housing / totalAccruals) * accruals.coldToHotWaterCommon),
     hotWaterCommon: Math.round((income.housing / totalAccruals) * accruals.hotWaterCommon),
     waterDisposalCommon: Math.round((income.housing / totalAccruals) * accruals.waterDisposalCommon),
     electricityCommon: Math.round((income.housing / totalAccruals) * accruals.electricityCommon),
@@ -122,9 +128,11 @@ export const getConstants = async (userId: string, reportId: string) => {
 	// Общая сумма оплат за КУ
 	const communalPayments =
 		payments.coldWater +
+		payments.coldToHotWater +
 		payments.hotWater +
 		payments.waterDisposal +
 		payments.heat +
+		payments.heatToHotWater +
 		payments.electricity +
 		payments.gas +
 		payments.solidWasteRemoval
@@ -132,6 +140,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 	// Общая сумма оплат за КР на СОИ
 	const commonPayments =
 		payments.coldWaterCommon +
+		payments.coldToHotWaterCommon +
 		payments.hotWaterCommon +
 		payments.waterDisposalCommon +
 		payments.electricityCommon
@@ -144,13 +153,16 @@ export const getConstants = async (userId: string, reportId: string) => {
 	//prettier-ignore
 	const currentYearPayments = {
 		coldWater: payments.coldWater >= accruals.coldWater ? accruals.coldWater : payments.coldWater,
+		coldToHotWater: payments.coldToHotWater >= accruals.coldToHotWater ? accruals.coldToHotWater : payments.coldToHotWater,
 		hotWater: payments.hotWater >= accruals.hotWater ? accruals.hotWater : payments.hotWater,
 		waterDisposal: payments.waterDisposal >= accruals.waterDisposal ? accruals.waterDisposal : payments.waterDisposal,
 		heat: payments.heat >= accruals.heat ? accruals.heat : payments.heat,
+		heatToHotWater: payments.heatToHotWater >= accruals.heatToHotWater ? accruals.heatToHotWater : payments.heatToHotWater,
 		electricity: payments.electricity >= accruals.electricity ? accruals.electricity : payments.electricity,
 		gas: payments.gas >= accruals.gas ? accruals.gas : payments.gas,
 		solidWasteRemoval: payments.solidWasteRemoval >= accruals.solidWasteRemoval ? accruals.solidWasteRemoval : payments.solidWasteRemoval,
 		coldWaterCommon: payments.coldWaterCommon >= accruals.coldWaterCommon ? accruals.coldWaterCommon : payments.coldWaterCommon,
+		coldToHotWaterCommon: payments.coldToHotWaterCommon >= accruals.coldToHotWaterCommon ? accruals.coldToHotWaterCommon : payments.coldToHotWaterCommon,
 		hotWaterCommon: payments.hotWaterCommon >= accruals.hotWaterCommon ? accruals.hotWaterCommon : payments.hotWaterCommon,
 		waterDisposalCommon: payments.waterDisposalCommon >= accruals.waterDisposalCommon ? accruals.waterDisposalCommon : payments.waterDisposalCommon,
 		electricityCommon: payments.electricityCommon >= accruals.electricityCommon ? accruals.electricityCommon : payments.electricityCommon,
@@ -162,13 +174,16 @@ export const getConstants = async (userId: string, reportId: string) => {
 	//prettier-ignore
 	const previousPeriodPayments = {
 		coldWater: payments.coldWater >= accruals.coldWater ? payments.coldWater - accruals.coldWater : 0,
+		coldToHotWater: payments.coldToHotWater >= accruals.coldToHotWater ? payments.coldToHotWater - accruals.coldToHotWater : 0,
 		hotWater: payments.hotWater >= accruals.hotWater ? payments.hotWater - accruals.hotWater : 0,
 		waterDisposal: payments.waterDisposal >= accruals.waterDisposal ? payments.waterDisposal - accruals.waterDisposal : 0,
 		heat: payments.heat >= accruals.heat ? payments.heat - accruals.heat : 0,
+		heatToHotWater: payments.heatToHotWater >= accruals.heatToHotWater ? payments.heatToHotWater - accruals.heatToHotWater : 0,
 		electricity: payments.electricity >= accruals.electricity ? payments.electricity - accruals.electricity : 0,
 		gas: payments.gas >= accruals.gas ? payments.gas - accruals.gas : 0,
 		solidWasteRemoval: payments.solidWasteRemoval >= accruals.solidWasteRemoval ? payments.solidWasteRemoval - accruals.solidWasteRemoval : 0,
 		coldWaterCommon: payments.coldWaterCommon >= accruals.coldWaterCommon ? payments.coldWaterCommon - accruals.coldWaterCommon : 0,
+		coldToHotWaterCommon: payments.coldToHotWaterCommon >= accruals.coldToHotWaterCommon ? payments.coldToHotWaterCommon - accruals.coldToHotWaterCommon : 0,
 		hotWaterCommon: payments.hotWaterCommon >= accruals.hotWaterCommon ? payments.hotWaterCommon - accruals.hotWaterCommon : 0,
 		waterDisposalCommon: payments.waterDisposalCommon >= accruals.waterDisposalCommon ? payments.waterDisposalCommon - accruals.waterDisposalCommon : 0,
 		electricityCommon: payments.electricityCommon >= accruals.electricityCommon ? payments.electricityCommon - accruals.electricityCommon : 0,
@@ -180,13 +195,16 @@ export const getConstants = async (userId: string, reportId: string) => {
 	//prettier-ignore
 	let previousPeriodDebts = {
 		coldWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldWater),
+		coldToHotWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldToHotWater),
 		hotWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.hotWater),
 		waterDisposal: Math.round((residentsDebts.housing / totalAccruals) * accruals.waterDisposal),
 		heat: Math.round((residentsDebts.housing / totalAccruals) * accruals.heat),
+		heatToHotWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.heatToHotWater),
 		electricity: Math.round((residentsDebts.housing / totalAccruals) * accruals.electricity),
 		gas: Math.round((residentsDebts.housing / totalAccruals) * accruals.gas),
 		solidWasteRemoval: Math.round((residentsDebts.housing / totalAccruals) * accruals.solidWasteRemoval),
 		coldWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldWaterCommon),
+		coldToHotWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldToHotWaterCommon),
 		hotWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.hotWaterCommon),
 		waterDisposalCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.waterDisposalCommon),
 		electricityCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.electricityCommon),
@@ -208,13 +226,16 @@ export const getConstants = async (userId: string, reportId: string) => {
 	//prettier-ignore
 	const debts = {
 		coldWater: accruals.coldWater - currentYearPayments.coldWater + previousPeriodDebts.coldWater - previousPeriodPayments.coldWater,
+		coldToHotWater: accruals.coldToHotWater - currentYearPayments.coldToHotWater + previousPeriodDebts.coldToHotWater - previousPeriodPayments.coldToHotWater,
 		hotWater: accruals.hotWater - currentYearPayments.hotWater + previousPeriodDebts.hotWater - previousPeriodPayments.hotWater,
 		waterDisposal: accruals.waterDisposal - currentYearPayments.waterDisposal + previousPeriodDebts.waterDisposal - previousPeriodPayments.waterDisposal,
 		heat: accruals.heat - currentYearPayments.heat + previousPeriodDebts.heat - previousPeriodPayments.heat,
+		heatToHotWater: accruals.heatToHotWater - currentYearPayments.heatToHotWater + previousPeriodDebts.heatToHotWater - previousPeriodPayments.heatToHotWater,
 		electricity: accruals.electricity - currentYearPayments.electricity + previousPeriodDebts.electricity - previousPeriodPayments.electricity,
 		gas: accruals.gas - currentYearPayments.gas + previousPeriodDebts.gas - previousPeriodPayments.gas,
 		solidWasteRemoval: accruals.solidWasteRemoval - currentYearPayments.solidWasteRemoval + previousPeriodDebts.solidWasteRemoval - previousPeriodPayments.solidWasteRemoval,
 		coldWaterCommon: accruals.coldWaterCommon - currentYearPayments.coldWaterCommon + previousPeriodDebts.coldWaterCommon - previousPeriodPayments.coldWaterCommon,
+		coldToHotWaterCommon: accruals.coldToHotWaterCommon - currentYearPayments.coldToHotWaterCommon + previousPeriodDebts.coldToHotWaterCommon - previousPeriodPayments.coldToHotWaterCommon,
 		hotWaterCommon: accruals.hotWaterCommon - currentYearPayments.hotWaterCommon + previousPeriodDebts.hotWaterCommon - previousPeriodPayments.hotWaterCommon,
 		waterDisposalCommon: accruals.waterDisposalCommon - currentYearPayments.waterDisposalCommon + previousPeriodDebts.waterDisposalCommon - previousPeriodPayments.waterDisposalCommon,
 		electricityCommon: accruals.electricityCommon - currentYearPayments.electricityCommon + previousPeriodDebts.electricityCommon - previousPeriodPayments.electricityCommon,
@@ -225,15 +246,18 @@ export const getConstants = async (userId: string, reportId: string) => {
 	// Общий долг за КУ
 	const communalDebts =
 		debts.coldWater +
+		debts.coldToHotWater +
 		debts.hotWater +
 		debts.waterDisposal +
 		debts.heat +
+		debts.heatToHotWater +
 		debts.electricity +
 		debts.gas +
 		debts.solidWasteRemoval
 
 	// Общий долг за КР на СОИ
 	const commonDebts =
+		debts.coldToHotWaterCommon +
 		debts.coldWaterCommon +
 		debts.hotWaterCommon +
 		debts.waterDisposalCommon +

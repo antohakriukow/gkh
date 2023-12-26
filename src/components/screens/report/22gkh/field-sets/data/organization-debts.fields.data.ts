@@ -9,7 +9,7 @@ export const organizationDebtsFieldsData = [
 	},
 	{
 		name: 'data.organizationDebts.heat',
-		placeholder: 'Теплоснабжение, руб'
+		placeholder: 'Тепловая энергия, руб'
 	},
 	{
 		name: 'data.organizationDebts.hotWater',
