@@ -20,7 +20,7 @@ const ServicesFieldSet: FC<IServicesFieldSet> = ({
 	return (
 		<>
 			<h3 className={styles.blockTitle}>
-				Действующие услуги {isAdvancedModeOn ? 'и площади' : ''}
+				Действующие услуги (Начисляет УО) {isAdvancedModeOn ? 'и площади' : ''}
 			</h3>
 			<div className={styles.fieldSet}>
 				{servicesFieldsData.map(field => (

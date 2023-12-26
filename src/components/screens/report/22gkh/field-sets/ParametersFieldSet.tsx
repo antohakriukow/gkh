@@ -229,7 +229,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 							<ReportFieldNumber
 								control={control}
 								fieldName='data.renovationCosts.totalAmount'
-								placeholder='Сумма затрат на капитальный ремонт, руб'
+								placeholder='Сумма затрат на капитальный ремонт с 01.01, руб'
 								register={register}
 								error={errors?.data?.renovationCosts?.totalAmount}
 								isRequired={isRenovationCosts}
@@ -239,7 +239,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 							<ReportFieldNumber
 								control={control}
 								fieldName='data.renovationCosts.budgetTransfers'
-								placeholder='В том числе трансферы из бюджета, руб'
+								placeholder='В том числе трансферы из бюджета с 01.01, руб'
 								register={register}
 							/>
 						)}

@@ -18,8 +18,8 @@ const ReportFieldNumberWithSwitch: FC<IReportFieldWithSwitch> = ({
 	error
 }) => {
 	const isChecked = watch(switcherName as keyof IReport)
-	const monetizedArea =
-		watch('data.area.residentialArea') + watch('data.area.nonResidentialArea')
+	const monetizedArea = watch('data.area.residentialArea')
+	// + watch('data.area.nonResidentialArea')
 
 	const handleSetDefaultArea = useCallback(
 		() => setValue(fieldName as keyof IReport, monetizedArea),

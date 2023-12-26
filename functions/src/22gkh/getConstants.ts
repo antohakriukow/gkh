@@ -53,7 +53,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 	 * @param monetizedArea - Общая монетизированная площадь, используемая по умолчанию.
 	 * @returns Объект, где ключи - это услуги, а значения - соответствующие площади.
 	 */
-	const calculatedAreas = generateServicesArea(settings, monetizedArea)
+	const calculatedAreas = generateServicesArea(settings, area.residentialArea)
 
 	//Площадь, на которую начисляется капремонт
 	const renovationArea =
@@ -262,7 +262,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 	const row66 = typicalRow(
 		accrualsMaintenance,
 		commonAndMaintenancePayments,
-		monetizedArea
+		area.residentialArea
 	)
 
 	//Строка отчета №76. Вынесена в константу, так как используется в коде несколько раз
