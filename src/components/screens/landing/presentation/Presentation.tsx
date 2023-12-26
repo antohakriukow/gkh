@@ -32,8 +32,8 @@ const Presentation: FC = () => {
 						/>
 					))}
 				</ul>
+				{isNarrow && <ScrollButton scrollDirection='down' />}
 			</div>
-			{isNarrow && <ScrollButton scrollDirection='down' />}
 		</div>
 	)
 }

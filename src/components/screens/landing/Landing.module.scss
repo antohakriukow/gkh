@@ -4,8 +4,7 @@
 }
 
 .scroll {
-	@apply flex flex-col items-center justify-center bg-transparent border-none font-bold uppercase cursor-pointer absolute bottom-28;
-	bottom: 100px;
+	@apply flex flex-col items-center justify-center bg-transparent border-none font-bold uppercase cursor-pointer;
 
 	> p {
 		@apply p-0 m-0;
@@ -29,11 +28,5 @@
 @media (max-width: 800px) {
 	.landing {
 		@apply flex-col;
-	}
-}
-
-@media (max-width: 600px) {
-	.scroll {
-		// @apply pb-24;
 	}
 }

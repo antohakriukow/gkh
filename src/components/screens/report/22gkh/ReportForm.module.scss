@@ -2,15 +2,15 @@
 
 .reportForm {
 	@apply w-full;
-	height: calc(100vh - 274px);
+	max-height: calc(100vh - 274px);
 	@media (max-width: 800px) {
-		height: calc(100vh - 270px);
+		max-height: calc(100vh - 270px);
 	}
 	@media (max-width: 560px) {
-		height: calc(100vh - 286px);
+		max-height: calc(100vh - 286px);
 	}
 	@media (max-width: 450px) {
-		height: calc(100vh - 258px);
+		max-height: calc(100vh - 258px);
 	}
 }
 
@@ -30,11 +30,11 @@
 	@apply ml-2 my-2 text-xl text-primary-600 underline;
 	@media (max-width: 600px) {
 		font-size: 18px;
-		line-height: 22px;
+		line-max-height: 22px;
 	}
 	@media (max-width: 450px) {
 		font-size: 16px;
-		line-height: 18px;
+		line-max-height: 18px;
 	}
 }
 

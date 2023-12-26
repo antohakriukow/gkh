@@ -75,7 +75,7 @@ const RegisterForm: FC = () => {
 				>
 					Получить доступ
 				</Button>
-				<div className={styles.switcherTitle}>У меня уже есть аккаунт</div>
+				<div className={styles.switcherTitle}>У меня уже есть аккаунт.</div>
 				<div onClick={navigateToLogin} className={styles.switcherPressable}>
 					Войти
 				</div>
