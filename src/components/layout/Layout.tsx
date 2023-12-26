@@ -1,3 +1,4 @@
+import Footer from './footer/Footer'
 import Header from './header/Header'
 import { FC, PropsWithChildren } from 'react'
 
@@ -21,6 +22,7 @@ const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
 					<>
 						{!!user?.uid && <Header />}
 						<div>{children}</div>
+						{!!user?.uid && <Footer />}
 					</>
 				)}
 			</div>

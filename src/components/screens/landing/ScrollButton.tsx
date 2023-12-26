@@ -24,7 +24,7 @@ const ScrollButton: FC<IScrollButton> = ({ scrollDirection }) => {
 	) : (
 		<button className={styles.scroll} onClick={handleScroll}>
 			<FaChevronCircleUp size={30} />
-			<p>Назад</p>
+			<p></p>
 		</button>
 	)
 }

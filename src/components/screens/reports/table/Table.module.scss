@@ -15,8 +15,14 @@
 }
 
 .body {
-	max-height: calc(100vh - 230px);
 	overflow-y: auto;
+	height: calc(100vh - 290px);
+	@media (max-width: 500px) {
+		height: calc(100vh - 278px);
+	}
+	@media (max-width: 390px) {
+		height: calc(100vh - 298px);
+	}
 }
 
 .item {

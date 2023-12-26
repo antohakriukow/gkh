@@ -4,7 +4,8 @@
 }
 
 .scroll {
-	@apply flex flex-col items-center justify-center bg-transparent border-none font-bold uppercase cursor-pointer pb-10;
+	@apply flex flex-col items-center justify-center bg-transparent border-none font-bold uppercase cursor-pointer absolute bottom-28;
+	bottom: 100px;
 
 	> p {
 		@apply p-0 m-0;
@@ -33,6 +34,6 @@
 
 @media (max-width: 600px) {
 	.scroll {
-		@apply pb-24;
+		// @apply pb-24;
 	}
 }

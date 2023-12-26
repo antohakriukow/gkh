@@ -2,7 +2,18 @@
 
 .reportForm {
 	@apply w-full;
+	height: calc(100vh - 274px);
+	@media (max-width: 800px) {
+		height: calc(100vh - 270px);
+	}
+	@media (max-width: 560px) {
+		height: calc(100vh - 286px);
+	}
+	@media (max-width: 450px) {
+		height: calc(100vh - 258px);
+	}
 }
+
 .fieldSet {
 	@apply grid gap-x-2 gap-y-0.5  rounded-sm;
 

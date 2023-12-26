@@ -86,7 +86,7 @@ const RegisterForm: FC = () => {
 					Забыли пароль?
 				</div>
 			</form>
-			{isNarrow && <ScrollButton scrollDirection='up' />}
+			{/* {isNarrow && <ScrollButton scrollDirection='up' />} */}
 		</div>
 	)
 }

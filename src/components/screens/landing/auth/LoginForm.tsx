@@ -75,7 +75,7 @@ const LoginForm: FC = () => {
 				>
 					Войти
 				</Button>
-				<div className={styles.switcherTitle}>У меня еще нет аккаунта/</div>
+				<div className={styles.switcherTitle}>У меня еще нет аккаунта.</div>
 				<div onClick={navigateToHome} className={styles.switcherPressable}>
 					Зарегистрироваться
 				</div>
@@ -86,7 +86,7 @@ const LoginForm: FC = () => {
 					Забыли пароль?
 				</div>
 			</form>
-			{isNarrow && <ScrollButton scrollDirection='up' />}
+			{/* {isNarrow && <ScrollButton scrollDirection='up' />} */}
 		</div>
 	)
 }
