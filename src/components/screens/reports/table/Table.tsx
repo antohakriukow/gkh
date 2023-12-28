@@ -2,12 +2,14 @@ import TableHeader from './components/TableHeader'
 import TableItem from './components/TableItem'
 import { FC } from 'react'
 
-import { useWorkspace } from '../../workspace/useWorkspace'
+import { useData } from '~/hooks/useData'
+import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import styles from './Table.module.scss'
 
 const Table: FC = () => {
-	const { reports, currentCompany } = useWorkspace()
+	const { reports } = useData()
+	const { currentCompany } = useTypedSelector(state => state.ui)
 
 	const filteredReports = reports.filter(
 		report => report.company.inn === currentCompany?.inn

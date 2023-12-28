@@ -1,5 +1,5 @@
 import { generateFinalReport } from './22gkh'
-import { createLog } from './dadata/db/createLog'
+import { createLog } from './db/createLog'
 import * as admin from 'firebase-admin'
 
 const { getCompanyByInn } = require('./dadata')

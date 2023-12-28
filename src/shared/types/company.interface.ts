@@ -14,6 +14,7 @@ export interface ICompany {
 	ogrn: number
 	okpo: number
 	name: ICompanyName
+	opf: string
 	leader_name: string
 	leader_post: string
 	address: string

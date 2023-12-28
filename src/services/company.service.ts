@@ -61,7 +61,6 @@ export const CompanyService = {
 
 	async update(userId: string, data: ICompany) {
 		if (!data.inn) return
-
 		try {
 			update(ref(db, `users/${userId}/companies/${data.inn}`), data)
 			cloudFunction.createLog(userId, 'info', 'company/update', { data })

@@ -6,6 +6,7 @@ export const companyData = [
 	{ name: 'ogrn', placeholder: 'ОГРН' },
 	{ name: 'kpp', placeholder: 'КПП' },
 	{ name: 'okpo', placeholder: 'ОКПО' },
+	{ name: 'opf', placeholder: 'ОПФ' },
 	{ name: 'leader_post', placeholder: 'Должность руководителя' },
 	{ name: 'leader_name', placeholder: 'Ф.И.О. руководителя' },
 	{ name: 'email', placeholder: 'Email (для отчета)' },

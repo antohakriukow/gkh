@@ -7,6 +7,7 @@ export const prepareCompanyData = (data: any): ICompany => {
 		kpp: !!data?.kpp ? data?.kpp : '',
 		ogrn: !!data?.ogrn ? data?.ogrn : '',
 		okpo: !!data?.okpo ? data?.okpo : '',
+		opf: !!data?.opf ? data?.opf?.short : '',
 		name: {
 			short: !!data?.name?.short ? data?.name?.short : '',
 			full: !!data?.name?.full ? data?.name?.full : ''
