@@ -1,3 +1,4 @@
+@import '../../../../../styles/colors.scss';
 .adder__title {
 	@apply text-center text-lg;
 	line-height: 12px;
@@ -13,5 +14,29 @@
 
 	> button:nth-of-type(2) {
 		@apply ml-4;
+	}
+}
+
+.formContainer {
+	@apply flex flex-col justify-center items-center m-6;
+	> button {
+		@apply mt-3;
+	}
+}
+
+.form {
+	outline: solid $primary-500 1px;
+	max-height: 30vh;
+	overflow-y: scroll;
+	scrollbar-width: thin;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: $primary-500;
+		border-radius: 0px;
 	}
 }

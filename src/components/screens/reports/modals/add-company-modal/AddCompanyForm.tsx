@@ -9,6 +9,8 @@ import { Button, Field } from '~/components/ui'
 
 import { ICompanyInn } from '~/shared/types/company.interface'
 
+import styles from './CompanyModal.module.scss'
+
 interface IAddCompanyForm {
 	register: UseFormRegister<ICompanyInn>
 	handleSubmit: UseFormHandleSubmit<ICompanyInn, undefined>
@@ -23,7 +25,7 @@ const AddCompanyForm: FC<IAddCompanyForm> = ({
 	errors
 }) => {
 	return (
-		<div style={{ padding: 24 }}>
+		<div className={styles.formContainer}>
 			<Field
 				{...register('inn', {
 					minLength: {
@@ -41,9 +43,7 @@ const AddCompanyForm: FC<IAddCompanyForm> = ({
 				autoComplete='off'
 				step='1'
 			/>
-			<Button onClick={handleSubmit(data => onSubmit(data))}>
-				НАЙТИ ПО ИНН
-			</Button>
+			<Button onClick={handleSubmit(data => onSubmit(data))}>Найти</Button>
 		</div>
 	)
 }

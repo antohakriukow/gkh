@@ -2,6 +2,7 @@
 
 .container {
 	@apply bg-white p-4 pb-8 rounded-md box-border;
+	height: calc(100vh - 118px);
 }
 
 .heading {

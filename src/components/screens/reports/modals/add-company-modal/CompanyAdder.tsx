@@ -29,7 +29,7 @@ const CompanyAdder: FC<{ company: ICompany }> = ({ company }) => {
 	}
 
 	return (
-		<div>
+		<div className={styles.formContainer}>
 			{companyIsAlreadyExists(company.inn.toString()) ? (
 				<>
 					<p className={styles.adder__company}>{company.name.short}</p>

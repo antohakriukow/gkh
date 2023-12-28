@@ -12,6 +12,8 @@ import { Button, Field } from '~/components/ui'
 
 import { ICompany } from '~/shared/types/company.interface'
 
+import styles from './CompanyModal.module.scss'
+
 interface IAddCompanyForm {
 	register: UseFormRegister<ICompany>
 	handleSubmit: UseFormHandleSubmit<ICompany, undefined>
@@ -38,20 +40,34 @@ const AddCompanyDetailsForm: FC<IAddCompanyForm> = ({
 	}, [initialValues, setValue])
 
 	return (
-		<div key={Field.name} style={{ padding: 24 }}>
+		<div className={styles.formContainer}>
 			<h3>Внесите недостающие данные, иначе отчет будет не полным</h3>
-			{companyData.map(field => (
-				<Field
-					{...register(field.name as keyof ICompany, {})}
-					error={errors[field.name as keyof ICompany] as FieldError | undefined}
-					placeholder={field.placeholder}
-					type='text'
-					autoComplete='off'
-					step='1'
-				/>
-			))}
+			<div className={styles.form} key={Field.name} style={{ padding: 24 }}>
+				{companyData.map(
+					field =>
+						field.name !== 'phone' &&
+						field.name !== 'email' && (
+							<Field
+								key={field.name}
+								{...register(field.name as keyof ICompany, {
+									required: 'Обязательное поле'
+								})}
+								error={errors[field.name as keyof ICompany] as FieldError}
+								disabled={
+									!!initialValues &&
+									initialValues[field.name as keyof ICompany] !== ''
+								}
+								placeholder={field.placeholder}
+								type='text'
+								autoComplete='off'
+								step='1'
+							/>
+						)
+				)}
+			</div>
 			<Button onClick={handleSubmit(onSubmit)}>Продолжить</Button>
 		</div>
 	)
 }
+
 export default AddCompanyDetailsForm
