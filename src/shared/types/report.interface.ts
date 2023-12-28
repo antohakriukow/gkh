@@ -1,7 +1,14 @@
 import { ICompany } from './company.interface'
 import {
 	IAccruals,
+	IArea,
+	IElevator,
+	IGasBoiler,
+	IRenovation,
 	IReport22gkhData,
+	ISettings,
+	IStove,
+	IWaterHeating,
 	Type22gkhReportTemplate
 } from './report22gkh.interface'
 import { TypeAnnualReportTemplate } from './reportAnnual.interface'
@@ -39,7 +46,16 @@ export interface IReport {
 
 export interface IReportCreate
 	extends Pick<IReport, 'type' | 'year' | 'period' | 'company'> {
-	data?: { accruals: IAccruals }
+	data: {
+		accruals?: IAccruals
+		area?: IArea
+		elevator?: IElevator
+		gasBoiler?: IGasBoiler
+		renovation?: IRenovation
+		settings?: ISettings
+		stove?: IStove
+		waterHeating?: IWaterHeating
+	}
 }
 
 export interface IReportTableItem

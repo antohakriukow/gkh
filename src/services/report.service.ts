@@ -41,14 +41,6 @@ export const ReportService = {
 
 	async create(userId: string, data: IReportCreate, reportId: string) {
 		if (!data) return
-		const today = dayjs()
-		const currentYear = today.year()
-		const currentMonth = today.month()
-		const currentQuarter = Math.floor(currentMonth / 3) + 1
-		const previousQuarter = currentQuarter - 1
-
-		if (data.year === currentYear && data.period === previousQuarter)
-			throw new Error('Report already exists')
 
 		const newReport = {
 			...data,

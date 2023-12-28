@@ -1,5 +1,5 @@
+import { getReportInitialData } from './getReportInitialData'
 import { FC, useState } from 'react'
-import { clear22gkhReportData } from '~/data/clear22gkhReportData'
 
 import { Button } from '~/components/ui'
 
@@ -29,6 +29,10 @@ const ReportModal: FC<{ handleOpenReport: (_id: number) => void }> = ({
 		report => report.period === newReportPeriod && report.year === newReportYear
 	)
 
+	const previousReport = reports.find(
+		report => report.period === newReportPeriod && report.year === newReportYear
+	)
+
 	const handleCreateReport = async () => {
 		if (!currentCompany) return
 		const newReport = (await create({
@@ -36,14 +40,14 @@ const ReportModal: FC<{ handleOpenReport: (_id: number) => void }> = ({
 			year: newReportYear,
 			period: newReportPeriod,
 			company: currentCompany,
-			data: clear22gkhReportData
+			data: getReportInitialData(previousReport)
 		})) as IReport
 		console.log(newReport)
 		if (!!newReport && !!newReport._id) handleOpenReport(newReport._id)
 	}
 
 	const handleCreate = () =>
-		existingReport ? setIsReportExisting(true) : handleCreateReport()
+		!!existingReport ? setIsReportExisting(true) : handleCreateReport()
 
 	const handleGoToReport = () => {
 		if (!!existingReport) handleOpenReport(existingReport?._id)
