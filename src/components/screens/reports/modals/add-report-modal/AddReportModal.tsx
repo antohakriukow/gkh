@@ -94,7 +94,7 @@ const ReportModal: FC<{ handleOpenReport: (_id: number) => void }> = ({
 			<p
 				className={styles.periodSubtitle}
 			>{`Отчетный период: ${convertedPeriod} ${newReportYear} г.`}</p>
-			<Button onClick={handleCreate} style={{ marginTop: 8, width: '100%' }}>
+			<Button onClick={handleCreate} style={{ marginTop: 12 }}>
 				Создать отчет
 			</Button>
 		</div>

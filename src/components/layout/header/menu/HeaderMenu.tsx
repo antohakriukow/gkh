@@ -1,4 +1,3 @@
-import LogoutButton from './components/buttons/LogoutButton'
 import { FC, useEffect } from 'react'
 
 import DropDown from '~/components/layout/header/menu/components/drop-down/DropDown'
@@ -21,14 +20,6 @@ const HeaderMenu: FC = () => {
 			: setCurrentCompany(null)
 	}, [currentCompanyInn, currentCompany, companies, setCurrentCompany])
 
-	return (
-		<>
-			{!companies || companies.length === 0 ? (
-				<LogoutButton />
-			) : (
-				<DropDown data={companies} />
-			)}
-		</>
-	)
+	return <DropDown data={companies} />
 }
 export default HeaderMenu

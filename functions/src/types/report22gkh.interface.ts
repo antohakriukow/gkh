@@ -36,6 +36,7 @@ export interface IServices {
 	coldWaterCommon: IService
 	coldToHotWaterCommon: IService
 	hotWaterCommon: IService
+	// heatToHotWaterCommon : IService
 	waterDisposalCommon: IService
 	electricityCommon: IService
 	renovation: IService
