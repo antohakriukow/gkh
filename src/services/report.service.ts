@@ -1,5 +1,6 @@
 import { IFinalReport, IReportCreate } from './../shared/types/report.interface'
 import { cloudFunction } from './_functions'
+import dayjs from 'dayjs'
 import { child, get, ref, remove, set, update } from 'firebase/database'
 import { toast } from 'react-toastify'
 
@@ -40,6 +41,14 @@ export const ReportService = {
 
 	async create(userId: string, data: IReportCreate, reportId: string) {
 		if (!data) return
+		const today = dayjs()
+		const currentYear = today.year()
+		const currentMonth = today.month()
+		const currentQuarter = Math.floor(currentMonth / 3) + 1
+		const previousQuarter = currentQuarter - 1
+
+		if (data.year === currentYear && data.period === previousQuarter)
+			throw new Error('Report already exists')
 
 		const newReport = {
 			...data,

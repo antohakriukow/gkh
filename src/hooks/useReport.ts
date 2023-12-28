@@ -25,8 +25,9 @@ export const useReport = () => {
 
 			const createdReport = await ReportService.getById(userUid, reportId)
 
-			if (createdReport) {
+			if (!!createdReport) {
 				toast.success('Отчет создан', { autoClose: 3000 })
+				console.log(createdReport)
 				return createdReport
 			}
 		} catch (error) {

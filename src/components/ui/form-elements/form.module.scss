@@ -16,6 +16,7 @@
 
 .button {
 	@apply py-2 px-4 bg-primary-500 text-white rounded-sm border-0 text-base font-semibold hover:bg-primary-400 hover:cursor-pointer transition-colors;
+	max-width: 240px;
 }
 
 .success {

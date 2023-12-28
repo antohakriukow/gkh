@@ -18,7 +18,8 @@ const Reports: FC = () => {
 		navigate(`/reports/edit/${reportId}`)
 	}
 
-	const handleAdd = () => showModal(<ReportModal handler={handleOpenReport} />)
+	const handleAdd = () =>
+		showModal(<ReportModal handleOpenReport={handleOpenReport} />)
 
 	return (
 		<div className={styles.container}>
