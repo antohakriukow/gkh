@@ -43,7 +43,6 @@ export const generate22gkhReport = async (
 		row76,
 		distributeMaintenance,
 		distributeElectricity,
-		distributeGas,
 
 		row86,
 		row87
@@ -59,7 +58,7 @@ export const generate22gkhReport = async (
 		6: { 3: accruals.waterDisposal },
 		7: { 3: accruals.heat + accruals.heatToHotWater },
 		8: { 3: accruals.electricity },
-		9: { 3: accruals.gas },
+		9: { 3: accruals.gasNetwork + accruals.gasLiquid },
 		10: { 3: accruals.solidWasteRemoval },
 		11: { 3: accrualsMaintenance },
 		12: { 3: accruals.management },
@@ -75,7 +74,7 @@ export const generate22gkhReport = async (
 		21: { 3: accruals.waterDisposal },
 		22: { 3: accruals.heat + accruals.heatToHotWater },
 		23: { 3: accruals.electricity },
-		24: { 3: accruals.gas },
+		24: { 3: accruals.gasNetwork + accruals.gasLiquid },
 		25: { 3: accruals.solidWasteRemoval },
 		26: { 3: accrualsMaintenance },
 		27: { 3: accruals.management },
@@ -92,7 +91,7 @@ export const generate22gkhReport = async (
 		36: { 3: debts.waterDisposal },
 		37: { 3: debts.heat + debts.heatToHotWater },
 		38: { 3: debts.electricity },
-		39: { 3: debts.gas },
+		39: { 3: debts.gasNetwork + debts.gasLiquid },
 		40: { 3: debts.solidWasteRemoval },
 		41: { 3: maintenanceDebts },
 		42: { 3: debts.management },
@@ -163,8 +162,16 @@ export const generate22gkhReport = async (
 		76: row76,
 		77: distributeElectricity(77),
 		78: distributeElectricity(78),
-		79: distributeGas(79),
-		80: distributeGas(80),
+		79: typicalRow(
+			accruals.gasNetwork,
+			payments.gasNetwork,
+			calculatedAreas.gasNetwork
+		),
+		80: typicalRow(
+			accruals.gasLiquid,
+			payments.gasLiquid,
+			calculatedAreas.gasLiquid
+		),
 		81: {}, // TODO: Добавить в форму "В том числе в баллонах".
 		82: {}, // TODO: Добавить уголь.
 		83: {}, // TODO: Добавить дрова.

@@ -29,7 +29,8 @@ export interface IServices {
 	waterDisposal: IService
 	heat: IService
 	heatToHotWater: IService
-	gas: IService
+	gasNetwork: IService
+	gasLiquid: IService
 	electricity: IService
 	solidWasteRemoval: IService
 	coldWaterCommon: IService
@@ -124,7 +125,8 @@ export interface IAccruals {
 	waterDisposal: number
 	heat: number
 	heatToHotWater: number
-	gas: number
+	gasNetwork: number
+	gasLiquid: number
 	electricity: number
 	solidWasteRemoval: number
 	coldWaterCommon: number
@@ -142,7 +144,6 @@ export interface IReport22gkhData {
 	settings: ISettings
 	elevator: IElevator
 	stove: IStove
-	gas: IGas
 	waterHeating: TypeWaterHeating
 	gasBoiler: IGasBoiler
 	renovation: IRenovation

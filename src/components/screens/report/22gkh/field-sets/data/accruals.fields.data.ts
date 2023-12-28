@@ -13,7 +13,8 @@ export const accrualsFieldsData = [
 	},
 	{ name: 'data.accruals.hotWater', placeholder: 'Горячее водоснабжение, руб' },
 	{ name: 'data.accruals.waterDisposal', placeholder: 'Водоотведение, руб' },
-	{ name: 'data.accruals.gas', placeholder: 'Газоснабжение, руб' },
+	{ name: 'data.accruals.gasNetwork', placeholder: 'Сетевой газ, руб' },
+	{ name: 'data.accruals.gasLiquid', placeholder: 'Сжиженный газ, руб' },
 	{ name: 'data.accruals.electricity', placeholder: 'Электроэнергия, руб' },
 	{
 		name: 'data.accruals.solidWasteRemoval',

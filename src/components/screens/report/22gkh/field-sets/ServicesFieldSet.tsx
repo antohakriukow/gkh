@@ -33,12 +33,7 @@ const ServicesFieldSet: FC<IServicesFieldSet> = ({
 		watch('data.settings.housesCount') === 'many' &&
 		watch('data.settings.areasAreDifferent') === 'yes'
 	const waterHeatingStatus = watch('data.waterHeating.status')
-	const isGas =
-		watch('data.gas.status') === 'liquid' ||
-		watch('data.gas.status') === 'network' ||
-		watch('data.gas.status') === 'both'
 
-	const hasGasBoiler = watch('data.gasBoiler.status') === 'yes'
 	const hasNoGasBoiler = watch('data.gasBoiler.status') === 'no'
 
 	const renderFields = (fieldsData: IFieldsData[]) =>
@@ -64,10 +59,6 @@ const ServicesFieldSet: FC<IServicesFieldSet> = ({
 
 	if (hasNoGasBoiler) {
 		fieldsToRender = [...fieldsToRender, ...heatingServicesData]
-	}
-
-	if (isGas || hasGasBoiler) {
-		fieldsToRender = [...fieldsToRender, ...gasServicesData]
 	}
 
 	if (waterHeatingStatus === 'yes') {

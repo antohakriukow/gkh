@@ -42,6 +42,16 @@ export const requiredServicesFieldsData = [
 		switcherName: 'data.settings.services.solidWasteRemoval.status',
 		name: 'data.settings.services.solidWasteRemoval.area',
 		placeholder: 'Обращение с ТКО'
+	},
+	{
+		switcherName: 'data.settings.services.gasNetwork.status',
+		name: 'data.settings.services.gasNetwork.area',
+		placeholder: 'Сетевой газ'
+	},
+	{
+		switcherName: 'data.settings.services.gasLiquid.status',
+		name: 'data.settings.services.gasLiquid.area',
+		placeholder: 'Сжиженный газ'
 	}
 ]
 

@@ -35,7 +35,6 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 	const errors = formState?.errors
 	const isElevatorBoth = watch('data.elevator.status') === 'both'
 	const isStoveBoth = watch('data.stove.status') === 'both'
-	const isGasBoth = watch('data.gas.status') === 'both'
 	const isRenovation = watch('data.renovation.status') !== 'no'
 	const isRenovationBoth = watch('data.renovation.status') === 'both'
 	const isBudgetFinancing = watch('data.budgetFinancing.status') === 'yes'
@@ -171,45 +170,6 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 					options={gasBoilerOptions}
 					isRequired
 				/>
-
-				<FieldGroup isVisible={isGasBoth}>
-					<ReportSelect
-						control={control}
-						fieldName='data.gas.status'
-						placeholder='УО начисляет плату за газ'
-						options={isAdvancedModeOn ? advancedGasOptions : gasOptions}
-					/>
-					{isGasBoth && (
-						<ReportFieldNumber
-							control={control}
-							fieldName='data.gas.areaNone'
-							placeholder='Площадь домов без газа, м2'
-							register={register}
-							error={errors?.data?.gas?.areaNone}
-							isRequired={isGasBoth}
-						/>
-					)}
-					{isGasBoth && (
-						<ReportFieldNumber
-							control={control}
-							fieldName='data.gas.areaNetwork'
-							placeholder='Площадь домов с сетевым газом, м2'
-							register={register}
-							error={errors?.data?.gas?.areaNetwork}
-							isRequired={isGasBoth}
-						/>
-					)}
-					{isGasBoth && (
-						<ReportFieldNumber
-							control={control}
-							fieldName='data.gas.areaLiquid'
-							placeholder='Площадь домов со сжиженным газом, м2'
-							register={register}
-							error={errors?.data?.gas?.areaLiquid}
-							isRequired={isGasBoth}
-						/>
-					)}
-				</FieldGroup>
 
 				<FieldGroup isVisible={isRenovationBoth}>
 					<ReportSelect

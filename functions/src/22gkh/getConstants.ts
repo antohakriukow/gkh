@@ -21,8 +21,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 		throw new Error('Отсутствуют данные отчета')
 	}
 
-	const { area, elevator, gas, stove, renovation, settings, natural } =
-		report?.data
+	const { area, elevator, stove, renovation, settings, natural } = report?.data
 	const accruals = divideAndRoundNumbers(report.data.accruals) as IAccruals
 	const income = divideAndRoundNumbers(report.data.income) as IIncome
 	const residentsDebts = divideAndRoundNumbers(
@@ -72,7 +71,8 @@ export const getConstants = async (userId: string, reportId: string) => {
 		accruals.heat +
 		accruals.heatToHotWater +
 		accruals.electricity +
-		accruals.gas +
+		accruals.gasNetwork +
+		accruals.gasLiquid +
 		accruals.solidWasteRemoval
 
 	// Общая сумма начислений коммунальных ресурсов (КР) на СОИ
@@ -105,7 +105,8 @@ export const getConstants = async (userId: string, reportId: string) => {
     heat: Math.round((income.housing / totalAccruals) * accruals.heat),
     heatToHotWater: Math.round((income.housing / totalAccruals) * accruals.heatToHotWater),
     electricity: Math.round((income.housing / totalAccruals) * accruals.electricity),
-    gas: Math.round((income.housing / totalAccruals) * accruals.gas),
+    gasNetwork: Math.round((income.housing / totalAccruals) * accruals.gasNetwork),
+    gasLiquid: Math.round((income.housing / totalAccruals) * accruals.gasLiquid),
     solidWasteRemoval: Math.round((income.housing / totalAccruals) * accruals.solidWasteRemoval),
     coldWaterCommon: Math.round((income.housing / totalAccruals) * accruals.coldWaterCommon),
     coldToHotWaterCommon: Math.round((income.housing / totalAccruals) * accruals.coldToHotWaterCommon),
@@ -134,7 +135,8 @@ export const getConstants = async (userId: string, reportId: string) => {
 		payments.heat +
 		payments.heatToHotWater +
 		payments.electricity +
-		payments.gas +
+		payments.gasNetwork +
+		payments.gasLiquid +
 		payments.solidWasteRemoval
 
 	// Общая сумма оплат за КР на СОИ
@@ -159,7 +161,8 @@ export const getConstants = async (userId: string, reportId: string) => {
 		heat: payments.heat >= accruals.heat ? accruals.heat : payments.heat,
 		heatToHotWater: payments.heatToHotWater >= accruals.heatToHotWater ? accruals.heatToHotWater : payments.heatToHotWater,
 		electricity: payments.electricity >= accruals.electricity ? accruals.electricity : payments.electricity,
-		gas: payments.gas >= accruals.gas ? accruals.gas : payments.gas,
+		gasNetwork: payments.gasNetwork >= accruals.gasNetwork ? accruals.gasNetwork : payments.gasNetwork,
+		gasLiquid: payments.gasLiquid >= accruals.gasLiquid ? accruals.gasLiquid : payments.gasLiquid,
 		solidWasteRemoval: payments.solidWasteRemoval >= accruals.solidWasteRemoval ? accruals.solidWasteRemoval : payments.solidWasteRemoval,
 		coldWaterCommon: payments.coldWaterCommon >= accruals.coldWaterCommon ? accruals.coldWaterCommon : payments.coldWaterCommon,
 		coldToHotWaterCommon: payments.coldToHotWaterCommon >= accruals.coldToHotWaterCommon ? accruals.coldToHotWaterCommon : payments.coldToHotWaterCommon,
@@ -180,7 +183,8 @@ export const getConstants = async (userId: string, reportId: string) => {
 		heat: payments.heat >= accruals.heat ? payments.heat - accruals.heat : 0,
 		heatToHotWater: payments.heatToHotWater >= accruals.heatToHotWater ? payments.heatToHotWater - accruals.heatToHotWater : 0,
 		electricity: payments.electricity >= accruals.electricity ? payments.electricity - accruals.electricity : 0,
-		gas: payments.gas >= accruals.gas ? payments.gas - accruals.gas : 0,
+		gasNetwork: payments.gasNetwork >= accruals.gasNetwork ? payments.gasNetwork - accruals.gasNetwork : 0,
+		gasLiquid: payments.gasLiquid >= accruals.gasLiquid ? payments.gasLiquid - accruals.gasLiquid : 0,
 		solidWasteRemoval: payments.solidWasteRemoval >= accruals.solidWasteRemoval ? payments.solidWasteRemoval - accruals.solidWasteRemoval : 0,
 		coldWaterCommon: payments.coldWaterCommon >= accruals.coldWaterCommon ? payments.coldWaterCommon - accruals.coldWaterCommon : 0,
 		coldToHotWaterCommon: payments.coldToHotWaterCommon >= accruals.coldToHotWaterCommon ? payments.coldToHotWaterCommon - accruals.coldToHotWaterCommon : 0,
@@ -201,7 +205,8 @@ export const getConstants = async (userId: string, reportId: string) => {
 		heat: Math.round((residentsDebts.housing / totalAccruals) * accruals.heat),
 		heatToHotWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.heatToHotWater),
 		electricity: Math.round((residentsDebts.housing / totalAccruals) * accruals.electricity),
-		gas: Math.round((residentsDebts.housing / totalAccruals) * accruals.gas),
+		gasNetwork: Math.round((residentsDebts.housing / totalAccruals) * accruals.gasNetwork),
+		gasLiquid: Math.round((residentsDebts.housing / totalAccruals) * accruals.gasLiquid),
 		solidWasteRemoval: Math.round((residentsDebts.housing / totalAccruals) * accruals.solidWasteRemoval),
 		coldWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldWaterCommon),
 		coldToHotWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldToHotWaterCommon),
@@ -232,7 +237,8 @@ export const getConstants = async (userId: string, reportId: string) => {
 		heat: accruals.heat - currentYearPayments.heat + previousPeriodDebts.heat - previousPeriodPayments.heat,
 		heatToHotWater: accruals.heatToHotWater - currentYearPayments.heatToHotWater + previousPeriodDebts.heatToHotWater - previousPeriodPayments.heatToHotWater,
 		electricity: accruals.electricity - currentYearPayments.electricity + previousPeriodDebts.electricity - previousPeriodPayments.electricity,
-		gas: accruals.gas - currentYearPayments.gas + previousPeriodDebts.gas - previousPeriodPayments.gas,
+		gasNetwork: accruals.gasNetwork - currentYearPayments.gasNetwork + previousPeriodDebts.gasNetwork - previousPeriodPayments.gasNetwork,
+		gasLiquid: accruals.gasLiquid - currentYearPayments.gasLiquid + previousPeriodDebts.gasLiquid - previousPeriodPayments.gasLiquid,
 		solidWasteRemoval: accruals.solidWasteRemoval - currentYearPayments.solidWasteRemoval + previousPeriodDebts.solidWasteRemoval - previousPeriodPayments.solidWasteRemoval,
 		coldWaterCommon: accruals.coldWaterCommon - currentYearPayments.coldWaterCommon + previousPeriodDebts.coldWaterCommon - previousPeriodPayments.coldWaterCommon,
 		coldToHotWaterCommon: accruals.coldToHotWaterCommon - currentYearPayments.coldToHotWaterCommon + previousPeriodDebts.coldToHotWaterCommon - previousPeriodPayments.coldToHotWaterCommon,
@@ -252,7 +258,8 @@ export const getConstants = async (userId: string, reportId: string) => {
 		debts.heat +
 		debts.heatToHotWater +
 		debts.electricity +
-		debts.gas +
+		debts.gasNetwork +
+		debts.gasLiquid +
 		debts.solidWasteRemoval
 
 	// Общий долг за КР на СОИ
@@ -317,16 +324,6 @@ export const getConstants = async (userId: string, reportId: string) => {
 				: monetizedArea
 	}
 
-	//Строка отчета с данными о газоснабжении. Вынесена в константу, так как используется в коде несколько раз
-	const rowGas = {
-		3: accruals.gas,
-		4: payments.gas,
-		5: calculatePreviousPayments(payments.gas, accruals.gas),
-		6: accruals.gas,
-		7: accruals.gas,
-		8: monetizedArea // TODO: поработать с площадью
-	}
-
 	/**
 	 * Распределяет значения по услугам на основе заданных площадей.
 	 * @param row - Строка данных для распределения.
@@ -379,33 +376,6 @@ export const getConstants = async (userId: string, reportId: string) => {
 		return row === 77 ? results[0] : results[1]
 	}
 
-	/**
-	 * Распределяет расходы на газ в зависимости от его источника.
-	 * @param row - Строка данных для распределения.
-	 * @returns Объект с распределенными значениями.
-	 */
-	const distributeGas = (row: 79 | 80) => {
-		const gasCopy = { ...gas }
-		if (
-			(row === 79 && gas.status === 'network') ||
-			(row === 80 && gas.status === 'liquid')
-		)
-			return rowGas
-
-		if (!gasCopy.areaNetwork) gasCopy.areaNetwork = 0
-		if (!gasCopy.areaLiquid) gasCopy.areaLiquid = 0
-		if (!gasCopy.areaNone) gasCopy.areaNone = 0
-
-		const results = distributeValues(
-			rowGas,
-			gasCopy.areaNetwork,
-			gasCopy.areaLiquid,
-			gasCopy.areaNone
-		)
-
-		return row === 79 ? results[0] : results[1]
-	}
-
 	return {
 		calculatedAreas,
 		area,
@@ -440,7 +410,6 @@ export const getConstants = async (userId: string, reportId: string) => {
 		row76,
 		distributeMaintenance,
 		distributeElectricity,
-		distributeGas,
 
 		row86,
 		row87
