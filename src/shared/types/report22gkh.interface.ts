@@ -35,6 +35,7 @@ export interface IServices {
 	solidWasteRemoval: IService
 	coldWaterCommon: IService
 	coldToHotWaterCommon: IService
+	// heatToHotWaterCommon : IService
 	hotWaterCommon: IService
 	waterDisposalCommon: IService
 	electricityCommon: IService

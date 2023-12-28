@@ -1,28 +1,12 @@
-// 1. КУ если есть подогрев ХВС для ГВС
-export const hasWaterHeatingServicesFieldsData = [
+export const coldToHotWaterData = [
 	{
 		switcherName: 'data.settings.services.coldToHotWater.status',
 		name: 'data.settings.services.coldToHotWater.area',
 		placeholder: 'Холодное водоснабжение для ГВС'
-	},
-	{
-		switcherName: 'data.settings.services.heatToHotWater.status',
-		name: 'data.settings.services.heatToHotWater.area',
-		placeholder: 'Тепловая энергия для ГВС'
 	}
 ]
 
-// 2. КУ если нет подогрева ХВС для ГВС
-export const hasNotWaTerHeatingServicesFieldsData = [
-	{
-		switcherName: 'data.settings.services.hotWater.status',
-		name: 'data.settings.services.hotWater.area',
-		placeholder: 'ГВС'
-	}
-]
-
-// 3. Стандартные КУ
-export const requiredServicesFieldsData = [
+export const requiredData = [
 	{
 		switcherName: 'data.settings.services.coldWater.status',
 		name: 'data.settings.services.coldWater.area',
@@ -42,7 +26,34 @@ export const requiredServicesFieldsData = [
 		switcherName: 'data.settings.services.solidWasteRemoval.status',
 		name: 'data.settings.services.solidWasteRemoval.area',
 		placeholder: 'Обращение с ТКО'
-	},
+	}
+]
+
+export const heatData = [
+	{
+		switcherName: 'data.settings.services.heat.status',
+		name: 'data.settings.services.heat.area',
+		placeholder: 'Отопление'
+	}
+]
+
+export const heatToHotWaterData = [
+	{
+		switcherName: 'data.settings.services.heatToHotWater.status',
+		name: 'data.settings.services.heatToHotWater.area',
+		placeholder: 'Тепловая энергия для ГВС'
+	}
+]
+
+export const hotWaterData = [
+	{
+		switcherName: 'data.settings.services.hotWater.status',
+		name: 'data.settings.services.hotWater.area',
+		placeholder: 'ГВС'
+	}
+]
+
+export const gasData = [
 	{
 		switcherName: 'data.settings.services.gasNetwork.status',
 		name: 'data.settings.services.gasNetwork.area',
@@ -55,26 +66,7 @@ export const requiredServicesFieldsData = [
 	}
 ]
 
-// 5. Отопление
-export const heatingServicesData = [
-	{
-		switcherName: 'data.settings.services.heat.status',
-		name: 'data.settings.services.heat.area',
-		placeholder: 'Отопление'
-	}
-]
-
-// 5. Если есть газ
-export const gasServicesData = [
-	{
-		switcherName: 'data.settings.services.gas.status',
-		name: 'data.settings.services.gas.area',
-		placeholder: 'Газоснабжение'
-	}
-]
-
-// 6. Стандартные КР на СОИ
-export const requiredCommonServicesFieldsData = [
+export const requiredCommonData = [
 	{
 		switcherName: 'data.settings.services.coldWaterCommon.status',
 		name: 'data.settings.services.coldWaterCommon.area',
@@ -92,8 +84,7 @@ export const requiredCommonServicesFieldsData = [
 	}
 ]
 
-// 7. КУ если есть подогрев ХВС для ГВС
-export const hasWaterHeatingCommonServicesFieldsData = [
+export const coldToHotWaterCommonData = [
 	{
 		switcherName: 'data.settings.services.coldToHotWaterCommon.status',
 		name: 'data.settings.services.coldToHotWaterCommon.area',
@@ -101,11 +92,18 @@ export const hasWaterHeatingCommonServicesFieldsData = [
 	}
 ]
 
-// 8. КУ если есть подогрев ХВС для ГВС
-export const hasNotWaterHeatingCommonServicesFieldsData = [
+export const hotWaterCommonData = [
 	{
 		switcherName: 'data.settings.services.hotWaterCommon.status',
 		name: 'data.settings.services.hotWaterCommon.area',
 		placeholder: 'ГВС СОИ'
 	}
 ]
+
+// export const heatToHotWaterCommonData = [
+// 	{
+// 		switcherName: 'data.settings.services.heatToHotWaterCommon.status',
+// 		name: 'data.settings.services.heatToHotWaterCommon.area',
+// 		placeholder: 'Тепловая энергия для ГВС СОИ'
+// 	}
+// ]

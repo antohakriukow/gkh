@@ -1,13 +1,4 @@
-import {
-	gasServicesData,
-	hasNotWaTerHeatingServicesFieldsData,
-	hasNotWaterHeatingCommonServicesFieldsData,
-	hasWaterHeatingCommonServicesFieldsData,
-	hasWaterHeatingServicesFieldsData,
-	heatingServicesData,
-	requiredCommonServicesFieldsData,
-	requiredServicesFieldsData
-} from './data/services.fields.data'
+import * as servicesFieldsData from './data/services.fields.data'
 import { FC } from 'react'
 
 import { IReportForm } from '../../report-editor.interface'
@@ -32,8 +23,15 @@ const ServicesFieldSet: FC<IServicesFieldSet> = ({
 	const isAdvancedModeOn =
 		watch('data.settings.housesCount') === 'many' &&
 		watch('data.settings.areasAreDifferent') === 'yes'
-	const waterHeatingStatus = watch('data.waterHeating.status')
 
+	const hasWaterHeating =
+		watch('data.waterHeating.status') === 'yes' ||
+		watch('data.waterHeating.status') === 'both'
+	const hasNoWaterHeating = watch('data.waterHeating.status') === 'no'
+
+	const hasGasBoiler =
+		watch('data.gasBoiler.status') === 'yes' ||
+		watch('data.gasBoiler.status') === 'both'
 	const hasNoGasBoiler = watch('data.gasBoiler.status') === 'no'
 
 	const renderFields = (fieldsData: IFieldsData[]) =>
@@ -52,36 +50,31 @@ const ServicesFieldSet: FC<IServicesFieldSet> = ({
 			/>
 		))
 
-	let fieldsToRender = [
-		...requiredServicesFieldsData,
-		...requiredCommonServicesFieldsData
-	]
-
-	if (hasNoGasBoiler) {
-		fieldsToRender = [...fieldsToRender, ...heatingServicesData]
+	const renderConditions = {
+		coldToHotWaterData: hasWaterHeating || hasGasBoiler,
+		requiredData: true,
+		heatData: hasNoWaterHeating && hasNoGasBoiler,
+		heatToHotWaterData: hasWaterHeating,
+		hotWaterData: hasNoWaterHeating && hasNoGasBoiler,
+		gasData: true,
+		requiredCommonData: true,
+		coldToHotWaterCommonData: hasWaterHeating || hasGasBoiler,
+		hotWaterCommonData: hasNoWaterHeating && hasNoGasBoiler
 	}
 
-	if (waterHeatingStatus === 'yes') {
-		fieldsToRender = [
-			...hasWaterHeatingServicesFieldsData,
-			...fieldsToRender,
-			...hasWaterHeatingCommonServicesFieldsData
-		]
-	} else if (waterHeatingStatus === 'no') {
-		fieldsToRender = [
-			...hasNotWaTerHeatingServicesFieldsData,
-			...fieldsToRender,
-			...hasNotWaterHeatingCommonServicesFieldsData
-		]
-	} else if (waterHeatingStatus === 'both') {
-		fieldsToRender = [
-			...hasWaterHeatingServicesFieldsData,
-			...hasNotWaTerHeatingServicesFieldsData,
-			...fieldsToRender,
-			...hasWaterHeatingCommonServicesFieldsData,
-			...hasNotWaterHeatingCommonServicesFieldsData
-		]
-	}
+	const fieldsToRender = Object.keys(renderConditions).reduce<IFieldsData[]>(
+		(acc, key) => {
+			if (renderConditions[key as keyof typeof renderConditions]) {
+				const fields =
+					servicesFieldsData[key as keyof typeof servicesFieldsData]
+				if (fields) {
+					return [...acc, ...fields]
+				}
+			}
+			return acc
+		},
+		[]
+	)
 
 	return (
 		<>
