@@ -64,44 +64,56 @@ export const sectionFourTableHeader = [
 ]
 
 export const getRow86 = (report: IReport) => [
-	{ text: sectionFourNames[86] },
+	{ text: sectionFourNames[86] ? sectionFourNames[86] : '' },
 	{ text: 86, alignment: 'center' },
 	{},
 	{
-		text: report.finalReport?.[4][86][4],
+		text: report.finalReport?.[4]?.[86]?.[4]
+			? report.finalReport?.[4][86][4]
+			: '',
 		alignment: 'center',
 		fillColor: '#ffffc2'
 	},
 	{},
 	{
-		text: report.finalReport?.[4][86][6],
+		text: report.finalReport?.[4]?.[86]?.[6]
+			? report.finalReport?.[4][86][6]
+			: '',
 		alignment: 'center',
 		fillColor: '#ffffc2'
 	},
 	{
-		text: report.finalReport?.[4][86][7],
+		text: report.finalReport?.[4]?.[86]?.[7]
+			? report.finalReport?.[4][86][7]
+			: '',
 		alignment: 'center',
 		fillColor: '#ffffc2'
 	}
 ]
 
 export const getRow87 = (report: IReport) => [
-	{ text: sectionFourNames[87] },
+	{ text: sectionFourNames[87] ? sectionFourNames[87] : '' },
 	{ text: 87, alignment: 'center' },
 	{
-		text: report.finalReport?.[4][87][3],
+		text: report.finalReport?.[4]?.[87]?.[3]
+			? report.finalReport?.[4][87][3]
+			: '',
 		alignment: 'center',
 		fillColor: '#ffffc2'
 	},
 	{},
 	{
-		text: report.finalReport?.[4][87][5],
+		text: report.finalReport?.[4]?.[87]?.[5]
+			? report.finalReport?.[4][87][5]
+			: '',
 		alignment: 'center',
 		fillColor: '#ffffc2'
 	},
 	{},
 	{
-		text: report.finalReport?.[4][87][7],
+		text: report.finalReport?.[4]?.[87]?.[7]
+			? report.finalReport?.[4][87][7]
+			: '',
 		alignment: 'center',
 		fillColor: '#ffffc2'
 	}

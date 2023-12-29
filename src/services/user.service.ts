@@ -13,7 +13,7 @@ import { db, resetPassword } from '~/services/_firebase'
 export const UserService = {
 	async create(userId: string, email: string) {
 		await set(ref(db, `users/${userId}`), {
-			displayName: 'No name',
+			displayName: 'Пользователь',
 			email: email
 		})
 		await cloudFunction.addShortIdToUser()
