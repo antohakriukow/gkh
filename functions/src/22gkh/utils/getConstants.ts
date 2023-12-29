@@ -7,13 +7,13 @@ import {
 	IOrganizationDebts,
 	IRenovationCosts,
 	IResidentsDebts
-} from '../types/report22gkh.interface'
+} from '../../types/report22gkh.interface'
 import {
 	calculatePreviousPayments,
 	distributeValues,
 	divideAndRoundNumbers,
 	generateServicesArea
-} from '../utils/report.utils'
+} from '../../utils/report.utils'
 
 export const getConstants = async (userId: string, reportId: string) => {
 	const report = await getReportData(userId, reportId)
@@ -21,7 +21,16 @@ export const getConstants = async (userId: string, reportId: string) => {
 		throw new Error('Отсутствуют данные отчета')
 	}
 
-	const { area, elevator, stove, renovation, settings, natural } = report?.data
+	const {
+		area,
+		elevator,
+		stove,
+		renovation,
+		settings,
+		natural,
+		waterHeating,
+		gasBoiler
+	} = report?.data
 	const accruals = divideAndRoundNumbers(report.data.accruals) as IAccruals
 	const income = divideAndRoundNumbers(report.data.income) as IIncome
 	const residentsDebts = divideAndRoundNumbers(
@@ -420,6 +429,10 @@ export const getConstants = async (userId: string, reportId: string) => {
 		distributeElectricity,
 
 		row86,
-		row87
+		row87,
+
+		stove,
+		waterHeating,
+		gasBoiler
 	}
 }

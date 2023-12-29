@@ -1,4 +1,4 @@
-import { generate22gkhReport } from './generate22gkhReport'
+import { generate22gkhReport } from './utils/generate22gkhReport'
 import * as admin from 'firebase-admin'
 import * as functions from 'firebase-functions'
 

@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin'
 
-import { IReport } from '../types/report.interface'
+import { IReport } from '../../types/report.interface'
 
 export async function getReportData(
 	userId: string,

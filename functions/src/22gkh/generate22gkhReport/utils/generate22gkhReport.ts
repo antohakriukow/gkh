@@ -1,10 +1,9 @@
-import { getConstants } from './getConstants'
-
-import { IFinalReport } from '../types/report.interface'
+import { IFinalReport } from '../../../types/report.interface'
 import {
 	calculatePreviousPayments,
 	removeZeroAndUndefined
-} from '../utils/report.utils'
+} from '../../../utils/report.utils'
+import { getConstants } from '../../utils/getConstants'
 
 export const generate22gkhReport = async (
 	userId: string,

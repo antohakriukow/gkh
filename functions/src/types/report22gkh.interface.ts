@@ -146,7 +146,7 @@ export interface IReport22gkhData {
 	settings: ISettings
 	elevator: IElevator
 	stove: IStove
-	waterHeating: TypeWaterHeating
+	waterHeating: IWaterHeating
 	gasBoiler: IGasBoiler
 	renovation: IRenovation
 	budgetFinancing: IBudgetFinancing
