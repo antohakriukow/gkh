@@ -2,6 +2,7 @@ import { accrualsFieldsData } from './data/accruals.fields.data'
 import { FC, useCallback, useEffect, useState } from 'react'
 
 import { IServices } from '~/shared/types/report22gkh.interface'
+import { IReport } from '~/shared/types/report.interface'
 
 import { IReportForm } from '../../report-editor.interface'
 import styles from '../ReportForm.module.scss'
@@ -18,6 +19,7 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 	register,
 	control,
 	formState,
+	setValue,
 	watch
 }) => {
 	const [providedServices, setProvidedServices] = useState<IFieldData[]>([])
@@ -32,10 +34,15 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 			const serviceKey = field.name.split('.').pop() as keyof IServices
 			const service = settingsServices[serviceKey]
 
-			return service ? service.status : false
+			if (!service || !service.status) {
+				setValue(field.name as keyof IReport, 0)
+				return false
+			}
+
+			return true
 		})
 		setProvidedServices(result)
-	}, [settingsServices])
+	}, [settingsServices, setValue])
 
 	useEffect(() => {
 		const interval = setInterval(() => {

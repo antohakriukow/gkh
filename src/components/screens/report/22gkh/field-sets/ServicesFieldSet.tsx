@@ -1,5 +1,5 @@
 import * as servicesFieldsData from './data/services.fields.data'
-import { FC } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 
 import { IReportForm } from '../../report-editor.interface'
 import styles from '../ReportForm.module.scss'
@@ -20,6 +20,8 @@ const ServicesFieldSet: FC<IServicesFieldSet> = ({
 	setValue,
 	formState
 }) => {
+	const [providedServices, setProvidedServices] = useState<IFieldsData[]>([])
+
 	const isAdvancedModeOn =
 		watch('data.settings.housesCount') === 'many' &&
 		watch('data.settings.areasAreDifferent') === 'yes'
@@ -50,39 +52,52 @@ const ServicesFieldSet: FC<IServicesFieldSet> = ({
 			/>
 		))
 
-	const renderConditions = {
-		coldToHotWaterData: hasWaterHeating || hasGasBoiler,
-		requiredData: true,
-		heatData: hasNoWaterHeating && hasNoGasBoiler,
-		heatToHotWaterData: hasWaterHeating,
-		hotWaterData: hasNoWaterHeating && hasNoGasBoiler,
-		gasData: true,
-		requiredCommonData: true,
-		coldToHotWaterCommonData: hasWaterHeating || hasGasBoiler,
-		heatToHotWaterCommonData: hasWaterHeating,
-		hotWaterCommonData: hasNoWaterHeating && hasNoGasBoiler
-	}
-
-	const fieldsToRender = Object.keys(renderConditions).reduce<IFieldsData[]>(
-		(acc, key) => {
-			if (renderConditions[key as keyof typeof renderConditions]) {
-				const fields =
-					servicesFieldsData[key as keyof typeof servicesFieldsData]
-				if (fields) {
-					return [...acc, ...fields]
-				}
-			}
-			return acc
-		},
-		[]
+	const renderConditions = useMemo(
+		() => ({
+			coldWater: true,
+			coldToHotWater: hasWaterHeating || hasGasBoiler,
+			hotWater: hasNoWaterHeating && hasNoGasBoiler,
+			waterDisposal: true,
+			heat: hasNoWaterHeating && hasNoGasBoiler,
+			heatToHotWater: hasWaterHeating && hasNoGasBoiler,
+			solidWasteRemoval: true,
+			electricity: true,
+			gasNetwork: true,
+			gasLiquid: true,
+			coldWaterCommon: true,
+			coldToHotWaterCommon: hasWaterHeating || hasGasBoiler,
+			hotWaterCommon: hasNoWaterHeating && hasNoGasBoiler,
+			waterDisposalCommon: true,
+			heatToHotWaterCommon: hasWaterHeating && hasNoGasBoiler,
+			electricityCommon: true
+		}),
+		[hasWaterHeating, hasNoWaterHeating, hasGasBoiler, hasNoGasBoiler]
 	)
+
+	useEffect(() => {
+		const newFieldsToRender: IFieldsData[] = []
+		Object.keys(renderConditions).forEach(key => {
+			const condition = renderConditions[key as keyof typeof renderConditions]
+			const field = servicesFieldsData[key as keyof typeof servicesFieldsData]
+
+			if (condition) {
+				if (field) {
+					newFieldsToRender.push(field)
+				}
+			} else if (field) {
+				setValue(field.switcherName as any, false)
+			}
+		})
+
+		setProvidedServices(newFieldsToRender)
+	}, [renderConditions, setValue])
 
 	return (
 		<>
 			<h3 className={styles.blockTitle}>
 				Действующие услуги (Начисляет УО) {isAdvancedModeOn ? 'и площади' : ''}
 			</h3>
-			<div className={styles.fieldSet}>{renderFields(fieldsToRender)}</div>
+			<div className={styles.fieldSet}>{renderFields(providedServices)}</div>
 		</>
 	)
 }
