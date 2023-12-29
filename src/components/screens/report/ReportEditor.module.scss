@@ -5,6 +5,16 @@
 	height: calc(100vh - 118px);
 }
 
+.notFound {
+	@apply flex flex-col items-center justify-center self-center;
+	> p {
+		@apply text-xl;
+	}
+	> button {
+		@apply mt-4;
+	}
+}
+
 .report {
 	@apply p-2 rounded-sm w-full box-border;
 	border: 1px solid $primary-200;

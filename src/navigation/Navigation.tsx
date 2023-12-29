@@ -1,4 +1,5 @@
 import ProtectedRoute from './ProtectedRoute'
+import RedirectForNotFound from './RedirectForNotFound'
 import { FC } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
 				<ReportEditor />
 			</ProtectedRoute>
 		)
+	},
+	{
+		path: '*',
+		element: <RedirectForNotFound />
 	}
 ])
 

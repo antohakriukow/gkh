@@ -1,13 +1,16 @@
 import ReportForm from './22gkh/ReportForm'
 import ReportButtons from './buttons/ReportButtons'
+import NoReportFound from './components/NoReportFound'
 import ConfirmGenerationModal from './modals/confirm-report-generation-module/ConfirmGenerationModal'
 import { useReportEditor } from './useReportEditor'
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { AiOutlineCloseSquare } from 'react-icons/ai'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 
-import { Heading, Loader } from '~/components/ui'
+import { Button, Heading, Loader } from '~/components/ui'
 
+import { useData } from '~/hooks/useData'
 import { useModal } from '~/hooks/useModal'
 
 import { IReport } from '~/shared/types/report.interface'
@@ -22,7 +25,6 @@ const ReportEditor: FC = () => {
 	const { showModal } = useModal()
 
 	const {
-		isLoading,
 		reportEditorHeading,
 		saveReport,
 		currentReport,
@@ -31,6 +33,17 @@ const ReportEditor: FC = () => {
 		generateReport,
 		closeReport
 	} = useReportEditor(setValue, reset)
+
+	const { reportId } = useParams()
+	const { reports, isLoading } = useData()
+
+	if (isLoading) return <Loader loaderType='large' />
+
+	const reportExists = reports.some(
+		report => report?._id?.toString() === reportId?.toString()
+	)
+
+	if (!reportExists) return <NoReportFound />
 
 	const isReadyToGenerate = !formState.isDirty && formState.isValid
 	const isReadyToDownload =
@@ -42,7 +55,7 @@ const ReportEditor: FC = () => {
 	}
 
 	return (
-		<div className={styles.container}>
+		<div className={styles.container} key={reportId}>
 			<div className={styles.header}>
 				<Heading title={reportEditorHeading} className={styles.title} />
 				<AiOutlineCloseSquare onClick={closeReport} color='#df4956' size={40} />
@@ -74,5 +87,4 @@ const ReportEditor: FC = () => {
 		</div>
 	)
 }
-
 export default ReportEditor
