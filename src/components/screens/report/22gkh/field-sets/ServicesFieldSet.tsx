@@ -59,6 +59,7 @@ const ServicesFieldSet: FC<IServicesFieldSet> = ({
 		gasData: true,
 		requiredCommonData: true,
 		coldToHotWaterCommonData: hasWaterHeating || hasGasBoiler,
+		heatToHotWaterCommonData: hasWaterHeating,
 		hotWaterCommonData: hasNoWaterHeating && hasNoGasBoiler
 	}
 

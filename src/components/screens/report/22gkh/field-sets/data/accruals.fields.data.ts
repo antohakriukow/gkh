@@ -40,5 +40,9 @@ export const accrualsFieldsData = [
 	{
 		name: 'data.accruals.coldToHotWaterCommon',
 		placeholder: 'Холодное водоснабжение для ГВС СОИ, руб'
+	},
+	{
+		name: 'data.accruals.heatToHotWaterCommon',
+		placeholder: 'Тепловая энергия для ГВС СОИ, руб'
 	}
 ]

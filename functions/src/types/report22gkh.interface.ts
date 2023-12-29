@@ -36,7 +36,7 @@ export interface IServices {
 	coldWaterCommon: IService
 	coldToHotWaterCommon: IService
 	hotWaterCommon: IService
-	// heatToHotWaterCommon : IService
+	heatToHotWaterCommon: IService
 	waterDisposalCommon: IService
 	electricityCommon: IService
 	renovation: IService
@@ -132,6 +132,7 @@ export interface IAccruals {
 	solidWasteRemoval: number
 	coldWaterCommon: number
 	coldToHotWaterCommon: number
+	heatToHotWaterCommon: number
 	hotWaterCommon: number
 	waterDisposalCommon: number
 	electricityCommon: number

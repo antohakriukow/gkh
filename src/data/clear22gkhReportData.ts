@@ -11,6 +11,7 @@ export const clear22gkhReportData = {
 	solidWasteRemoval: 0,
 	coldWaterCommon: 0,
 	coldToHotWaterCommon: 0,
+	heatToHotWaterCommon: 0,
 	hotWaterCommon: 0,
 	waterDisposalCommon: 0,
 	electricityCommon: 0,

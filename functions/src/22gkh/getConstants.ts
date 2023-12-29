@@ -79,6 +79,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 	const accrualsCommon =
 		accruals.coldWaterCommon +
 		accruals.coldToHotWaterCommon +
+		accruals.heatToHotWaterCommon +
 		accruals.hotWaterCommon +
 		accruals.waterDisposalCommon +
 		accruals.electricityCommon
@@ -110,6 +111,7 @@ export const getConstants = async (userId: string, reportId: string) => {
     solidWasteRemoval: Math.round((income.housing / totalAccruals) * accruals.solidWasteRemoval),
     coldWaterCommon: Math.round((income.housing / totalAccruals) * accruals.coldWaterCommon),
     coldToHotWaterCommon: Math.round((income.housing / totalAccruals) * accruals.coldToHotWaterCommon),
+    heatToHotWaterCommon: Math.round((income.housing / totalAccruals) * accruals.heatToHotWaterCommon),
     hotWaterCommon: Math.round((income.housing / totalAccruals) * accruals.hotWaterCommon),
     waterDisposalCommon: Math.round((income.housing / totalAccruals) * accruals.waterDisposalCommon),
     electricityCommon: Math.round((income.housing / totalAccruals) * accruals.electricityCommon),
@@ -143,6 +145,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 	const commonPayments =
 		payments.coldWaterCommon +
 		payments.coldToHotWaterCommon +
+		payments.heatToHotWaterCommon +
 		payments.hotWaterCommon +
 		payments.waterDisposalCommon +
 		payments.electricityCommon
@@ -166,6 +169,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 		solidWasteRemoval: payments.solidWasteRemoval >= accruals.solidWasteRemoval ? accruals.solidWasteRemoval : payments.solidWasteRemoval,
 		coldWaterCommon: payments.coldWaterCommon >= accruals.coldWaterCommon ? accruals.coldWaterCommon : payments.coldWaterCommon,
 		coldToHotWaterCommon: payments.coldToHotWaterCommon >= accruals.coldToHotWaterCommon ? accruals.coldToHotWaterCommon : payments.coldToHotWaterCommon,
+		heatToHotWaterCommon: payments.heatToHotWaterCommon >= accruals.heatToHotWaterCommon ? accruals.heatToHotWaterCommon : payments.heatToHotWaterCommon,
 		hotWaterCommon: payments.hotWaterCommon >= accruals.hotWaterCommon ? accruals.hotWaterCommon : payments.hotWaterCommon,
 		waterDisposalCommon: payments.waterDisposalCommon >= accruals.waterDisposalCommon ? accruals.waterDisposalCommon : payments.waterDisposalCommon,
 		electricityCommon: payments.electricityCommon >= accruals.electricityCommon ? accruals.electricityCommon : payments.electricityCommon,
@@ -188,6 +192,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 		solidWasteRemoval: payments.solidWasteRemoval >= accruals.solidWasteRemoval ? payments.solidWasteRemoval - accruals.solidWasteRemoval : 0,
 		coldWaterCommon: payments.coldWaterCommon >= accruals.coldWaterCommon ? payments.coldWaterCommon - accruals.coldWaterCommon : 0,
 		coldToHotWaterCommon: payments.coldToHotWaterCommon >= accruals.coldToHotWaterCommon ? payments.coldToHotWaterCommon - accruals.coldToHotWaterCommon : 0,
+		heatToHotWaterCommon: payments.heatToHotWaterCommon >= accruals.heatToHotWaterCommon ? payments.heatToHotWaterCommon - accruals.heatToHotWaterCommon : 0,
 		hotWaterCommon: payments.hotWaterCommon >= accruals.hotWaterCommon ? payments.hotWaterCommon - accruals.hotWaterCommon : 0,
 		waterDisposalCommon: payments.waterDisposalCommon >= accruals.waterDisposalCommon ? payments.waterDisposalCommon - accruals.waterDisposalCommon : 0,
 		electricityCommon: payments.electricityCommon >= accruals.electricityCommon ? payments.electricityCommon - accruals.electricityCommon : 0,
@@ -210,6 +215,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 		solidWasteRemoval: Math.round((residentsDebts.housing / totalAccruals) * accruals.solidWasteRemoval),
 		coldWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldWaterCommon),
 		coldToHotWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldToHotWaterCommon),
+		heatToHotWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.heatToHotWaterCommon),
 		hotWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.hotWaterCommon),
 		waterDisposalCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.waterDisposalCommon),
 		electricityCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.electricityCommon),
@@ -242,6 +248,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 		solidWasteRemoval: accruals.solidWasteRemoval - currentYearPayments.solidWasteRemoval + previousPeriodDebts.solidWasteRemoval - previousPeriodPayments.solidWasteRemoval,
 		coldWaterCommon: accruals.coldWaterCommon - currentYearPayments.coldWaterCommon + previousPeriodDebts.coldWaterCommon - previousPeriodPayments.coldWaterCommon,
 		coldToHotWaterCommon: accruals.coldToHotWaterCommon - currentYearPayments.coldToHotWaterCommon + previousPeriodDebts.coldToHotWaterCommon - previousPeriodPayments.coldToHotWaterCommon,
+		heatToHotWaterCommon: accruals.heatToHotWaterCommon - currentYearPayments.heatToHotWaterCommon + previousPeriodDebts.heatToHotWaterCommon - previousPeriodPayments.heatToHotWaterCommon,
 		hotWaterCommon: accruals.hotWaterCommon - currentYearPayments.hotWaterCommon + previousPeriodDebts.hotWaterCommon - previousPeriodPayments.hotWaterCommon,
 		waterDisposalCommon: accruals.waterDisposalCommon - currentYearPayments.waterDisposalCommon + previousPeriodDebts.waterDisposalCommon - previousPeriodPayments.waterDisposalCommon,
 		electricityCommon: accruals.electricityCommon - currentYearPayments.electricityCommon + previousPeriodDebts.electricityCommon - previousPeriodPayments.electricityCommon,
@@ -265,6 +272,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 	// Общий долг за КР на СОИ
 	const commonDebts =
 		debts.coldToHotWaterCommon +
+		debts.heatToHotWaterCommon +
 		debts.coldWaterCommon +
 		debts.hotWaterCommon +
 		debts.waterDisposalCommon +

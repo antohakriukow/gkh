@@ -100,10 +100,10 @@ export const hotWaterCommonData = [
 	}
 ]
 
-// export const heatToHotWaterCommonData = [
-// 	{
-// 		switcherName: 'data.settings.services.heatToHotWaterCommon.status',
-// 		name: 'data.settings.services.heatToHotWaterCommon.area',
-// 		placeholder: 'Тепловая энергия для ГВС СОИ'
-// 	}
-// ]
+export const heatToHotWaterCommonData = [
+	{
+		switcherName: 'data.settings.services.heatToHotWaterCommon.status',
+		name: 'data.settings.services.heatToHotWaterCommon.area',
+		placeholder: 'Тепловая энергия для ГВС СОИ'
+	}
+]
