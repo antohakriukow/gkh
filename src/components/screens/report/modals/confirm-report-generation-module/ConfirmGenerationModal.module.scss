@@ -1,3 +1,4 @@
+@import '../../../../../styles/colors.scss';
 .container {
 	@apply flex flex-col items-center;
 }
@@ -10,6 +11,18 @@
 	@apply list-none p-0;
 	max-height: 50vh;
 	overflow-y: scroll;
+	overflow-y: scroll;
+	scrollbar-width: thin;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: $primary-500;
+		border-radius: 0px;
+	}
 }
 
 .item {

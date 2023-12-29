@@ -15,13 +15,25 @@
 }
 
 .body {
-	overflow-y: auto;
 	height: calc(100vh - 316px);
 	@media (max-width: 500px) {
 		height: calc(100vh - 304px);
 	}
 	@media (max-width: 390px) {
 		height: calc(100vh - 324px);
+	}
+
+	overflow-y: scroll;
+	scrollbar-width: thin;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: $primary-500;
+		border-radius: 0px;
 	}
 }
 
