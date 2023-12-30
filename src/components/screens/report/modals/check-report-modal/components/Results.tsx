@@ -13,7 +13,7 @@ interface IResults {
 }
 
 const Results: FC<IResults> = ({ type, data }) => {
-	if (!data) return null
+	if (!data || data.length === 0) return null
 
 	return (
 		<div className={type === 'error' ? styles.errors : styles.warnings}>

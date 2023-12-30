@@ -12,7 +12,7 @@ interface INotice {
 const Notice: FC<INotice> = ({ errors, warnings }) => {
 	return (
 		<>
-			{!!errors && errors.length && (
+			{errors.length > 0 && (
 				<>
 					<p className={styles.notice}>{`Внимание! Форма содержит ошибки${
 						!!warnings &&
@@ -22,7 +22,7 @@ const Notice: FC<INotice> = ({ errors, warnings }) => {
 					<p className={styles.noticeWarning}>Продолжить генерацию отчета?</p>
 				</>
 			)}
-			{!errors && !!warnings && warnings.length && (
+			{errors.length === 0 && warnings.length > 0 && (
 				<p className={styles.notice}>
 					Просим внимательно ознакомиться с предупреждениями перед генерацией
 					отчета.
