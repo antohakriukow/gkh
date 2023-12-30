@@ -3,7 +3,7 @@ import ReportButtons from './buttons/ReportButtons'
 import NoReportFound from './components/NoReportFound'
 import CheckReportModal from './modals/check-report-modal/CheckReportModal'
 import { useReportEditor } from './useReportEditor'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AiOutlineCloseSquare } from 'react-icons/ai'
 import { useParams } from 'react-router-dom'
@@ -18,6 +18,7 @@ import { IReport } from '~/shared/types/report.interface'
 import styles from './ReportEditor.module.scss'
 
 const ReportEditor: FC = () => {
+	const [isLoading, setIsLoading] = useState(true)
 	const { register, setValue, control, formState, watch, reset, handleSubmit } =
 		useForm<IReport>({
 			mode: 'onSubmit'
@@ -32,14 +33,26 @@ const ReportEditor: FC = () => {
 		downloadReportPDF,
 		checkReport,
 		generateReport,
-		closeReport,
-		isLoading
+		closeReport
 	} = useReportEditor(setValue, reset)
 
 	const { reportId } = useParams()
 	const { reports, isLoading: isDataLoading } = useData()
 
-	if (isDataLoading) return <Loader loaderType='large' />
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setIsLoading(false)
+		}, 1000)
+
+		return () => clearTimeout(timer)
+	}, [])
+
+	if (isLoading)
+		return (
+			<div className={styles.container}>
+				<Loader loaderType='large' />
+			</div>
+		)
 
 	const reportExists = reports.some(
 		report => report?._id?.toString() === reportId?.toString()

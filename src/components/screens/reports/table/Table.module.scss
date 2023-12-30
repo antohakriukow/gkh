@@ -1,12 +1,12 @@
 @import '../../../../styles/colors.scss';
 
 .table {
-	@apply mt-4;
+	@apply mt-4 w-full box-border;
 	border: 1px $gray-300 solid;
 }
 
 .header {
-	@apply grid text-base text-center bg-primary-50;
+	@apply grid text-base text-center bg-primary-50 w-full;
 	grid-template-columns: 1fr 1fr 1fr;
 	gap: 1px;
 	> div {
@@ -15,6 +15,7 @@
 }
 
 .body {
+	@apply w-full;
 	height: calc(100vh - 316px);
 	@media (max-width: 500px) {
 		height: calc(100vh - 304px);
@@ -23,7 +24,7 @@
 		height: calc(100vh - 324px);
 	}
 
-	overflow-y: scroll;
+	overflow-y: auto;
 	scrollbar-width: thin;
 	-ms-overflow-style: -ms-autohiding-scrollbar;
 
@@ -38,7 +39,7 @@
 }
 
 .item {
-	@apply grid text-base text-center hover:bg-primary-200 cursor-pointer;
+	@apply grid text-base text-center hover:bg-primary-200 cursor-pointer w-full box-border;
 	grid-template-columns: 1fr 1fr 1fr;
 	gap: 1px;
 	border-top: 1px $gray-100 solid;
