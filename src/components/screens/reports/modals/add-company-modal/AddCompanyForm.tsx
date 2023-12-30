@@ -1,8 +1,10 @@
 import { FC } from 'react'
 import {
 	FieldErrors,
+	FormState,
 	UseFormHandleSubmit,
-	UseFormRegister
+	UseFormRegister,
+	UseFormWatch
 } from 'react-hook-form'
 
 import { Button, Field } from '~/components/ui'
@@ -15,6 +17,8 @@ interface IAddCompanyForm {
 	register: UseFormRegister<ICompanyInn>
 	handleSubmit: UseFormHandleSubmit<ICompanyInn, undefined>
 	onSubmit: (data: ICompanyInn) => Promise<void>
+	formState: FormState<ICompanyInn>
+	watch: UseFormWatch<ICompanyInn>
 	errors: FieldErrors<ICompanyInn>
 }
 
@@ -22,8 +26,13 @@ const AddCompanyForm: FC<IAddCompanyForm> = ({
 	register,
 	handleSubmit,
 	onSubmit,
+	formState,
+	watch,
 	errors
 }) => {
+	const { isValid } = formState
+	const isEmpty = !watch('inn')
+
 	return (
 		<div className={styles.formContainer}>
 			<Field
@@ -43,7 +52,12 @@ const AddCompanyForm: FC<IAddCompanyForm> = ({
 				autoComplete='off'
 				step='1'
 			/>
-			<Button onClick={handleSubmit(data => onSubmit(data))}>Найти</Button>
+			<Button
+				disabled={!isValid || isEmpty}
+				onClick={handleSubmit(data => onSubmit(data))}
+			>
+				Найти
+			</Button>
 		</div>
 	)
 }

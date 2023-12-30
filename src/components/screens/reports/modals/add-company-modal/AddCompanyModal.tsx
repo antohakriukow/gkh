@@ -22,7 +22,8 @@ const AddCompanyModal: FC = () => {
 	const {
 		handleSubmit: handleSubmitCompanyInn,
 		register: registerCompanyInn,
-		formState: { errors: errorsCompanyInn }
+		formState: formStateInn,
+		watch: watchInn
 	} = useForm<ICompanyInn>({
 		mode: 'onChange'
 	})
@@ -30,7 +31,7 @@ const AddCompanyModal: FC = () => {
 	const {
 		handleSubmit: handleSubmitCompany,
 		register: registerCompany,
-		formState: { errors: errorsCompany },
+		formState: formStateCompany,
 		setValue
 	} = useForm<ICompany>({
 		mode: 'onChange'
@@ -44,7 +45,7 @@ const AddCompanyModal: FC = () => {
 				register={registerCompany}
 				handleSubmit={handleSubmitCompany}
 				onSubmit={handleSetCompanyDetails}
-				errors={errorsCompany}
+				errors={formStateCompany.errors}
 				setValue={setValue}
 				initialValues={newCompany}
 			/>
@@ -57,7 +58,9 @@ const AddCompanyModal: FC = () => {
 			register={registerCompanyInn}
 			handleSubmit={handleSubmitCompanyInn}
 			onSubmit={handleGetCompanyData}
-			errors={errorsCompanyInn}
+			errors={formStateInn.errors}
+			formState={formStateInn}
+			watch={watchInn}
 		/>
 	)
 }
