@@ -60,3 +60,17 @@ export interface IReportCreate
 
 export interface IReportTableItem
 	extends Pick<IReport, 'type' | 'year' | 'period' | 'updatedAt' | '_id'> {}
+
+// Типы для checkReport
+export type TypeCheckResult = 'error' | 'warning'
+export type CheckExpression = () => boolean
+
+export interface ICheckListItem {
+	condition: () => boolean
+	type: TypeCheckResult
+	message: string
+}
+
+export interface ICheckReportResult extends Omit<ICheckListItem, 'condition'> {}
+
+export interface ICheckResult extends Omit<ICheckListItem, 'condition'> {}

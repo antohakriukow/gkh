@@ -1,7 +1,7 @@
 import {
 	ICheckListItem,
 	TypeCheckResult
-} from '../types/check22gkhReport.interface'
+} from '../../../types/report.interface'
 
 export const checkCondition = (
 	condition: boolean,

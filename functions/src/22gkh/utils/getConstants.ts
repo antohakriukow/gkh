@@ -45,6 +45,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 	const renovationCosts = divideAndRoundNumbers(
 		report.data.renovationCosts
 	) as IRenovationCosts
+	const { period } = report
 
 	// Монетизируемая площадь
 	const monetizedArea = area.residentialArea + area.nonResidentialArea
@@ -73,7 +74,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 
 	// Общая сумма начислений КУ
 	const accrualsCommunal =
-		accruals.coldWater +
+		+accruals.coldWater +
 		accruals.coldToHotWater +
 		accruals.hotWater +
 		accruals.waterDisposal +
@@ -86,7 +87,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 
 	// Общая сумма начислений коммунальных ресурсов (КР) на СОИ
 	const accrualsCommon =
-		accruals.coldWaterCommon +
+		+accruals.coldWaterCommon +
 		accruals.coldToHotWaterCommon +
 		accruals.heatToHotWaterCommon +
 		accruals.hotWaterCommon +
@@ -108,23 +109,23 @@ export const getConstants = async (userId: string, reportId: string) => {
 	// Распределяем платежи за ЖКУ по услугам пропорционально суммам начисления
 	//prettier-ignore
 	let payments = {
-    coldWater: Math.round((income.housing / totalAccruals) * accruals.coldWater),
-    coldToHotWater: Math.round((income.housing / totalAccruals) * accruals.coldToHotWater),
-    hotWater: Math.round((income.housing / totalAccruals) * accruals.hotWater),
-    waterDisposal: Math.round((income.housing / totalAccruals) * accruals.waterDisposal),
-    heat: Math.round((income.housing / totalAccruals) * accruals.heat),
-    heatToHotWater: Math.round((income.housing / totalAccruals) * accruals.heatToHotWater),
-    electricity: Math.round((income.housing / totalAccruals) * accruals.electricity),
-    gasNetwork: Math.round((income.housing / totalAccruals) * accruals.gasNetwork),
-    gasLiquid: Math.round((income.housing / totalAccruals) * accruals.gasLiquid),
-    solidWasteRemoval: Math.round((income.housing / totalAccruals) * accruals.solidWasteRemoval),
-    coldWaterCommon: Math.round((income.housing / totalAccruals) * accruals.coldWaterCommon),
-    coldToHotWaterCommon: Math.round((income.housing / totalAccruals) * accruals.coldToHotWaterCommon),
-    heatToHotWaterCommon: Math.round((income.housing / totalAccruals) * accruals.heatToHotWaterCommon),
-    hotWaterCommon: Math.round((income.housing / totalAccruals) * accruals.hotWaterCommon),
-    waterDisposalCommon: Math.round((income.housing / totalAccruals) * accruals.waterDisposalCommon),
-    electricityCommon: Math.round((income.housing / totalAccruals) * accruals.electricityCommon),
-    management: Math.round((income.housing / totalAccruals) * accruals.management),
+    coldWater: Math.round((income.housing / totalAccruals) * accruals.coldWater) || 0,
+    coldToHotWater: Math.round((income.housing / totalAccruals) * accruals.coldToHotWater) || 0,
+    hotWater: Math.round((income.housing / totalAccruals) * accruals.hotWater) || 0,
+    waterDisposal: Math.round((income.housing / totalAccruals) * accruals.waterDisposal) || 0,
+    heat: Math.round((income.housing / totalAccruals) * accruals.heat) || 0,
+    heatToHotWater: Math.round((income.housing / totalAccruals) * accruals.heatToHotWater) || 0,
+    electricity: Math.round((income.housing / totalAccruals) * accruals.electricity) || 0,
+    gasNetwork: Math.round((income.housing / totalAccruals) * accruals.gasNetwork) || 0,
+    gasLiquid: Math.round((income.housing / totalAccruals) * accruals.gasLiquid) || 0,
+    solidWasteRemoval: Math.round((income.housing / totalAccruals) * accruals.solidWasteRemoval) || 0,
+    coldWaterCommon: Math.round((income.housing / totalAccruals) * accruals.coldWaterCommon) || 0,
+    coldToHotWaterCommon: Math.round((income.housing / totalAccruals) * accruals.coldToHotWaterCommon) || 0,
+    heatToHotWaterCommon: Math.round((income.housing / totalAccruals) * accruals.heatToHotWaterCommon) || 0,
+    hotWaterCommon: Math.round((income.housing / totalAccruals) * accruals.hotWaterCommon) || 0,
+    waterDisposalCommon: Math.round((income.housing / totalAccruals) * accruals.waterDisposalCommon) || 0,
+    electricityCommon: Math.round((income.housing / totalAccruals) * accruals.electricityCommon) || 0,
+    management: Math.round((income.housing / totalAccruals) * accruals.management) || 0,
     maintenance:0
 };
 
@@ -139,7 +140,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 
 	// Общая сумма оплат за КУ
 	const communalPayments =
-		payments.coldWater +
+		+payments.coldWater +
 		payments.coldToHotWater +
 		payments.hotWater +
 		payments.waterDisposal +
@@ -152,7 +153,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 
 	// Общая сумма оплат за КР на СОИ
 	const commonPayments =
-		payments.coldWaterCommon +
+		+payments.coldWaterCommon +
 		payments.coldToHotWaterCommon +
 		payments.heatToHotWaterCommon +
 		payments.hotWaterCommon +
@@ -161,7 +162,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 
 	// Общая сумма оплат за ЖУ ("Управление МКД", "Содержание и текущий ремонт", КР на СОИ)
 	const commonAndMaintenancePayments =
-		payments.maintenance + payments.management + commonPayments
+		+payments.maintenance + payments.management + commonPayments
 
 	// Устанавливаем размер оплат за текущий период в размере суммы начисления, если оплачено больше чем начислено. Если оплата меньше начисления, то в размере суммы оплаты.
 	//prettier-ignore
@@ -189,47 +190,47 @@ export const getConstants = async (userId: string, reportId: string) => {
 	// Устанавливаем размер оплат в счет предыдущих периодов как разницу между оплатами и начислениями по каждой услуге. Если оплачено меньше, то возвращаем ноль
 	//prettier-ignore
 	const previousPeriodPayments = {
-		coldWater: payments.coldWater >= accruals.coldWater ? payments.coldWater - accruals.coldWater : 0,
-		coldToHotWater: payments.coldToHotWater >= accruals.coldToHotWater ? payments.coldToHotWater - accruals.coldToHotWater : 0,
-		hotWater: payments.hotWater >= accruals.hotWater ? payments.hotWater - accruals.hotWater : 0,
-		waterDisposal: payments.waterDisposal >= accruals.waterDisposal ? payments.waterDisposal - accruals.waterDisposal : 0,
-		heat: payments.heat >= accruals.heat ? payments.heat - accruals.heat : 0,
-		heatToHotWater: payments.heatToHotWater >= accruals.heatToHotWater ? payments.heatToHotWater - accruals.heatToHotWater : 0,
-		electricity: payments.electricity >= accruals.electricity ? payments.electricity - accruals.electricity : 0,
-		gasNetwork: payments.gasNetwork >= accruals.gasNetwork ? payments.gasNetwork - accruals.gasNetwork : 0,
-		gasLiquid: payments.gasLiquid >= accruals.gasLiquid ? payments.gasLiquid - accruals.gasLiquid : 0,
-		solidWasteRemoval: payments.solidWasteRemoval >= accruals.solidWasteRemoval ? payments.solidWasteRemoval - accruals.solidWasteRemoval : 0,
-		coldWaterCommon: payments.coldWaterCommon >= accruals.coldWaterCommon ? payments.coldWaterCommon - accruals.coldWaterCommon : 0,
-		coldToHotWaterCommon: payments.coldToHotWaterCommon >= accruals.coldToHotWaterCommon ? payments.coldToHotWaterCommon - accruals.coldToHotWaterCommon : 0,
-		heatToHotWaterCommon: payments.heatToHotWaterCommon >= accruals.heatToHotWaterCommon ? payments.heatToHotWaterCommon - accruals.heatToHotWaterCommon : 0,
-		hotWaterCommon: payments.hotWaterCommon >= accruals.hotWaterCommon ? payments.hotWaterCommon - accruals.hotWaterCommon : 0,
-		waterDisposalCommon: payments.waterDisposalCommon >= accruals.waterDisposalCommon ? payments.waterDisposalCommon - accruals.waterDisposalCommon : 0,
-		electricityCommon: payments.electricityCommon >= accruals.electricityCommon ? payments.electricityCommon - accruals.electricityCommon : 0,
-		management: payments.management >= accruals.management ? payments.management - accruals.management : 0,
-		maintenance: payments.maintenance >= accruals.maintenance ? payments.maintenance - accruals.maintenance : 0
+		coldWater: payments.coldWater >= accruals.coldWater ? +payments.coldWater - accruals.coldWater : 0,
+		coldToHotWater: payments.coldToHotWater >= accruals.coldToHotWater ? +payments.coldToHotWater - accruals.coldToHotWater : 0,
+		hotWater: payments.hotWater >= accruals.hotWater ? +payments.hotWater - accruals.hotWater : 0,
+		waterDisposal: payments.waterDisposal >= accruals.waterDisposal ? +payments.waterDisposal - accruals.waterDisposal : 0,
+		heat: payments.heat >= accruals.heat ? +payments.heat - accruals.heat : 0,
+		heatToHotWater: payments.heatToHotWater >= accruals.heatToHotWater ? +payments.heatToHotWater - accruals.heatToHotWater : 0,
+		electricity: payments.electricity >= accruals.electricity ? +payments.electricity - accruals.electricity : 0,
+		gasNetwork: payments.gasNetwork >= accruals.gasNetwork ? +payments.gasNetwork - accruals.gasNetwork : 0,
+		gasLiquid: payments.gasLiquid >= accruals.gasLiquid ? +payments.gasLiquid - accruals.gasLiquid : 0,
+		solidWasteRemoval: payments.solidWasteRemoval >= accruals.solidWasteRemoval ? +payments.solidWasteRemoval - accruals.solidWasteRemoval : 0,
+		coldWaterCommon: payments.coldWaterCommon >= accruals.coldWaterCommon ? +payments.coldWaterCommon - accruals.coldWaterCommon : 0,
+		coldToHotWaterCommon: payments.coldToHotWaterCommon >= accruals.coldToHotWaterCommon ? +payments.coldToHotWaterCommon - accruals.coldToHotWaterCommon : 0,
+		heatToHotWaterCommon: payments.heatToHotWaterCommon >= accruals.heatToHotWaterCommon ? +payments.heatToHotWaterCommon - accruals.heatToHotWaterCommon : 0,
+		hotWaterCommon: payments.hotWaterCommon >= accruals.hotWaterCommon ? +payments.hotWaterCommon - accruals.hotWaterCommon : 0,
+		waterDisposalCommon: payments.waterDisposalCommon >= accruals.waterDisposalCommon ? +payments.waterDisposalCommon - accruals.waterDisposalCommon : 0,
+		electricityCommon: payments.electricityCommon >= accruals.electricityCommon ? +payments.electricityCommon - accruals.electricityCommon : 0,
+		management: payments.management >= accruals.management ? +payments.management - accruals.management : 0,
+		maintenance: payments.maintenance >= accruals.maintenance ? +payments.maintenance - accruals.maintenance : 0
 	}
 
 	// Распределение долгов прошлых периодов пропорционально начислениям
 	//prettier-ignore
 	let previousPeriodDebts = {
-		coldWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldWater),
-		coldToHotWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldToHotWater),
-		hotWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.hotWater),
-		waterDisposal: Math.round((residentsDebts.housing / totalAccruals) * accruals.waterDisposal),
-		heat: Math.round((residentsDebts.housing / totalAccruals) * accruals.heat),
-		heatToHotWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.heatToHotWater),
-		electricity: Math.round((residentsDebts.housing / totalAccruals) * accruals.electricity),
-		gasNetwork: Math.round((residentsDebts.housing / totalAccruals) * accruals.gasNetwork),
-		gasLiquid: Math.round((residentsDebts.housing / totalAccruals) * accruals.gasLiquid),
-		solidWasteRemoval: Math.round((residentsDebts.housing / totalAccruals) * accruals.solidWasteRemoval),
-		coldWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldWaterCommon),
-		coldToHotWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldToHotWaterCommon),
-		heatToHotWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.heatToHotWaterCommon),
-		hotWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.hotWaterCommon),
-		waterDisposalCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.waterDisposalCommon),
-		electricityCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.electricityCommon),
+		coldWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldWater) || 0,
+		coldToHotWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldToHotWater) || 0,
+		hotWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.hotWater) || 0,
+		waterDisposal: Math.round((residentsDebts.housing / totalAccruals) * accruals.waterDisposal) || 0,
+		heat: Math.round((residentsDebts.housing / totalAccruals) * accruals.heat) || 0,
+		heatToHotWater: Math.round((residentsDebts.housing / totalAccruals) * accruals.heatToHotWater) || 0,
+		electricity: Math.round((residentsDebts.housing / totalAccruals) * accruals.electricity) || 0,
+		gasNetwork: Math.round((residentsDebts.housing / totalAccruals) * accruals.gasNetwork) || 0,
+		gasLiquid: Math.round((residentsDebts.housing / totalAccruals) * accruals.gasLiquid) || 0,
+		solidWasteRemoval: Math.round((residentsDebts.housing / totalAccruals) * accruals.solidWasteRemoval) || 0,
+		coldWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldWaterCommon) || 0,
+		coldToHotWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.coldToHotWaterCommon) || 0,
+		heatToHotWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.heatToHotWaterCommon) || 0,
+		hotWaterCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.hotWaterCommon) || 0,
+		waterDisposalCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.waterDisposalCommon) || 0,
+		electricityCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.electricityCommon) || 0,
 
-		management: Math.round((residentsDebts.housing / totalAccruals) * accruals.management),
+		management: Math.round((residentsDebts.housing / totalAccruals) * accruals.management) || 0,
 		maintenance: 0
 	}
 
@@ -240,34 +241,34 @@ export const getConstants = async (userId: string, reportId: string) => {
 
 	// Перезаписываем maintenance
 	previousPeriodDebts.maintenance =
-		residentsDebts.housing - totalPreviousPeriodDebtsWithoutMaintenance
+		+residentsDebts.housing - totalPreviousPeriodDebtsWithoutMaintenance
 
 	// Расчет долгов. По каждой услуге: Начислено - оплачено за текущий период + долг за прошлый период - оплачен за прошлый период
 	//prettier-ignore
 	const debts = {
-		coldWater: accruals.coldWater - currentYearPayments.coldWater + previousPeriodDebts.coldWater - previousPeriodPayments.coldWater,
-		coldToHotWater: accruals.coldToHotWater - currentYearPayments.coldToHotWater + previousPeriodDebts.coldToHotWater - previousPeriodPayments.coldToHotWater,
-		hotWater: accruals.hotWater - currentYearPayments.hotWater + previousPeriodDebts.hotWater - previousPeriodPayments.hotWater,
-		waterDisposal: accruals.waterDisposal - currentYearPayments.waterDisposal + previousPeriodDebts.waterDisposal - previousPeriodPayments.waterDisposal,
-		heat: accruals.heat - currentYearPayments.heat + previousPeriodDebts.heat - previousPeriodPayments.heat,
-		heatToHotWater: accruals.heatToHotWater - currentYearPayments.heatToHotWater + previousPeriodDebts.heatToHotWater - previousPeriodPayments.heatToHotWater,
-		electricity: accruals.electricity - currentYearPayments.electricity + previousPeriodDebts.electricity - previousPeriodPayments.electricity,
-		gasNetwork: accruals.gasNetwork - currentYearPayments.gasNetwork + previousPeriodDebts.gasNetwork - previousPeriodPayments.gasNetwork,
-		gasLiquid: accruals.gasLiquid - currentYearPayments.gasLiquid + previousPeriodDebts.gasLiquid - previousPeriodPayments.gasLiquid,
-		solidWasteRemoval: accruals.solidWasteRemoval - currentYearPayments.solidWasteRemoval + previousPeriodDebts.solidWasteRemoval - previousPeriodPayments.solidWasteRemoval,
-		coldWaterCommon: accruals.coldWaterCommon - currentYearPayments.coldWaterCommon + previousPeriodDebts.coldWaterCommon - previousPeriodPayments.coldWaterCommon,
-		coldToHotWaterCommon: accruals.coldToHotWaterCommon - currentYearPayments.coldToHotWaterCommon + previousPeriodDebts.coldToHotWaterCommon - previousPeriodPayments.coldToHotWaterCommon,
-		heatToHotWaterCommon: accruals.heatToHotWaterCommon - currentYearPayments.heatToHotWaterCommon + previousPeriodDebts.heatToHotWaterCommon - previousPeriodPayments.heatToHotWaterCommon,
-		hotWaterCommon: accruals.hotWaterCommon - currentYearPayments.hotWaterCommon + previousPeriodDebts.hotWaterCommon - previousPeriodPayments.hotWaterCommon,
-		waterDisposalCommon: accruals.waterDisposalCommon - currentYearPayments.waterDisposalCommon + previousPeriodDebts.waterDisposalCommon - previousPeriodPayments.waterDisposalCommon,
-		electricityCommon: accruals.electricityCommon - currentYearPayments.electricityCommon + previousPeriodDebts.electricityCommon - previousPeriodPayments.electricityCommon,
-		management: accruals.management - currentYearPayments.management + previousPeriodDebts.management - previousPeriodPayments.management,
-		maintenance: accruals.maintenance - currentYearPayments.maintenance + previousPeriodDebts.maintenance - previousPeriodPayments.maintenance,
+		coldWater: +accruals.coldWater - currentYearPayments.coldWater + previousPeriodDebts.coldWater - previousPeriodPayments.coldWater,
+		coldToHotWater: +accruals.coldToHotWater - currentYearPayments.coldToHotWater + previousPeriodDebts.coldToHotWater - previousPeriodPayments.coldToHotWater,
+		hotWater: +accruals.hotWater - currentYearPayments.hotWater + previousPeriodDebts.hotWater - previousPeriodPayments.hotWater,
+		waterDisposal: +accruals.waterDisposal - currentYearPayments.waterDisposal + previousPeriodDebts.waterDisposal - previousPeriodPayments.waterDisposal,
+		heat: +accruals.heat - currentYearPayments.heat + previousPeriodDebts.heat - previousPeriodPayments.heat,
+		heatToHotWater: +accruals.heatToHotWater - currentYearPayments.heatToHotWater + previousPeriodDebts.heatToHotWater - previousPeriodPayments.heatToHotWater,
+		electricity: +accruals.electricity - currentYearPayments.electricity + previousPeriodDebts.electricity - previousPeriodPayments.electricity,
+		gasNetwork: +accruals.gasNetwork - currentYearPayments.gasNetwork + previousPeriodDebts.gasNetwork - previousPeriodPayments.gasNetwork,
+		gasLiquid: +accruals.gasLiquid - currentYearPayments.gasLiquid + previousPeriodDebts.gasLiquid - previousPeriodPayments.gasLiquid,
+		solidWasteRemoval: +accruals.solidWasteRemoval - currentYearPayments.solidWasteRemoval + previousPeriodDebts.solidWasteRemoval - previousPeriodPayments.solidWasteRemoval,
+		coldWaterCommon: +accruals.coldWaterCommon - currentYearPayments.coldWaterCommon + previousPeriodDebts.coldWaterCommon - previousPeriodPayments.coldWaterCommon,
+		coldToHotWaterCommon: +accruals.coldToHotWaterCommon - currentYearPayments.coldToHotWaterCommon + previousPeriodDebts.coldToHotWaterCommon - previousPeriodPayments.coldToHotWaterCommon,
+		heatToHotWaterCommon: +accruals.heatToHotWaterCommon - currentYearPayments.heatToHotWaterCommon + previousPeriodDebts.heatToHotWaterCommon - previousPeriodPayments.heatToHotWaterCommon,
+		hotWaterCommon: +accruals.hotWaterCommon - currentYearPayments.hotWaterCommon + previousPeriodDebts.hotWaterCommon - previousPeriodPayments.hotWaterCommon,
+		waterDisposalCommon: +accruals.waterDisposalCommon - currentYearPayments.waterDisposalCommon + previousPeriodDebts.waterDisposalCommon - previousPeriodPayments.waterDisposalCommon,
+		electricityCommon: +accruals.electricityCommon - currentYearPayments.electricityCommon + previousPeriodDebts.electricityCommon - previousPeriodPayments.electricityCommon,
+		management: +accruals.management - currentYearPayments.management + previousPeriodDebts.management - previousPeriodPayments.management,
+		maintenance: +accruals.maintenance - currentYearPayments.maintenance + previousPeriodDebts.maintenance - previousPeriodPayments.maintenance,
 	}
 
 	// Общий долг за КУ
 	const communalDebts =
-		debts.coldWater +
+		+debts.coldWater +
 		debts.coldToHotWater +
 		debts.hotWater +
 		debts.waterDisposal +
@@ -280,7 +281,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 
 	// Общий долг за КР на СОИ
 	const commonDebts =
-		debts.coldToHotWaterCommon +
+		+debts.coldToHotWaterCommon +
 		debts.heatToHotWaterCommon +
 		debts.coldWaterCommon +
 		debts.hotWaterCommon +
@@ -288,7 +289,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 		debts.electricityCommon
 
 	// Общий долг за ЖУ
-	const maintenanceDebts = debts.maintenance + debts.management + commonDebts
+	const maintenanceDebts = +debts.maintenance + debts.management + commonDebts
 
 	/**
 	 * Создает типичную строку данных с учетом начислений и платежей.
@@ -394,6 +395,8 @@ export const getConstants = async (userId: string, reportId: string) => {
 	}
 
 	return {
+		period,
+
 		calculatedAreas,
 		area,
 		monetizedArea,
@@ -431,6 +434,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 		row86,
 		row87,
 
+		renovation,
 		stove,
 		waterHeating,
 		gasBoiler

@@ -48,7 +48,6 @@ export const generateFinalReport = functions.https.onCall(
 				)
 			}
 		} catch (error) {
-			console.error('Ошибка при генерации отчета:', error)
 			throw new functions.https.HttpsError(
 				'unknown',
 				'Произошла ошибка при генерации отчета'

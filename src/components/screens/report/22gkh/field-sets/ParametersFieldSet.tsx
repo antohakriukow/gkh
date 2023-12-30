@@ -1,6 +1,5 @@
 import {
 	advancedElevatorOptions,
-	advancedGasOptions,
 	advancedRenovationOptions,
 	advancedStoveOptions,
 	advancedWaterHeatingOptions,
@@ -8,7 +7,6 @@ import {
 	budgetFinancingOptions,
 	elevatorOptions,
 	gasBoilerOptions,
-	gasOptions,
 	housesCountOptions,
 	renovationCostsOptions,
 	renovationOptions,

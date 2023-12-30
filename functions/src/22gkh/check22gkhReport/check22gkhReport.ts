@@ -1,4 +1,4 @@
-import { getCheckList } from './getCheckList'
+import { getCheckList } from './utils/getCheckList'
 import * as functions from 'firebase-functions'
 
 export const check22gkhReport = functions.https.onCall(

@@ -1,5 +1,5 @@
 import { FirebaseError } from 'firebase/app'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { SubmitHandler, UseFormReset, UseFormSetValue } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -11,7 +11,7 @@ import { useAuth } from '~/hooks/useAuth'
 import { useData } from '~/hooks/useData'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
 
-import { IReport } from '~/shared/types/report.interface'
+import { ICheckReportResult, IReport } from '~/shared/types/report.interface'
 
 import { cloudFunction } from '~/services/_functions'
 import { ReportService } from '~/services/report.service'
@@ -72,22 +72,7 @@ export const useReportEditor = (
 		[setValue]
 	)
 
-	const closeReport = useCallback(() => navigate(`/reports`), [])
-
-	const handleEscKey = useCallback(
-		(e: KeyboardEvent) => {
-			if (e.key === 'Escape') closeReport()
-		},
-		[closeReport]
-	)
-
-	useEffect(() => {
-		document.addEventListener('keydown', handleEscKey)
-
-		return () => {
-			document.removeEventListener('keydown', handleEscKey)
-		}
-	}, [handleEscKey])
+	const closeReport = useCallback(() => navigate(`/reports`), [navigate])
 
 	useEffect(() => {
 		if (currentReport) {
@@ -96,30 +81,53 @@ export const useReportEditor = (
 		}
 	}, [currentReport, setReportValues, reset])
 
-	const saveReport: SubmitHandler<IReport> = async (reportData: IReport) => {
-		if (!user) return
+	const saveReport: SubmitHandler<IReport> = useCallback(
+		async (reportData: IReport) => {
+			if (!user) return
+			setIsLoading(true)
+			try {
+				if (!reportData.year) return
+
+				await ReportService.update(user.uid, reportData)
+				const newReportData = await ReportService.getById(
+					user.uid,
+					reportData._id.toString()
+				)
+				await setCurrentReport(newReportData)
+
+				reset(newReportData)
+
+				toast.success('Данные сохранены', { autoClose: 3000 })
+			} catch (error) {
+				if (error instanceof FirebaseError) handleDBErrors(error)
+			} finally {
+				setIsLoading(false)
+			}
+		},
+		[user, setCurrentReport, reset]
+	)
+
+	const checkReport = useCallback(async () => {
+		if (!user || !currentReport) return
 		setIsLoading(true)
 		try {
-			if (!reportData.year) return
-
-			await ReportService.update(user.uid, reportData)
-			const newReportData = await ReportService.getById(
-				user.uid,
-				reportData._id.toString()
+			const checkResult = await cloudFunction.checkReport(
+				currentReport._id.toString()
 			)
-			await setCurrentReport(newReportData)
-
-			reset(newReportData)
-
-			toast.success('Данные сохранены', { autoClose: 3000 })
+			return checkResult.data as ICheckReportResult[]
 		} catch (error) {
-			if (error instanceof FirebaseError) handleDBErrors(error)
+			if (error instanceof FirebaseError) {
+				handleDBErrors(error)
+			} else {
+				console.log(error)
+			}
 		} finally {
 			setIsLoading(false)
 		}
-	}
+	}, [user, currentReport])
 
-	const generateReport = async () => {
+	const generateReport = useCallback(async () => {
+		console.log('currentReport._id')
 		if (!user || !currentReport) return
 		setIsLoading(true)
 
@@ -140,9 +148,9 @@ export const useReportEditor = (
 		} finally {
 			setIsLoading(false)
 		}
-	}
+	}, [user, currentReport, setCurrentReport])
 
-	const downloadReportPDF = async () => {
+	const downloadReportPDF = useCallback(async () => {
 		if (!user || !currentReport) return
 		setIsLoading(true)
 		try {
@@ -163,9 +171,9 @@ export const useReportEditor = (
 		} finally {
 			setIsLoading(false)
 		}
-	}
+	}, [user, currentReport])
 
-	const downloadReportXML = async () => {
+	const downloadReportXML = useCallback(async () => {
 		if (!user || !currentReport) return
 		setIsLoading(true)
 		try {
@@ -187,16 +195,30 @@ export const useReportEditor = (
 		} finally {
 			setIsLoading(false)
 		}
-	}
+	}, [user, currentReport])
 
-	return {
-		isLoading,
-		reportEditorHeading,
-		saveReport,
-		generateReport,
-		downloadReportPDF,
-		downloadReportXML,
-		currentReport,
-		closeReport
-	}
+	return useMemo(
+		() => ({
+			isLoading,
+			reportEditorHeading,
+			saveReport,
+			checkReport,
+			generateReport,
+			downloadReportPDF,
+			downloadReportXML,
+			currentReport,
+			closeReport
+		}),
+		[
+			isLoading,
+			reportEditorHeading,
+			saveReport,
+			checkReport,
+			generateReport,
+			downloadReportPDF,
+			downloadReportXML,
+			currentReport,
+			closeReport
+		]
+	)
 }

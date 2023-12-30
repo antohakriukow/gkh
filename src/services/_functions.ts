@@ -1,5 +1,6 @@
 import {
 	addShortIdToUserCF,
+	checkReportCF,
 	createLogCF,
 	generateFinalReportCF,
 	getCompanyByInnCF
@@ -21,7 +22,13 @@ export const cloudFunction = {
 		return response
 	},
 
+	async checkReport(reportId: string) {
+		const response = await checkReportCF({ reportId })
+		return response
+	},
+
 	async generateFinalReport(reportId: string) {
+		console.log('reportId: ', reportId)
 		const response = await generateFinalReportCF({ reportId })
 		return response
 	},
