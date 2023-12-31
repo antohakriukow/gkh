@@ -26,7 +26,7 @@ const Buttons: FC<IButtons> = ({ generateReport, isDanger }) => {
 				className={styles.button}
 				color={isDanger ? 'danger' : 'success'}
 			>
-				Сгенерировать отчет
+				Продолжить
 			</Button>
 			<Button onClick={hideModal} className={styles.button}>
 				Внести правки
