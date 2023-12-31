@@ -1,13 +1,16 @@
+@import '../../../styles/colors.scss';
+
 .headingDefault {
-	@apply text-primary-800 font-semibold text-2xl;
+	@apply mb-0 mt-2 font-light text-left text-primary-800;
+	font-size: 20px;
+	line-height: 22px;
+	color: $gray-700;
+	@media (max-width: 450px) {
+		font-size: 16px;
+		line-height: 18px;
+	}
 }
 
 .subheading {
 	@apply text-xl mb-5 font-semibold;
-}
-
-@media (max-width: 600px) {
-	.heading {
-		@apply text-xl;
-	}
 }

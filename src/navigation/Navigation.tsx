@@ -3,6 +3,7 @@ import RedirectForNotFound from './RedirectForNotFound'
 import { FC } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
+import Issues from '~/components/screens/issues/Issues'
 import LoginPage from '~/components/screens/landing/LoginPage'
 import RegisterPage from '~/components/screens/landing/RegisterPage'
 import ReportEditor from '~/components/screens/report/ReportEditor'
@@ -35,6 +36,14 @@ const router = createBrowserRouter([
 		element: (
 			<ProtectedRoute>
 				<ReportEditor />
+			</ProtectedRoute>
+		)
+	},
+	{
+		path: '/issues',
+		element: (
+			<ProtectedRoute>
+				<Issues />
 			</ProtectedRoute>
 		)
 	},

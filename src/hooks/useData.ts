@@ -3,6 +3,7 @@ import { off, onValue, ref } from 'firebase/database'
 import { useEffect, useMemo, useState } from 'react'
 
 import { IData } from '~/shared/types/data.interface'
+import { IIssue } from '~/shared/types/issue.interface'
 
 import { auth, db } from '~/services/_firebase'
 
@@ -16,16 +17,18 @@ export const useData = () => {
 		companies: [],
 		reports: []
 	} as IData)
-	const [isLoading, setIsLoading] = useState(false)
+	const [issuesData, setIssuesData] = useState<IIssue[]>([])
+	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
 		setIsLoading(true)
 		const handleAuthStateChanged: NextOrObserver<User> = user => {
 			if (user) {
-				const dataRef = ref(db, `users/${user.uid}`)
+				const userRef = ref(db, `users/${user.uid}`)
+				const issuesRef = ref(db, `issues/${user.uid}`)
 
 				// prettier-ignore
-				const unsubscribe = onValue(dataRef, snapshot => {
+				const userUnsubscribe = onValue(userRef, snapshot => {
 					let dataFromDB = {} as IData
 					if (snapshot.exists()) {
 						dataFromDB = {
@@ -37,7 +40,7 @@ export const useData = () => {
 							companies: snapshot.val().companies
 								? snapshot.val().companies
 								: [],
-							reports: snapshot.val().reports ? snapshot.val().reports : []
+							reports: snapshot.val().reports ? snapshot.val().reports : [],
 						}
 					}
 					if (dataFromDB) {
@@ -55,8 +58,17 @@ export const useData = () => {
 					}
 				})
 
+				const issuesUnsubscribe = onValue(issuesRef, snapshot => {
+					if (snapshot.exists() && snapshot.val()) {
+						setIssuesData(Object.values(snapshot.val()))
+					} else {
+						setIssuesData([])
+					}
+				})
+
 				return () => {
-					off(dataRef, 'value', unsubscribe)
+					off(userRef, 'value', userUnsubscribe)
+					off(issuesRef, 'value', issuesUnsubscribe)
 				}
 			}
 		}
@@ -79,8 +91,9 @@ export const useData = () => {
 			companies: Object.values(data.companies),
 			reports: Object.values(data.reports),
 			displayName: data.displayName,
-			email: data.email
+			email: data.email,
+			issues: issuesData
 		}),
-		[data, isLoading]
+		[data, issuesData, isLoading]
 	)
 }

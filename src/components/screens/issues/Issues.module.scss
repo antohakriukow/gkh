@@ -1,0 +1,57 @@
+@import '../../../styles/colors.scss';
+
+.container {
+	@apply box-border;
+	min-height: calc(100vh - 118px);
+}
+
+.issues {
+	@apply grid gap-4 p-4 w-full box-border;
+	grid-template-columns: repeat(3, 1fr);
+	max-height: calc(100vh - 118px);
+	overflow-y: auto;
+	scrollbar-width: thin;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: $primary-500;
+		border-radius: 0px;
+	}
+
+	@media (max-width: 958px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	@media (max-width: 644px) {
+		grid-template-columns: repeat(1, 1fr);
+		max-height: calc(100vh - 174px);
+	}
+}
+
+.header {
+	@apply px-4 pt-4 w-full flex flex-row justify-between items-center box-border;
+}
+
+.tools {
+	@apply flex flex-row items-center justify-between;
+	> svg {
+		@apply cursor-pointer ml-2;
+	}
+	> svg:hover {
+		transform: scale(1.1);
+	}
+}
+
+.title {
+	@apply m-0 font-light text-left;
+	font-size: 20px;
+	line-height: 22px;
+	color: $gray-700;
+	@media (max-width: 450px) {
+		font-size: 16px;
+		line-height: 18px;
+	}
+}

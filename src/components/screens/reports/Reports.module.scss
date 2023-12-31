@@ -5,8 +5,12 @@
 	height: calc(100vh - 118px);
 }
 
+.headingContainer {
+	@apply w-full flex flex-row items-center justify-between;
+}
+
 .heading {
-	@apply mb-0 mt-2 text-3xl font-light text-left;
+	@apply mb-0 mt-0 text-3xl font-light text-left;
 	color: $gray-700;
 }
 

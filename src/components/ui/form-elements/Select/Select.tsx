@@ -15,7 +15,8 @@ const Select: FC<ISelect> = ({
 	options,
 	field,
 	isLoading,
-	isRequired
+	isRequired,
+	width
 }) => {
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
@@ -28,7 +29,7 @@ const Select: FC<ISelect> = ({
 		}),
 		container: provided => ({
 			...provided,
-			width: windowWidth <= 450 ? 140 : 164
+			width: width ? width : windowWidth <= 450 ? 140 : 164
 		}),
 		valueContainer: provided => ({
 			...provided,

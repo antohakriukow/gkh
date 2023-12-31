@@ -1,0 +1,19 @@
+.container {
+	> h1 {
+		@apply mx-2;
+	}
+}
+
+.form {
+	@apply mt-4;
+}
+
+.button {
+	@apply mt-4 ml-2 px-2 text-xl;
+	@media (max-width: 800px) {
+		@apply text-base;
+	}
+	@media (max-width: 450px) {
+		@apply text-sm;
+	}
+}

@@ -4,15 +4,33 @@
 }
 
 .container {
-	@apply relative top-1/2 left-1/2 bg-white w-2/3 max-w-xl inline-flex justify-center items-center p-6 rounded-md;
+	@apply relative top-1/2 left-1/2 bg-white w-2/3 max-w-xl inline-flex justify-center items-center py-6 px-4 rounded-md;
 	min-height: 200px;
 	max-height: 80vh;
 	transform: translate(-50%, -50%);
+	> div {
+		width: calc(100% - 32px);
+	}
+	@media (max-width: 500px) {
+		@apply w-3/4;
+	}
+
+	// @media (max-width: 450) {
+	// 	@apply px-2;
+	// }
+
+	@media (max-width: 360) {
+		@apply w-3/5 px-2;
+		> div {
+			width: calc(100% - 16px);
+		}
+	}
 }
 
 .closeBtn {
 	@apply absolute top-0 right-0 hover:cursor-pointer;
-	transform: translate(40px, -40px);
+	top: -40px;
+	right: -30px;
 }
 
 .component {

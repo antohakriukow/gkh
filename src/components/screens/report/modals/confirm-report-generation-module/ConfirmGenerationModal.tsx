@@ -30,12 +30,10 @@ const ConfirmGenerationModal: FC<{ generateReport: () => void }> = ({
 				))}
 			</ul>
 			<div className={styles.buttons}>
-				<Button color='success' onClick={accept}>
-					Продолжить
-				</Button>
-				<Button color='danger' onClick={hideModal}>
+				<Button onClick={accept}>Продолжить</Button>
+				{/* <Button color='danger' onClick={hideModal}>
 					Отменить
-				</Button>
+				</Button> */}
 			</div>
 		</div>
 	)

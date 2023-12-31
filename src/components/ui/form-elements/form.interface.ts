@@ -1,4 +1,8 @@
-import { ButtonHTMLAttributes, InputHTMLAttributes } from 'react'
+import {
+	ButtonHTMLAttributes,
+	InputHTMLAttributes,
+	TextareaHTMLAttributes
+} from 'react'
 import { ControllerRenderProps, FieldError } from 'react-hook-form'
 import { Options } from 'react-select'
 
@@ -19,9 +23,12 @@ export interface ICheckboxProps {
 type TypeInputPropsField = InputHTMLAttributes<HTMLInputElement> & IFieldProps
 type TypeCheckboxPropsField = InputHTMLAttributes<HTMLInputElement> &
 	ICheckboxProps
+type TypeTextareaPropsField = TextareaHTMLAttributes<HTMLTextAreaElement> &
+	IFieldProps
 
 export interface IField extends TypeInputPropsField {}
 export interface ICheckbox extends TypeCheckboxPropsField {}
+export interface ITextarea extends TypeTextareaPropsField {}
 
 export interface IOption {
 	label: string
@@ -34,4 +41,5 @@ export interface ISelect extends IFieldProps {
 	field: ControllerRenderProps<any, any>
 	isLoading?: boolean
 	isRequired?: boolean
+	width?: number
 }

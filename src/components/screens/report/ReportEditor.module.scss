@@ -30,6 +30,10 @@
 		background-color: $primary-500;
 		border-radius: 0px;
 	}
+
+	@media (max-width: 450px) {
+		@apply pr-4;
+	}
 }
 
 .header {
@@ -47,18 +51,16 @@
 	}
 }
 
-.title {
-	@apply mb-0 mt-2 font-light text-left;
-	font-size: 24px;
-	line-height: 28px;
-	color: $gray-700;
+.tools {
+	@apply flex flex-row items-center justify-between;
 }
 
-@media (max-width: 450px) {
-	.report {
-		@apply pr-4;
-	}
-	.title {
+.title {
+	@apply mb-0 mt-2 font-light text-left;
+	font-size: 20px;
+	line-height: 22px;
+	color: $gray-700;
+	@media (max-width: 450px) {
 		font-size: 16px;
 		line-height: 18px;
 	}

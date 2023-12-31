@@ -1,0 +1,40 @@
+@import '../../../../styles/mixins.scss';
+@import '../../../../styles/colors.scss';
+
+.container {
+	@apply flex flex-col items-end py-2 px-2 hover:bg-gray-50 h-full w-full;
+	border-radius: 4px;
+	// min-width: 216px;
+	max-width: 865px;
+
+	.label {
+		@apply w-full block text-primary-800;
+
+		> span {
+			@apply block pb-1;
+			font-size: 16px;
+			line-height: 16px;
+			@media (max-width: 450px) {
+				font-size: 14px;
+				line-height: 14px;
+			}
+		}
+
+		textarea {
+			@apply w-full px-2 text-primary-700 text-lg border-primary-700 focus:ring-0 box-border font-sans;
+			height: auto;
+			min-height: 34px;
+			border: 1px solid rgb(204, 204, 204);
+			border-radius: 4px;
+			outline: none;
+		}
+	}
+
+	.error {
+		@apply text-danger-500 font-semibold text-center;
+		font-size: 14px;
+		line-height: 14px;
+		margin-top: 1px;
+		width: 164px;
+	}
+}
