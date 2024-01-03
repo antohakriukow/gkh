@@ -22,7 +22,10 @@ const ReportModal: FC<{ handleOpenReport: (_id: number) => void }> = ({
 	const [isReportExisting, setIsReportExisting] = useState(false)
 
 	const now = new Date()
-	const newReportYear = now.getFullYear()
+	const currentYear = now.getFullYear()
+
+	const newReportYear = now.getMonth() <= 2 ? currentYear - 1 : currentYear
+
 	const newReportPeriod = Math.floor(((now.getMonth() + 9) % 12) / 3) + 1
 
 	const existingReport = reports.find(
@@ -63,7 +66,7 @@ const ReportModal: FC<{ handleOpenReport: (_id: number) => void }> = ({
 			case 3:
 				return '9 месяцев'
 			case 4:
-				return 'год'
+				return ''
 			default:
 				return period
 		}

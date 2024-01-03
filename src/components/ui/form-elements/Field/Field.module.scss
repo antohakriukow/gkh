@@ -66,6 +66,7 @@
 .container {
 	@apply flex flex-col items-end py-2 px-2 hover:bg-gray-50;
 	border-radius: 4px;
+	max-width: 600px;
 	.error {
 		@apply text-center;
 		width: 164px;
@@ -79,13 +80,13 @@
 	margin-top: 1px;
 }
 
-@media (min-width: 1320px) {
-	.container {
-		max-width: 600px;
-	}
-}
+// @media (min-width: 1320px) {
+// 	.container {
+// 		max-width: 600px;
+// 	}
+// }
 
-@media (min-width: 865px) {
+@media (max-width: 865px) {
 	.container {
 		max-width: 865px;
 	}
