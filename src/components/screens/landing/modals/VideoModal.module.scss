@@ -1,0 +1,16 @@
+.container {
+	@apply w-full;
+	height: 315px;
+
+	@media (max-width: 850px) {
+		height: 250px;
+	}
+
+	@media (max-width: 570px) {
+		height: 220px;
+	}
+
+	@media (max-width: 410px) {
+		height: 180px;
+	}
+}

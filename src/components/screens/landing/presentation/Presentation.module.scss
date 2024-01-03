@@ -58,3 +58,8 @@
 		min-height: 100vh;
 	}
 }
+
+.button {
+	@apply mt-3 mb-8 self-center;
+	max-width: 320px;
+}
