@@ -11,7 +11,7 @@ export const generate22gkhReport = async (
 ): Promise<IFinalReport> => {
 	const {
 		calculatedAreas,
-		monetizedArea,
+		accrualsCommonArea,
 		renovationArea,
 
 		accruals,
@@ -131,7 +131,7 @@ export const generate22gkhReport = async (
 		66: row66,
 		67: distributeMaintenance(67),
 		68: distributeMaintenance(68),
-		69: typicalRow(accrualsCommon, commonPayments, monetizedArea),
+		69: typicalRow(accrualsCommon, commonPayments, accrualsCommonArea),
 		70: typicalRow(accruals.renovation, income.renovation, renovationArea),
 		71: typicalRow(accrualsCommunal, communalPayments),
 		72: typicalRow(

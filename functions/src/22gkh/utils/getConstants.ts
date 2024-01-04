@@ -67,10 +67,19 @@ export const getConstants = async (userId: string, reportId: string) => {
 	//Площадь, на которую начисляется капремонт
 	const renovationArea =
 		renovation.status === 'yes'
-			? monetizedArea
+			? calculatedAreas.renovation
 			: renovation.status === 'both'
 			? renovation.areaWith
 			: 0
+
+	const accrualsCommonArea = Math.max(
+		+calculatedAreas.coldWaterCommon,
+		+calculatedAreas.coldToHotWaterCommon,
+		+calculatedAreas.heatToHotWaterCommon,
+		+calculatedAreas.hotWaterCommon,
+		+calculatedAreas.waterDisposalCommon,
+		+calculatedAreas.electricityCommon
+	)
 
 	// Общая сумма начислений КУ
 	const accrualsCommunal =
@@ -401,6 +410,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 		area,
 		monetizedArea,
 		renovationArea,
+		accrualsCommonArea,
 
 		accruals,
 		accrualsCommunal,
