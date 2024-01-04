@@ -11,7 +11,6 @@ import React, {
 } from 'react'
 import { toast } from 'react-toastify'
 
-import Layout from '~/components/layout/Layout'
 import Modal from '~/components/ui/modal/Modal'
 
 import { useActions } from '~/hooks/useActions'
@@ -151,8 +150,7 @@ export const CombinedProvider: FC<PropsWithChildren<unknown>> = ({
 
 	return (
 		<CombinedContext.Provider value={value}>
-			{/* {!isLoadingInitial && children} */}
-			<Layout>{!isLoadingInitial && children}</Layout>
+			{!isLoadingInitial && children}
 			{isModalOpen && <Modal component={modalComponent} />}
 		</CombinedContext.Provider>
 	)

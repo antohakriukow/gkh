@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom'
 
 import { Button } from '~/components/ui'
 
-import styles from './Support.module.scss'
+import styles from './buttons.module.scss'
 
-const Support: FC = () => {
+const SupportButton: FC = () => {
 	const navigate = useNavigate()
 	const [width, setWidth] = useState(window.innerWidth)
 
@@ -17,6 +17,7 @@ const Support: FC = () => {
 	}, [])
 
 	const isNarrow = width <= 680
+	const isMobile = width <= 400
 
 	const navigateToIssues = () => {
 		navigate(`/issues`)
@@ -25,9 +26,20 @@ const Support: FC = () => {
 	const title = isNarrow ? 'Техподдержка' : 'Сообщить о проблеме'
 
 	return (
-		<Button className={styles.button} onClick={navigateToIssues}>
-			{title}
-		</Button>
+		<>
+			{isMobile ? (
+				<BiSupport
+					className={styles.supportIcon}
+					color='#df4956'
+					size={20}
+					onClick={navigateToIssues}
+				/>
+			) : (
+				<Button className={styles.supportButton} onClick={navigateToIssues}>
+					{title}
+				</Button>
+			)}
+		</>
 	)
 }
-export default Support
+export default SupportButton

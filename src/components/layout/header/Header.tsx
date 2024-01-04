@@ -2,6 +2,7 @@ import FAQButton from './menu/buttons/FAQButton'
 import { FC } from 'react'
 
 import HeaderMenu from '~/components/layout/header/menu/HeaderMenu'
+import SupportButton from '~/components/layout/header/menu/buttons/SupportButton'
 
 import { useAuth } from '~/hooks/useAuth'
 
@@ -16,6 +17,7 @@ const Header: FC = () => {
 				<div className={styles.title}>Экспресс 22</div>
 				{!!user && (
 					<div className={styles.tools}>
+						<SupportButton />
 						<FAQButton />
 						<HeaderMenu />
 						{/* <SettingsButton /> */}

@@ -1,6 +1,7 @@
 import Footer from './footer/Footer'
 import Header from './header/Header'
 import { FC, PropsWithChildren } from 'react'
+import { Outlet } from 'react-router-dom'
 
 import { useAuth } from '~/hooks/useAuth'
 import { useData } from '~/hooks/useData'
@@ -21,7 +22,7 @@ const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
 				) : (
 					<>
 						{!!user?.uid && <Header />}
-						<div>{children}</div>
+						<Outlet />
 						{!!user?.uid && <Footer />}
 					</>
 				)}

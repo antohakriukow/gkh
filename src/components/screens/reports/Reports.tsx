@@ -1,4 +1,3 @@
-import Support from './support/Support'
 import Table from './table/Table'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -26,7 +25,6 @@ const Reports: FC = () => {
 		<div className={styles.container}>
 			<div className={styles.headingContainer}>
 				<Heading title='Отчеты' className={styles.heading} />
-				<Support />
 			</div>
 			<AddReportBtn onClick={handleAdd} />
 			<Table />

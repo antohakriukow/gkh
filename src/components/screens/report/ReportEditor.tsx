@@ -15,8 +15,6 @@ import { useModal } from '~/hooks/useModal'
 
 import { IReport } from '~/shared/types/report.interface'
 
-import Support from '../reports/support/Support'
-
 import styles from './ReportEditor.module.scss'
 
 const ReportEditor: FC = () => {
@@ -82,7 +80,6 @@ const ReportEditor: FC = () => {
 			<div className={styles.header}>
 				<Heading title={reportEditorHeading} className={styles.title} />
 				<div className={styles.tools}>
-					<Support />
 					<AiOutlineCloseSquare
 						onClick={closeReport}
 						color='#e25a66'
