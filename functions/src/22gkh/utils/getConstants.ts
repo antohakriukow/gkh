@@ -1,3 +1,4 @@
+import { gasLiquid } from './../../../../src/components/screens/report/22gkh/field-sets/data/services.fields.data'
 import { getReportData } from './getReport'
 
 import {
@@ -49,6 +50,8 @@ export const getConstants = async (userId: string, reportId: string) => {
 
 	// Монетизируемая площадь
 	const monetizedArea = area.residentialArea + area.nonResidentialArea
+	const totalArea =
+		area.residentialArea + area.nonResidentialArea + area.commonArea
 
 	/**
 	 * Генерирует объект с площадями услуг, основываясь на настройках и заданной общей площади.
@@ -335,8 +338,8 @@ export const getConstants = async (userId: string, reportId: string) => {
 		6: area.commonArea ? area.commonArea : 0,
 		7:
 			settings.areasAreDifferent === 'yes' && !!calculatedAreas.electricity
-				? calculatedAreas.electricity
-				: monetizedArea
+				? calculatedAreas.electricity + area.commonArea
+				: totalArea
 	}
 
 	const row87 = {
@@ -347,8 +350,10 @@ export const getConstants = async (userId: string, reportId: string) => {
 				: area.residentialArea,
 		7:
 			settings.areasAreDifferent === 'yes' && !!calculatedAreas.heat
-				? calculatedAreas.heat
-				: monetizedArea
+				? calculatedAreas.heat + area.commonArea
+				: gasBoiler.status === 'yes' || gasBoiler.status === 'both'
+				? totalArea - calculatedAreas.gasNetwork - calculatedAreas.gasLiquid
+				: totalArea
 	}
 
 	/**
