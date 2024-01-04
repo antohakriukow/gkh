@@ -29,12 +29,17 @@ const ReportModal: FC<{ handleOpenReport: (_id: number) => void }> = ({
 	const newReportPeriod = Math.floor(((now.getMonth() + 9) % 12) / 3) + 1
 
 	const existingReport = reports.find(
-		report => report.period === newReportPeriod && report.year === newReportYear
+		report =>
+			report.period === newReportPeriod &&
+			report.year === newReportYear &&
+			report.company.inn === currentCompany?.inn
 	)
 
 	const previousReport = reports.find(
 		report =>
-			report.period === newReportPeriod - 1 && report.year === newReportYear
+			report.period === newReportPeriod - 1 &&
+			report.year === newReportYear &&
+			report.company.inn === currentCompany?.inn
 	)
 
 	const handleCreateReport = async () => {
