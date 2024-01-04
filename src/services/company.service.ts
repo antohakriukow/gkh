@@ -20,10 +20,10 @@ export const CompanyService = {
 		}
 	},
 
-	async getById(userId: string, companyId: string) {
+	async getByInn(userId: string, companyInn: string) {
 		try {
 			const snapshot = await get(
-				child(ref(db), `users/${userId}/companies/${companyId}`)
+				child(ref(db), `users/${userId}/companies/${companyInn}`)
 			)
 			if (snapshot.exists()) {
 				return snapshot.val()

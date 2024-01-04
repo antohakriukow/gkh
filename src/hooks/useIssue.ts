@@ -1,13 +1,8 @@
-import {
-	IIssueCreate,
-	IMessage,
-	TypeIssueSubject
-} from './../shared/types/issue.interface'
+import { IIssueCreate } from './../shared/types/issue.interface'
 import { useData } from './useData'
 import { useModal } from './useModal'
 import { FirebaseError } from 'firebase/app'
 import { useState } from 'react'
-import { SubmitHandler } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 import { IssuesService } from '~/services/issue.service'
@@ -15,7 +10,7 @@ import { IssuesService } from '~/services/issue.service'
 import { handleDBErrors } from '~/utils/error.utils'
 
 export const useIssue = () => {
-	const { userUid, userId, displayName } = useData()
+	const { userUid, userId, displayName, email } = useData()
 	const { hideModal } = useModal()
 	const [isLoading, setIsLoading] = useState(false)
 
@@ -29,7 +24,8 @@ export const useIssue = () => {
 			const user = {
 				_id: userUid,
 				shortId: userId,
-				displayName: displayName ?? ''
+				displayName: displayName ?? '',
+				email: email ?? ''
 			}
 
 			await IssuesService.create(user, data, timestamp)

@@ -33,7 +33,8 @@ const ReportModal: FC<{ handleOpenReport: (_id: number) => void }> = ({
 	)
 
 	const previousReport = reports.find(
-		report => report.period === newReportPeriod && report.year === newReportYear
+		report =>
+			report.period === newReportPeriod - 1 && report.year === newReportYear
 	)
 
 	const handleCreateReport = async () => {
@@ -42,10 +43,21 @@ const ReportModal: FC<{ handleOpenReport: (_id: number) => void }> = ({
 			type: '22gkh',
 			year: newReportYear,
 			period: newReportPeriod,
-			company: currentCompany,
+			company: {
+				...currentCompany,
+				phone: currentCompany.phone
+					? currentCompany.phone
+					: previousReport?.company.phone
+					? previousReport.company.phone
+					: '',
+				email: currentCompany.email
+					? currentCompany.email
+					: previousReport?.company.email
+					? previousReport.company.email
+					: ''
+			},
 			data: getReportInitialData(previousReport)
 		})) as IReport
-		console.log(newReport)
 		if (!!newReport && !!newReport._id) handleOpenReport(newReport._id)
 	}
 

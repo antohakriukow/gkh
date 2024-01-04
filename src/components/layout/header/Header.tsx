@@ -1,4 +1,4 @@
-import SettingsButton from './menu/settings/SettingsButton'
+import FAQButton from './menu/buttons/FAQButton'
 import { FC } from 'react'
 
 import HeaderMenu from '~/components/layout/header/menu/HeaderMenu'
@@ -16,6 +16,7 @@ const Header: FC = () => {
 				<div className={styles.title}>Экспресс 22</div>
 				{!!user && (
 					<div className={styles.tools}>
+						<FAQButton />
 						<HeaderMenu />
 						{/* <SettingsButton /> */}
 					</div>

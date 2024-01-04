@@ -12,6 +12,8 @@ export const getReportInitialData = (report?: IReport) => {
 		settings: report.data.settings,
 		stove: report.data.stove,
 		waterHeating: report.data.waterHeating,
+		budgetFinancing: report.data.budgetFinancing,
+		renovationCosts: report.data.renovationCosts,
 		accruals: clear22gkhReportData
 	}
 }
