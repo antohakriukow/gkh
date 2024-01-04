@@ -1,4 +1,3 @@
-import { gasLiquid } from './../../../../src/components/screens/report/22gkh/field-sets/data/services.fields.data'
 import { getReportData } from './getReport'
 
 import {
