@@ -9,12 +9,12 @@ export const areasAreDifferentOptions = [
 ]
 
 export const elevatorOptions = [
-	{ label: 'Есть', value: 'yes' },
+	{ label: 'Да', value: 'yes' },
 	{ label: 'Нет', value: 'no' }
 ]
 
 export const advancedElevatorOptions = [
-	{ label: 'Есть', value: 'yes' },
+	{ label: 'Да', value: 'yes' },
 	{ label: 'Нет', value: 'no' },
 	{ label: 'Оба варианта', value: 'both' }
 ]
@@ -76,6 +76,11 @@ export const budgetFinancingOptions = [
 ]
 
 export const renovationCostsOptions = [
+	{ label: 'Да', value: 'yes' },
+	{ label: 'Нет', value: 'no' }
+]
+
+export const vatOptions = [
 	{ label: 'Да', value: 'yes' },
 	{ label: 'Нет', value: 'no' }
 ]

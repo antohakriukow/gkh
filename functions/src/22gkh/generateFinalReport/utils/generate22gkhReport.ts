@@ -1,3 +1,5 @@
+import { gasNetwork } from './../../../../../src/components/screens/report/22gkh/field-sets/data/services.fields.data'
+
 import { IFinalReport } from '../../../types/report.interface'
 import {
 	calculatePreviousPayments,
@@ -19,6 +21,12 @@ export const generate22gkhReport = async (
 		accrualsCommon,
 		accrualsMaintenance,
 		totalAccruals,
+
+		vat,
+		vatCommunal,
+		vatCommon,
+		vatMaintenance,
+		totalVat,
 
 		payments,
 		communalPayments,
@@ -49,36 +57,72 @@ export const generate22gkhReport = async (
 
 	// Секция отчета №1
 	const sectionOne = removeZeroAndUndefined({
-		1: { 3: totalAccruals + income.commerce },
-		2: { 3: totalAccruals },
-		3: { 3: accrualsCommunal },
-		4: { 3: accruals.coldWater + accruals.coldToHotWater },
-		5: { 3: accruals.hotWater },
-		6: { 3: accruals.waterDisposal },
-		7: { 3: accruals.heat + accruals.heatToHotWater },
-		8: { 3: accruals.electricity },
-		9: { 3: accruals.gasNetwork + accruals.gasLiquid },
-		10: { 3: accruals.solidWasteRemoval },
-		11: { 3: accrualsMaintenance },
-		12: { 3: accruals.management },
-		13: { 3: accruals.maintenance },
-		14: { 3: accrualsCommon },
+		1: { 3: totalAccruals + income.commerce - totalVat },
+		2: { 3: totalAccruals - totalVat },
+		3: { 3: accrualsCommunal - vatCommunal },
+		4: {
+			3:
+				accruals.coldWater +
+				accruals.coldToHotWater -
+				vat.values.coldToHotWater -
+				vat.values.coldWater
+		},
+		5: { 3: accruals.hotWater - vat.values.hotWater },
+		6: { 3: accruals.waterDisposal - vat.values.waterDisposal },
+		7: {
+			3:
+				accruals.heat +
+				accruals.heatToHotWater -
+				vat.values.heat -
+				vat.values.heatToHotWater
+		},
+		8: { 3: accruals.electricity - vat.values.electricity },
+		9: {
+			3:
+				accruals.gasNetwork +
+				accruals.gasLiquid -
+				vat.values.gasNetwork -
+				vat.values.gasLiquid
+		},
+		10: { 3: accruals.solidWasteRemoval - vat.values.solidWasteRemoval },
+		11: { 3: accrualsMaintenance - vatMaintenance },
+		12: { 3: accruals.management - vat.values.management },
+		13: { 3: accruals.maintenance - vat.values.maintenance },
+		14: { 3: accrualsCommon - vatCommon },
 		15: { 3: income.commerce },
 
-		16: { 3: totalAccruals },
-		17: { 3: totalAccruals },
-		18: { 3: accrualsCommunal },
-		19: { 3: accruals.coldWater + accruals.coldToHotWater },
-		20: { 3: accruals.hotWater },
-		21: { 3: accruals.waterDisposal },
-		22: { 3: accruals.heat + accruals.heatToHotWater },
-		23: { 3: accruals.electricity },
-		24: { 3: accruals.gasNetwork + accruals.gasLiquid },
-		25: { 3: accruals.solidWasteRemoval },
-		26: { 3: accrualsMaintenance },
-		27: { 3: accruals.management },
-		28: { 3: accruals.maintenance },
-		29: { 3: accrualsCommon },
+		16: { 3: totalAccruals - totalVat },
+		17: { 3: totalAccruals - totalVat },
+		18: { 3: accrualsCommunal - vatCommunal },
+		19: {
+			3:
+				accruals.coldWater +
+				accruals.coldToHotWater -
+				vat.values.coldWater -
+				vat.values.coldToHotWater
+		},
+		20: { 3: accruals.hotWater - vat.values.hotWater },
+		21: { 3: accruals.waterDisposal - vat.values.waterDisposal },
+		22: {
+			3:
+				accruals.heat +
+				accruals.heatToHotWater -
+				vat.values.heat -
+				-vat.values.heatToHotWater
+		},
+		23: { 3: accruals.electricity - vat.values.electricity },
+		24: {
+			3:
+				accruals.gasNetwork +
+				accruals.gasLiquid -
+				vat.values.gasNetwork -
+				vat.values.gasLiquid
+		},
+		25: { 3: accruals.solidWasteRemoval - vat.values.solidWasteRemoval },
+		26: { 3: accrualsMaintenance - vatMaintenance },
+		27: { 3: accruals.management - vat.values.management },
+		28: { 3: accruals.maintenance - vat.values.maintenance },
+		29: { 3: accrualsCommon - vatCommon },
 
 		30: { 3: budgetFinancing.totalAmount },
 		31: { 3: budgetFinancing.tariffCompensation },

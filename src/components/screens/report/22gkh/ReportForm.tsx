@@ -5,6 +5,7 @@ import OrganizationDebtsFieldSet from './field-sets/OrganizationDebtsFieldSet'
 import ParametersFieldSet from './field-sets/ParametersFieldSet'
 import ResidentsDebtsFieldSet from './field-sets/ResidentsDebtsFieldSet'
 import ServicesFieldSet from './field-sets/ServicesFieldSet'
+import VatFieldSet from './field-sets/VatFieldSet'
 import { FC } from 'react'
 
 import { IReportForm } from '../report-editor.interface'
@@ -22,6 +23,7 @@ const ReportForm: FC<IReportForm> = ({
 		ParametersFieldSet,
 		ServicesFieldSet,
 		AccrualsFieldSet,
+		VatFieldSet,
 		IncomeFieldSet,
 		ResidentsDebtsFieldSet,
 		OrganizationDebtsFieldSet,

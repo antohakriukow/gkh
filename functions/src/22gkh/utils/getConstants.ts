@@ -29,7 +29,8 @@ export const getConstants = async (userId: string, reportId: string) => {
 		settings,
 		natural,
 		waterHeating,
-		gasBoiler
+		gasBoiler,
+		vat
 	} = report?.data
 	const accruals = divideAndRoundNumbers(report.data.accruals) as IAccruals
 	const income = divideAndRoundNumbers(report.data.income) as IIncome
@@ -96,6 +97,19 @@ export const getConstants = async (userId: string, reportId: string) => {
 		accruals.gasLiquid +
 		accruals.solidWasteRemoval
 
+	// Общая сумма НДС в КУ
+	const vatCommunal =
+		+vat.values.coldWater +
+		vat.values.coldToHotWater +
+		vat.values.hotWater +
+		vat.values.waterDisposal +
+		vat.values.heat +
+		vat.values.heatToHotWater +
+		vat.values.electricity +
+		vat.values.gasNetwork +
+		vat.values.gasLiquid +
+		vat.values.solidWasteRemoval
+
 	// Общая сумма начислений коммунальных ресурсов (КР) на СОИ
 	const accrualsCommon =
 		+accruals.coldWaterCommon +
@@ -105,12 +119,28 @@ export const getConstants = async (userId: string, reportId: string) => {
 		accruals.waterDisposalCommon +
 		accruals.electricityCommon
 
+	// Общая сумма НДС в КР на СОИ
+	const vatCommon =
+		+vat.values.coldWaterCommon +
+		vat.values.coldToHotWaterCommon +
+		vat.values.heatToHotWaterCommon +
+		vat.values.hotWaterCommon +
+		vat.values.waterDisposalCommon +
+		vat.values.electricityCommon
+
 	// Общая сумма начислений за ЖУ (Управление МКД, Содержание и текущий ремонт, КР на СОИ)
 	const accrualsMaintenance =
 		accruals.management + accruals.maintenance + accrualsCommon
 
+	// Общая сумма НДС в начислениях за ЖУ (Управление МКД, Содержание и текущий ремонт, КР на СОИ)
+	const vatMaintenance =
+		vat.values.management + vat.values.maintenance + vatCommon
+
 	// Сумма начислений за коммунальные услуги и жилищные услуги
 	const totalAccruals = accrualsCommunal + accrualsMaintenance
+
+	// Сумма НДС в начислениях за коммунальные услуги и жилищные услуги
+	const totalVat = vatCommunal + vatMaintenance
 
 	const totalOrganizationDebts = Object.values(organizationDebts).reduce(
 		(sum, value) => sum + value,
@@ -421,6 +451,12 @@ export const getConstants = async (userId: string, reportId: string) => {
 		accrualsCommon,
 		accrualsMaintenance,
 		totalAccruals,
+
+		vat,
+		vatCommunal,
+		vatCommon,
+		vatMaintenance,
+		totalVat,
 
 		payments,
 		communalPayments,

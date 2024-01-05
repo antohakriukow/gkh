@@ -10,6 +10,7 @@ export type TypeHousesCount = 'one' | 'many'
 export type TypeAreasAreDifferent = 'yes' | 'no'
 export type TypeNDS = 'yes' | 'no'
 export type TypeGasBoiler = 'yes' | 'no'
+export type TypeVat = 'yes' | 'no'
 
 export interface IService {
 	status: boolean
@@ -52,6 +53,11 @@ export interface IElevator {
 	status: TypeElevator
 	areaWith?: number
 	areaWithout?: number
+}
+
+export interface IVat {
+	status: TypeVat
+	values: IAccruals
 }
 
 export interface IStove {
@@ -155,6 +161,7 @@ export interface IReport22gkhData {
 	residentsDebts: IResidentsDebts
 	organizationDebts: IOrganizationDebts
 	accruals: IAccruals
+	vat: IVat
 	natural: INatural
 	createdAt: Date
 	updatedAt: Date

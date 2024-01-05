@@ -11,6 +11,7 @@ import {
 	renovationCostsOptions,
 	renovationOptions,
 	stoveOptions,
+	vatOptions,
 	waterHeatingOptions
 } from './data/parameters.select-options.data'
 import { FC } from 'react'
@@ -255,6 +256,14 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 						/>
 					)}
 				</FieldGroup>
+
+				<ReportSelect
+					control={control}
+					fieldName='data.vat.status'
+					placeholder='УО - Плательщик НДС (ОСНО)'
+					options={vatOptions}
+					isRequired
+				/>
 
 				<ReportFieldText
 					control={control}
