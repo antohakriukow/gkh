@@ -56,5 +56,13 @@ export const vatFieldsData = [
 	{
 		name: 'data.vat.values.electricityCommon',
 		placeholder: 'Электроэнергия СОИ (НДС), руб'
+	},
+	{
+		name: 'data.vat.values.management',
+		placeholder: 'Управление МКД (НДС), руб'
+	},
+	{
+		name: 'data.vat.values.maintenance',
+		placeholder: 'Содержание и текущий ремонт ОИ (НДС), руб'
 	}
 ]

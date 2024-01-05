@@ -27,21 +27,38 @@ const VatFieldSet: FC<IVatFieldSet> = ({
 	const hasVat = watch('data.vat.status') === 'yes'
 	const settingsServices = watch('data.settings.services')
 
+	console.log('settingsServices: ', settingsServices)
+
 	const checkServices = useCallback(() => {
 		if (!settingsServices) return []
+
+		// Добавляем услуги управления и обслуживания
+		const services = {
+			...settingsServices,
+			management: { status: true },
+			maintenance: { status: true }
+		}
+
+		const vatValues = watch('data.vat.values') // Получаем значения НДС
+
 		const result = vatFieldsData.filter(field => {
 			const serviceKey = field.name.split('.').pop() as keyof IServices
-			const service = settingsServices[serviceKey]
+			const service = services[serviceKey]
 
-			if (!service || !service.status) {
+			// Доступ к значениям НДС для каждой услуги
+			const vatValue = vatValues ? vatValues[serviceKey] : null
+
+			// Проверяем статус услуги и наличие значения НДС
+			if (!service || !service.status || !hasVat || vatValue === null) {
 				setValue(field.name as keyof IReport, 0)
 				return false
 			}
 
 			return true
 		})
+
 		setProvidedServices(result)
-	}, [settingsServices, setValue])
+	}, [settingsServices, setValue, watch, hasVat])
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -49,7 +66,7 @@ const VatFieldSet: FC<IVatFieldSet> = ({
 		}, 500)
 
 		return () => clearInterval(interval)
-	}) // TODO: Убрать костыль, сделать нормально. Возможно, вызов watch должен быть внутри useEffect
+	})
 
 	if (!hasVat) return null
 
@@ -68,21 +85,6 @@ const VatFieldSet: FC<IVatFieldSet> = ({
 						register={register}
 					/>
 				))}
-
-				<ReportFieldNumber
-					key='data.vat.values.management'
-					control={control}
-					fieldName='data.vat.values.management'
-					placeholder='Управление МКД, руб'
-					register={register}
-				/>
-				<ReportFieldNumber
-					key='data.vat.values.maintenance'
-					control={control}
-					fieldName='data.vat.values.maintenance'
-					placeholder='Содержание и текущий ремонт ОИ (НДС), руб'
-					register={register}
-				/>
 			</div>
 		</>
 	)
