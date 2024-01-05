@@ -62,30 +62,26 @@ export const generate22gkhReport = async (
 			3:
 				accruals.coldWater +
 				accruals.coldToHotWater -
-				vat.values.coldToHotWater -
-				vat.values.coldWater
+				vat.coldToHotWater -
+				vat.coldWater
 		},
-		5: { 3: accruals.hotWater - vat.values.hotWater },
-		6: { 3: accruals.waterDisposal - vat.values.waterDisposal },
+		5: { 3: accruals.hotWater - vat.hotWater },
+		6: { 3: accruals.waterDisposal - vat.waterDisposal },
 		7: {
-			3:
-				accruals.heat +
-				accruals.heatToHotWater -
-				vat.values.heat -
-				vat.values.heatToHotWater
+			3: accruals.heat + accruals.heatToHotWater - vat.heat - vat.heatToHotWater
 		},
-		8: { 3: accruals.electricity - vat.values.electricity },
+		8: { 3: accruals.electricity - vat.electricity },
 		9: {
 			3:
 				accruals.gasNetwork +
 				accruals.gasLiquid -
-				vat.values.gasNetwork -
-				vat.values.gasLiquid
+				vat.gasNetwork -
+				vat.gasLiquid
 		},
-		10: { 3: accruals.solidWasteRemoval - vat.values.solidWasteRemoval },
+		10: { 3: accruals.solidWasteRemoval - vat.solidWasteRemoval },
 		11: { 3: accrualsMaintenance - vatMaintenance },
-		12: { 3: accruals.management - vat.values.management },
-		13: { 3: accruals.maintenance - vat.values.maintenance },
+		12: { 3: accruals.management - vat.management },
+		13: { 3: accruals.maintenance - vat.maintenance },
 		14: { 3: accrualsCommon - vatCommon },
 		15: { 3: income.commerce },
 
@@ -96,30 +92,27 @@ export const generate22gkhReport = async (
 			3:
 				accruals.coldWater +
 				accruals.coldToHotWater -
-				vat.values.coldWater -
-				vat.values.coldToHotWater
+				vat.coldWater -
+				vat.coldToHotWater
 		},
-		20: { 3: accruals.hotWater - vat.values.hotWater },
-		21: { 3: accruals.waterDisposal - vat.values.waterDisposal },
+		20: { 3: accruals.hotWater - vat.hotWater },
+		21: { 3: accruals.waterDisposal - vat.waterDisposal },
 		22: {
 			3:
-				accruals.heat +
-				accruals.heatToHotWater -
-				vat.values.heat -
-				-vat.values.heatToHotWater
+				accruals.heat + accruals.heatToHotWater - vat.heat - -vat.heatToHotWater
 		},
-		23: { 3: accruals.electricity - vat.values.electricity },
+		23: { 3: accruals.electricity - vat.electricity },
 		24: {
 			3:
 				accruals.gasNetwork +
 				accruals.gasLiquid -
-				vat.values.gasNetwork -
-				vat.values.gasLiquid
+				vat.gasNetwork -
+				vat.gasLiquid
 		},
-		25: { 3: accruals.solidWasteRemoval - vat.values.solidWasteRemoval },
+		25: { 3: accruals.solidWasteRemoval - vat.solidWasteRemoval },
 		26: { 3: accrualsMaintenance - vatMaintenance },
-		27: { 3: accruals.management - vat.values.management },
-		28: { 3: accruals.maintenance - vat.values.maintenance },
+		27: { 3: accruals.management - vat.management },
+		28: { 3: accruals.maintenance - vat.maintenance },
 		29: { 3: accrualsCommon - vatCommon },
 
 		30: { 3: budgetFinancing.totalAmount },

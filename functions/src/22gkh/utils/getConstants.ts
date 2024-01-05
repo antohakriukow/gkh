@@ -29,10 +29,10 @@ export const getConstants = async (userId: string, reportId: string) => {
 		settings,
 		natural,
 		waterHeating,
-		gasBoiler,
-		vat
+		gasBoiler
 	} = report?.data
 	const accruals = divideAndRoundNumbers(report.data.accruals) as IAccruals
+	const vat = divideAndRoundNumbers(report.data.vat.values) as IAccruals
 	const income = divideAndRoundNumbers(report.data.income) as IIncome
 	const residentsDebts = divideAndRoundNumbers(
 		report.data.residentsDebts
@@ -99,16 +99,16 @@ export const getConstants = async (userId: string, reportId: string) => {
 
 	// Общая сумма НДС в КУ
 	const vatCommunal =
-		+vat.values.coldWater +
-		vat.values.coldToHotWater +
-		vat.values.hotWater +
-		vat.values.waterDisposal +
-		vat.values.heat +
-		vat.values.heatToHotWater +
-		vat.values.electricity +
-		vat.values.gasNetwork +
-		vat.values.gasLiquid +
-		vat.values.solidWasteRemoval
+		+vat.coldWater +
+		vat.coldToHotWater +
+		vat.hotWater +
+		vat.waterDisposal +
+		vat.heat +
+		vat.heatToHotWater +
+		vat.electricity +
+		vat.gasNetwork +
+		vat.gasLiquid +
+		vat.solidWasteRemoval
 
 	// Общая сумма начислений коммунальных ресурсов (КР) на СОИ
 	const accrualsCommon =
@@ -121,20 +121,19 @@ export const getConstants = async (userId: string, reportId: string) => {
 
 	// Общая сумма НДС в КР на СОИ
 	const vatCommon =
-		+vat.values.coldWaterCommon +
-		vat.values.coldToHotWaterCommon +
-		vat.values.heatToHotWaterCommon +
-		vat.values.hotWaterCommon +
-		vat.values.waterDisposalCommon +
-		vat.values.electricityCommon
+		+vat.coldWaterCommon +
+		vat.coldToHotWaterCommon +
+		vat.heatToHotWaterCommon +
+		vat.hotWaterCommon +
+		vat.waterDisposalCommon +
+		vat.electricityCommon
 
 	// Общая сумма начислений за ЖУ (Управление МКД, Содержание и текущий ремонт, КР на СОИ)
 	const accrualsMaintenance =
 		accruals.management + accruals.maintenance + accrualsCommon
 
 	// Общая сумма НДС в начислениях за ЖУ (Управление МКД, Содержание и текущий ремонт, КР на СОИ)
-	const vatMaintenance =
-		vat.values.management + vat.values.maintenance + vatCommon
+	const vatMaintenance = vat.management + vat.maintenance + vatCommon
 
 	// Сумма начислений за коммунальные услуги и жилищные услуги
 	const totalAccruals = accrualsCommunal + accrualsMaintenance

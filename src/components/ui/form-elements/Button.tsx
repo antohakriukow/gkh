@@ -7,15 +7,11 @@ import styles from './form.module.scss'
 const Button: FC<IButton> = ({ children, className, color, ...props }) => {
 	return (
 		<button
-			className={cn(
-				styles.button,
-				{
-					[styles.success]: color === 'success',
-					[styles.danger]: color === 'danger',
-					[styles.disabled]: props.disabled
-				},
-				className
-			)}
+			className={cn(className, styles.button, {
+				[styles.success]: color === 'success',
+				[styles.danger]: color === 'danger',
+				[styles.disabled]: props.disabled
+			})}
 			{...props}
 		>
 			{children}

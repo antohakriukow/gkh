@@ -16,7 +16,7 @@ const SupportButton: FC = () => {
 		return () => window.removeEventListener('resize', handleResize)
 	}, [])
 
-	const isNarrow = width <= 680
+	const isNarrow = width <= 500
 	const isMobile = width <= 400
 
 	const navigateToIssues = () => {
@@ -35,9 +35,9 @@ const SupportButton: FC = () => {
 					onClick={navigateToIssues}
 				/>
 			) : (
-				<Button className={styles.supportButton} onClick={navigateToIssues}>
+				<button className={styles.supportButton} onClick={navigateToIssues}>
 					{title}
-				</Button>
+				</button>
 			)}
 		</>
 	)
