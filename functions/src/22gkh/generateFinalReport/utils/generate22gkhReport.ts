@@ -1,5 +1,3 @@
-import { gasNetwork } from './../../../../../src/components/screens/report/22gkh/field-sets/data/services.fields.data'
-
 import { IFinalReport } from '../../../types/report.interface'
 import {
 	calculatePreviousPayments,
