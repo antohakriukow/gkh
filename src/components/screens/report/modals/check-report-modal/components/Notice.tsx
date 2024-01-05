@@ -15,9 +15,9 @@ const Notice: FC<INotice> = ({ errors, warnings }) => {
 			{errors.length > 0 && (
 				<>
 					<p className={styles.notice}>{`Внимание! Форма содержит ошибки${
-						!!warnings &&
-						warnings.length &&
-						' и потенциальные ошибки (см. предупреждения)'
+						!!warnings && warnings.length
+							? ' и потенциальные ошибки (см. предупреждения)'
+							: ''
 					}. Высока вероятность получения отрицательного протокола от Росстата.`}</p>
 					<p className={styles.noticeWarning}>Продолжить генерацию отчета?</p>
 				</>
@@ -29,7 +29,7 @@ const Notice: FC<INotice> = ({ errors, warnings }) => {
 					<p className={styles.noticeWarning}>Продолжить генерацию отчета?</p>
 				</p>
 			)}
-			{!errors && !warnings && (
+			{errors.length === 0 && warnings.length === 0 && (
 				<p className={styles.notice}>
 					Логических ошибок не обнаружено.
 					<p className={styles.noticeWarning}>Продолжить генерацию отчета?</p>

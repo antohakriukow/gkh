@@ -127,7 +127,6 @@ export const useReportEditor = (
 	}, [user, currentReport])
 
 	const generateReport = useCallback(async () => {
-		console.log('currentReport._id')
 		if (!user || !currentReport) return
 		setIsLoading(true)
 

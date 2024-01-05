@@ -1,19 +1,26 @@
 import { clear22gkhReportData } from '~/data/clear22gkhReportData'
 
+import { IReport22gkhData } from '~/shared/types/report22gkh.interface'
 import { IReport } from '~/shared/types/report.interface'
 
-export const getReportInitialData = (report?: IReport) => {
-	if (!report) return { accruals: clear22gkhReportData }
-	return {
-		area: report.data.area,
-		elevator: report.data.elevator,
-		gasBoiler: report.data.gasBoiler,
-		renovation: report.data.renovation,
-		settings: report.data.settings,
-		stove: report.data.stove,
-		waterHeating: report.data.waterHeating,
-		budgetFinancing: report.data.budgetFinancing,
-		renovationCosts: report.data.renovationCosts,
+export const getReportInitialData = (previousReport?: IReport) => {
+	if (!previousReport) return { accruals: clear22gkhReportData }
+
+	let previousReportData = {
+		area: previousReport.data.area,
+		elevator: previousReport.data.elevator,
+		gasBoiler: previousReport.data.gasBoiler,
+		renovation: previousReport.data.renovation,
+		settings: previousReport.data.settings,
+		stove: previousReport.data.stove,
+		waterHeating: previousReport.data.waterHeating,
+		budgetFinancing: previousReport.data.budgetFinancing,
+		renovationCosts: previousReport.data.renovationCosts,
 		accruals: clear22gkhReportData
-	}
+	} as IReport22gkhData
+
+	if (previousReport.period !== 4)
+		previousReportData.residentsDebts = previousReport.data.residentsDebts
+
+	return previousReportData
 }

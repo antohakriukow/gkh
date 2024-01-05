@@ -486,6 +486,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 		renovation,
 		stove,
 		waterHeating,
-		gasBoiler
+		gasBoiler,
+		elevator
 	}
 }

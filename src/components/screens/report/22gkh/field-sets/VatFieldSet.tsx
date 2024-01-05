@@ -27,8 +27,6 @@ const VatFieldSet: FC<IVatFieldSet> = ({
 	const hasVat = watch('data.vat.status') === 'yes'
 	const settingsServices = watch('data.settings.services')
 
-	console.log('settingsServices: ', settingsServices)
-
 	const checkServices = useCallback(() => {
 		if (!settingsServices) return []
 
@@ -73,7 +71,7 @@ const VatFieldSet: FC<IVatFieldSet> = ({
 	return (
 		<>
 			<h3 className={styles.blockTitle}>
-				В том числе НДС в начислениях ЖКУ с 01.01
+				В том числе НДС в начислениях ЖКУ за отчетный период
 			</h3>
 			<div className={styles.fieldSet}>
 				{providedServices.map(field => (

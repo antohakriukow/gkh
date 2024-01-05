@@ -1,5 +1,5 @@
 .container {
-	@apply bg-primary-50;
+	@apply bg-primary-50 flex flex-row items-center justify-center text-primary-500 text-sm;
 	min-width: 330px;
 	height: 66px;
 }

@@ -10,7 +10,7 @@ export const getCheckList = async (
 	const {
 		period,
 		// calculatedAreas,
-		// area,
+		area,
 		// monetizedArea,
 		// renovationArea,
 
@@ -39,7 +39,8 @@ export const getCheckList = async (
 		renovation,
 		stove,
 		waterHeating,
-		gasBoiler
+		gasBoiler,
+		elevator
 	} = await getConstants(userId, reportId)
 
 	return [
@@ -145,6 +146,46 @@ export const getCheckList = async (
 			natural.heat === 0,
 			'error',
 			'При отсутствии начисления платы за отопление в натуральных показателях за год объем тепловой энергии в Гкал должен быть равен нулю.'
+		),
+		checkCondition(
+			true,
+			accruals.maintenance > 0,
+			'error',
+			'Начисления по статье "Содержание и текущий ремонт ОИ" должны быть больше нуля'
+		),
+		checkCondition(
+			true,
+			accruals.management > 0,
+			'error',
+			'Начисления по статье "Управление МКД" должны быть больше нуля'
+		),
+		checkCondition(
+			true,
+			area.residentialArea + area.nonResidentialArea + area.commonArea >=
+				(stove.areaGas ?? 0) + (stove.areaElectro ?? 0),
+			'error',
+			'Площадь домов с электроплитами и газовыми плитами не может быть больше суммы жилой площади, нежилой площади и площади МОП'
+		),
+		checkCondition(
+			true,
+			area.residentialArea + area.nonResidentialArea + area.commonArea >=
+				(elevator.areaWith ?? 0) + (elevator.areaWithout ?? 0),
+			'error',
+			'Площадь домов с лифтами и без лифтов не может быть больше суммы жилой площади, нежилой площади и площади МОП'
+		),
+		checkCondition(
+			true,
+			area.residentialArea + area.nonResidentialArea + area.commonArea >=
+				(renovation.areaWith ?? 0) + (renovation.areaWithout ?? 0),
+			'error',
+			'Площадь домов с капремонтом и без капремонта не может быть больше суммы жилой площади, нежилой площади и площади МОП'
+		),
+		checkCondition(
+			true,
+			area.residentialArea > area.nonResidentialArea &&
+				area.residentialArea > area.commonArea,
+			'warning',
+			'Жилая площадь обычно больше нежилой площади и площади МОП. Возможно, площади указаны неверно.'
 		)
 	]
 }

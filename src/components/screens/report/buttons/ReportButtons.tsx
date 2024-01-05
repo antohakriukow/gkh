@@ -40,7 +40,7 @@ const ReportButtons: FC<IReportButtons> = ({
 							onClick={handleShowReportConfirmationModal}
 							className={styles.button}
 						>
-							Сгенерировать отчет
+							Сформировать отчет
 						</Button>
 					)}
 					{isReadyToDownload && (

@@ -47,10 +47,15 @@ export const useCompany = () => {
 		}
 	}
 
+	const handleSetCurrentCompany = (inn: number) => {
+		if (user) CompanyService.updateCurrentCompanyInn(user.uid, inn.toString())
+	}
+
 	return {
 		isLoading,
 		create,
 		update,
-		companyIsAlreadyExists
+		companyIsAlreadyExists,
+		handleSetCurrentCompany
 	}
 }

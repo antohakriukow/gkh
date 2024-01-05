@@ -81,6 +81,7 @@ const ReportEditor: FC = () => {
 				<Heading title={reportEditorHeading} className={styles.title} />
 				<div className={styles.tools}>
 					<AiOutlineCloseSquare
+						className={styles.close}
 						onClick={closeReport}
 						color='#e25a66'
 						size={40}

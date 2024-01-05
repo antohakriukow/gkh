@@ -65,3 +65,7 @@
 		line-height: 18px;
 	}
 }
+
+.close {
+	@apply cursor-pointer;
+}

@@ -20,7 +20,7 @@ const ConfirmGenerationModal: FC<{ generateReport: () => void }> = ({
 	return (
 		<div className={styles.container}>
 			<h3 className={styles.title}>
-				Отчет будет сгенерирован исходя из следующих допущений:
+				Отчет будет сформирован исходя из следующих допущений:
 			</h3>
 			<ul className={styles.list}>
 				{ReportManifest.map((item, index) => (

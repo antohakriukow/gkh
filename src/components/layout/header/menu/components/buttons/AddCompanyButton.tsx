@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { BsHouseAddFill } from 'react-icons/bs'
+import { useNavigate } from 'react-router-dom'
 
 import { useModal } from '~/hooks/useModal'
 
@@ -7,10 +8,14 @@ import AddCompanyModal from '../../../../../screens/reports/modals/add-company-m
 import styles from '../../HeaderMenu.module.scss'
 
 const AddCompanyButton: FC<{ onClick?: () => void }> = ({ onClick }) => {
+	const navigate = useNavigate()
 	const { showModal } = useModal()
+
+	const goHome = () => navigate(`/reports`)
 
 	const handleAdd = () => {
 		if (!!onClick) onClick()
+		goHome()
 		showModal(<AddCompanyModal />)
 	}
 

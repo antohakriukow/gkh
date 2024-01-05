@@ -18,7 +18,7 @@ const ResidentsDebtsFieldSet: FC<IResidentsDebtsFieldSet> = ({
 	return (
 		<>
 			<h3 className={styles.blockTitle}>
-				Долги собственников перед УО на 01.01
+				Долги собственников перед УО на начало отчетного периода
 			</h3>
 			<div className={styles.fieldSet}>
 				<ReportFieldNumber

@@ -13,12 +13,14 @@ import styles from './CompanyModal.module.scss'
 const CompanyAdder: FC<{ company: ICompany }> = ({ company }) => {
 	const { setNewCompany } = useActions()
 	const { hideModal } = useModal()
-	const { create, update, companyIsAlreadyExists } = useCompany()
+	const { create, update, companyIsAlreadyExists, handleSetCurrentCompany } =
+		useCompany()
 
 	const handleAddCompany = () => {
 		companyIsAlreadyExists(company.inn.toString())
 			? update(company)
 			: create(company)
+		handleSetCurrentCompany(company.inn)
 		setNewCompany(null)
 		hideModal()
 	}

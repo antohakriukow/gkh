@@ -54,7 +54,7 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 
 	return (
 		<>
-			<h3 className={styles.blockTitle}>Начисления ЖКУ с 01.01</h3>
+			<h3 className={styles.blockTitle}>Начисления ЖКУ за отчетный период</h3>
 			<div className={styles.fieldSet}>
 				{providedServices.map(field => (
 					<ReportFieldNumber

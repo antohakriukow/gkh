@@ -1,7 +1,7 @@
 import IssueItem from './IssueItem/IssueItem'
 import IssueCreator from './IssueItem/components/IssueCreator'
 import { FC } from 'react'
-import { AiOutlineLeftSquare } from 'react-icons/ai'
+import { AiOutlineCloseSquare } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 
 import { Heading, Loader } from '~/components/ui'
@@ -25,7 +25,8 @@ const Issues: FC = () => {
 			<div className={styles.header}>
 				<Heading title='Обращения' className={styles.title} />
 				<div className={styles.tools}>
-					<AiOutlineLeftSquare
+					<AiOutlineCloseSquare
+						className={styles.close}
 						onClick={handleGoBack}
 						color='#e25a66'
 						size={40}
