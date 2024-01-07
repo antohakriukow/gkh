@@ -1,32 +1,27 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { BsSendFill } from 'react-icons/bs'
 
-import { Button } from '~/components/ui'
 import TextArea from '~/components/ui/form-elements/TextArea/TextArea'
 
-import { useIssue } from '~/hooks/useIssue'
+import { useMessage } from '~/hooks/useMessage'
 
-import { IIssueMessageCreate } from '~/shared/types/issue.interface'
+import { IMessageCreate } from '~/shared/types/message.interface'
 
 import { IIssueItem } from '../../../IssueItem/issue-item.interface'
 import styles from '../IssueModal.module.scss'
 
-const MessageCreator: FC<IIssueItem & { onIssueUpdate: () => void }> = ({
-	issue,
-	onIssueUpdate
-}) => {
-	const { sendMessage } = useIssue()
-	const { register, handleSubmit, setValue } = useForm<IIssueMessageCreate>({
+const MessageCreator: FC<IIssueItem> = ({ issue }) => {
+	const { sendMessage } = useMessage()
+	const { register, handleSubmit, setValue } = useForm<IMessageCreate>({
 		mode: 'onSubmit'
 	})
 
 	const onSendMessage: SubmitHandler<{ message: string }> = async ({
 		message
 	}) => {
-		await sendMessage(issue._id, message)
+		await sendMessage('issue', issue._id, message)
 		setValue('message', '')
-		onIssueUpdate()
 	}
 
 	return (

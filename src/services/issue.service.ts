@@ -1,17 +1,10 @@
-import {
-	IIssue,
-	IIssueCreate,
-	IMessage,
-	IOwner,
-	IUpdateMessageData
-} from './../shared/types/issue.interface'
+import { IIssue, IIssueCreate } from './../shared/types/issue.interface'
+import { IOwner } from './../shared/types/shared.types'
 import { cloudFunction } from './_functions'
 import { child, get, push, ref, set, update } from 'firebase/database'
 import { toast } from 'react-toastify'
 
 import { db } from '~/services/_firebase'
-
-import { getIssueSubject } from '~/utils/issue.utils'
 
 export const IssuesService = {
 	async getAll(userId: string) {
@@ -52,17 +45,6 @@ export const IssuesService = {
 
 		if (!newMessageKey) return
 
-		const messageObject: IMessage = {
-			message: `[${getIssueSubject(data.subject)}]: ${data.description}`,
-			createdAt: timestamp,
-			updatedAt: timestamp,
-			author: user
-		}
-
-		const messageData = {
-			[newMessageKey]: messageObject
-		}
-
 		const issue = {
 			_id: timestamp,
 			shortId: shortId,
@@ -71,7 +53,6 @@ export const IssuesService = {
 			owner: user,
 			status: 'open',
 			priority: 'low',
-			messages: messageData,
 			subject: data.subject,
 			type: 'error',
 			description: data.description
@@ -82,35 +63,6 @@ export const IssuesService = {
 		} catch (error) {
 			cloudFunction.createLog(user._id, 'error', 'issues/error', {
 				data: issue,
-				error
-			})
-		}
-	},
-	async sendMessage(user: IOwner, issueId: string, message: string) {
-		if (!user._id || !issueId || !message) return
-		const timestamp = Date.now().toString()
-
-		const messageData: IMessage = {
-			message: message,
-			createdAt: timestamp,
-			updatedAt: timestamp,
-			author: user
-		}
-
-		const updates: IUpdateMessageData = {} // Используем определенный тип для объекта обновлений
-		const newMessageKey = push(
-			ref(db, `issues/${user._id}/${issueId}/messages`)
-		).key
-
-		updates[`issues/${user._id}/${issueId}/messages/${newMessageKey}`] =
-			messageData
-		updates[`issues/${user._id}/${issueId}/updatedAt`] = timestamp
-
-		try {
-			await update(ref(db), updates)
-		} catch (error) {
-			cloudFunction.createLog(user._id, 'error', 'issues/error', {
-				data: { messageData, updates },
 				error
 			})
 		}

@@ -12,6 +12,7 @@ export type TypeLogCode =
 	| 'company/update'
 	| 'company/delete'
 	| 'issues/error'
+	| 'message/error'
 
 export type TypeLogLevel = 'info' | 'error' | 'warning'
 

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { IData } from '~/shared/types/data.interface'
 import { IIssue } from '~/shared/types/issue.interface'
+import { IMessage } from '~/shared/types/message.interface'
 
 import { auth, db } from '~/services/_firebase'
 
@@ -18,6 +19,7 @@ export const useData = () => {
 		reports: []
 	} as IData)
 	const [issuesData, setIssuesData] = useState<IIssue[]>([])
+	const [messagesData, setMessagesData] = useState<IMessage[]>([])
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
@@ -26,6 +28,7 @@ export const useData = () => {
 			if (user) {
 				const userRef = ref(db, `users/${user.uid}`)
 				const issuesRef = ref(db, `issues/${user.uid}`)
+				const messagesRef = ref(db, `messages/${user.uid}`)
 
 				// prettier-ignore
 				const userUnsubscribe = onValue(userRef, snapshot => {
@@ -66,9 +69,18 @@ export const useData = () => {
 					}
 				})
 
+				const messagesUnsubscribe = onValue(messagesRef, snapshot => {
+					if (snapshot.exists() && snapshot.val()) {
+						setMessagesData(Object.values(snapshot.val()))
+					} else {
+						setMessagesData([])
+					}
+				})
+
 				return () => {
 					off(userRef, 'value', userUnsubscribe)
 					off(issuesRef, 'value', issuesUnsubscribe)
+					off(messagesRef, 'value', messagesUnsubscribe)
 				}
 			}
 		}
@@ -92,8 +104,9 @@ export const useData = () => {
 			reports: Object.values(data.reports),
 			displayName: data.displayName,
 			email: data.email,
-			issues: issuesData
+			issues: issuesData,
+			messages: messagesData
 		}),
-		[data, issuesData, isLoading]
+		[data, issuesData, messagesData, isLoading]
 	)
 }

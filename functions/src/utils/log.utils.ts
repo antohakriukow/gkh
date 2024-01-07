@@ -16,6 +16,8 @@ export const generateLogMessage = (level: TypeLogLevel, code: TypeLogCode) => {
 			case 'company/create': return 'Компания создана'
 			case 'company/update': return 'Компания обновлена'
 			case 'company/delete': return 'Компания удалена'
+			case 'issues/error': return 'Обновление в issues'
+			case 'message/error': return 'Обновление в message'
 			default: return 'Неизвестное событие'
 		}
 	}
@@ -34,6 +36,8 @@ export const generateLogMessage = (level: TypeLogLevel, code: TypeLogCode) => {
 			case 'company/create': return 'Ошибка создания компании'
 			case 'company/update': return 'Ошибка обновления компании'
 			case 'company/delete': return 'Ошибка удаления компании'
+			case 'issues/error': return 'Ошибка в issues'
+			case 'message/error': return 'Ошибка в message'
 			default: return 'Неизвестная ошибка'
 		}
 	}

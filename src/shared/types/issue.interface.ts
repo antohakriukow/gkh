@@ -1,15 +1,4 @@
-export interface IOwner {
-	_id: string
-	shortId: string
-	displayName: string
-}
-
-export interface IMessage {
-	message: string
-	createdAt: string
-	updatedAt?: string
-	author: IOwner
-}
+import { IOwner } from './shared.types'
 
 export type TypeIssueType = 'error' | 'question'
 export type TypeIssueStatus = 'open' | 'closed' | 'pending' | 'resolved'
@@ -36,13 +25,6 @@ export interface IIssue {
 	type: TypeIssueType
 	subject: TypeIssueSubject //
 	description: string
-	messages: { [key: string]: IMessage }
 }
 
 export interface IIssueCreate extends Pick<IIssue, 'subject' | 'description'> {}
-
-export interface IIssueMessageCreate extends Pick<IMessage, 'message'> {}
-
-export interface IUpdateMessageData {
-	[key: string]: IMessage | string
-}

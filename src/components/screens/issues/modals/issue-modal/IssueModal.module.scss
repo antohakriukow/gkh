@@ -43,12 +43,20 @@
 	}
 
 	.message {
-		@apply flex flex-col text-base w-3/5 px-4 py-2 my-2 rounded-md box-border;
+		@apply flex flex-col text-base w-3/5 px-4 py-4 my-3 rounded-md box-border;
+
+		.author {
+			@apply m-0 mb-2 font-semibold underline text-primary-700;
+			font-size: 15px;
+			line-height: 16px;
+		}
+
 		.text {
 			@apply m-0 text-primary-700;
 			font-size: 14px;
 			line-height: 16px;
 		}
+
 		.date {
 			@apply m-0 mt-1 text-right font-semibold text-primary-700;
 			font-size: 12px;

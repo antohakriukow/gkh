@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { IssuesService } from '~/services/issue.service'
+import { MessageService } from '~/services/message.service'
 
 import { handleDBErrors } from '~/utils/error.utils'
 
@@ -28,7 +29,9 @@ export const useIssue = () => {
 				email: email ?? ''
 			}
 
+			//Создание Issue и первого сообщения в треде
 			await IssuesService.create(user, data, timestamp)
+			await MessageService.create(user, 'issue', timestamp, data.description)
 
 			const newIssue = await IssuesService.getById(userUid, timestamp)
 
@@ -46,23 +49,5 @@ export const useIssue = () => {
 		}
 	}
 
-	const sendMessage = async (issueId: string, message: string) => {
-		setIsLoading(true)
-		try {
-			if (!userUid) return
-
-			const user = {
-				_id: userUid,
-				shortId: userId,
-				displayName: displayName ?? ''
-			}
-			await IssuesService.sendMessage(user, issueId, message)
-		} catch (error) {
-			if (error instanceof FirebaseError) handleDBErrors(error)
-		} finally {
-			setIsLoading(false)
-		}
-	}
-
-	return { isLoading, createIssue, sendMessage }
+	return { isLoading, createIssue }
 }
