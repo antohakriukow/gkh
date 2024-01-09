@@ -64,5 +64,9 @@ export const vatFieldsData = [
 	{
 		name: 'data.vat.values.maintenance',
 		placeholder: 'Содержание и текущий ремонт ОИ (НДС), руб'
+	},
+	{
+		name: 'data.vat.values.other',
+		placeholder: 'Прочие услуги, руб'
 	}
 ]
