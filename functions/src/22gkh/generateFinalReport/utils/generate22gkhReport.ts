@@ -216,7 +216,7 @@ export const generate22gkhReport = async (
 		),
 		85: {
 			3: totalAccruals + accruals.renovation - accruals.other,
-			4: income.housing + income.renovation,
+			4: income.housing + income.renovation - payments.other,
 			5:
 				calculatePreviousPayments(
 					commonAndMaintenancePayments,
