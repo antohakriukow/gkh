@@ -1,7 +1,7 @@
 @import '../../../styles/colors.scss';
 
 .container {
-	@apply box-border;
+	@apply box-border select-none;
 	min-height: calc(100vh - 118px);
 }
 

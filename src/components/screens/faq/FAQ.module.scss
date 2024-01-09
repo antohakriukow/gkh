@@ -1,0 +1,84 @@
+@import '../../../styles/colors.scss';
+
+.container {
+	@apply box-border select-none;
+	min-height: calc(100vh - 118px);
+}
+
+.header {
+	@apply px-4 pt-4 w-full flex flex-row justify-between items-center box-border;
+}
+
+.tools {
+	@apply flex flex-row items-center justify-between;
+	> svg {
+		@apply cursor-pointer ml-2;
+	}
+	> svg:hover {
+		transform: scale(1.1);
+	}
+}
+
+.title {
+	@apply m-0 pt-1 pb-2 font-light text-left;
+	font-size: 20px;
+	line-height: 22px;
+	color: $gray-700;
+	@media (max-width: 450px) {
+		font-size: 16px;
+		line-height: 18px;
+	}
+}
+
+.close {
+	@apply cursor-pointer;
+}
+
+.faq {
+	@apply p-4 w-full box-border;
+
+	max-height: calc(100vh - 118px);
+	overflow-y: auto;
+	scrollbar-width: thin;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: $primary-500;
+		border-radius: 0px;
+	}
+}
+
+.video {
+	@apply w-full box-border mb-5;
+	max-width: 800px;
+	outline: 1px $gray-100 solid;
+	height: 450px;
+	@media (max-width: 800px) {
+		height: 440px;
+	}
+	@media (max-width: 750px) {
+		height: 400px;
+	}
+	@media (max-width: 700px) {
+		height: 360px;
+	}
+	@media (max-width: 600px) {
+		height: 325px;
+	}
+	@media (max-width: 500px) {
+		height: 264px;
+	}
+	@media (max-width: 450px) {
+		height: 240px;
+	}
+	@media (max-width: 400px) {
+		height: 210px;
+	}
+	@media (max-width: 350px) {
+		height: 180px;
+	}
+}

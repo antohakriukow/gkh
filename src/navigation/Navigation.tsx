@@ -4,6 +4,7 @@ import { FC } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import Layout from '~/components/layout/Layout'
+import FAQ from '~/components/screens/faq/FAQ'
 import Issues from '~/components/screens/issues/Issues'
 import LoginPage from '~/components/screens/landing/LoginPage'
 import RegisterPage from '~/components/screens/landing/RegisterPage'
@@ -48,6 +49,14 @@ const router = createBrowserRouter([
 				element: (
 					<ProtectedRoute>
 						<Issues />
+					</ProtectedRoute>
+				)
+			},
+			{
+				path: '/faq',
+				element: (
+					<ProtectedRoute>
+						<FAQ />
 					</ProtectedRoute>
 				)
 			},

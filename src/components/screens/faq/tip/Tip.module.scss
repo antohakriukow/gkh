@@ -1,0 +1,26 @@
+@import '../../../../styles/colors.scss';
+
+.container {
+	@apply w-full mb-2 px-2 py-3 bg-gray-50 rounded-md box-border cursor-pointer;
+	max-width: 800px;
+	border: $gray-200 1px solid;
+
+	&:hover {
+		@apply bg-primary-50;
+		border: $primary-200 1px solid;
+	}
+}
+
+.title {
+	@apply font-semibold;
+	color: $gray-800;
+}
+
+.text {
+	@apply mt-2 pt-2;
+	border-top: $gray-200 1px solid;
+	> a {
+		@apply font-semibold;
+		color: $primary-500;
+	}
+}

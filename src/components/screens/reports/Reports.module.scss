@@ -1,7 +1,7 @@
 @import '../../../styles/colors.scss';
 
 .container {
-	@apply bg-white p-4 pb-8 rounded-md box-border;
+	@apply bg-white p-4 pb-8 rounded-md box-border select-none;
 	height: calc(100vh - 118px);
 }
 

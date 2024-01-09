@@ -1,6 +1,6 @@
 @import '../../../styles/colors.scss';
 .landing {
-	@apply flex h-screen w-screen;
+	@apply flex h-screen w-screen select-none;
 }
 
 .scroll {
