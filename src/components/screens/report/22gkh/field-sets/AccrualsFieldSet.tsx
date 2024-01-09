@@ -71,7 +71,7 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 					placeholder='Управление МКД, руб'
 					register={register}
 					error={errors?.data?.accruals?.management}
-					isRequired={isRenovationRequired}
+					isRequired
 				/>
 				<ReportFieldNumber
 					control={control}
@@ -79,7 +79,15 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 					placeholder='Содержание и текущий ремонт ОИ, руб'
 					register={register}
 					error={errors?.data?.accruals?.maintenance}
-					isRequired={isRenovationRequired}
+					isRequired
+				/>
+				<ReportFieldNumber
+					control={control}
+					fieldName='data.accruals.other'
+					placeholder='Прочие услуги, руб'
+					register={register}
+					error={errors?.data?.accruals?.other}
+					isRequired
 				/>
 				{isRenovationRequired && (
 					<ReportFieldNumber

@@ -136,10 +136,10 @@ export const getConstants = async (userId: string, reportId: string) => {
 	const vatMaintenance = vat.management + vat.maintenance + vatCommon
 
 	// Сумма начислений за коммунальные услуги и жилищные услуги
-	const totalAccruals = accrualsCommunal + accrualsMaintenance
+	const totalAccruals = accrualsCommunal + accrualsMaintenance + accruals.other
 
 	// Сумма НДС в начислениях за коммунальные услуги и жилищные услуги
-	const totalVat = vatCommunal + vatMaintenance
+	const totalVat = vatCommunal + vatMaintenance + vat.other
 
 	const totalOrganizationDebts = Object.values(organizationDebts).reduce(
 		(sum, value) => sum + value,
@@ -166,6 +166,7 @@ export const getConstants = async (userId: string, reportId: string) => {
     waterDisposalCommon: Math.round((income.housing / totalAccruals) * accruals.waterDisposalCommon) || 0,
     electricityCommon: Math.round((income.housing / totalAccruals) * accruals.electricityCommon) || 0,
     management: Math.round((income.housing / totalAccruals) * accruals.management) || 0,
+    other: Math.round((income.housing / totalAccruals) * accruals.other) || 0,
     maintenance:0
 };
 
@@ -224,7 +225,8 @@ export const getConstants = async (userId: string, reportId: string) => {
 		waterDisposalCommon: payments.waterDisposalCommon >= accruals.waterDisposalCommon ? accruals.waterDisposalCommon : payments.waterDisposalCommon,
 		electricityCommon: payments.electricityCommon >= accruals.electricityCommon ? accruals.electricityCommon : payments.electricityCommon,
 		management: payments.management >= accruals.management ? accruals.management : payments.management,
-		maintenance: payments.maintenance >= accruals.maintenance ? accruals.maintenance : payments.maintenance
+		maintenance: payments.maintenance >= accruals.maintenance ? accruals.maintenance : payments.maintenance,
+		other: payments.other >= accruals.other ? accruals.other : payments.other
 	}
 
 	// Устанавливаем размер оплат в счет предыдущих периодов как разницу между оплатами и начислениями по каждой услуге. Если оплачено меньше, то возвращаем ноль
@@ -247,7 +249,8 @@ export const getConstants = async (userId: string, reportId: string) => {
 		waterDisposalCommon: payments.waterDisposalCommon >= accruals.waterDisposalCommon ? +payments.waterDisposalCommon - accruals.waterDisposalCommon : 0,
 		electricityCommon: payments.electricityCommon >= accruals.electricityCommon ? +payments.electricityCommon - accruals.electricityCommon : 0,
 		management: payments.management >= accruals.management ? +payments.management - accruals.management : 0,
-		maintenance: payments.maintenance >= accruals.maintenance ? +payments.maintenance - accruals.maintenance : 0
+		maintenance: payments.maintenance >= accruals.maintenance ? +payments.maintenance - accruals.maintenance : 0,
+		other: payments.other >= accruals.other ? +payments.other - accruals.other : 0
 	}
 
 	// Распределение долгов прошлых периодов пропорционально начислениям
@@ -271,6 +274,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 		electricityCommon: Math.round((residentsDebts.housing / totalAccruals) * accruals.electricityCommon) || 0,
 
 		management: Math.round((residentsDebts.housing / totalAccruals) * accruals.management) || 0,
+		other: Math.round((residentsDebts.housing / totalAccruals) * accruals.other) || 0,
 		maintenance: 0
 	}
 
@@ -304,6 +308,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 		electricityCommon: +accruals.electricityCommon - currentYearPayments.electricityCommon + previousPeriodDebts.electricityCommon - previousPeriodPayments.electricityCommon,
 		management: +accruals.management - currentYearPayments.management + previousPeriodDebts.management - previousPeriodPayments.management,
 		maintenance: +accruals.maintenance - currentYearPayments.maintenance + previousPeriodDebts.maintenance - previousPeriodPayments.maintenance,
+		other: +accruals.other - currentYearPayments.other + previousPeriodDebts.other - previousPeriodPayments.other,
 	}
 
 	// Общий долг за КУ

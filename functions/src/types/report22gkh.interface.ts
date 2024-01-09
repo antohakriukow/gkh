@@ -145,6 +145,7 @@ export interface IAccruals {
 	management: number
 	maintenance: number
 	renovation: number
+	other: number
 }
 
 export interface IReport22gkhData {

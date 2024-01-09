@@ -17,5 +17,6 @@ export const clear22gkhReportData = {
 	electricityCommon: 0,
 	management: 0,
 	maintenance: 0,
-	renovation: 0
+	renovation: 0,
+	other: 0
 }

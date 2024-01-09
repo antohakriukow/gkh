@@ -55,8 +55,8 @@ export const generate22gkhReport = async (
 
 	// Секция отчета №1
 	const sectionOne = removeZeroAndUndefined({
-		1: { 3: totalAccruals + income.commerce - totalVat },
-		2: { 3: totalAccruals - totalVat },
+		1: { 3: totalAccruals - totalVat },
+		2: { 3: totalAccruals - accruals.other - totalVat },
 		3: { 3: accrualsCommunal - vatCommunal },
 		4: {
 			3:
@@ -83,10 +83,10 @@ export const generate22gkhReport = async (
 		12: { 3: accruals.management - vat.management },
 		13: { 3: accruals.maintenance - vat.maintenance },
 		14: { 3: accrualsCommon - vatCommon },
-		15: { 3: income.commerce },
+		15: { 3: accruals.other - vat.other },
 
-		16: { 3: totalAccruals - totalVat },
-		17: { 3: totalAccruals - totalVat },
+		16: { 3: totalAccruals - totalVat - accruals.other },
+		17: { 3: totalAccruals - totalVat - accruals.other },
 		18: { 3: accrualsCommunal - vatCommunal },
 		19: {
 			3:
@@ -215,7 +215,7 @@ export const generate22gkhReport = async (
 			calculatedAreas.solidWasteRemoval
 		),
 		85: {
-			3: totalAccruals + accruals.renovation,
+			3: totalAccruals + accruals.renovation - accruals.other,
 			4: income.housing + income.renovation,
 			5:
 				calculatePreviousPayments(
@@ -224,8 +224,8 @@ export const generate22gkhReport = async (
 				) +
 				calculatePreviousPayments(income.renovation, accruals.renovation) +
 				calculatePreviousPayments(communalPayments, accrualsCommunal),
-			6: totalAccruals + accruals.renovation,
-			7: totalAccruals + accruals.renovation
+			6: totalAccruals + accruals.renovation - accruals.other,
+			7: totalAccruals + accruals.renovation - accruals.other
 		}
 	})
 
