@@ -124,7 +124,7 @@ export const generateServicesArea = (
 	return servicesArea
 }
 
-// Рекурсивно обходит объект и делит каждое число на 1000, после чего округляет до целого
+// Рекурсивно обходит объект и делит каждое число на 1000, после чего округляет вверх до целого
 export const divideAndRoundNumbers = (
 	obj:
 		| IAccruals
@@ -146,7 +146,7 @@ export const divideAndRoundNumbers = (
 		if (obj.hasOwnProperty(key)) {
 			const value = (obj as any)[key]
 			if (typeof value === 'number') {
-				;(result as any)[key] = Math.round(value / 1000)
+				;(result as any)[key] = Math.ceil(value / 1000)
 			}
 		}
 	}
