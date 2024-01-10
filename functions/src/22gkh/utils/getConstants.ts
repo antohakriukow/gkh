@@ -65,18 +65,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 	const totalArea =
 		area.residentialArea + area.nonResidentialArea + area.commonArea
 
-	/**
-	 * Генерирует объект с площадями услуг, основываясь на настройках и заданной общей площади.
-	 *
-	 * Эта функция принимает объект настроек и общую монетизированную площадь, затем генерирует
-	 * и возвращает объект, в котором каждому ключу услуги соответствует её площадь. Если для услуги
-	 * указана конкретная площадь в настройках, используется она; в противном случае используется
-	 * общая монетизированная площадь.
-	 *
-	 * @param settings - Объект настроек, содержащий информацию о площадях различных услуг.
-	 * @param monetizedArea - Общая монетизированная площадь, используемая по умолчанию.
-	 * @returns Объект, где ключи - это услуги, а значения - соответствующие площади.
-	 */
+	// Площади
 	const calculatedAreas = generateServicesArea(settings, area.residentialArea)
 
 	//Площадь, на которую начисляется капремонт
@@ -97,48 +86,16 @@ export const getConstants = async (userId: string, reportId: string) => {
 	)
 
 	// Общая сумма начислений КУ
-	const accrualsCommunal =
-		+accruals.coldWater +
-		accruals.coldToHotWater +
-		accruals.hotWater +
-		accruals.waterDisposal +
-		accruals.heat +
-		accruals.heatToHotWater +
-		accruals.electricity +
-		accruals.gasNetwork +
-		accruals.gasLiquid +
-		accruals.solidWasteRemoval
+	const accrualsCommunal = getCommunal(accruals)
 
 	// Общая сумма НДС в КУ
-	const vatCommunal =
-		+vat.coldWater +
-		vat.coldToHotWater +
-		vat.hotWater +
-		vat.waterDisposal +
-		vat.heat +
-		vat.heatToHotWater +
-		vat.electricity +
-		vat.gasNetwork +
-		vat.gasLiquid +
-		vat.solidWasteRemoval
+	const vatCommunal = getCommunal(vat)
 
 	// Общая сумма начислений коммунальных ресурсов (КР) на СОИ
-	const accrualsCommon =
-		+accruals.coldWaterCommon +
-		accruals.coldToHotWaterCommon +
-		accruals.heatToHotWaterCommon +
-		accruals.hotWaterCommon +
-		accruals.waterDisposalCommon +
-		accruals.electricityCommon
+	const accrualsCommon = getCommon(accruals)
 
 	// Общая сумма НДС в КР на СОИ
-	const vatCommon =
-		+vat.coldWaterCommon +
-		vat.coldToHotWaterCommon +
-		vat.heatToHotWaterCommon +
-		vat.hotWaterCommon +
-		vat.waterDisposalCommon +
-		vat.electricityCommon
+	const vatCommon = getCommon(vat)
 
 	// Общая сумма начислений за ЖУ (Управление МКД, Содержание и текущий ремонт, КР на СОИ)
 	const accrualsMaintenance =
@@ -251,26 +208,10 @@ export const getConstants = async (userId: string, reportId: string) => {
 	})
 
 	// Общий долг за КУ
-	const communalDebts =
-		+debts.coldWater +
-		debts.coldToHotWater +
-		debts.hotWater +
-		debts.waterDisposal +
-		debts.heat +
-		debts.heatToHotWater +
-		debts.electricity +
-		debts.gasNetwork +
-		debts.gasLiquid +
-		debts.solidWasteRemoval
+	const communalDebts = getCommunal(debts)
 
 	// Общий долг за КР на СОИ
-	const commonDebts =
-		+debts.coldToHotWaterCommon +
-		debts.heatToHotWaterCommon +
-		debts.coldWaterCommon +
-		debts.hotWaterCommon +
-		debts.waterDisposalCommon +
-		debts.electricityCommon
+	const commonDebts = getCommon(debts)
 
 	// Общий долг за ЖУ
 	const maintenanceDebts = +debts.maintenance + debts.management + commonDebts
