@@ -85,7 +85,7 @@ export const generate22gkhReport = async (
 		14: { 3: accrualsCommon - vatCommon },
 		15: { 3: accruals.other - vat.other },
 
-		16: { 3: totalAccruals - totalVat - accruals.other },
+		16: { 3: totalAccruals - totalVat },
 		17: { 3: totalAccruals - totalVat - accruals.other },
 		18: { 3: accrualsCommunal - vatCommunal },
 		19: {
@@ -118,7 +118,7 @@ export const generate22gkhReport = async (
 		30: { 3: budgetFinancing.totalAmount },
 		31: { 3: budgetFinancing.tariffCompensation },
 
-		32: { 3: communalDebts + maintenanceDebts },
+		32: { 3: communalDebts + maintenanceDebts + debts.other },
 		33: { 3: communalDebts },
 		34: { 3: debts.coldWater + debts.coldToHotWater },
 		35: { 3: debts.hotWater },

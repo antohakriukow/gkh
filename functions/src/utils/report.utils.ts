@@ -146,7 +146,7 @@ export const divideAndRoundNumbers = (
 		if (obj.hasOwnProperty(key)) {
 			const value = (obj as any)[key]
 			if (typeof value === 'number') {
-				;(result as any)[key] = Math.ceil(value / 1000)
+				;(result as any)[key] = value > 0 ? Math.ceil(value / 1000) : 0
 			}
 		}
 	}

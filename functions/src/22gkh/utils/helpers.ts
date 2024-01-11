@@ -20,15 +20,34 @@ export const serviceKeys = [
 	'maintenance'
 ] as const
 
+export const sumValues = (obj: Record<string, number>): number => {
+	return Object.values(obj).reduce((sum, value) => sum + value, 0)
+}
+
+export const replaceNegativeValuesWithZero = <T extends Record<string, number>>(
+	obj: T
+): T => {
+	const result: Record<string, number> = {}
+
+	for (const key in obj) {
+		result[key] = obj[key] < 0 ? 0 : obj[key]
+	}
+
+	return result as T
+}
+
 export type TypeServiceKey = (typeof serviceKeys)[number]
 
 export const getServiceKeys = (exclude: TypeServiceKey[]) => {
 	return serviceKeys.filter(key => !exclude.includes(key))
 }
 
-export const sumValues = (obj: Record<string, number>): number => {
-	return Object.values(obj).reduce((sum, value) => sum + value, 0)
-}
+export const removeNonResidentialShare = (
+	value: number,
+	residentialArea: number,
+	nonResidentialArea: number
+) =>
+	Math.ceil((value * residentialArea) / (residentialArea + nonResidentialArea))
 
 export const distributePayments = (
 	income: number,
@@ -55,8 +74,15 @@ export const getDebts = (
 	currentYearPayments: number,
 	previousPeriodDebts: number,
 	previousPeriodPayments: number
-) =>
-	+accruals - currentYearPayments + previousPeriodDebts - previousPeriodPayments
+) => {
+	const result =
+		+accruals -
+		currentYearPayments +
+		previousPeriodDebts -
+		previousPeriodPayments
+
+	return result > 0 ? result : 0
+}
 
 export const getCommunal = (obj: Record<TypeServiceKey, number>): number => {
 	const communalKeys: TypeServiceKey[] = [

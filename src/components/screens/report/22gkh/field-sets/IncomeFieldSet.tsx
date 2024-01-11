@@ -22,7 +22,7 @@ const IncomeFieldSet: FC<IIncomeFieldSet> = ({
 				<ReportFieldNumber
 					control={control}
 					fieldName='data.income.housing'
-					placeholder='Поступило на расчетный счет, руб'
+					placeholder='Поступило на расчетные счета, руб'
 					register={register}
 					error={errors?.data?.income?.housing}
 					isRequired
@@ -31,7 +31,7 @@ const IncomeFieldSet: FC<IIncomeFieldSet> = ({
 					<ReportFieldNumber
 						control={control}
 						fieldName='data.income.renovation'
-						placeholder='Поступило на спецсчет, руб'
+						placeholder='Поступило на специальные счета, руб'
 						register={register}
 						error={
 							isRenovationRequired

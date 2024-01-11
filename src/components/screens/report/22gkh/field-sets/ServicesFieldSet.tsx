@@ -58,7 +58,7 @@ const ServicesFieldSet: FC<IServicesFieldSet> = ({
 			coldToHotWater: hasWaterHeating || hasGasBoiler,
 			hotWater: hasNoWaterHeating && hasNoGasBoiler,
 			waterDisposal: true,
-			heat: hasNoWaterHeating && hasNoGasBoiler,
+			heat: hasNoGasBoiler,
 			heatToHotWater: hasWaterHeating && hasNoGasBoiler,
 			solidWasteRemoval: true,
 			electricity: true,

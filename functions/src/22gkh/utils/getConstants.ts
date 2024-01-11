@@ -9,6 +9,7 @@ import {
 	getPreviousPeriodDebts,
 	getPreviousPeriodPayments,
 	getServiceKeys,
+	removeNonResidentialShare,
 	sumValues
 } from './helpers'
 
@@ -43,8 +44,10 @@ export const getConstants = async (userId: string, reportId: string) => {
 		waterHeating,
 		gasBoiler
 	} = report?.data
-	const accruals = divideAndRoundNumbers(report.data.accruals) as IAccruals
-	const vat = divideAndRoundNumbers(report.data.vat.values) as IAccruals
+	const accrualsInitial = divideAndRoundNumbers(
+		report.data.accruals
+	) as IAccruals
+	const vatInitial = divideAndRoundNumbers(report.data.vat.values) as IAccruals
 	const income = divideAndRoundNumbers(report.data.income) as IIncome
 	const residentsDebts = divideAndRoundNumbers(
 		report.data.residentsDebts
@@ -59,6 +62,56 @@ export const getConstants = async (userId: string, reportId: string) => {
 		report.data.renovationCosts
 	) as IRenovationCosts
 	const { period } = report
+
+	// Расчет доли начислений нежилым помещениям и перераспределение этой суммы на прочие услуги. Значение начисленных взносов на капремонт не меняется.
+	let calculatedAccruals: Record<TypeServiceKey, number> = {} as Record<
+		TypeServiceKey,
+		number
+	>
+
+	getServiceKeys(['other']).forEach(key => {
+		calculatedAccruals[key] = removeNonResidentialShare(
+			accrualsInitial[key],
+			area.residentialArea,
+			area.nonResidentialArea
+		)
+	})
+
+	const nonResidentialAccrualsShare =
+		Object.values(accrualsInitial).reduce((sum, value) => sum + value, 0) -
+		accrualsInitial.other -
+		accrualsInitial.renovation -
+		sumValues(calculatedAccruals)
+
+	const accruals = {
+		...calculatedAccruals,
+		renovation: accrualsInitial.renovation,
+		other: accrualsInitial.other + nonResidentialAccrualsShare
+	}
+
+	// Расчет доли НДС в начислениям нежилым помещениям и перераспределение этой суммы на НДС в прочих услугах.
+	let calculatedVat: Record<TypeServiceKey, number> = {} as Record<
+		TypeServiceKey,
+		number
+	>
+
+	getServiceKeys(['other']).forEach(key => {
+		calculatedVat[key] = removeNonResidentialShare(
+			vatInitial[key],
+			area.residentialArea,
+			area.nonResidentialArea
+		)
+	})
+
+	const nonResidentialVatShare =
+		Object.values(vatInitial).reduce((sum, value) => sum + value, 0) -
+		vatInitial.other -
+		sumValues(calculatedVat)
+
+	const vat = {
+		...calculatedVat,
+		other: vatInitial.other + nonResidentialVatShare
+	}
 
 	// Монетизируемая площадь
 	const monetizedArea = area.residentialArea + area.nonResidentialArea

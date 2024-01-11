@@ -22,3 +22,7 @@ export const convertXmlAttributes = (xmlStr: string): string => {
 }
 
 export const extractLastLink = (string: string) => string.split('.').pop()
+
+export const convertLineBreaksToHTML = (text: string) => {
+	return text.replace(/\n/g, '<br/>')
+}
