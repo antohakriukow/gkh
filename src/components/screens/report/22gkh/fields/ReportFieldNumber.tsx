@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { Tooltip } from 'react-tooltip'
 
 import { Field } from '~/components/ui'
 
@@ -11,24 +12,31 @@ const ReportFieldNumber: FC<IReportField> = ({
 	placeholder,
 	fieldName,
 	isRequired,
-	error
+	error,
+	tooltip
 }) => {
 	return (
-		<Field
-			{...register(
-				fieldName as keyof IReport,
-				isRequired
-					? {
-							valueAsNumber: true,
-							required: 'Обязательное поле'
-					  }
-					: { valueAsNumber: true }
-			)}
-			error={error}
-			placeholder={placeholder}
-			type='number'
-			autoComplete='off'
-		/>
+		<>
+			<Field
+				{...register(
+					fieldName as keyof IReport,
+					isRequired
+						? {
+								valueAsNumber: true,
+								required: 'Обязательное поле'
+						  }
+						: { valueAsNumber: true }
+				)}
+				error={error}
+				placeholder={placeholder}
+				type='number'
+				autoComplete='off'
+				data-tooltip-id={fieldName}
+				data-tooltip-content={tooltip}
+				data-tooltip-place='left'
+			/>
+			{tooltip && <Tooltip id={fieldName} delayShow={200} />}
+		</>
 	)
 }
 export default ReportFieldNumber

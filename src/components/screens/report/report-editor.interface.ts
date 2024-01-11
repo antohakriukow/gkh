@@ -30,6 +30,7 @@ export interface IReportField {
 	formState?: FormState<IReport>
 	error?: FieldError
 	isRequired?: boolean
+	tooltip?: string
 }
 
 export interface IReportFieldWithSwitch extends IReportField {
@@ -44,4 +45,5 @@ export interface IReportSelect {
 	fieldName: string
 	options: IOption[]
 	isRequired?: boolean
+	tooltip?: string
 }

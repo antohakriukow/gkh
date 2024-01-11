@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { Controller } from 'react-hook-form'
+import { Tooltip } from 'react-tooltip'
 
 import { Select } from '~/components/ui'
 
@@ -12,7 +13,8 @@ const ReportSelect: FC<IReportSelect> = ({
 	fieldName,
 	placeholder,
 	options,
-	isRequired
+	isRequired,
+	tooltip
 }) => {
 	return (
 		<Controller
@@ -22,13 +24,19 @@ const ReportSelect: FC<IReportSelect> = ({
 				required: 'Обязательное поле'
 			}}
 			render={({ field, fieldState: { error } }) => (
-				<Select
-					error={error}
-					field={field}
-					placeholder={placeholder}
-					options={options}
-					isRequired={isRequired}
-				/>
+				<>
+					<Select
+						error={error}
+						field={field}
+						placeholder={placeholder}
+						options={options}
+						isRequired={isRequired}
+						data-tooltip-id={fieldName}
+						data-tooltip-content={tooltip}
+						data-tooltip-place='left'
+					/>
+					{tooltip && <Tooltip id={fieldName} delayShow={200} />}
+				</>
 			)}
 		/>
 	)

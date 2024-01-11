@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { RegisterOptions } from 'react-hook-form'
+import { Tooltip } from 'react-tooltip'
 
 import { Field } from '~/components/ui'
 
@@ -13,7 +14,8 @@ const ReportFieldText: FC<IReportField> = ({
 	placeholder,
 	fieldName,
 	isRequired,
-	error
+	error,
+	tooltip
 }) => {
 	const parameters = {} as RegisterOptions
 	if (isRequired) parameters.required = 'Обязательное поле'
@@ -30,13 +32,19 @@ const ReportFieldText: FC<IReportField> = ({
 		}
 
 	return (
-		<Field
-			{...register(fieldName as keyof IReport, parameters)}
-			error={error}
-			placeholder={placeholder}
-			type='text'
-			autoComplete='off'
-		/>
+		<>
+			<Field
+				{...register(fieldName as keyof IReport, parameters)}
+				error={error}
+				placeholder={placeholder}
+				type='text'
+				autoComplete='off'
+				data-tooltip-id={fieldName}
+				data-tooltip-content={tooltip}
+				data-tooltip-place='left'
+			/>
+			{tooltip && <Tooltip id={fieldName} delayShow={200} />}
+		</>
 	)
 }
 export default ReportFieldText

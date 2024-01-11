@@ -13,6 +13,7 @@ interface IAccrualsFieldSet extends IReportForm {}
 interface IFieldData {
 	name: string
 	placeholder: string
+	tooltip?: string
 }
 
 const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
@@ -63,6 +64,7 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 						fieldName={field.name}
 						placeholder={field.placeholder}
 						register={register}
+						tooltip={field?.tooltip ? field?.tooltip : undefined}
 					/>
 				))}
 				<ReportFieldNumber
@@ -72,6 +74,7 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 					register={register}
 					error={errors?.data?.accruals?.management}
 					isRequired
+					tooltip='См. инструкции (Нажмите на вопрос вверху)'
 				/>
 				<ReportFieldNumber
 					control={control}
@@ -80,6 +83,7 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 					register={register}
 					error={errors?.data?.accruals?.maintenance}
 					isRequired
+					tooltip='См. инструкции (Нажмите на вопрос вверху)'
 				/>
 				<ReportFieldNumber
 					control={control}
@@ -88,6 +92,7 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 					register={register}
 					error={errors?.data?.accruals?.other}
 					isRequired
+					tooltip='См. инструкции (Нажмите на вопрос вверху)'
 				/>
 				{isRenovationRequired && (
 					<ReportFieldNumber
