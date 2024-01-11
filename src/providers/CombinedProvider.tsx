@@ -69,10 +69,10 @@ export const CombinedProvider: FC<PropsWithChildren<unknown>> = ({
 			if (!userResponse.user.email) return
 			await UserService.create(userResponse.user.uid, userResponse.user.email)
 			await verifyEmail(userResponse.user)
-			toast.success(
-				`Добро пожаловать! Не забудьте подтвердить электронную почту. Письмо уже отправлено на ${email}.`,
-				{ autoClose: false }
-			)
+			// toast.success(
+			// 	`Добро пожаловать! Не забудьте подтвердить электронную почту. Письмо уже отправлено на ${email}.`,
+			// 	{ autoClose: false }
+			// )
 			cloudFunction.createLog(userResponse.user.uid, 'info', 'auth/register')
 		} catch (error) {
 			if (error instanceof FirebaseError) handleAuthErrors(error)

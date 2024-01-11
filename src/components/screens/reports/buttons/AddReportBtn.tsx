@@ -14,6 +14,7 @@ const AddReportBtn: FC<{ onClick: () => void }> = ({ onClick }) => {
 
 	return (
 		<Button
+			className='addReportButtonAnchor'
 			style={{ marginTop: 16 }}
 			onClick={companies.length > 0 ? onClick : handleAddCompany}
 		>

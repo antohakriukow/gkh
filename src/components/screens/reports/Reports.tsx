@@ -1,4 +1,5 @@
 import Table from './table/Table'
+import cn from 'clsx'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -7,6 +8,8 @@ import ReportModal from '~/components/screens/reports/modals/add-report-modal/Ad
 import { Heading } from '~/components/ui'
 
 import { useModal } from '~/hooks/useModal'
+
+import Intro from '~/shared/Intro'
 
 import styles from './Reports.module.scss'
 
@@ -22,12 +25,13 @@ const Reports: FC = () => {
 		showModal(<ReportModal handleOpenReport={handleOpenReport} />)
 
 	return (
-		<div className={styles.container}>
+		<div className={cn(styles.container, 'introAnchor')}>
 			<div className={styles.headingContainer}>
 				<Heading title='Отчеты' className={styles.heading} />
 			</div>
 			<AddReportBtn onClick={handleAdd} />
 			<Table />
+			<Intro />
 		</div>
 	)
 }

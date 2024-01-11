@@ -14,6 +14,7 @@ export const useData = () => {
 		userUid: '',
 		displayName: '',
 		email: '',
+		needToShowIntro: false,
 		currentCompanyInn: '',
 		companies: [],
 		reports: []
@@ -39,6 +40,7 @@ export const useData = () => {
 							userUid: user.uid,
 							displayName: snapshot.val().displayName,
 							email: snapshot.val().email,
+							needToShowIntro:snapshot.val().needToShowIntro,
 							currentCompanyInn: snapshot.val().currentCompanyInn,
 							companies: snapshot.val().companies
 								? snapshot.val().companies
@@ -54,6 +56,7 @@ export const useData = () => {
 							userUid: '',
 							displayName: '',
 							email: '',
+							needToShowIntro: false,
 							currentCompanyInn: '',
 							companies: [],
 							reports: []
@@ -104,6 +107,7 @@ export const useData = () => {
 			reports: Object.values(data.reports),
 			displayName: data.displayName,
 			email: data.email,
+			needToShowIntro: data.needToShowIntro,
 			issues: issuesData,
 			messages: messagesData
 		}),

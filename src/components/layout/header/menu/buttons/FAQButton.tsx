@@ -1,3 +1,4 @@
+import cn from 'clsx'
 import { FC } from 'react'
 import { FaQuestionCircle } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
@@ -14,9 +15,9 @@ const FAQButton: FC = () => {
 		<>
 			<FaQuestionCircle
 				onClick={handlePress}
-				color='#df4956'
+				color='#4553a1'
 				size={20}
-				className={styles.faq}
+				className={cn(styles.faq, 'faqButtonAnchor')}
 				data-tooltip-id='faq'
 				data-tooltip-content='Инструкции'
 				data-tooltip-place='bottom'

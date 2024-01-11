@@ -57,7 +57,11 @@ const DropDown: FC<IDropDown> = ({ data }) => {
 		<div ref={dropDownRef} className={styles.anchor}>
 			<div className={styles.dropDown}>
 				<div onClick={toggleDropDown} className={styles.iconContainer}>
-					<MdOutlineMenu color='#4553a1' size={30} />
+					<MdOutlineMenu
+						className='menuButtonAnchor'
+						color='#4553a1'
+						size={30}
+					/>
 				</div>
 				{/* {currentCompany && renderDropDownItem(currentCompany, true)} */}
 

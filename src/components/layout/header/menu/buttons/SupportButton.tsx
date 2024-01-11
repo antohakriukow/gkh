@@ -1,3 +1,4 @@
+import cn from 'clsx'
 import { FC } from 'react'
 import { IoMailSharp } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom'
@@ -15,8 +16,8 @@ const SupportButton: FC = () => {
 	return (
 		<>
 			<IoMailSharp
-				className={styles.supportIcon}
-				color='#df4956'
+				className={cn(styles.supportIcon, 'supportButtonAnchor')}
+				color='#4553a1'
 				size={26}
 				onClick={navigateToIssues}
 				data-tooltip-id='support'

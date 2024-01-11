@@ -5,6 +5,7 @@ export interface IUser {
 	currentCompanyInn: string
 	createdAt?: string
 	isSubscribed?: boolean
+	needToShowIntro?: boolean
 }
 
 export interface IUserEmail extends Pick<IUser, 'email'> {}
