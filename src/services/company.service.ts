@@ -39,7 +39,7 @@ export const CompanyService = {
 		if (!currentCompanyInn) return
 
 		update(ref(db, `users/${userId}`), {
-			currentCompanyInn: +currentCompanyInn
+			currentCompanyInn: currentCompanyInn
 		})
 	},
 

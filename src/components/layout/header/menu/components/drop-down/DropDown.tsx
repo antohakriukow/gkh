@@ -21,7 +21,7 @@ const DropDown: FC<IDropDown> = ({ data }) => {
 
 	const toggleDropDown = () => setIsDropDownOpened(!isDropDownOpened)
 	const handleClickOnItem = (inn: number) => {
-		handleSetCurrentCompany(inn)
+		handleSetCurrentCompany(inn.toString())
 		toggleDropDown()
 	}
 

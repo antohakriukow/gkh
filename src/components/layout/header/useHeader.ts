@@ -29,7 +29,7 @@ export const useHeader = () => {
 		}
 	}
 
-	const handleSetCurrentCompany = (inn: number) =>
+	const handleSetCurrentCompany = (inn: string) =>
 		CompanyService.updateCurrentCompanyInn(userUid, inn.toString())
 
 	return {
