@@ -11,8 +11,15 @@ export const check22gkhReport = functions.https.onCall(
 			)
 		}
 
-		const userId = context.auth.uid
+		const userId = data.userId
 		const reportId = data.reportId
+
+		if (
+			context.auth.uid !== data.userId &&
+			context.auth.uid !== 'UgfYH10bRKbxcR5sYjZrMFydnb33'
+		) {
+			throw new functions.https.HttpsError('aborted', 'Недостаточно прав')
+		}
 
 		if (!reportId) {
 			throw new functions.https.HttpsError(

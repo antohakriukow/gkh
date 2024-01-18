@@ -112,7 +112,8 @@ export const useReportEditor = (
 		setIsLoading(true)
 		try {
 			const checkResult = await cloudFunction.checkReport(
-				currentReport._id.toString()
+				currentReport._id.toString(),
+				user.uid
 			)
 			return checkResult.data as ICheckReportResult[]
 		} catch (error) {

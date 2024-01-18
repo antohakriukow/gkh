@@ -22,8 +22,8 @@ export const cloudFunction = {
 		return response
 	},
 
-	async checkReport(reportId: string) {
-		const response = await checkReportCF({ reportId })
+	async checkReport(reportId: string, userId: string) {
+		const response = await checkReportCF({ reportId, userId })
 		return response
 	},
 
