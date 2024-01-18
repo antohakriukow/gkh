@@ -27,8 +27,8 @@ export const cloudFunction = {
 		return response
 	},
 
-	async generateFinalReport(reportId: string) {
-		const response = await generateFinalReportCF({ reportId })
+	async generateFinalReport(reportId: string, userId: string) {
+		const response = await generateFinalReportCF({ reportId, userId })
 		return response
 	},
 

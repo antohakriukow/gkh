@@ -132,7 +132,8 @@ export const useReportEditor = (
 
 		try {
 			const newReportData = (await cloudFunction.generateFinalReport(
-				currentReport._id.toString()
+				currentReport._id.toString(),
+				user.uid
 			)) as { data: IReport }
 
 			setCurrentReport(newReportData.data)
