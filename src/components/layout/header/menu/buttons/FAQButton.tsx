@@ -1,15 +1,23 @@
 import cn from 'clsx'
 import { FC } from 'react'
 import { FaQuestionCircle } from 'react-icons/fa'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Tooltip } from 'react-tooltip'
 
 import styles from './buttons.module.scss'
 
 const FAQButton: FC = () => {
+	const location = useLocation()
 	const navigate = useNavigate()
+	const currentPath = location.pathname
 
-	const handlePress = () => navigate('/faq')
+	const handlePress = () => {
+		if (currentPath.includes('/reports/edit/')) {
+			window.open('/faq', '_blank')
+		} else {
+			navigate('/faq')
+		}
+	}
 
 	return (
 		<>

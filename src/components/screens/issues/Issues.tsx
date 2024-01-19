@@ -15,7 +15,7 @@ const Issues: FC = () => {
 	const navigate = useNavigate()
 
 	const handleGoBack = () => {
-		navigate(-1)
+		navigate('/reports')
 	}
 
 	if (isLoading) return <Loader />

@@ -12,7 +12,7 @@ const FAQ: FC = () => {
 	const navigate = useNavigate()
 
 	const handleGoBack = () => {
-		navigate(-1)
+		navigate('/reports')
 	}
 
 	return (
