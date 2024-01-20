@@ -3,6 +3,7 @@ import { generateFinalReport } from './22gkh/generateFinalReport/generateFinalRe
 import { getCompanyByInn } from './dadata/getCompanyByInn'
 import { addShortIdToUser } from './db/addShortIdToUser'
 import { createLog } from './db/createLog'
+import { sendEmail } from './mail/sendEmail'
 import * as admin from 'firebase-admin'
 
 admin.initializeApp()
@@ -12,3 +13,4 @@ exports.addShortIdToUser = addShortIdToUser
 exports.createLog = createLog
 exports.check22gkhReport = check22gkhReport
 exports.generateFinalReport = generateFinalReport
+exports.sendEmail = sendEmail
