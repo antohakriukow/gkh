@@ -4,6 +4,8 @@ import { FC } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import Layout from '~/components/layout/Layout'
+import AnnualReport from '~/components/screens/annual-report/AnnualReport'
+import AnnualReports from '~/components/screens/annual-reports/AnnualReports'
 import FAQ from '~/components/screens/faq/FAQ'
 import Issues from '~/components/screens/issues/Issues'
 import LoginPage from '~/components/screens/landing/LoginPage'
@@ -41,6 +43,22 @@ const router = createBrowserRouter([
 				element: (
 					<ProtectedRoute>
 						<ReportEditor />
+					</ProtectedRoute>
+				)
+			},
+			{
+				path: 'annual-reports',
+				element: (
+					<ProtectedRoute>
+						<AnnualReports />
+					</ProtectedRoute>
+				)
+			},
+			{
+				path: '/annual-reports/edit/:reportId',
+				element: (
+					<ProtectedRoute>
+						<AnnualReport />
 					</ProtectedRoute>
 				)
 			},
