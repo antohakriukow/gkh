@@ -126,7 +126,7 @@ export const CombinedProvider: FC<PropsWithChildren<unknown>> = ({
 		setIsModalOpen(false)
 		setModalComponent(null)
 		setNewCompany(null)
-	}, [])
+	}, [setNewCompany])
 
 	useEffect(() => {
 		onAuthStateChanged(auth, user => {

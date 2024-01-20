@@ -1,4 +1,3 @@
-import cn from 'classnames'
 import { forwardRef } from 'react'
 
 import { ITextarea } from '../form.interface'

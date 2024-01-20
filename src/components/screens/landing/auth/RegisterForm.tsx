@@ -1,6 +1,6 @@
 import AuthFields from './AuthFields'
 import { IAuthInput } from './auth.interface'
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, Heading } from '~/components/ui'
@@ -9,22 +9,11 @@ import SubHeading from '~/components/ui/heading/SubHeading'
 import { useAuth } from '~/hooks/useAuth'
 
 import { useRedirect } from '../../../../hooks/useRedirect'
-import ScrollButton from '../ScrollButton'
 
 import styles from './Auth.module.scss'
 
 const RegisterForm: FC = () => {
 	const { navigateToResetPassword, navigateToLogin } = useRedirect()
-
-	const [width, setWidth] = useState(window.innerWidth)
-
-	useEffect(() => {
-		const handleResize = () => setWidth(window.innerWidth)
-		window.addEventListener('resize', handleResize)
-		return () => window.removeEventListener('resize', handleResize)
-	}, [])
-
-	const isNarrow = width <= 800
 
 	const { register, isLoading } = useAuth()
 
@@ -86,7 +75,6 @@ const RegisterForm: FC = () => {
 					Забыли пароль?
 				</div>
 			</form>
-			{/* {isNarrow && <ScrollButton scrollDirection='up' />} */}
 		</div>
 	)
 }

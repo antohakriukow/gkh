@@ -17,10 +17,9 @@ import styles from './ResetPassword.module.scss'
 
 const ResetPassword = () => {
 	const { isLoading, handleResetPassword } = useResetPassword()
-	const { register, handleSubmit, formState, reset, watch } =
-		useForm<IAuthInput>({
-			mode: 'onChange'
-		})
+	const { register, handleSubmit, formState } = useForm<IAuthInput>({
+		mode: 'onChange'
+	})
 
 	const onSubmit: SubmitHandler<IAuthInput> = ({ email }) =>
 		handleResetPassword(email)

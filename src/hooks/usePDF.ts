@@ -1,11 +1,11 @@
 // @ts-ignore
-import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfMake from 'pdfmake/build/pdfmake'
 // @ts-ignore
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 
-import { ISimplePDFData } from '~/shared/types/pdf.interface';
+import { ISimplePDFData } from '~/shared/types/pdf.interface'
 
-(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+;(pdfMake as any).vfs = pdfFonts.pdfMake.vfs
 
 export const usePDF = () => {
 	const printSimplePDF = (data: ISimplePDFData) => {
@@ -33,5 +33,5 @@ export const usePDF = () => {
 		pdfMake.createPdf(document).open()
 	}
 
-	return {printSimplePDF}
+	return { printSimplePDF }
 }

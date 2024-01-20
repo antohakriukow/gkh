@@ -14,6 +14,7 @@ export const sendEmail = functions.https.onCall(
 		if (context.auth.uid !== 'UgfYH10bRKbxcR5sYjZrMFydnb33')
 			throw new functions.https.HttpsError('aborted', 'Недостаточно прав')
 
+		// Чтобы посмотреть конфиг введи в консоли firebase functions:config:get
 		const email = functions.config().email.user
 		const password = functions.config().email.pass
 
