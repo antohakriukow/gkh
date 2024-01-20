@@ -1,0 +1,63 @@
+@import '../../../styles/colors.scss';
+
+.table {
+	@apply w-full box-border;
+	border: 1px $gray-300 solid;
+}
+
+.header {
+	@apply grid text-base text-center bg-primary-50 w-full;
+	gap: 1px;
+	> div {
+		@apply p-1 flex flex-col whitespace-nowrap overflow-hidden overflow-ellipsis;
+
+		.title {
+			@apply m-0 whitespace-nowrap overflow-hidden overflow-ellipsis;
+		}
+
+		.input {
+			@apply px-2 mx-2 whitespace-nowrap overflow-hidden overflow-ellipsis;
+		}
+	}
+}
+
+.body {
+	@apply w-full;
+	overflow-y: auto;
+	scrollbar-width: thin;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+
+	&::-webkit-scrollbar {
+		width: 3px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: $gray-300;
+		border-radius: 0px;
+	}
+}
+
+.item {
+	@apply grid text-base hover:bg-primary-200 cursor-pointer w-full box-border;
+	gap: 1px;
+	border-top: 1px $gray-100 solid;
+}
+
+.cell {
+	@apply py-2 flex flex-row items-center justify-between outline-none px-2 mx-0 whitespace-nowrap overflow-hidden;
+}
+
+.text {
+	@apply text-center whitespace-nowrap overflow-hidden overflow-ellipsis m-0 w-full;
+}
+
+@media (max-width: 500px) {
+	.cell {
+		@apply text-sm;
+	}
+	.header {
+		> div {
+			@apply text-sm;
+		}
+	}
+}
