@@ -1,4 +1,6 @@
 import FAQButton from './menu/buttons/FAQButton'
+import SubHeader from './sub-header/SubHeader'
+import { menuItems } from './sub-header/sub-header.data'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -25,10 +27,10 @@ const Header: FC = () => {
 						<SupportButton />
 						<FAQButton />
 						<HeaderMenu />
-						{/* <SettingsButton /> */}
 					</div>
 				)}
 			</div>
+			<SubHeader menuItems={menuItems} />
 		</div>
 	)
 }
