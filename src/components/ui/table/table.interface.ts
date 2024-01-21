@@ -1,6 +1,11 @@
+export interface IRow {
+	_id: string
+	data: string[]
+}
+
 export interface ITable {
 	titles: string[]
-	rows: string[][]
+	rows: IRow[]
 	columnWidths: number[]
 	onClick: (_id: string) => void
 	hasFilters?: boolean
@@ -14,6 +19,7 @@ export interface ITableHeader {
 }
 
 export interface ITableItem {
+	_id: string
 	data: string[]
 	columnWidths: number[]
 	onClick: (_id: string) => void

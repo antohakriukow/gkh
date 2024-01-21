@@ -1,6 +1,6 @@
 import TableHeader from './components/TableHeader'
 import TableItem from './components/TableItem'
-import { ITable } from './table.interface'
+import { IRow, ITable } from './table.interface'
 import { FC, useCallback, useMemo, useState } from 'react'
 
 import styles from './Table.module.scss'
@@ -40,10 +40,10 @@ const Table: FC<ITable> = ({
 	}, {} as IFilters)
 
 	const filteredRows = useMemo(() => {
-		return rows.filter((row: string[]) => {
+		return rows.filter((row: IRow) => {
 			return titles.every((title, index) => {
 				if (!lowerCaseFilters[title]) return true
-				const cellValue = row[index].toString().toLowerCase()
+				const cellValue = row.data[index].toString().toLowerCase()
 				return cellValue.includes(lowerCaseFilters[title])
 			})
 		})
@@ -59,8 +59,9 @@ const Table: FC<ITable> = ({
 			<div className={styles.body} style={{ height: calculatedHeight }}>
 				{(hasFilters ? filteredRows : rows).map(row => (
 					<TableItem
-						key={row[0]}
-						data={row}
+						key={row._id}
+						_id={row._id}
+						data={row.data}
 						onClick={onClick}
 						columnWidths={columnWidths}
 					/>
