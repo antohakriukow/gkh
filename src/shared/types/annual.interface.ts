@@ -1,6 +1,7 @@
 import { ICompany } from './company.interface'
 
 export type TypeAnnualDirection = 'main' | 'renovation' | 'commerce' | 'target'
+export type TypeReport = '22gkh' | 'annual'
 
 // //  Формат исходных данных после парсинга:
 
@@ -72,6 +73,7 @@ export interface IAnnualReportData {
 
 export interface IAnnualReport {
 	_id: number
+	type: TypeReport
 	startDate: number
 	finalDate: number
 	company: ICompany
@@ -79,3 +81,6 @@ export interface IAnnualReport {
 	createdAt: string
 	updatedAt: string
 }
+
+export interface IAnnualReportCreate
+	extends Pick<IAnnualReport, 'type' | 'company'> {}
