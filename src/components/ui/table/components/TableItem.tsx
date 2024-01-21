@@ -4,12 +4,12 @@ import { Tooltip } from 'react-tooltip'
 import styles from '../Table.module.scss'
 import { ITableItem } from '../table.interface'
 
-const TableItem: FC<ITableItem> = ({ data, columnWidths, onClick }) => {
+const TableItem: FC<ITableItem> = ({ _id, data, columnWidths, onClick }) => {
 	const gridTemplateColumns = columnWidths.map(width => `${width}fr`).join(' ')
 
 	return (
 		<div
-			onClick={() => onClick(data[0])}
+			onClick={() => onClick(_id)}
 			className={styles.item}
 			style={{ gridTemplateColumns }}
 		>

@@ -48,7 +48,7 @@ const Reports: FC = () => {
 	return (
 		<div className={cn(styles.container, 'introAnchor')}>
 			<div className={styles.headingContainer}>
-				<Heading title='Отчеты' className={styles.heading} />
+				<Heading title='Отчеты 22-ЖКХ' className={styles.heading} />
 			</div>
 			<AddReportBtn onClick={handleAdd} />
 			<Table
