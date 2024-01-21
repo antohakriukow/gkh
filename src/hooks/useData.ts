@@ -2,6 +2,7 @@ import { NextOrObserver, User, onAuthStateChanged } from 'firebase/auth'
 import { off, onValue, ref } from 'firebase/database'
 import { useEffect, useMemo, useState } from 'react'
 
+import { IAnnualReport } from '~/shared/types/annual.interface'
 import { IData } from '~/shared/types/data.interface'
 import { IIssue } from '~/shared/types/issue.interface'
 import { IMessage } from '~/shared/types/message.interface'
@@ -20,6 +21,7 @@ export const useData = () => {
 		reports: []
 	} as IData)
 	const [issuesData, setIssuesData] = useState<IIssue[]>([])
+	const [annualsData, setAnnualsData] = useState<IAnnualReport[]>([])
 	const [messagesData, setMessagesData] = useState<IMessage[]>([])
 	const [isLoading, setIsLoading] = useState(true)
 
@@ -30,6 +32,7 @@ export const useData = () => {
 				const userRef = ref(db, `users/${user.uid}`)
 				const issuesRef = ref(db, `issues/${user.uid}`)
 				const messagesRef = ref(db, `messages/${user.uid}`)
+				const annualsRef = ref(db, `annuals/${user.uid}`)
 
 				// prettier-ignore
 				const userUnsubscribe = onValue(userRef, snapshot => {
@@ -80,10 +83,19 @@ export const useData = () => {
 					}
 				})
 
+				const annualsUnsubscribe = onValue(annualsRef, snapshot => {
+					if (snapshot.exists() && snapshot.val()) {
+						setAnnualsData(Object.values(snapshot.val()))
+					} else {
+						setAnnualsData([])
+					}
+				})
+
 				return () => {
 					off(userRef, 'value', userUnsubscribe)
 					off(issuesRef, 'value', issuesUnsubscribe)
 					off(messagesRef, 'value', messagesUnsubscribe)
+					off(annualsRef, 'value', annualsUnsubscribe)
 				}
 			}
 		}
@@ -109,8 +121,9 @@ export const useData = () => {
 			email: data.email,
 			needToShowIntro: data.needToShowIntro,
 			issues: issuesData,
-			messages: messagesData
+			messages: messagesData,
+			annuals: annualsData
 		}),
-		[data, issuesData, messagesData, isLoading]
+		[data, issuesData, messagesData, annualsData, isLoading]
 	)
 }

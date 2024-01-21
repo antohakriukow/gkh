@@ -11,7 +11,7 @@ import { db } from '~/services/_firebase'
 export const AnnualService = {
 	async _getAll(userId: string) {
 		try {
-			const snapshot = await get(child(ref(db), `users/${userId}/annual`))
+			const snapshot = await get(child(ref(db), `users/${userId}/annuals`))
 			if (snapshot.exists()) {
 				return Object.values(snapshot.val())
 			} else {
@@ -25,7 +25,7 @@ export const AnnualService = {
 	async getById(userId: string, annualId: string) {
 		try {
 			const snapshot = await get(
-				child(ref(db), `users/${userId}/annual/${annualId}`)
+				child(ref(db), `users/${userId}/annuals/${annualId}`)
 			)
 			if (snapshot.exists()) {
 				return snapshot.val()
@@ -48,7 +48,7 @@ export const AnnualService = {
 		}
 
 		try {
-			set(ref(db, `users/${userId}/annual/${annualId}`), newReport)
+			set(ref(db, `users/${userId}/annuals/${annualId}`), newReport)
 		} catch (error) {
 			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		}
@@ -60,7 +60,7 @@ export const AnnualService = {
 		// replaceUndefinedAndNaNWithZero(data)
 
 		try {
-			await update(ref(db, `users/${userId}/annual/${data._id}`), data)
+			await update(ref(db, `users/${userId}/annuals/${data._id}`), data)
 		} catch (error) {
 			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		}
