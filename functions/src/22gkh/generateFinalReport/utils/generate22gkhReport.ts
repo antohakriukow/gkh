@@ -41,7 +41,6 @@ export const generate22gkhReport = async (
 		income,
 		budgetFinancing,
 		renovationCosts,
-		natural,
 
 		typicalRow,
 		row66,
@@ -49,6 +48,7 @@ export const generate22gkhReport = async (
 		distributeMaintenance,
 		distributeElectricity,
 
+		gasBoiler,
 		row86,
 		row87
 	} = await getConstants(userId, reportId)
@@ -231,11 +231,12 @@ export const generate22gkhReport = async (
 
 	// Секция отчета №4.
 	const sectionFour = removeZeroAndUndefined({
-		86:
-			!!accruals.electricityCommon && !!natural && !!natural.electricityCommon
-				? row86
-				: {},
-		87: !!accruals.heat && !!natural && !!natural.heat ? row87 : {}
+		86: row86,
+		87:
+			accruals.heat === 0 &&
+			(gasBoiler.status === 'both' || gasBoiler.status === 'yes')
+				? {}
+				: row87
 	})
 
 	return {
