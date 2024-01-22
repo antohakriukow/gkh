@@ -12,5 +12,6 @@
 }
 
 .subheading {
-	@apply text-xl mb-5 font-semibold;
+	@apply text-base mb-1 mt-0 font-semibold;
+	color: $primary-700;
 }

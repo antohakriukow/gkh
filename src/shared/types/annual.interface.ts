@@ -1,7 +1,11 @@
 import { ICompany } from './company.interface'
 
-export type TypeAnnualDirection = 'main' | 'renovation' | 'commerce' | 'target'
 export type TypeReport = '22gkh' | 'annual'
+export type TypeAnnualDirection = 'main' | 'renovation' | 'commerce' | 'target'
+export type TypeAnnualReportStructure =
+	| 'cash/partners'
+	| 'cash/services'
+	| 'accruals/services'
 
 // //  Формат исходных данных после парсинга:
 
@@ -64,11 +68,16 @@ export interface ICategory {
 	children?: ICategory[] // Дочерние категории (для удобства работы с деревом)
 }
 
+export interface IAnnualReportSettings {
+	structure: TypeAnnualReportStructure
+}
+
 export interface IAnnualReportData {
 	directions: TypeAnnualDirection[]
 	accounts: IAccount[]
 	categories: ICategory[]
 	operations: IOperation[]
+	settings: IAnnualReportSettings
 }
 
 export interface IAnnualReport {

@@ -1,0 +1,41 @@
+@import '../../../../../../../styles/colors.scss';
+
+.container {
+	@apply px-2 pt-6 pb-8 rounded-md;
+}
+.cards {
+	@apply inline-flex space-x-4;
+}
+
+.card {
+	@apply flex flex-col items-center justify-center p-4 bg-gray-50 rounded-md;
+	width: 300px;
+
+	&:hover {
+		@apply bg-primary-50;
+	}
+
+	> label {
+		@apply cursor-pointer;
+		> span:nth-of-type(1) {
+			@apply block mb-2;
+		}
+		> span:nth-of-type(2) {
+			@apply block pb-4;
+		}
+	}
+
+	> input {
+		@apply cursor-pointer w-full m-0;
+		height: 24px;
+		// width: 24px;
+	}
+}
+
+.title {
+	@apply text-primary-800 font-bold;
+}
+
+.description {
+	@apply text-sm text-gray-600;
+}

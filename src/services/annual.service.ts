@@ -1,3 +1,4 @@
+import { IAnnualReportSettings } from './../shared/types/annual.interface'
 import { child, get, ref, set, update } from 'firebase/database'
 import { toast } from 'react-toastify'
 
@@ -37,6 +38,21 @@ export const AnnualService = {
 		}
 	},
 
+	async getSettingsById(userId: string, annualId: string) {
+		try {
+			const snapshot = await get(
+				child(ref(db), `users/${userId}/annuals/${annualId}/data/settings`)
+			)
+			if (snapshot.exists()) {
+				return snapshot.val()
+			} else {
+				return []
+			}
+		} catch (error) {
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
+		}
+	},
+
 	async create(userId: string, data: IAnnualReportCreate, annualId: string) {
 		if (!data) return
 
@@ -57,10 +73,28 @@ export const AnnualService = {
 	async update(userId: string, data: IAnnualReport) {
 		if (!data.data) return
 		data.updatedAt = Date.now().toString()
-		// replaceUndefinedAndNaNWithZero(data)
 
 		try {
 			await update(ref(db, `users/${userId}/annuals/${data._id}`), data)
+		} catch (error) {
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
+		}
+	},
+
+	async updateSettings(
+		userId: string,
+		annualId: string,
+		data: IAnnualReportSettings
+	) {
+		if (!data.structure) return
+
+		try {
+			// const settings = await get(
+			// 	child(ref(db), `users/${userId}/annuals/${annualId}/settings`)
+			// )
+			// console.log('settings')
+
+			await update(ref(db, `users/${userId}/annuals/${annualId}/data`), data)
 		} catch (error) {
 			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		}
