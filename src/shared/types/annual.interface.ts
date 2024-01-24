@@ -70,6 +70,7 @@ export interface ICategory {
 
 export interface IAnnualReportSettings {
 	structure: TypeAnnualReportStructure
+	dataUploaded: boolean
 }
 
 export interface IAnnualReportData {

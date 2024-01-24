@@ -5,6 +5,7 @@ export { default as Heading } from '../ui/heading/Heading'
 export { default as SubHeading } from '../ui/heading/SubHeading'
 
 export { default as Field } from './form-elements/Field/Field'
+export { default as UploadField } from './form-elements/UploadField/UploadField'
 export { default as AuthField } from './form-elements/AuthField/AuthField'
 export { default as Checkbox } from './form-elements/Checkbox/Checkbox'
 export { default as Select } from './form-elements/Select/Select'

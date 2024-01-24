@@ -3,13 +3,24 @@
 .container {
 	@apply px-2 pt-6 pb-8 rounded-md;
 }
+
 .cards {
-	@apply inline-flex space-x-4;
+	@apply grid gap-3;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 320px));
+	@media (max-width: 1031px) {
+		grid-template-columns: repeat(auto-fill, minmax(240px, 31%));
+	}
+	@media (max-width: 900px) {
+		grid-template-columns: repeat(2, minmax(240px, 1fr));
+	}
+	@media (max-width: 542px) {
+		grid-template-columns: repeat(1, minmax(240px, 1fr));
+	}
 }
 
 .card {
-	@apply flex flex-col items-center justify-center p-4 bg-gray-50 rounded-md;
-	width: 300px;
+	@apply flex flex-col items-center justify-between p-4 bg-gray-50 rounded-md box-border;
+	width: 100%;
 
 	&:hover {
 		@apply bg-primary-50;
@@ -28,7 +39,6 @@
 	> input {
 		@apply cursor-pointer w-full m-0;
 		height: 24px;
-		// width: 24px;
 	}
 }
 

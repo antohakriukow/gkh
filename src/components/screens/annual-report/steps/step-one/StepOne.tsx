@@ -1,8 +1,9 @@
 import stepOneMap from './stepOneMap'
 import { useStepOne } from './useStepOne'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { Loader } from '~/components/ui'
 import MultiStep from '~/components/ui/quiz-elements/multi-step/MultiStep'
 
 import { IAnnualReportSettings } from '~/shared/types/annual.interface'
@@ -10,23 +11,46 @@ import { IAnnualReportSettings } from '~/shared/types/annual.interface'
 import styles from './StepOne.module.scss'
 
 const StepOne: FC = () => {
-	const { setValue, control, getValues, formState } =
+	const [initialStep, setInitialStep] = useState(0)
+	const { setValue, control, getValues, formState, reset } =
 		useForm<IAnnualReportSettings>({
 			mode: 'onSubmit'
 		})
-	const { handleSubmit } = useStepOne(setValue)
+	const { isLoading, handleSubmit, currentAnnualReport } = useStepOne(
+		setValue,
+		reset
+	)
 
 	const steps = stepOneMap(handleSubmit, control, getValues, formState)
 
 	const finalFunction = () => console.log('Function before step 2')
+
+	useEffect(() => {
+		if (!currentAnnualReport?.data.settings) return
+		const settings = currentAnnualReport.data.settings
+		if (!!settings.structure && !!settings.dataUploaded)
+			return setInitialStep(2)
+		if (!!settings.structure) return setInitialStep(1)
+		setInitialStep(0)
+	}, [currentAnnualReport?.data.settings])
+
 	return (
-		<div className={styles.container}>
-			<MultiStep
-				steps={steps}
-				finalFunction={finalFunction}
-				finalButtonTitle='Завершить'
-			/>
-		</div>
+		<>
+			{isLoading ? (
+				<div className={styles.loaderContainer}>
+					<Loader loaderType='large' />
+				</div>
+			) : (
+				<div className={styles.container}>
+					<MultiStep
+						steps={steps}
+						finalFunction={finalFunction}
+						finalButtonTitle='Завершить'
+						initialStepIndex={initialStep}
+					/>
+				</div>
+			)}
+		</>
 	)
 }
 export default StepOne

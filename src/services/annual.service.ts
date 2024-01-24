@@ -94,7 +94,10 @@ export const AnnualService = {
 			// )
 			// console.log('settings')
 
-			await update(ref(db, `users/${userId}/annuals/${annualId}/data`), data)
+			await update(
+				ref(db, `users/${userId}/annuals/${annualId}/data/settings`),
+				data
+			)
 		} catch (error) {
 			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		}

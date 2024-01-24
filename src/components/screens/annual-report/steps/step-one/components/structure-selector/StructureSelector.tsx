@@ -33,6 +33,7 @@ const StructureSelector: React.FC<IStructureSelectorProps> = ({ control }) => {
 									type='radio'
 									value={item.type}
 									id={item.type}
+									checked={field.value === item.type}
 								/>
 							)}
 						/>

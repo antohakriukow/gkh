@@ -1,5 +1,6 @@
 import {
 	clearUI,
+	setCurrentAnnualReport,
 	setCurrentCompany,
 	setCurrentReport,
 	setNewCompany
@@ -9,5 +10,6 @@ export const allActions = {
 	clearUI,
 	setCurrentCompany,
 	setCurrentReport,
+	setCurrentAnnualReport,
 	setNewCompany
 }

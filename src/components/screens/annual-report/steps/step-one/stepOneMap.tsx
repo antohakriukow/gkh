@@ -21,14 +21,17 @@ const stepOneMap = (
 			const formData = getValues()
 			handleSubmit(formData)
 		},
-		hidden: !formState.dirtyFields.structure,
 		component: <StructureSelector control={control} />
 	},
 	{
 		stepNumber: 2,
 		stepTitle: 'Загрузка данных',
-		onNext: () => console.log('ParseInitialData'),
-		component: <DataImporter />
+		onNext: () => {
+			const formData = getValues()
+			console.log('formData: ', formData)
+			handleSubmit(formData)
+		},
+		component: <DataImporter control={control} />
 	},
 	{
 		stepNumber: 3,
