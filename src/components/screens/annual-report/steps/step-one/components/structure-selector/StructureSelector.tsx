@@ -3,12 +3,12 @@ import { Control, Controller } from 'react-hook-form'
 
 import { SubHeading } from '~/components/ui'
 
-import { IAnnualReportSettings } from '~/shared/types/annual.interface'
+import { IAnnualReport } from '~/shared/types/annual.interface'
 
 import styles from './StructureSelector.module.scss'
 
 interface IStructureSelectorProps {
-	control: Control<IAnnualReportSettings>
+	control: Control<IAnnualReport>
 }
 
 const StructureSelector: React.FC<IStructureSelectorProps> = ({ control }) => {
@@ -24,7 +24,7 @@ const StructureSelector: React.FC<IStructureSelectorProps> = ({ control }) => {
 						</label>
 
 						<Controller
-							name='structure'
+							name='data.settings.structure'
 							control={control}
 							rules={{ required: true }}
 							render={({ field }) => (

@@ -60,7 +60,15 @@ export const AnnualService = {
 			...data,
 			_id: annualId,
 			createdAt: annualId,
-			updatedAt: annualId
+			updatedAt: annualId,
+			data: {
+				directions: [],
+				accounts: [],
+				categories: [],
+				operations: [],
+				settings: [],
+				temporary: []
+			}
 		}
 
 		try {
@@ -89,11 +97,6 @@ export const AnnualService = {
 		if (!data.structure) return
 
 		try {
-			// const settings = await get(
-			// 	child(ref(db), `users/${userId}/annuals/${annualId}/settings`)
-			// )
-			// console.log('settings')
-
 			await update(
 				ref(db, `users/${userId}/annuals/${annualId}/data/settings`),
 				data

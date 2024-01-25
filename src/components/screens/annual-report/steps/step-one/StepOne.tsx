@@ -6,14 +6,14 @@ import { useForm } from 'react-hook-form'
 import { Loader } from '~/components/ui'
 import MultiStep from '~/components/ui/quiz-elements/multi-step/MultiStep'
 
-import { IAnnualReportSettings } from '~/shared/types/annual.interface'
+import { IAnnualReport } from '~/shared/types/annual.interface'
 
 import styles from './StepOne.module.scss'
 
 const StepOne: FC = () => {
 	const [initialStep, setInitialStep] = useState(0)
-	const { setValue, control, getValues, formState, reset } =
-		useForm<IAnnualReportSettings>({
+	const { setValue, control, getValues, formState, reset, register, watch } =
+		useForm<IAnnualReport>({
 			mode: 'onSubmit'
 		})
 	const { isLoading, handleSubmit, currentAnnualReport } = useStepOne(
@@ -21,18 +21,26 @@ const StepOne: FC = () => {
 		reset
 	)
 
-	const steps = stepOneMap(handleSubmit, control, getValues, formState)
+	const steps = stepOneMap(
+		handleSubmit,
+		control,
+		getValues,
+		register,
+		formState,
+		setValue,
+		watch
+	)
 
 	const finalFunction = () => console.log('Function before step 2')
 
 	useEffect(() => {
 		if (!currentAnnualReport?.data.settings) return
-		const settings = currentAnnualReport.data.settings
-		if (!!settings.structure && !!settings.dataUploaded)
+		const settings = currentAnnualReport?.data?.settings
+		if (!!settings?.structure && !!settings?.dataUploaded)
 			return setInitialStep(2)
-		if (!!settings.structure) return setInitialStep(1)
+		if (!!settings?.structure) return setInitialStep(1)
 		setInitialStep(0)
-	}, [currentAnnualReport?.data.settings])
+	}, [currentAnnualReport?.data?.settings])
 
 	return (
 		<>

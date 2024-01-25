@@ -7,12 +7,13 @@ import { Quiz } from '~/components/ui'
 import styles from './AnnualReport.module.scss'
 
 const AnnualReport: FC = () => {
-	const { finalFunction, finalButtonTitle } = useAnnualReport()
+	const { finalFunction, finalButtonTitle, currentAnnualReport } =
+		useAnnualReport()
 
 	return (
 		<div className={styles.container}>
 			<Quiz
-				steps={stepsMap}
+				steps={stepsMap(currentAnnualReport)}
 				finalFunction={finalFunction}
 				finalButtonTitle={finalButtonTitle}
 			/>

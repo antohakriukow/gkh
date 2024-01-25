@@ -1,7 +1,12 @@
 import { ICompany } from './company.interface'
 
 export type TypeReport = '22gkh' | 'annual'
-export type TypeAnnualDirection = 'main' | 'renovation' | 'commerce' | 'target'
+export type TypeAnnualDirection =
+	| 'main'
+	| 'renovation'
+	| 'commerce'
+	| 'target'
+	| undefined
 export type TypeAnnualReportStructure =
 	| 'cash/partners'
 	| 'cash/services'
@@ -74,11 +79,16 @@ export interface IAnnualReportSettings {
 }
 
 export interface IAnnualReportData {
-	directions: TypeAnnualDirection[]
-	accounts: IAccount[]
-	categories: ICategory[]
-	operations: IOperation[]
-	settings: IAnnualReportSettings
+	directions?: TypeAnnualDirection[]
+	accounts?: IAccount[]
+	categories?: ICategory[]
+	operations?: IOperation[]
+	settings?: IAnnualReportSettings
+	temporary?: ITemporaryData
+}
+
+export interface ITemporaryData {
+	files: File[]
 }
 
 export interface IAnnualReport {

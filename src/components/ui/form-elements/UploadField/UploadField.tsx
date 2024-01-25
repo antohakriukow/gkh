@@ -2,14 +2,13 @@ import { useDroppable } from '@dnd-kit/core'
 import cn from 'classnames'
 import React, { forwardRef, useCallback, useState } from 'react'
 
-import { IField } from '../form.interface'
+import { IUploadField } from '../form.interface'
 
 import styles from './UploadField.module.scss'
 
-const UploadField = forwardRef<HTMLInputElement, IField>(
-	({ placeholder, error, style, ...props }, ref) => {
+const UploadField = forwardRef<HTMLInputElement, IUploadField>(
+	({ placeholder, error, handleFiles, fileNames, style, ...props }, ref) => {
 		const [isDragOver, setIsDragOver] = useState(false)
-		const [files, setFiles] = useState<File[]>([])
 		const { setNodeRef } = useDroppable({ id: 'droppable' })
 
 		const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
@@ -25,20 +24,24 @@ const UploadField = forwardRef<HTMLInputElement, IField>(
 			[]
 		)
 
-		const onDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-			event.preventDefault()
-			const newFiles = Array.from(event.dataTransfer.files)
-			setFiles(prevFiles => [...prevFiles, ...newFiles])
-		}, [])
+		const onDrop = useCallback(
+			(event: React.DragEvent<HTMLDivElement>) => {
+				event.preventDefault()
+				setIsDragOver(false)
+				const newFiles = Array.from(event.dataTransfer.files)
+				handleFiles(newFiles)
+			},
+			[handleFiles]
+		)
 
 		const onFileChange = useCallback(
 			(event: React.ChangeEvent<HTMLInputElement>) => {
 				if (event.target.files) {
 					const newFiles = Array.from(event.target.files)
-					setFiles(prevFiles => [...prevFiles, ...newFiles])
+					handleFiles(newFiles)
 				}
 			},
-			[]
+			[handleFiles]
 		)
 
 		return (
@@ -64,9 +67,9 @@ const UploadField = forwardRef<HTMLInputElement, IField>(
 							onDragOver={onDragOver}
 							onDragLeave={onDragLeave}
 						>
-							{files.length === 0
+							{fileNames.length === 0
 								? 'Перетащите файлы сюда или кликните для выбора'
-								: files.map(file => file.name).join(', ')}
+								: fileNames.join(', ')}
 						</div>
 					</label>
 				</div>

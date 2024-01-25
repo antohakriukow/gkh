@@ -5,10 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useAuth } from '~/hooks/useAuth'
 
-import {
-	IAnnualReport,
-	IAnnualReportSettings
-} from '~/shared/types/annual.interface'
+import { IAnnualReport } from '~/shared/types/annual.interface'
 
 import { AnnualService } from '~/services/annual.service'
 
@@ -17,8 +14,8 @@ import { handleDBErrors } from '~/utils/error.utils'
 import { useAnnualReport } from '../../useAnnualReport'
 
 export const useStepOne = (
-	setValue: UseFormSetValue<IAnnualReportSettings>,
-	reset: UseFormReset<IAnnualReportSettings>
+	setValue: UseFormSetValue<IAnnualReport>,
+	reset: UseFormReset<IAnnualReport>
 ) => {
 	const { user } = useAuth()
 	const navigate = useNavigate()
@@ -42,7 +39,7 @@ export const useStepOne = (
 						typeof value === 'number' ||
 						typeof value === 'boolean'
 					) {
-						setValue(fullKey as keyof IAnnualReportSettings, value as any)
+						setValue(fullKey as keyof IAnnualReport, value as any)
 					}
 				}
 			})
@@ -56,21 +53,21 @@ export const useStepOne = (
 		if (!currentAnnualReport) return
 		console.log('currentAnnualReport: ', currentAnnualReport)
 		setReportValues(currentAnnualReport)
-		reset(currentAnnualReport.data.settings)
+		reset(currentAnnualReport)
 		setIsLoading(false)
 	}, [currentAnnualReport, setReportValues, reset])
 
 	useEffect(() => {
-		if (!currentAnnualReport?.data.settings) return
-		const settings = currentAnnualReport.data.settings
+		if (!currentAnnualReport?.data?.settings) return
+		const settings = currentAnnualReport?.data?.settings
 		if (!!settings.structure && !!settings.dataUploaded)
 			return setInitialStep(2)
 		if (!!settings.structure) return setInitialStep(1)
 		setInitialStep(0)
-	}, [currentAnnualReport?.data.settings])
+	}, [currentAnnualReport?.data?.settings])
 
-	const handleSubmit: SubmitHandler<IAnnualReportSettings> = useCallback(
-		async (reportData: IAnnualReportSettings) => {
+	const handleSubmit: SubmitHandler<IAnnualReport> = useCallback(
+		async (reportData: IAnnualReport) => {
 			if (!user || !currentAnnualReport?._id) return
 			setIsLoading(true)
 			try {
@@ -79,7 +76,7 @@ export const useStepOne = (
 					currentAnnualReport._id.toString()
 				)
 
-				const data = { ...settingsInDB, ...reportData }
+				const data = { ...settingsInDB, ...reportData.data.settings }
 
 				await AnnualService.updateSettings(
 					user.uid,
