@@ -10,7 +10,8 @@ import { AnnualState } from '~/store/annual/annual.interface'
 const stepOneMap = (
 	state: AnnualState,
 	handleStepOneOnNext: () => void,
-	handleStepTwoOnPrevious: () => void,
+	handleRefreshStepTwo: () => void,
+	handleRefreshStepThree: () => void,
 	clearError: () => void
 ): IQuizStep[] => {
 	console.log('state: ', state)
@@ -29,7 +30,7 @@ const stepOneMap = (
 			stepNumber: 2,
 			stepTitle: 'Загрузка данных',
 			onPrevious: () => {
-				handleStepTwoOnPrevious()
+				handleRefreshStepTwo()
 				clearError()
 			},
 			onNext: () => {
@@ -41,8 +42,15 @@ const stepOneMap = (
 		{
 			stepNumber: 3,
 			stepTitle: 'Настройка направлений отчета',
-			onNext: () => console.log('Переход к шагу 2'),
-			component: <CategorySelector />
+			onPrevious: () => {
+				handleRefreshStepThree()
+				clearError()
+			},
+			onNext: () => clearError(),
+			component: <CategorySelector />,
+			hidden: !!state.accounts.find(
+				acc => acc.type === undefined || acc.type === ''
+			)
 		},
 		{
 			stepNumber: 2,

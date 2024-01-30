@@ -6,6 +6,7 @@ export type TypeAnnualDirection =
 	| 'renovation'
 	| 'commerce'
 	| 'target'
+	| ''
 	| undefined
 export type TypeAnnualReportStructure =
 	| 'cash/partners'

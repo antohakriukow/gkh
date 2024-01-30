@@ -1,1 +1,14 @@
+@import '../../../../../../../styles/colors.scss';
 
+.container {
+	@apply px-2 pt-6 rounded-md;
+	max-width: 330px;
+}
+
+.account {
+	@apply flex flex-row items-center justify-between;
+
+	> p {
+		@apply my-0 mt-1 mr-2;
+	}
+}

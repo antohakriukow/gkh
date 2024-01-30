@@ -57,6 +57,10 @@ export const useStepOne = () => {
 	}
 
 	const clearError = () => annualActions.setAnnualError('')
+	const clearAccountTypes = () =>
+		annualActions.setAnnualAccounts(
+			annualState.accounts.map(account => ({ ...account, type: undefined }))
+		)
 	// const handleSaveAnnualReportInitialData = () => {
 	// 	try {
 	// 		if (!user?.uid || !currentAnnualReport?._id || !annualState?.structure)
@@ -82,11 +86,12 @@ export const useStepOne = () => {
 		isLoading,
 		initialStep,
 		handleSaveAnnualReportStructure,
-		clearAccountsAndOperations,
 		closeReport,
 		currentAnnualReport,
 		annualState,
 		annualActions,
-		clearError
+		clearError,
+		clearAccountsAndOperations,
+		clearAccountTypes
 	}
 }

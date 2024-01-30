@@ -16,13 +16,15 @@ const StepOne: FC = () => {
 		currentAnnualReport,
 		annualState,
 		isLoading,
-		clearError
+		clearError,
+		clearAccountTypes
 	} = useStepOne()
 
 	const steps = stepOneMap(
 		annualState,
 		handleSaveAnnualReportStructure,
 		clearAccountsAndOperations,
+		clearAccountTypes,
 		clearError
 	)
 
