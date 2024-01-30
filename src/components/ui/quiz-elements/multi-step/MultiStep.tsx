@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import Button from '../../form-elements/Button'
 import { IQuizProps } from '../quiz.interface'
@@ -12,11 +12,17 @@ const MultiStep: FC<IQuizProps> = ({
 }) => {
 	const [currentStepIndex, setCurrentStepIndex] = useState(initialStepIndex)
 
+	useEffect(() => {
+		setCurrentStepIndex(initialStepIndex)
+		console.log('Updated current step index:', initialStepIndex)
+	}, [initialStepIndex])
+
 	const currentStep = steps[currentStepIndex]
 	const isLastStep = currentStepIndex === steps.length - 1
 
 	const goToPreviousStep = () => {
 		if (currentStepIndex > 0) {
+			if (!!currentStep.onPrevious) currentStep.onPrevious()
 			setCurrentStepIndex(currentStepIndex - 1)
 		}
 	}

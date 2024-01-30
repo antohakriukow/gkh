@@ -1,10 +1,12 @@
 import {
-	clearOAnnualState,
-	setAccounts,
-	setFileNames,
-	setFinalDate,
-	setOperations,
-	setStartDate
+	clearAnnualState,
+	setAnnualAccounts,
+	setAnnualError,
+	setAnnualFileNames,
+	setAnnualFinalDate,
+	setAnnualOperations,
+	setAnnualStartDate,
+	setAnnualStructure
 } from './annual/annual.slice'
 import {
 	clearUI,
@@ -21,10 +23,12 @@ export const allActions = {
 	setCurrentAnnualReport,
 	setNewCompany,
 
-	clearOAnnualState,
-	setOperations,
-	setAccounts,
-	setFileNames,
-	setStartDate,
-	setFinalDate
+	clearAnnualState,
+	setAnnualStructure,
+	setAnnualOperations,
+	setAnnualAccounts,
+	setAnnualFileNames,
+	setAnnualStartDate,
+	setAnnualFinalDate,
+	setAnnualError
 }

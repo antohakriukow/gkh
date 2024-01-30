@@ -23,7 +23,7 @@
 	width: 100%;
 
 	&:hover {
-		@apply bg-primary-50;
+		border: 1px solid $primary-200;
 	}
 
 	> label {
@@ -48,4 +48,8 @@
 
 .description {
 	@apply text-sm text-gray-600;
+}
+
+.active {
+	@apply bg-primary-200;
 }

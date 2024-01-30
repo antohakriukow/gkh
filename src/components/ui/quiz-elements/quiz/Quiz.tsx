@@ -18,6 +18,7 @@ const Quiz: React.FC<IQuizProps> = ({
 
 	const goToPreviousStep = () => {
 		if (currentStepIndex > 0) {
+			if (!!currentStep.onPrevious) currentStep.onPrevious()
 			setCurrentStepIndex(currentStepIndex - 1)
 		}
 	}

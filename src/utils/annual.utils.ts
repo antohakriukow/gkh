@@ -8,9 +8,10 @@ import {
 
 type HeaderMap = Record<string, keyof IAccountingOperation>
 
+//prettier-ignore
 const headerMap: HeaderMap = {
-	Дата: 'date',
-	Документ: 'document',
+	'Дата': 'date',
+	'Документ': 'document',
 	'Счет Дт': 'debitAccount',
 	'Субконто1 Дт': 'debitSubaccount1',
 	'Субконто2 Дт': 'debitSubaccount2',
@@ -19,8 +20,8 @@ const headerMap: HeaderMap = {
 	'Субконто1 Кт': 'creditSubaccount1',
 	'Субконто2 Кт': 'creditSubaccount2',
 	'Субконто3 Кт': 'creditSubaccount3',
-	Сумма: 'amount',
-	Содержание: 'description'
+	'Сумма': 'amount',
+	'Содержание': 'description'
 }
 
 /**
@@ -30,7 +31,10 @@ const headerMap: HeaderMap = {
  */
 export const parseXLSXFile = (
 	file: File
-): Promise<{ operations: IAccountingOperation[]; accounts: IAccount[] }> => {
+): Promise<{
+	operations: IAccountingOperation[]
+	accounts: IAccount[]
+}> => {
 	return new Promise((resolve, reject) => {
 		const reader = new FileReader()
 		reader.onload = (e: any) => {
@@ -49,12 +53,18 @@ export const parseXLSXFile = (
 				row.forEach((cell, index) => {
 					const fieldName = headerMap[headers[index]]
 					if (fieldName && cell) {
-						operation[fieldName] = cell
-						if (fieldName === 'debitAccount') {
-							debitAccounts.add(cell)
+						// Нормализация даты
+						if (fieldName === 'date') {
+							operation[fieldName] = cell.split(' ')[0]
+						} else {
+							operation[fieldName] = cell
+							if (fieldName === 'debitAccount') {
+								debitAccounts.add(cell)
+							}
 						}
 					}
 				})
+
 				return operation as IAccountingOperation
 			})
 
@@ -104,8 +114,6 @@ export const parseTXTFile = async (
 ): Promise<{
 	operations: IBankOperation[]
 	accounts: IAccount[]
-	startDate: number
-	finalDate: number
 }> => {
 	const reader = new FileReader()
 	reader.readAsArrayBuffer(file)
@@ -128,26 +136,6 @@ export const parseTXTFile = async (
 				lines[1].trim() !== 'ВерсияФормата=1.03'
 			) {
 				reject('Неверный формат файла')
-				return
-			}
-
-			// Извлечение startDate и finalDate
-			const startDateLine = lines.find(line => line.startsWith('ДатаНачала='))
-			const finalDateLine = lines.find(line => line.startsWith('ДатаКонца='))
-
-			let startDate: number | null = null
-			let finalDate: number | null = null
-
-			if (startDateLine) {
-				startDate = new Date(startDateLine.split('=')[1]).getTime()
-			}
-
-			if (finalDateLine) {
-				finalDate = new Date(finalDateLine.split('=')[1]).getTime()
-			}
-
-			if (startDate === null || finalDate === null) {
-				reject('Ошибка в получении дат начала и конца')
 				return
 			}
 
@@ -184,14 +172,7 @@ export const parseTXTFile = async (
 				}
 			})
 
-			console.log('{ operations, accounts, startDate, finalDate }: ', {
-				operations,
-				accounts,
-				startDate,
-				finalDate
-			})
-
-			resolve({ operations, accounts, startDate, finalDate })
+			resolve({ operations, accounts })
 		}
 
 		reader.onerror = () => {
@@ -199,32 +180,3 @@ export const parseTXTFile = async (
 		}
 	})
 }
-
-// date: 'Дата'
-// document: 'Документ'
-// debitAccount: 'Счет Дт'
-// debitSubaccount1: 'Субконто1 Дт'
-// debitSubaccount2: 'Субконто2 Дт'
-// debitSubaccount3: 'Субконто3 Дт'
-// creditAccount: 'Счет Кт'
-// creditSubaccount1: 'Субконто1 Кт'
-// creditSubaccount2: 'Субконто2 Кт'
-// creditSubaccount3: 'Субконто3 Кт'
-// amount: 'Сумма'
-// description: 'Содержание'
-
-// documentNumber: 'Номер'
-// date: 'Дата'
-// amount: 'Сумма'
-// payerAccount: 'ПлательщикСчет'
-// payerName: 'Плательщик'
-// payerINN: 'ПлательщикИНН'
-// payerKPP: 'ПлательщикКПП'
-// payerCheckingAccount: 'ПлательщикРасчСчет'
-// recipientAccount: 'ПолучательСчет'
-// recipientName: 'Получатель'
-// recipientINN: 'ПолучательИНН'
-// recipientCheckingAccount: 'ПолучательРасчСчет'
-// budgetClassificationCode: 'ПоказательКБК'
-// paymentPriority: 'Очередность'
-// paymentPurpose: 'НазначениеПлатежа'

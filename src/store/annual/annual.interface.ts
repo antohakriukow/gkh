@@ -1,3 +1,5 @@
+import { TypeAnnualReportStructure } from './../../shared/types/annual.interface'
+
 import {
 	IAccount,
 	IAccountingOperation,
@@ -8,6 +10,8 @@ export interface AnnualState {
 	fileNames: string[]
 	accounts: IAccount[]
 	operations: IAccountingOperation[] | IBankOperation[]
-	startDate?: number
-	finalDate?: number
+	structure?: TypeAnnualReportStructure
+	startDate?: string
+	finalDate?: string
+	error?: string
 }

@@ -4,7 +4,8 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import {
 	IAccount,
 	IAccountingOperation,
-	IBankOperation
+	IBankOperation,
+	TypeAnnualReportStructure
 } from '~/shared/types/annual.interface'
 
 const initialState: AnnualState = {
@@ -12,46 +13,61 @@ const initialState: AnnualState = {
 	accounts: [],
 	fileNames: [],
 	startDate: undefined,
-	finalDate: undefined
+	finalDate: undefined,
+	error: undefined
 }
 
 export const annualSlice = createSlice({
 	name: 'ui',
 	initialState,
 	reducers: {
-		clearOAnnualState: state => {
+		clearAnnualState: state => {
 			state.operations = []
 			state.accounts = []
 			state.fileNames = []
+			state.startDate = undefined
+			state.finalDate = undefined
+			state.structure = undefined
 		},
-		setOperations: (
+		setAnnualStructure: (
+			state,
+			action: PayloadAction<TypeAnnualReportStructure>
+		) => {
+			state.structure = action.payload
+		},
+		setAnnualOperations: (
 			state,
 			action: PayloadAction<IAccountingOperation[] | IBankOperation[]>
 		) => {
 			state.operations = action.payload
 		},
-		setAccounts: (state, action: PayloadAction<IAccount[]>) => {
+		setAnnualAccounts: (state, action: PayloadAction<IAccount[]>) => {
 			state.accounts = action.payload
 		},
-		setStartDate: (state, action: PayloadAction<number>) => {
+		setAnnualStartDate: (state, action: PayloadAction<string>) => {
 			state.startDate = action.payload
 		},
-		setFinalDate: (state, action: PayloadAction<number>) => {
+		setAnnualFinalDate: (state, action: PayloadAction<string>) => {
 			state.finalDate = action.payload
 		},
+		setAnnualError: (state, action: PayloadAction<string>) => {
+			state.error = action.payload
+		},
 
-		setFileNames: (state, action: PayloadAction<string[]>) => {
+		setAnnualFileNames: (state, action: PayloadAction<string[]>) => {
 			state.fileNames = action.payload
 		}
 	}
 })
 
 export const {
-	clearOAnnualState,
-	setOperations,
-	setAccounts,
-	setFileNames,
-	setStartDate,
-	setFinalDate
+	clearAnnualState,
+	setAnnualStructure,
+	setAnnualOperations,
+	setAnnualAccounts,
+	setAnnualFileNames,
+	setAnnualStartDate,
+	setAnnualFinalDate,
+	setAnnualError
 } = annualSlice.actions
 export const annualReducer = annualSlice.reducer

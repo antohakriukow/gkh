@@ -6,19 +6,25 @@ import { IQuizStep } from '~/components/ui/quiz-elements/quiz.interface'
 import { IAnnualReport } from '~/shared/types/annual.interface'
 
 const stepsMap = (currentAnnualReport: IAnnualReport | null): IQuizStep[] => {
+	const hasSettings = !!currentAnnualReport?.data?.settings
+	const hasOperations = !!currentAnnualReport?.data?.operations
+	const hasAccounts = !!currentAnnualReport?.data?.accounts
+	const hasCategories = !!currentAnnualReport?.data?.categories
+	const hasDirections = !!currentAnnualReport?.data?.directions
+
 	const isNextButtonHiddenOnStepOne =
-		!!currentAnnualReport?.data.settings?.structure ||
-		!!currentAnnualReport?.data.operations ||
-		!!currentAnnualReport?.data.accounts ||
-		!!currentAnnualReport?.data.categories ||
-		!!currentAnnualReport?.data.directions
+		hasSettings ||
+		hasOperations ||
+		hasAccounts ||
+		hasCategories ||
+		hasDirections
 
 	return [
 		{
 			stepNumber: 1,
 			stepTitle: 'Структура отчета',
 			onNext: () => console.log('Переход к шагу 2'),
-			hidden: isNextButtonHiddenOnStepOne,
+			hidden: isNextButtonHiddenOnStepOne ?? true,
 			component: <StepOne />
 		},
 		{

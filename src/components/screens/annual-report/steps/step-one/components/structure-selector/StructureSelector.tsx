@@ -1,42 +1,46 @@
 import { data } from './data'
-import { Control, Controller } from 'react-hook-form'
+import cn from 'clsx'
+import { FC, useEffect } from 'react'
 
 import { SubHeading } from '~/components/ui'
 
-import { IAnnualReport } from '~/shared/types/annual.interface'
+import { useActions } from '~/hooks/useActions'
+import { useTypedSelector } from '~/hooks/useTypedSelector'
+
+import { TypeAnnualReportStructure } from '~/shared/types/annual.interface'
 
 import styles from './StructureSelector.module.scss'
 
-interface IStructureSelectorProps {
-	control: Control<IAnnualReport>
-}
+const StructureSelector: FC = () => {
+	const { setAnnualStructure } = useActions()
+	const { currentAnnualReport } = useTypedSelector(state => state.ui)
+	const { structure } = useTypedSelector(state => state.annual)
 
-const StructureSelector: React.FC<IStructureSelectorProps> = ({ control }) => {
+	useEffect(() => {
+		if (currentAnnualReport?.data.settings?.structure)
+			setAnnualStructure(currentAnnualReport?.data.settings?.structure)
+	}, [currentAnnualReport, setAnnualStructure])
+
+	const handleClick = (event: React.MouseEvent<HTMLDivElement>) =>
+		setAnnualStructure(event.currentTarget.id as TypeAnnualReportStructure)
+
 	return (
 		<form className={styles.container}>
 			<SubHeading title='Выберите шаблон отчета:' />
 			<div className={styles.cards}>
 				{data.map((item, index) => (
-					<div key={index} className={styles.card}>
+					<div
+						id={item.type}
+						key={index}
+						onClick={handleClick}
+						className={cn(styles.card, {
+							[styles.active]: structure === item.type
+						})}
+					>
 						<label htmlFor={item.type}>
 							<span className={styles.title}>{item.title}</span>
 							<span className={styles.description}>{item.description}</span>
 						</label>
-
-						<Controller
-							name='data.settings.structure'
-							control={control}
-							rules={{ required: true }}
-							render={({ field }) => (
-								<input
-									{...field}
-									type='radio'
-									value={item.type}
-									id={item.type}
-									checked={field.value === item.type}
-								/>
-							)}
-						/>
 					</div>
 				))}
 			</div>

@@ -12,57 +12,79 @@ import {
 import { parseTXTFile, parseXLSXFile } from '~/utils/annual.utils'
 
 export const useDataImporter = () => {
-	const { accounts, operations, fileNames } = useTypedSelector(
-		state => state.annual
-	)
-	const { setOperations, setAccounts, setFileNames } = useActions()
+	const state = useTypedSelector(state => state.annual)
+	const {
+		setAnnualOperations,
+		setAnnualAccounts,
+		setAnnualFileNames,
+		setAnnualStartDate,
+		setAnnualFinalDate,
+		setAnnualError
+	} = useActions()
 
 	const handleFiles = useCallback(
 		async (files: File[]) => {
 			try {
-				setFileNames(files.map(file => file.name))
+				setAnnualFileNames(files.map(file => file.name))
 				let allOperations: (IAccountingOperation | IBankOperation)[] = []
 				let allAccounts: IAccount[] = []
 
 				for (const file of files) {
 					const fileExtension = file.name.split('.').pop()
-					switch (fileExtension) {
-						case 'xlsx':
-							const { operations: xlsxOperations, accounts: xlsxAccounts } =
-								await parseXLSXFile(file)
-							allOperations.push(...xlsxOperations)
-							allAccounts.push(...xlsxAccounts)
-							break
-						case 'txt':
-							const { operations: txtOperations, accounts: txtAccounts } =
-								await parseTXTFile(file)
-							allOperations.push(...txtOperations)
-							allAccounts.push(...txtAccounts)
-							break
-						default:
-							console.error('Unsupported file type:', fileExtension)
+					if (
+						state.structure === 'accruals/services' &&
+						fileExtension === 'xlsx'
+					) {
+						const { operations: xlsxOperations, accounts: xlsxAccounts } =
+							await parseXLSXFile(file)
+						allOperations.push(...xlsxOperations)
+						allAccounts.push(...xlsxAccounts)
+					} else if (
+						(state.structure === 'cash/partners' ||
+							state.structure === 'cash/services') &&
+						fileExtension === 'txt'
+					) {
+						const { operations: txtOperations, accounts: txtAccounts } =
+							await parseTXTFile(file)
+						allOperations.push(...txtOperations)
+						allAccounts.push(...txtAccounts)
+					} else {
+						setAnnualError(
+							`Некорректный тип файла. Загрузите ${
+								state.structure === 'accruals/services'
+									? 'журнал проводок в формате XLSX'
+									: 'банковские выписки в формате 1C'
+							}`
+						)
 					}
 				}
 
-				setOperations(
+				if (!!allOperations) setAnnualStartDate(allOperations[0].date)
+				if (!!allOperations)
+					setAnnualFinalDate(allOperations[allOperations.length - 1].date)
+
+				setAnnualOperations(
 					allOperations as IAccountingOperation[] | IBankOperation[]
 				)
-				// If you have a separate action for bank operations, use it here
-				// setBankOperations(bankOperations);
 
-				setAccounts(allAccounts)
+				setAnnualAccounts(allAccounts)
 			} catch (error) {
 				console.error('Ошибка при обработке файлов:', error)
 			}
 		},
-		[setOperations, setFileNames, setAccounts]
+		[
+			setAnnualOperations,
+			setAnnualFileNames,
+			setAnnualAccounts,
+			setAnnualStartDate,
+			setAnnualFinalDate
+		]
 	)
 
 	const handleClick = () => {
-		// Получение текущих значений формы
-		console.log('operations: ', operations)
-		console.log('accounts: ', accounts)
+		console.log('operations: ', state.operations)
+		console.log('accounts: ', state.accounts)
 	}
 
-	return { handleFiles, handleClick, fileNames }
+	return { state, handleFiles, handleClick }
 }

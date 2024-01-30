@@ -4,7 +4,8 @@ import { toast } from 'react-toastify'
 
 import {
 	IAnnualReport,
-	IAnnualReportCreate
+	IAnnualReportCreate,
+	IAnnualReportData
 } from '~/shared/types/annual.interface'
 
 import { db } from '~/services/_firebase'
@@ -78,12 +79,15 @@ export const AnnualService = {
 		}
 	},
 
-	async update(userId: string, data: IAnnualReport) {
-		if (!data.data) return
-		data.updatedAt = Date.now().toString()
+	async update(userId: string, annualId: string, data: IAnnualReportData) {
+		if (!data) return
+		const updatedAt = Date.now().toString()
 
 		try {
-			await update(ref(db, `users/${userId}/annuals/${data._id}`), data)
+			await update(ref(db, `users/${userId}/annuals/${annualId}`), {
+				data,
+				updatedAt
+			})
 		} catch (error) {
 			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		}
