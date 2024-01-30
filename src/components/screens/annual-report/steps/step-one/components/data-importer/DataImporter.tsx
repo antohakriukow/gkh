@@ -1,33 +1,13 @@
 import { useDataImporter } from './useDataImporter'
-import { FC, useCallback } from 'react'
+import { FC } from 'react'
 
 import { SubHeading } from '~/components/ui'
 
 import styles from './DataImporter.module.scss'
 
 const DataImporter: FC = () => {
-	const { handleFiles, handleClick, state } = useDataImporter()
-
-	const onFileChange = useCallback(
-		(event: React.ChangeEvent<HTMLInputElement>) => {
-			if (event.target.files) {
-				const newFiles = Array.from(event.target.files)
-				handleFiles(newFiles)
-			}
-		},
-		[handleFiles]
-	)
-
-	const handleClickOnInput = () => {
-		const hiddenInput = document.getElementById('hidden-file-input')
-		if (hiddenInput) {
-			hiddenInput.click()
-		}
-	}
-
-	const operations = state.operations
-	const hasOperations = operations.length > 0
-	const hasError = !!state.error
+	const { state, onFileChange, handleClickOnInput, hasOperations, hasError } =
+		useDataImporter()
 
 	return (
 		<div className={styles.container}>
@@ -50,10 +30,10 @@ const DataImporter: FC = () => {
 				)}
 				{hasOperations && (
 					<div className={styles.resume}>
-						<p>{`Найдено операций: ${operations.length} по ${
+						<p>{`Найдено операций: ${state.operations.length} по ${
 							state.accounts.length
-						} счетам за период с ${operations[0].date} по ${
-							operations[operations.length - 1].date
+						} счетам за период с ${state.operations[0].date} по ${
+							state.operations[state.operations.length - 1].date
 						}.`}</p>
 					</div>
 				)}

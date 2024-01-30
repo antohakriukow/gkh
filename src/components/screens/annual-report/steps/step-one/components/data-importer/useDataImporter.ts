@@ -77,14 +77,32 @@ export const useDataImporter = () => {
 			setAnnualFileNames,
 			setAnnualAccounts,
 			setAnnualStartDate,
-			setAnnualFinalDate
+			setAnnualFinalDate,
+			setAnnualError,
+			state.structure
 		]
 	)
 
-	const handleClick = () => {
-		console.log('operations: ', state.operations)
-		console.log('accounts: ', state.accounts)
+	const onFileChange = useCallback(
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			if (event.target.files) {
+				const newFiles = Array.from(event.target.files)
+				handleFiles(newFiles)
+			}
+		},
+		[handleFiles]
+	)
+
+	const handleClickOnInput = () => {
+		const hiddenInput = document.getElementById('hidden-file-input')
+		if (hiddenInput) {
+			hiddenInput.click()
+		}
 	}
 
-	return { state, handleFiles, handleClick }
+	const operations = state.operations
+	const hasOperations = operations.length > 0
+	const hasError = !!state.error
+
+	return { state, onFileChange, handleClickOnInput, hasOperations, hasError }
 }
