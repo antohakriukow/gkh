@@ -1,6 +1,6 @@
-import CategorySelector from './components/category-selector/CategorySelector'
 import DataImporter from './components/data-importer/DataImporter'
-import GraphCreator from './components/graph-creator/GraphCreator'
+import DirectionSelector from './components/direction-selector/DirectionSelector'
+import Graph from './components/graph/Graph'
 import StructureSelector from './components/structure-selector/StructureSelector'
 
 import { IQuizStep } from '~/components/ui/quiz-elements/quiz.interface'
@@ -47,7 +47,7 @@ const stepOneMap = (
 				clearError()
 			},
 			onNext: () => clearError(),
-			component: <CategorySelector />,
+			component: <DirectionSelector />,
 			hidden: !!state.accounts.find(
 				acc => acc.type === undefined || acc.type === ''
 			)
@@ -56,7 +56,7 @@ const stepOneMap = (
 			stepNumber: 2,
 			stepTitle: 'Настройка статей отчета',
 			onNext: () => console.log('Переход к шагу 2'),
-			component: <GraphCreator />
+			component: <Graph />
 		}
 	]
 }

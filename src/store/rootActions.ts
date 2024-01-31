@@ -1,12 +1,17 @@
 import {
+	addAnnualCategory,
+	addAnnualCategoryChild,
 	clearAnnualState,
+	removeAnnualCategory,
+	removeAnnualCategoryChild,
 	setAnnualAccounts,
 	setAnnualError,
 	setAnnualFileNames,
 	setAnnualFinalDate,
 	setAnnualOperations,
 	setAnnualStartDate,
-	setAnnualStructure
+	setAnnualStructure,
+	updateAnnualCategoryTitle
 } from './annual/annual.slice'
 import {
 	clearUI,
@@ -30,5 +35,11 @@ export const allActions = {
 	setAnnualFileNames,
 	setAnnualStartDate,
 	setAnnualFinalDate,
-	setAnnualError
+	setAnnualError,
+
+	addAnnualCategory,
+	removeAnnualCategory,
+	addAnnualCategoryChild,
+	removeAnnualCategoryChild,
+	updateAnnualCategoryTitle
 }

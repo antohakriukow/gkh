@@ -3,7 +3,7 @@ import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { IAccount } from '~/shared/types/annual.interface'
 
-export const useCategorySelector = () => {
+export const useDirectionSelector = () => {
 	const state = useTypedSelector(state => state.annual)
 	const { setAnnualAccounts } = useActions()
 

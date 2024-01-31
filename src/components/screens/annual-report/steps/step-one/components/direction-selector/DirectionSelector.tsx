@@ -1,14 +1,14 @@
-import { useCategorySelector } from './useCategorySelector'
+import { useDirectionSelector } from './useDirectionSelector'
 import { ChangeEvent, FC } from 'react'
 
 import { SubHeading } from '~/components/ui'
 
-import { IAccount, TypeAnnualDirection } from '~/shared/types/annual.interface'
+import { TypeAnnualDirection } from '~/shared/types/annual.interface'
 
-import styles from './CategorySelector.module.scss'
+import styles from './DirectionSelector.module.scss'
 
-const CategorySelector: FC = () => {
-	const { state, setAccountDirection } = useCategorySelector()
+const DirectionSelector: FC = () => {
+	const { state, setAccountDirection } = useDirectionSelector()
 
 	const handleDirectionChange = (
 		accountNumber: string,
@@ -40,4 +40,4 @@ const CategorySelector: FC = () => {
 	)
 }
 
-export default CategorySelector
+export default DirectionSelector

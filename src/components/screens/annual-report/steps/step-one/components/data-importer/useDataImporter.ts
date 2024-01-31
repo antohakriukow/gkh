@@ -38,7 +38,11 @@ export const useDataImporter = () => {
 						const { operations: xlsxOperations, accounts: xlsxAccounts } =
 							await parseXLSXFile(file)
 						allOperations.push(...xlsxOperations)
-						allAccounts.push(...xlsxAccounts)
+						xlsxAccounts.forEach(account => {
+							if (!allAccounts.some(acc => acc.number === account.number)) {
+								allAccounts.push(account)
+							}
+						})
 					} else if (
 						(state.structure === 'cash/partners' ||
 							state.structure === 'cash/services') &&
@@ -47,7 +51,11 @@ export const useDataImporter = () => {
 						const { operations: txtOperations, accounts: txtAccounts } =
 							await parseTXTFile(file)
 						allOperations.push(...txtOperations)
-						allAccounts.push(...txtAccounts)
+						txtAccounts.forEach(account => {
+							if (!allAccounts.some(acc => acc.number === account.number)) {
+								allAccounts.push(account)
+							}
+						})
 					} else {
 						setAnnualError(
 							`Некорректный тип файла. Загрузите ${

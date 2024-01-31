@@ -59,19 +59,17 @@ export interface IAccount {
 // //  Формат исходных данных для работы:
 
 export interface IOperation {
-	id: string // Уникальный идентификатор операции
-	categoryId: string // Идентификатор категории, к которой относится операция
-	amount: number // Сумма расхода
-	date: string // Дата операции (может быть в любом формате, удобном для работы)
-	description: string // Описание операции
+	_id: string
+	categoryId: string
+	amount: number
+	date: string
+	description: string
 }
 
-export interface ICategory {
-	id: string // Уникальный идентификатор категории
-	child?: string // Идентификатор дочерней категории
-	sibling?: string // Идентификатор соседней категории
+export interface IAnnualCategory {
+	_id: string // Уникальный идентификатор категории
 	title: string // Название или описание категории
-	children?: ICategory[] // Дочерние категории (для удобства работы с деревом)
+	children?: string[] // Дочерние категории (для удобства работы с деревом)
 }
 
 export interface IAnnualReportSettings {
@@ -82,7 +80,7 @@ export interface IAnnualReportSettings {
 export interface IAnnualReportData {
 	directions?: TypeAnnualDirection[]
 	accounts?: IAccount[]
-	categories?: ICategory[]
+	categories?: IAnnualCategory[]
 	operations?: IOperation[]
 	settings?: IAnnualReportSettings
 	temporary?: ITemporaryData
