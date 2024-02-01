@@ -40,7 +40,11 @@ export const useDataImporter = () => {
 						allOperations.push(...xlsxOperations)
 						xlsxAccounts.forEach(account => {
 							if (!allAccounts.some(acc => acc.number === account.number)) {
-								allAccounts.push(account)
+								if (
+									(+account.number >= 80 && +account.number <= 89) ||
+									(+account.number >= 20 && +account.number <= 49)
+								)
+									allAccounts.push(account)
 							}
 						})
 					} else if (
@@ -53,7 +57,11 @@ export const useDataImporter = () => {
 						allOperations.push(...txtOperations)
 						txtAccounts.forEach(account => {
 							if (!allAccounts.some(acc => acc.number === account.number)) {
-								allAccounts.push(account)
+								if (
+									(+account.number >= 80 && +account.number <= 89) ||
+									(+account.number >= 20 && +account.number <= 49)
+								)
+									allAccounts.push(account)
 							}
 						})
 					} else {

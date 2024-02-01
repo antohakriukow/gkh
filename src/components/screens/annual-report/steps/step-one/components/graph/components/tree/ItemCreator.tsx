@@ -1,18 +1,18 @@
+import { useTreeContext } from './TreeProvider'
 import React, { FC, useState } from 'react'
 import { FaPlus } from 'react-icons/fa6'
 
 import { Button } from '~/components/ui'
 
-import { IItemCreator } from '../list.interface'
+import styles from './tree.module.scss'
 
-import styles from './ItemCreator.module.scss'
-
-const ItemCreator: FC<IItemCreator> = ({ onCreate }) => {
+const ItemCreator: FC = () => {
 	const [newItemTitle, setNewItemTitle] = useState('')
+	const { createItem } = useTreeContext()
 
 	const handleAddItem = () => {
 		if (newItemTitle.trim() !== '') {
-			onCreate(newItemTitle)
+			createItem(newItemTitle)
 			setNewItemTitle('')
 		}
 	}
@@ -24,7 +24,7 @@ const ItemCreator: FC<IItemCreator> = ({ onCreate }) => {
 	}
 
 	return (
-		<div className={styles.container}>
+		<div className={styles.itemCreator}>
 			<input
 				type='text'
 				value={newItemTitle}
@@ -35,7 +35,6 @@ const ItemCreator: FC<IItemCreator> = ({ onCreate }) => {
 			<Button onClick={handleAddItem}>
 				<FaPlus />
 			</Button>
-			{/* <button onClick={handleAddItem}>Добавить</button> */}
 		</div>
 	)
 }

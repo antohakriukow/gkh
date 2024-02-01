@@ -67,9 +67,13 @@ export interface IOperation {
 }
 
 export interface IAnnualCategory {
-	_id: string // Уникальный идентификатор категории
-	title: string // Название или описание категории
-	children?: string[] // Дочерние категории (для удобства работы с деревом)
+	id: string
+	value: string
+	children?: IAnnualCategory[]
+}
+
+export interface IAnnualCategoryState extends IAnnualCategory {
+	collapsed: boolean
 }
 
 export interface IAnnualReportSettings {

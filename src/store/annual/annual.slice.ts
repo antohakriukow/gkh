@@ -4,6 +4,8 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import {
 	IAccount,
 	IAccountingOperation,
+	IAnnualCategory,
+	IAnnualCategoryState,
 	IBankOperation,
 	TypeAnnualReportStructure
 } from '~/shared/types/annual.interface'
@@ -55,70 +57,11 @@ export const annualSlice = createSlice({
 			state.error = action.payload
 		},
 
-		addAnnualCategory: (state, action: PayloadAction<string>) => {
-			const maxId = state.categories.reduce((max, category) => {
-				const id = parseInt(category._id, 10)
-				return id > max ? id : max
-			}, 0)
-
-			const newId = (maxId + 1).toString()
-
-			state.categories = [
-				...state.categories,
-				{
-					_id: newId,
-					title: action.payload
-				}
-			]
-		},
-		removeAnnualCategory: (state, action: PayloadAction<string>) => {
-			state.categories = state.categories.filter(
-				category => category._id !== action.payload
-			)
-		},
-		addAnnualCategoryChild: (
+		setAnnualCategories: (
 			state,
-			action: PayloadAction<{ parent: string; child: string }>
+			action: PayloadAction<IAnnualCategoryState[]>
 		) => {
-			state.categories = state.categories.map(category => {
-				if (category._id === action.payload.parent) {
-					const children = category.children || []
-
-					if (children.includes(action.payload.child)) {
-						return category
-					}
-
-					return { ...category, children: [...children, action.payload.child] }
-				}
-				return category
-			})
-		},
-		removeAnnualCategoryChild: (
-			state,
-			action: PayloadAction<{ parent: string; child: string }>
-		) => {
-			state.categories = state.categories.map(category => {
-				if (category._id === action.payload.parent) {
-					const updatedChildren =
-						category.children?.filter(
-							child => child !== action.payload.child
-						) || []
-
-					return { ...category, children: updatedChildren }
-				}
-				return category
-			})
-		},
-		updateAnnualCategoryTitle: (
-			state,
-			action: PayloadAction<{ _id: string; title: string }>
-		) => {
-			state.categories = state.categories.map(category => {
-				if (category._id === action.payload._id) {
-					return { ...category, title: action.payload.title }
-				}
-				return category
-			})
+			state.categories = action.payload
 		},
 
 		setAnnualFileNames: (state, action: PayloadAction<string[]>) => {
@@ -136,10 +79,7 @@ export const {
 	setAnnualStartDate,
 	setAnnualFinalDate,
 	setAnnualError,
-	addAnnualCategory,
-	removeAnnualCategory,
-	addAnnualCategoryChild,
-	removeAnnualCategoryChild,
-	updateAnnualCategoryTitle
+
+	setAnnualCategories
 } = annualSlice.actions
 export const annualReducer = annualSlice.reducer
