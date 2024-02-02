@@ -41,8 +41,9 @@ export const useDataImporter = () => {
 						xlsxAccounts.forEach(account => {
 							if (!allAccounts.some(acc => acc.number === account.number)) {
 								if (
-									(+account.number >= 80 && +account.number <= 89) ||
-									(+account.number >= 20 && +account.number <= 49)
+									// (+account.number >= 20 && +account.number <= 29) ||
+									+account.number >= 80 &&
+									+account.number <= 89
 								)
 									allAccounts.push(account)
 							}
@@ -58,8 +59,9 @@ export const useDataImporter = () => {
 						txtAccounts.forEach(account => {
 							if (!allAccounts.some(acc => acc.number === account.number)) {
 								if (
-									(+account.number >= 80 && +account.number <= 89) ||
-									(+account.number >= 20 && +account.number <= 49)
+									// (+account.number >= 20 && +account.number <= 29) ||
+									+account.number >= 80 &&
+									+account.number <= 89
 								)
 									allAccounts.push(account)
 							}

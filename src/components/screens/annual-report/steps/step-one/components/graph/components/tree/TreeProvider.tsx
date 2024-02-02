@@ -10,7 +10,11 @@ import {
 	useState
 } from 'react'
 
+import { useTypedSelector } from '~/hooks/useTypedSelector'
+
 import { IAnnualCategoryState } from '~/shared/types/annual.interface'
+
+import { createDeepCopy } from '~/utils/object.utils'
 
 interface ITreeContext {
 	items: IAnnualCategoryState[]
@@ -22,12 +26,15 @@ interface ITreeContext {
 export const TreeContext = createContext<ITreeContext>({} as ITreeContext)
 
 export const TreeProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
-	const [items, setItems] = useState<IAnnualCategoryState[]>([])
+	const { categories } = useTypedSelector(state => state.annual)
+	const [items, setItems] = useState<IAnnualCategoryState[]>(
+		createDeepCopy(categories)
+	)
 
 	const createItem = useCallback(
 		(value: string) => {
 			const maxId = items.reduce((max, category) => {
-				const id = parseInt(category.id, 10)
+				const id = parseInt(category.id.toString(), 10)
 				return id > max ? id : max
 			}, 0)
 
@@ -36,7 +43,7 @@ export const TreeProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 			setItems([
 				...items,
 				{
-					id: newId,
+					id: +newId,
 					value,
 					collapsed: false,
 					children: []
@@ -53,7 +60,7 @@ export const TreeProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 			value: string
 		): IAnnualCategoryState[] =>
 			items.map(item => {
-				if (item.id === id) {
+				if (item.id.toString() === id.toString()) {
 					return { ...item, value }
 				} else if (item.children) {
 					return {

@@ -1,5 +1,5 @@
 export interface IQuizStep {
-	stepNumber: number
+	stepNumber?: number
 	stepTitle: string
 	onPrevious?: () => void
 	onNext: () => void

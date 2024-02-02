@@ -67,7 +67,7 @@ export interface IOperation {
 }
 
 export interface IAnnualCategory {
-	id: string
+	id: number
 	value: string
 	children?: IAnnualCategory[]
 }

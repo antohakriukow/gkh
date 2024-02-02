@@ -5,6 +5,8 @@ import StructureSelector from './components/structure-selector/StructureSelector
 
 import { IQuizStep } from '~/components/ui/quiz-elements/quiz.interface'
 
+import { getAnnualCategoriesGraph } from '~/utils/annual.utils'
+
 import { AnnualState } from '~/store/annual/annual.interface'
 
 const stepOneMap = (
@@ -12,53 +14,59 @@ const stepOneMap = (
 	handleStepOneOnNext: () => void,
 	handleRefreshStepTwo: () => void,
 	handleRefreshStepThree: () => void,
+	handleSetInitialCategories: () => void,
 	clearError: () => void
 ): IQuizStep[] => {
 	console.log('state: ', state)
-	return [
-		{
-			stepNumber: 1,
-			stepTitle: 'Выбор структуры отчета',
-			onNext: () => {
-				handleStepOneOnNext()
-				clearError()
-			},
-			component: <StructureSelector />,
-			hidden: !state.structure
+
+	const selectStructure = {
+		stepTitle: 'Выбор структуры отчета',
+		onNext: () => {
+			handleStepOneOnNext()
+			clearError()
 		},
-		{
-			stepNumber: 2,
-			stepTitle: 'Загрузка данных',
-			onPrevious: () => {
-				handleRefreshStepTwo()
-				clearError()
-			},
-			onNext: () => {
-				clearError()
-			},
-			component: <DataImporter />,
-			hidden: !state.accounts.length || !state.operations.length
+		component: <StructureSelector />,
+		hidden: !state.structure
+	}
+
+	const importData = {
+		stepTitle: 'Загрузка данных',
+		onPrevious: () => {
+			handleRefreshStepTwo()
+			clearError()
 		},
-		{
-			stepNumber: 3,
-			stepTitle: 'Настройка направлений отчета',
-			onPrevious: () => {
-				handleRefreshStepThree()
-				clearError()
-			},
-			onNext: () => clearError(),
-			component: <DirectionSelector />,
-			hidden: !!state.accounts.find(
-				acc => acc.type === undefined || acc.type === ''
-			)
+		onNext: () => {
+			clearError()
+			if (state.structure === 'accruals/services')
+				getAnnualCategoriesGraph(state)
 		},
-		{
-			stepNumber: 2,
-			stepTitle: 'Настройка статей отчета',
-			onNext: () => console.log('Переход к шагу 2'),
-			component: <Graph />
-		}
-	]
+		component: <DataImporter />,
+		hidden: !state.accounts.length || !state.operations.length
+	}
+
+	const selectDirections = {
+		stepTitle: 'Настройка направлений отчета',
+		onPrevious: () => {
+			handleRefreshStepThree()
+			clearError()
+		},
+		onNext: () => {
+			handleSetInitialCategories()
+			clearError()
+		},
+		component: <DirectionSelector />,
+		hidden: !!state.accounts.find(
+			acc => acc.type === undefined || acc.type === ''
+		)
+	}
+
+	const createGraph = {
+		stepTitle: 'Настройка статей отчета',
+		onNext: () => console.log('Переход к шагу 2'),
+		component: <Graph />
+	}
+
+	return [selectStructure, importData, selectDirections, createGraph]
 }
 
 export default stepOneMap

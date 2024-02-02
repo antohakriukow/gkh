@@ -21,21 +21,34 @@ const DirectionSelector: FC = () => {
 	return (
 		<div className={styles.container}>
 			<SubHeading title='Выберите направления для всех счетов:' />
-			{state.accounts.map(account => (
-				<div key={account.number} className={styles.account}>
-					<p>{account.number}</p>
-					<select
-						value={account.type || ''}
-						onChange={e => handleDirectionChange(account.number, e)}
-					>
-						<option value=''>Не указано</option>
-						<option value='main'>ЖКУ</option>
-						<option value='renovation'>Капремонт</option>
-						<option value='target'>Целевые взносы</option>
-						<option value='commerce'>Коммерция</option>
-					</select>
-				</div>
-			))}
+			<div className={styles.accounts}>
+				{[...state.accounts]
+					.sort((a, b) => +a.number - +b.number)
+					.map(account => (
+						<div key={account.number} className={styles.account}>
+							<p>{account.number}</p>
+							<select
+								value={account.type || ''}
+								onChange={e => handleDirectionChange(account.number, e)}
+							>
+								<option value=''>Не указано</option>
+								<option value='main'>ЖКУ</option>
+								<option value='renovation'>Капремонт</option>
+								<option value='target'>Целевые взносы</option>
+								<option value='commerce'>Коммерция</option>
+							</select>
+						</div>
+					))}
+			</div>
+			<div className={styles.resume}>
+				{state.structure === 'accruals/services' && (
+					<p>
+						В выборку попали счета бухгалтерского учета c 80 по 86. Убедитесь,
+						что на конец отчетного периода отсутствует сальдо по счетам 20-29,
+						40-46, 90, 91, 94, 97, 98, 99.
+					</p>
+				)}
+			</div>
 		</div>
 	)
 }

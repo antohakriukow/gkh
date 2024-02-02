@@ -1,7 +1,7 @@
 @import '../../../../../../../styles/colors.scss';
 
 .container {
-	@apply px-2 py-3 rounded-md;
+	@apply px-2 pb-3 rounded-md;
 }
 
 .cards {
@@ -19,7 +19,7 @@
 }
 
 .card {
-	@apply flex flex-col items-center justify-between p-4 bg-gray-50 rounded-md box-border;
+	@apply flex flex-col items-end justify-between p-4 bg-gray-50 rounded-md box-border;
 	width: 100%;
 
 	&:hover {
@@ -36,9 +36,8 @@
 		}
 	}
 
-	> input {
-		@apply cursor-pointer w-full m-0;
-		height: 24px;
+	> a {
+		@apply no-underline text-primary-500 font-bold text-base;
 	}
 }
 

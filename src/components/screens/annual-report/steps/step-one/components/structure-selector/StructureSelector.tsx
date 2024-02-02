@@ -21,8 +21,13 @@ const StructureSelector: FC = () => {
 			setAnnualStructure(currentAnnualReport?.data.settings?.structure)
 	}, [currentAnnualReport, setAnnualStructure])
 
-	const handleClick = (event: React.MouseEvent<HTMLDivElement>) =>
+	const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
 		setAnnualStructure(event.currentTarget.id as TypeAnnualReportStructure)
+	}
+
+	const handleLinkClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+		event.stopPropagation()
+	}
 
 	return (
 		<form className={styles.container}>
@@ -41,6 +46,13 @@ const StructureSelector: FC = () => {
 							<span className={styles.title}>{item.title}</span>
 							<span className={styles.description}>{item.description}</span>
 						</label>
+						<a
+							onClick={handleLinkClick}
+							className={styles.link}
+							href={item.link}
+						>
+							Смотреть образец
+						</a>
 					</div>
 				))}
 			</div>

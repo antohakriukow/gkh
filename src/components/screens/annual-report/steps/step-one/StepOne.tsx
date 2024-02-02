@@ -17,7 +17,8 @@ const StepOne: FC = () => {
 		annualState,
 		isLoading,
 		clearError,
-		clearAccountTypes
+		clearAccountTypes,
+		setInitialCategories
 	} = useStepOne()
 
 	const steps = stepOneMap(
@@ -25,10 +26,11 @@ const StepOne: FC = () => {
 		handleSaveAnnualReportStructure,
 		clearAccountsAndOperations,
 		clearAccountTypes,
+		setInitialCategories,
 		clearError
 	)
 
-	const finalFunction = () => console.log('Function before step 2')
+	const finalFunction = () => console.log('annualState: ', annualState)
 
 	useEffect(() => {
 		if (!currentAnnualReport?.data?.settings) return
@@ -52,7 +54,7 @@ const StepOne: FC = () => {
 					<MultiStep
 						steps={steps}
 						finalFunction={finalFunction}
-						finalButtonTitle='Завершить'
+						finalButtonTitle='Сохранить и перейти к шагу №2'
 						initialStepIndex={initialStep}
 					/>
 				</div>

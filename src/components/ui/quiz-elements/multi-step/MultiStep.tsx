@@ -47,25 +47,24 @@ const MultiStep: FC<IQuizProps> = ({
 
 	return (
 		<div className={styles.container}>
-			{steps.map(
-				(step, index) =>
-					index <= currentStepIndex && (
-						<div key={index} className={styles.step}>
+			{steps.map((step, index) => (
+				<div key={index} className={styles.step}>
+					{index === currentStepIndex ? (
+						<>
 							{step.component}
-							{index === currentStepIndex && (
-								<>
-									{currentStepIndex > 0 && (
-										<Button onClick={goToPreviousStep}>Назад</Button>
-									)}
-									{!currentStep.hidden && (
-										<Button onClick={goToNextStep}>{buttonText}</Button>
-									)}
-								</>
+							{index > 0 && <Button onClick={goToPreviousStep}>Назад</Button>}
+							{!currentStep.hidden && (
+								<Button onClick={goToNextStep}>{buttonText}</Button>
 							)}
-							{index < currentStepIndex && <div className={styles.overlay} />}
+						</>
+					) : index < currentStepIndex ? (
+						<div className={styles.completedStep}>
+							<div>{`${index + 1}. ${step.stepTitle}:`}</div>
+							<div>Выполнено</div>
 						</div>
-					)
-			)}
+					) : null}
+				</div>
+			))}
 		</div>
 	)
 }

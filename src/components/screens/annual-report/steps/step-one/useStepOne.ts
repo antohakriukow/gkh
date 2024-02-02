@@ -8,6 +8,7 @@ import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { AnnualService } from '~/services/annual.service'
 
+import { getAnnualCategoriesGraph } from '~/utils/annual.utils'
 import { handleDBErrors } from '~/utils/error.utils'
 
 export const useStepOne = () => {
@@ -56,11 +57,19 @@ export const useStepOne = () => {
 		annualActions.setAnnualFileNames([])
 	}
 
+	const setInitialCategories = () => {
+		if (annualState.structure === 'accruals/services') {
+			const categories = getAnnualCategoriesGraph(annualState)
+			annualActions.setAnnualCategories(categories)
+		}
+	}
+
 	const clearError = () => annualActions.setAnnualError('')
 	const clearAccountTypes = () =>
 		annualActions.setAnnualAccounts(
 			annualState.accounts.map(account => ({ ...account, type: undefined }))
 		)
+
 	// const handleSaveAnnualReportInitialData = () => {
 	// 	try {
 	// 		if (!user?.uid || !currentAnnualReport?._id || !annualState?.structure)
@@ -92,6 +101,7 @@ export const useStepOne = () => {
 		annualActions,
 		clearError,
 		clearAccountsAndOperations,
-		clearAccountTypes
+		clearAccountTypes,
+		setInitialCategories
 	}
 }

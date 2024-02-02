@@ -14,7 +14,7 @@
 }
 
 .item {
-	@apply flex flex-row my-0.5 box-border cursor-pointer;
+	@apply flex flex-row my-0.5 box-border cursor-pointer px-2 py-1;
 	border: solid 1px $gray-200;
 
 	> button:nth-of-type(1) {
@@ -29,6 +29,12 @@
 	> input {
 		padding: 0;
 		outline: none;
+	}
+}
+
+.single {
+	> p {
+		margin-left: 18px;
 	}
 }
 

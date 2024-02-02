@@ -1,4 +1,5 @@
 import { useTreeContext } from './TreeProvider'
+import cn from 'clsx'
 import {
 	SimpleTreeItemWrapper,
 	TreeItemComponentProps
@@ -29,7 +30,7 @@ const TreeItem = forwardRef<
 	}, [isEditing])
 
 	const handleRename = useCallback(() => {
-		renameItem(item.id, editedTitle)
+		renameItem(item.id.toString(), editedTitle)
 		setIsEditing(false)
 	}, [editedTitle, item.id, renameItem])
 
@@ -62,11 +63,15 @@ const TreeItem = forwardRef<
 		}
 	}, [isEditing, handleRename, inputRef])
 
+	const isSingle = item.children?.length === 0
+
 	return (
 		<SimpleTreeItemWrapper
 			{...props}
 			ref={ref}
-			contentClassName={styles.item}
+			contentClassName={cn(styles.item, {
+				[styles.single]: isSingle
+			})}
 			hideCollapseButton={false}
 		>
 			{isEditing ? (
