@@ -27,7 +27,7 @@ export interface IAccountingOperation {
 	creditSubaccount1: string
 	creditSubaccount2: string
 	creditSubaccount3: string
-	amount: string
+	amount: number
 	description: string
 }
 
@@ -60,10 +60,13 @@ export interface IAccount {
 
 export interface IOperation {
 	_id: string
+	direction: TypeAnnualDirection
 	categoryId: string
 	amount: number
 	date: string
+	document: string
 	description: string
+	partnerName?: string
 }
 
 export interface IAnnualCategory {

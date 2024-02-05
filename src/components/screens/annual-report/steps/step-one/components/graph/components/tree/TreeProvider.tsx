@@ -6,10 +6,12 @@ import {
 	createContext,
 	useCallback,
 	useContext,
+	useEffect,
 	useMemo,
 	useState
 } from 'react'
 
+import { useActions } from '~/hooks/useActions'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { IAnnualCategoryState } from '~/shared/types/annual.interface'
@@ -27,9 +29,14 @@ export const TreeContext = createContext<ITreeContext>({} as ITreeContext)
 
 export const TreeProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 	const { categories } = useTypedSelector(state => state.annual)
+	const { setAnnualCategories } = useActions()
 	const [items, setItems] = useState<IAnnualCategoryState[]>(
 		createDeepCopy(categories)
 	)
+
+	useEffect(() => {
+		setAnnualCategories(createDeepCopy(items))
+	}, [setAnnualCategories, items])
 
 	const createItem = useCallback(
 		(value: string) => {

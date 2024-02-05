@@ -19,6 +19,10 @@
 	> div:nth-of-type(2) {
 		@apply ml-1 font-semibold text-success-600;
 	}
+
+	@media (max-width: 425px) {
+		@apply justify-between;
+	}
 }
 
 .step {

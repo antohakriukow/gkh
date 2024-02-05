@@ -1,6 +1,8 @@
 import { FirebaseError } from 'firebase/app'
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { getAnnualCategoriesGraph } from '~/core/annual/getAnnualCategoriesGraph'
+import { prepareAnnualState } from '~/core/annual/prepareAnnualData'
 
 import { useActions } from '~/hooks/useActions'
 import { useAuth } from '~/hooks/useAuth'
@@ -8,7 +10,6 @@ import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { AnnualService } from '~/services/annual.service'
 
-import { getAnnualCategoriesGraph } from '~/utils/annual.utils'
 import { handleDBErrors } from '~/utils/error.utils'
 
 export const useStepOne = () => {
@@ -70,26 +71,28 @@ export const useStepOne = () => {
 			annualState.accounts.map(account => ({ ...account, type: undefined }))
 		)
 
-	// const handleSaveAnnualReportInitialData = () => {
-	// 	try {
-	// 		if (!user?.uid || !currentAnnualReport?._id || !annualState?.structure)
-	// 			return
+	const saveReportData = () => {
+		if (!user?.uid || !currentAnnualReport) return
 
-	// 		setIsLoading(true)
-	// 		AnnualService.update(
-	// 			user.uid,
-	// 			currentAnnualReport._id.toString(),
-	// 			{
-	// 				accounts: annualState.accounts,
-	// 				operations: annualState.operations,
-	// 			}
-	// 		)
-	// 	} catch (error) {
-	// 		if (error instanceof FirebaseError) handleDBErrors(error)
-	// 	} finally {
-	// 		setIsLoading(false)
-	// 	}
-	// }
+		setIsLoading(true)
+		const modifiedState = prepareAnnualState(annualState)
+
+		try {
+			console.log('modifiedState: ', modifiedState)
+			const data = {
+				settings: { structure: modifiedState.structure },
+				directions: modifiedState.directions ?? [],
+				accounts: modifiedState.accounts,
+				categories: modifiedState.categories,
+				operations: modifiedState.operations
+			}
+			AnnualService.update(user?.uid, currentAnnualReport._id.toString(), data)
+		} catch (error) {
+			console.log('error: ', error)
+		} finally {
+			setIsLoading(false)
+		}
+	}
 
 	return {
 		isLoading,
@@ -102,6 +105,7 @@ export const useStepOne = () => {
 		clearError,
 		clearAccountsAndOperations,
 		clearAccountTypes,
-		setInitialCategories
+		setInitialCategories,
+		saveReportData
 	}
 }

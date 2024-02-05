@@ -2,11 +2,11 @@ import DataImporter from './components/data-importer/DataImporter'
 import DirectionSelector from './components/direction-selector/DirectionSelector'
 import Graph from './components/graph/Graph'
 import StructureSelector from './components/structure-selector/StructureSelector'
+import { getAnnualCategoriesGraph } from '~/core/annual/getAnnualCategoriesGraph'
 
 import { IQuizStep } from '~/components/ui/quiz-elements/quiz.interface'
 
-import { getAnnualCategoriesGraph } from '~/utils/annual.utils'
-
+// import { getAnnualCategoriesGraph } from '~/utils/annual.utils'
 import { AnnualState } from '~/store/annual/annual.interface'
 
 const stepOneMap = (
@@ -15,6 +15,7 @@ const stepOneMap = (
 	handleRefreshStepTwo: () => void,
 	handleRefreshStepThree: () => void,
 	handleSetInitialCategories: () => void,
+	saveReportData: () => void,
 	clearError: () => void
 ): IQuizStep[] => {
 	console.log('state: ', state)
@@ -51,7 +52,9 @@ const stepOneMap = (
 			clearError()
 		},
 		onNext: () => {
-			handleSetInitialCategories()
+			state.structure === 'cash/partners'
+				? saveReportData()
+				: handleSetInitialCategories()
 			clearError()
 		},
 		component: <DirectionSelector />,
@@ -62,11 +65,30 @@ const stepOneMap = (
 
 	const createGraph = {
 		stepTitle: 'Настройка статей отчета',
-		onNext: () => console.log('Переход к шагу 2'),
+		onPrevious: () => {
+			clearError()
+		},
+		onNext: () => {
+			saveReportData()
+			clearError()
+		},
 		component: <Graph />
 	}
 
-	return [selectStructure, importData, selectDirections, createGraph]
+	const final = {
+		stepTitle: '',
+		onPrevious: () => {},
+		onNext: () => {},
+		hidden: true,
+		component: <></>
+	}
+
+	const sequence =
+		state.structure === 'cash/partners'
+			? [selectStructure, importData, selectDirections, final]
+			: [selectStructure, importData, selectDirections, createGraph, final]
+
+	return sequence
 }
 
 export default stepOneMap

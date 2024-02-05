@@ -1,4 +1,6 @@
 import { useCallback } from 'react'
+import { parseTXTFile } from '~/core/annual/parseTXTFile'
+import { parseXLSXFile } from '~/core/annual/parseXLSXFile'
 
 import { useActions } from '~/hooks/useActions'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
@@ -8,8 +10,6 @@ import {
 	IAccountingOperation,
 	IBankOperation
 } from '~/shared/types/annual.interface'
-
-import { parseTXTFile, parseXLSXFile } from '~/utils/annual.utils'
 
 export const useDataImporter = () => {
 	const state = useTypedSelector(state => state.annual)
@@ -58,12 +58,7 @@ export const useDataImporter = () => {
 						allOperations.push(...txtOperations)
 						txtAccounts.forEach(account => {
 							if (!allAccounts.some(acc => acc.number === account.number)) {
-								if (
-									// (+account.number >= 20 && +account.number <= 29) ||
-									+account.number >= 80 &&
-									+account.number <= 89
-								)
-									allAccounts.push(account)
+								allAccounts.push(account)
 							}
 						})
 					} else {
@@ -80,6 +75,8 @@ export const useDataImporter = () => {
 				if (!!allOperations) setAnnualStartDate(allOperations[0].date)
 				if (!!allOperations)
 					setAnnualFinalDate(allOperations[allOperations.length - 1].date)
+
+				console.log('allAccounts: ', allAccounts)
 
 				setAnnualOperations(
 					allOperations as IAccountingOperation[] | IBankOperation[]

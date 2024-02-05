@@ -18,7 +18,8 @@ const StepOne: FC = () => {
 		isLoading,
 		clearError,
 		clearAccountTypes,
-		setInitialCategories
+		setInitialCategories,
+		saveReportData
 	} = useStepOne()
 
 	const steps = stepOneMap(
@@ -27,6 +28,7 @@ const StepOne: FC = () => {
 		clearAccountsAndOperations,
 		clearAccountTypes,
 		setInitialCategories,
+		saveReportData,
 		clearError
 	)
 
@@ -35,15 +37,19 @@ const StepOne: FC = () => {
 	useEffect(() => {
 		if (!currentAnnualReport?.data?.settings) return
 		const settings = currentAnnualReport?.data?.settings
+		const { operations } = currentAnnualReport?.data
+		console.log('currentAnnualReport: ', currentAnnualReport)
 
-		if (settings.structure && settings.dataUploaded) {
-			setInitialStep(2)
+		if (settings.structure && !!operations?.length) {
+			settings.structure === 'cash/partners'
+				? setInitialStep(3)
+				: setInitialStep(4)
 		} else if (settings.structure) {
 			setInitialStep(1)
 		} else {
 			setInitialStep(0)
 		}
-	}, [currentAnnualReport?.data?.settings])
+	}, [currentAnnualReport])
 
 	return (
 		<>
@@ -54,7 +60,7 @@ const StepOne: FC = () => {
 					<MultiStep
 						steps={steps}
 						finalFunction={finalFunction}
-						finalButtonTitle='Сохранить и перейти к шагу №2'
+						finalButtonTitle='Сохранить'
 						initialStepIndex={initialStep}
 					/>
 				</div>
