@@ -13,13 +13,13 @@ import styles from './StructureSelector.module.scss'
 
 const StructureSelector: FC = () => {
 	const { setAnnualStructure } = useActions()
-	const { currentAnnualReport } = useTypedSelector(state => state.ui)
+	// const { currentAnnualReport } = useTypedSelector(state => state.ui)
 	const { structure } = useTypedSelector(state => state.annual)
 
-	useEffect(() => {
-		if (currentAnnualReport?.data.settings?.structure)
-			setAnnualStructure(currentAnnualReport?.data.settings?.structure)
-	}, [currentAnnualReport, setAnnualStructure])
+	// useEffect(() => {
+	// 	if (currentAnnualReport?.data?.settings?.structure)
+	// 		setAnnualStructure(currentAnnualReport?.data.settings?.structure)
+	// }, [currentAnnualReport, setAnnualStructure])
 
 	const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
 		setAnnualStructure(event.currentTarget.id as TypeAnnualReportStructure)

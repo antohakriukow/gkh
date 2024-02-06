@@ -8,7 +8,8 @@ import { useTypedSelector } from '~/hooks/useTypedSelector'
 export const useAnnualReport = () => {
 	const { annuals } = useData()
 	const { reportId } = useParams<{ reportId: string }>()
-	const { currentAnnualReport } = useTypedSelector(state => state.ui)
+	const { currentAnnualReport, annualReportInitialDataSavedToDb } =
+		useTypedSelector(state => state.ui)
 	const { setCurrentAnnualReport } = useActions()
 
 	useEffect(() => {
@@ -26,5 +27,10 @@ export const useAnnualReport = () => {
 	const finalFunction = () => console.log('finalFunction')
 	const finalButtonTitle = 'Предпросмотр'
 
-	return { finalFunction, finalButtonTitle, currentAnnualReport }
+	return {
+		finalFunction,
+		finalButtonTitle,
+		currentAnnualReport,
+		annualReportInitialDataSavedToDb
+	}
 }

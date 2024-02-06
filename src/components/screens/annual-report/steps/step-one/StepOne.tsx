@@ -19,7 +19,8 @@ const StepOne: FC = () => {
 		clearError,
 		clearAccountTypes,
 		setInitialCategories,
-		saveReportData
+		saveReportData,
+		setAnnualReportInitialDataSavedToDb
 	} = useStepOne()
 
 	const steps = stepOneMap(
@@ -29,7 +30,8 @@ const StepOne: FC = () => {
 		clearAccountTypes,
 		setInitialCategories,
 		saveReportData,
-		clearError
+		clearError,
+		setAnnualReportInitialDataSavedToDb
 	)
 
 	const finalFunction = () => console.log('annualState: ', annualState)

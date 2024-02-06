@@ -17,7 +17,14 @@ export const useStepOne = () => {
 	const navigate = useNavigate()
 	const { currentAnnualReport } = useTypedSelector(state => state.ui)
 	const annualState = useTypedSelector(state => state.annual)
-	const annualActions = useActions()
+	const {
+		setAnnualReportInitialDataSavedToDb,
+		setAnnualCategories,
+		setAnnualAccounts,
+		setAnnualOperations,
+		setAnnualFileNames,
+		setAnnualError
+	} = useActions()
 	const [isLoading, setIsLoading] = useState(false)
 	const [initialStep, setInitialStep] = useState(0)
 
@@ -53,21 +60,21 @@ export const useStepOne = () => {
 	}
 
 	const clearAccountsAndOperations = () => {
-		annualActions.setAnnualAccounts([])
-		annualActions.setAnnualOperations([])
-		annualActions.setAnnualFileNames([])
+		setAnnualAccounts([])
+		setAnnualOperations([])
+		setAnnualFileNames([])
 	}
 
 	const setInitialCategories = () => {
 		if (annualState.structure === 'accruals/services') {
 			const categories = getAnnualCategoriesGraph(annualState)
-			annualActions.setAnnualCategories(categories)
+			setAnnualCategories(categories)
 		}
 	}
 
-	const clearError = () => annualActions.setAnnualError('')
+	const clearError = () => setAnnualError('')
 	const clearAccountTypes = () =>
-		annualActions.setAnnualAccounts(
+		setAnnualAccounts(
 			annualState.accounts.map(account => ({ ...account, type: undefined }))
 		)
 
@@ -87,8 +94,10 @@ export const useStepOne = () => {
 				operations: modifiedState.operations
 			}
 			AnnualService.update(user?.uid, currentAnnualReport._id.toString(), data)
+			setAnnualReportInitialDataSavedToDb(true)
 		} catch (error) {
 			console.log('error: ', error)
+			setAnnualReportInitialDataSavedToDb(false)
 		} finally {
 			setIsLoading(false)
 		}
@@ -101,11 +110,11 @@ export const useStepOne = () => {
 		closeReport,
 		currentAnnualReport,
 		annualState,
-		annualActions,
 		clearError,
 		clearAccountsAndOperations,
 		clearAccountTypes,
 		setInitialCategories,
-		saveReportData
+		saveReportData,
+		setAnnualReportInitialDataSavedToDb
 	}
 }

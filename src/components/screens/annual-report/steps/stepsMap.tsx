@@ -15,7 +15,7 @@ const stepsMap = (
 			stepNumber: 1,
 			stepTitle: 'Структура отчета',
 			onNext: () => console.log('Переход к шагу 2!'),
-			hidden: isNextButtonHiddenOnStepOne,
+			hidden: !isNextButtonHiddenOnStepOne,
 			component: <StepOne />
 		},
 		{

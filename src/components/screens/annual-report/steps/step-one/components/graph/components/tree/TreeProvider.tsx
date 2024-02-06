@@ -40,24 +40,34 @@ export const TreeProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 
 	const createItem = useCallback(
 		(value: string) => {
-			const maxId = items.reduce((max, category) => {
-				const id = parseInt(category.id.toString(), 10)
-				return id > max ? id : max
-			}, 0)
+			// Функция для нахождения максимального ID
+			const findMaxId = (
+				categories: IAnnualCategoryState[],
+				currentMax: number = 0
+			): number => {
+				return categories.reduce((maxId, category) => {
+					const maxInChildren = category.children
+						? findMaxId(category.children as IAnnualCategoryState[], maxId)
+						: maxId
+					return Math.max(maxId, category.id, maxInChildren)
+				}, currentMax)
+			}
 
-			const newId = (maxId + 1).toString()
+			// Находим максимальный ID среди всех категорий и их подкатегорий
+			const maxId = findMaxId(items)
 
-			setItems([
-				...items,
-				{
-					id: +newId,
-					value,
-					collapsed: false,
-					children: []
-				}
-			])
+			// Создаем новую категорию с уникальным ID
+			const newCategory: IAnnualCategoryState = {
+				id: maxId + 1,
+				value,
+				collapsed: false,
+				children: []
+			}
+
+			// Обновляем состояние, добавляя новую категорию
+			setItems(currentItems => [...currentItems, newCategory])
 		},
-		[items]
+		[items, setItems]
 	)
 
 	const renameItem = useCallback((id: string, value: string) => {

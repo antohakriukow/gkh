@@ -2,6 +2,7 @@ import DataImporter from './components/data-importer/DataImporter'
 import DirectionSelector from './components/direction-selector/DirectionSelector'
 import Graph from './components/graph/Graph'
 import StructureSelector from './components/structure-selector/StructureSelector'
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { getAnnualCategoriesGraph } from '~/core/annual/getAnnualCategoriesGraph'
 
 import { IQuizStep } from '~/components/ui/quiz-elements/quiz.interface'
@@ -16,7 +17,11 @@ const stepOneMap = (
 	handleRefreshStepThree: () => void,
 	handleSetInitialCategories: () => void,
 	saveReportData: () => void,
-	clearError: () => void
+	clearError: () => void,
+	setAnnualReportInitialDataSavedToDb: ActionCreatorWithPayload<
+		boolean,
+		'ui/setAnnualReportInitialDataSavedToDb'
+	>
 ): IQuizStep[] => {
 	console.log('state: ', state)
 
@@ -35,6 +40,7 @@ const stepOneMap = (
 		onPrevious: () => {
 			handleRefreshStepTwo()
 			clearError()
+			setAnnualReportInitialDataSavedToDb(false)
 		},
 		onNext: () => {
 			clearError()
@@ -50,6 +56,7 @@ const stepOneMap = (
 		onPrevious: () => {
 			handleRefreshStepThree()
 			clearError()
+			setAnnualReportInitialDataSavedToDb(false)
 		},
 		onNext: () => {
 			state.structure === 'cash/partners'
@@ -67,6 +74,7 @@ const stepOneMap = (
 		stepTitle: 'Настройка статей отчета',
 		onPrevious: () => {
 			clearError()
+			setAnnualReportInitialDataSavedToDb(false)
 		},
 		onNext: () => {
 			saveReportData()
@@ -77,7 +85,7 @@ const stepOneMap = (
 
 	const final = {
 		stepTitle: '',
-		onPrevious: () => {},
+		onPrevious: () => setAnnualReportInitialDataSavedToDb(false),
 		onNext: () => {},
 		hidden: true,
 		component: <></>
