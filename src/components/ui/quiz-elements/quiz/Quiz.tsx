@@ -50,10 +50,10 @@ const Quiz: React.FC<IQuizProps> = ({
 				<div className={styles.stepContent}>{currentStep.component}</div>
 			</div>
 			<div className={styles.stepNavigation}>
-				{currentStepIndex > 0 && (
+				{currentStepIndex > 0 && !currentStep.backButtonHidden && (
 					<Button onClick={goToPreviousStep}>Назад</Button>
 				)}
-				{!currentStep.hidden && (
+				{!currentStep.nextButtonHidden && (
 					<Button onClick={goToNextStep}>{buttonText}</Button>
 				)}
 			</div>

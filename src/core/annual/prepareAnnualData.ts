@@ -14,8 +14,9 @@ import { createDeepCopy } from '../../utils/object.utils'
 export const removeCollapsedFromCategories = (
 	categories: IAnnualCategoryState[]
 ): IAnnualCategory[] => {
-	return categories.map(({ collapsed, children, ...rest }) => ({
-		...rest,
+	return categories.map(({ id, value, collapsed, children, ...rest }) => ({
+		id,
+		value,
 		...(children
 			? {
 					children: removeCollapsedFromCategories(

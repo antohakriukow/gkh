@@ -52,8 +52,10 @@ const MultiStep: FC<IQuizProps> = ({
 					{index === currentStepIndex ? (
 						<>
 							{step.component}
-							{index > 0 && <Button onClick={goToPreviousStep}>Назад</Button>}
-							{!currentStep.hidden && (
+							{index > 0 && !currentStep.backButtonHidden && (
+								<Button onClick={goToPreviousStep}>Назад</Button>
+							)}
+							{!currentStep.nextButtonHidden && (
 								<Button onClick={goToNextStep}>{buttonText}</Button>
 							)}
 						</>

@@ -5,7 +5,8 @@ export interface IQuizStep {
 	onNext: () => void
 	onNextButtonTitle?: string
 	component: JSX.Element
-	hidden?: boolean
+	nextButtonHidden?: boolean
+	backButtonHidden?: boolean
 }
 
 export interface IQuizProps {

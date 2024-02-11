@@ -85,7 +85,6 @@ export const useStepOne = () => {
 		const modifiedState = prepareAnnualState(annualState)
 
 		try {
-			console.log('modifiedState: ', modifiedState)
 			const data = {
 				settings: { structure: modifiedState.structure },
 				directions: modifiedState.directions ?? [],

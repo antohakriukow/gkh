@@ -3,7 +3,7 @@ import { child, get, ref, set, update } from 'firebase/database'
 import { toast } from 'react-toastify'
 
 import {
-	IAnnualReport,
+	IAnnualCategory,
 	IAnnualReportCreate,
 	IAnnualReportData
 } from '~/shared/types/annual.interface'
@@ -106,6 +106,45 @@ export const AnnualService = {
 				data
 			)
 		} catch (error) {
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
+		}
+	},
+
+	async updateCategory(
+		userId: string,
+		annualId: string,
+		categoryId: string,
+		data: IAnnualCategory
+	) {
+		if (!data.id) return
+
+		try {
+			await update(
+				ref(
+					db,
+					`users/${userId}/annuals/${annualId}/data/categories/${categoryId}`
+				),
+				data
+			)
+		} catch (error) {
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
+		}
+	},
+
+	async updateCategories(
+		userId: string,
+		annualId: string,
+		data: IAnnualCategory[]
+	) {
+		if (!data.length) return
+
+		try {
+			await set(
+				ref(db, `users/${userId}/annuals/${annualId}/data/categories`),
+				data
+			)
+		} catch (error) {
+			console.log('ERROR: ', error)
 			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		}
 	}

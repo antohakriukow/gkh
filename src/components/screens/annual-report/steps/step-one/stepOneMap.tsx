@@ -1,5 +1,6 @@
 import DataImporter from './components/data-importer/DataImporter'
 import DirectionSelector from './components/direction-selector/DirectionSelector'
+import FinalStep from './components/final-step/FinalStep'
 import Graph from './components/graph/Graph'
 import StructureSelector from './components/structure-selector/StructureSelector'
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
@@ -32,7 +33,7 @@ const stepOneMap = (
 			clearError()
 		},
 		component: <StructureSelector />,
-		hidden: !state.structure
+		nextButtonHidden: !state.structure
 	}
 
 	const importData = {
@@ -48,7 +49,7 @@ const stepOneMap = (
 				getAnnualCategoriesGraph(state)
 		},
 		component: <DataImporter />,
-		hidden: !state.accounts.length || !state.operations.length
+		nextButtonHidden: !state.accounts.length || !state.operations.length
 	}
 
 	const selectDirections = {
@@ -65,7 +66,7 @@ const stepOneMap = (
 			clearError()
 		},
 		component: <DirectionSelector />,
-		hidden: !!state.accounts.find(
+		nextButtonHidden: !!state.accounts.find(
 			acc => acc.type === undefined || acc.type === ''
 		)
 	}
@@ -87,8 +88,8 @@ const stepOneMap = (
 		stepTitle: '',
 		onPrevious: () => setAnnualReportInitialDataSavedToDb(false),
 		onNext: () => {},
-		hidden: true,
-		component: <></>
+		nextButtonHidden: true,
+		component: <FinalStep />
 	}
 
 	const sequence =
