@@ -1,7 +1,7 @@
 import BankIncomeOperations from './components/BankIncomeOperations'
 import FinalStep from './components/final-step/FinalStep'
 
-import { IQuizStep } from '~/components/ui/quiz-elements/quiz.interface'
+import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
 import {
 	IAnnualReport,

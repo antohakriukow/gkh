@@ -1,5 +1,6 @@
 export { default as Table } from './table/Table'
-export { default as Quiz } from './quiz-elements/quiz/Quiz'
+export { default as Quiz } from './quiz/Quiz'
+// export { default as Quiz } from './quiz-elements_OLD/quiz/Quiz'
 
 export { default as Heading } from '../ui/heading/Heading'
 export { default as SubHeading } from '../ui/heading/SubHeading'

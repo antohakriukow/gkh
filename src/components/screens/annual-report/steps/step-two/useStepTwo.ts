@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { useAuth } from '~/hooks/useAuth'
-import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { IAnnualCategory } from '~/shared/types/annual.interface'
 
@@ -17,7 +16,6 @@ export const useStepTwo = (
 	setValue: UseFormSetValue<IAnnualReportCategoriesFormInput>
 ) => {
 	const { user } = useAuth()
-	// const { currentAnnualReport } = useTypedSelector(state => state.ui)
 	const { annualReportInDB } = useAnnualReport()
 	const { reportId } = useParams<{ reportId: string }>()
 	const [isLoading, setIsLoading] = useState(false)

@@ -27,7 +27,7 @@ const Item: FC<IAnnualReportCategoriesField> = ({
 						: { valueAsNumber: true }
 				)}
 				error={error}
-				placeholder={placeholder}
+				placeholder={`${placeholder}, руб:`}
 				type='number'
 				autoComplete='off'
 			/>

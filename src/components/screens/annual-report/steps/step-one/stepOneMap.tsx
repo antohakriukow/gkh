@@ -6,7 +6,7 @@ import StructureSelector from './components/structure-selector/StructureSelector
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { getAnnualCategoriesGraph } from '~/core/annual/getAnnualCategoriesGraph'
 
-import { IQuizStep } from '~/components/ui/quiz-elements/quiz.interface'
+import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
 // import { getAnnualCategoriesGraph } from '~/utils/annual.utils'
 import { AnnualState } from '~/store/annual/annual.interface'
@@ -60,9 +60,7 @@ const stepOneMap = (
 			setAnnualReportInitialDataSavedToDb(false)
 		},
 		onNext: () => {
-			state.structure === 'cash/partners'
-				? saveReportData()
-				: handleSetInitialCategories()
+			if (state.structure === 'cash/partners') handleSetInitialCategories()
 			clearError()
 		},
 		component: <DirectionSelector />,
@@ -78,7 +76,6 @@ const stepOneMap = (
 			setAnnualReportInitialDataSavedToDb(false)
 		},
 		onNext: () => {
-			saveReportData()
 			clearError()
 		},
 		component: <Graph />
@@ -87,7 +84,10 @@ const stepOneMap = (
 	const final = {
 		stepTitle: '',
 		onPrevious: () => setAnnualReportInitialDataSavedToDb(false),
-		onNext: () => {},
+		onNext: () => {
+			saveReportData()
+			clearError()
+		},
 		nextButtonHidden: true,
 		component: <FinalStep />
 	}

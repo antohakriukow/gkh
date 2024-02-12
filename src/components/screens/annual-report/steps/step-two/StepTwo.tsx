@@ -20,15 +20,17 @@ const StepTwo: FC = () => {
 			<div className={styles.container}>
 				<SubHeading title='Введите суммы начислений:' />
 				{annualReportInDB?.data?.categories
-					? annualReportInDB?.data?.categories?.map(category => (
-							<Item
-								key={category.id}
-								register={register}
-								control={control}
-								fieldName={`categories.${category.id}.amount`}
-								placeholder={category.value}
-							/>
-					  ))
+					? annualReportInDB?.data?.categories
+							.sort((a, b) => a.value.localeCompare(b.value))
+							?.map(category => (
+								<Item
+									key={category.id}
+									register={register}
+									control={control}
+									fieldName={`categories.${category.id}.amount`}
+									placeholder={category.value}
+								/>
+							))
 					: null}
 				<Button type='submit'>Сохранить</Button>
 			</div>

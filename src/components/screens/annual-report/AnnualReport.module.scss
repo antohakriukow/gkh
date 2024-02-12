@@ -1,12 +1,12 @@
 @import '../../../styles/colors.scss';
 
 .container {
-	@apply flex flex-col justify-center items-start bg-white p-4 pb-8 rounded-md box-border select-none;
+	@apply h-full flex flex-col justify-start items-start bg-white p-4 rounded-md box-border select-none;
 	height: calc(100vh - 148px);
 }
 
 .loader {
-	@apply flex flex-col justify-center items-start bg-white p-4 pb-8 box-border select-none;
+	@apply flex flex-col justify-center items-start bg-white p-4 box-border select-none;
 	height: calc(100vh - 148px);
 	background-color: rgba(0, 0, 0, 0.1);
 	z-index: 10;

@@ -1,0 +1,54 @@
+@import '../../../styles/colors.scss';
+
+.container {
+	@apply h-full w-full flex flex-col  p-4 rounded-sm bg-gray-25 box-border;
+	border: 1px solid #ccc;
+}
+
+.stepContent {
+	@apply h-full;
+	margin-bottom: 20px;
+	overflow-y: auto;
+	scrollbar-width: thin;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+
+	&::-webkit-scrollbar {
+		width: 4px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: $gray-400;
+		border-radius: 0px;
+	}
+}
+
+.stepIndicator {
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.completedStep {
+	display: flex;
+	flex-direction: row;
+	background-color: #f0f0f0;
+	padding: 10px;
+	margin-bottom: 10px;
+	border-radius: 4px;
+}
+
+.completedStep div:first-child {
+	font-weight: bold;
+}
+
+.completedStep div:last-child {
+	margin-left: 10px;
+	color: green;
+}
+
+.currentStep {
+	margin-top: 20px;
+}
+
+.stepNavigation {
+	@apply flex flex-row justify-between;
+}

@@ -12,10 +12,13 @@ import { AnnualService } from '~/services/annual.service'
 
 import { handleDBErrors } from '~/utils/error.utils'
 
+import { useAnnualReport } from '../../useAnnualReport'
+
 export const useStepOne = () => {
 	const { user } = useAuth()
 	const navigate = useNavigate()
-	const { currentAnnualReport } = useTypedSelector(state => state.ui)
+	const { currentAnnualReport, annualReportInitialDataSavedToDb } =
+		useAnnualReport()
 	const annualState = useTypedSelector(state => state.annual)
 	const {
 		setAnnualReportInitialDataSavedToDb,
@@ -79,7 +82,10 @@ export const useStepOne = () => {
 		)
 
 	const saveReportData = () => {
+		console.log('HERE1')
+		console.log('currentAnnualReport: ', currentAnnualReport)
 		if (!user?.uid || !currentAnnualReport) return
+		console.log('HERE2')
 
 		setIsLoading(true)
 		const modifiedState = prepareAnnualState(annualState)
@@ -102,6 +108,12 @@ export const useStepOne = () => {
 		}
 	}
 
+	const stepOneDone =
+		!!annualReportInitialDataSavedToDb ||
+		(!!currentAnnualReport?.data?.accounts &&
+			!!currentAnnualReport?.data?.operations &&
+			!!currentAnnualReport?.data?.settings?.structure)
+
 	return {
 		isLoading,
 		initialStep,
@@ -114,6 +126,7 @@ export const useStepOne = () => {
 		clearAccountTypes,
 		setInitialCategories,
 		saveReportData,
-		setAnnualReportInitialDataSavedToDb
+		setAnnualReportInitialDataSavedToDb,
+		stepOneDone
 	}
 }
