@@ -5,7 +5,7 @@ import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
 import {
 	IAnnualReport,
-	IOperation,
+	IExtendedBankOperation,
 	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
 
@@ -16,10 +16,10 @@ interface IStepData {
 
 const stepThreeMap = (annualReport: IAnnualReport): IQuizStep[] => {
 	const filterOperationsByDirection = (
-		operations: IOperation[],
+		bankOperations: IExtendedBankOperation[],
 		direction: TypeAnnualDirection
 	) => {
-		return operations.filter(operation => operation.direction === direction)
+		return bankOperations.filter(operation => operation.direction === direction)
 	}
 
 	const stepsData = [
@@ -29,7 +29,7 @@ const stepThreeMap = (annualReport: IAnnualReport): IQuizStep[] => {
 		{ title: 'Коммерческая деятельность', direction: 'commerce' }
 	] as IStepData[]
 
-	const getStep = (operations: IOperation[], step: IStepData) => ({
+	const getStep = (operations: IExtendedBankOperation[], step: IStepData) => ({
 		stepTitle: `Поступления по направлению "${step.title}"`,
 		onNext: () => {},
 		component: (
@@ -43,17 +43,17 @@ const stepThreeMap = (annualReport: IAnnualReport): IQuizStep[] => {
 	let sequence = [] as IQuizStep[]
 
 	stepsData.forEach(step => {
-		if (!annualReport?.data?.operations) return
+		if (!annualReport?.data?.bankOperations) return
 		if (
 			filterOperationsByDirection(
-				annualReport?.data?.operations,
+				annualReport?.data?.bankOperations as IExtendedBankOperation[],
 				step.direction
 			).length > 0
 		) {
 			sequence.push(
 				getStep(
 					filterOperationsByDirection(
-						annualReport?.data?.operations,
+						annualReport?.data?.bankOperations as IExtendedBankOperation[],
 						step.direction
 					),
 					step

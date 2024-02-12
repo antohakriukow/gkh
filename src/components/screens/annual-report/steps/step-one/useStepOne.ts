@@ -82,10 +82,7 @@ export const useStepOne = () => {
 		)
 
 	const saveReportData = () => {
-		console.log('HERE1')
-		console.log('currentAnnualReport: ', currentAnnualReport)
 		if (!user?.uid || !currentAnnualReport) return
-		console.log('HERE2')
 
 		setIsLoading(true)
 		const modifiedState = prepareAnnualState(annualState)
@@ -96,8 +93,16 @@ export const useStepOne = () => {
 				directions: modifiedState.directions ?? [],
 				accounts: modifiedState.accounts,
 				categories: modifiedState.categories,
-				operations: modifiedState.operations
+				bankOperations: [],
+				accountingOperations: []
 			}
+
+			modifiedState.structure === 'accruals/services'
+				? (data.bankOperations = modifiedState.operations)
+				: (data.accountingOperations = modifiedState.operations)
+
+			console.log('data: ', data)
+
 			AnnualService.update(user?.uid, currentAnnualReport._id.toString(), data)
 			setAnnualReportInitialDataSavedToDb(true)
 		} catch (error) {

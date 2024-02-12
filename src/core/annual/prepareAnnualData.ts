@@ -30,10 +30,12 @@ export const removeCollapsedFromCategories = (
 export const prepareAnnualState = (state: AnnualState) => {
 	const internalState = createDeepCopy(state)
 
+	// Удаление свойства 'collapsed' из categories
 	internalState.categories = removeCollapsedFromCategories(
 		internalState.categories
 	)
 
+	// Унификация банковских операций
 	if (
 		internalState.structure === 'cash/partners' ||
 		internalState.structure === 'cash/services'
@@ -43,6 +45,7 @@ export const prepareAnnualState = (state: AnnualState) => {
 			internalState.accounts
 		)
 
+	// Унификация бухгалтерских операций
 	if (internalState.structure === 'accruals/services') {
 		internalState.operations = unifyAccountingOperations(
 			internalState.operations,

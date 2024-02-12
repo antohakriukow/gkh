@@ -8,6 +8,8 @@ import { getAnnualCategoriesGraph } from '~/core/annual/getAnnualCategoriesGraph
 
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
+import { TypeAnnualReportStructure } from '~/shared/types/annual.interface'
+
 // import { getAnnualCategoriesGraph } from '~/utils/annual.utils'
 import { AnnualState } from '~/store/annual/annual.interface'
 
@@ -92,10 +94,37 @@ const stepOneMap = (
 		component: <FinalStep />
 	}
 
-	const sequence =
-		state.structure === 'cash/partners'
-			? [selectStructure, importData, selectDirections, final]
-			: [selectStructure, importData, selectDirections, createGraph, final]
+	const getStepsSequence = (
+		structure: TypeAnnualReportStructure | null | undefined
+	) => {
+		switch (structure) {
+			case 'cash/partners':
+				return [selectStructure, importData, selectDirections, final]
+
+			case 'accruals/services':
+				return [selectStructure, importData, selectDirections, final]
+
+			case 'cash/services':
+				return [
+					selectStructure,
+					importData,
+					selectDirections,
+					createGraph,
+					final
+				]
+
+			default:
+				return [
+					selectStructure,
+					importData,
+					selectDirections,
+					createGraph,
+					final
+				]
+		}
+	}
+
+	const sequence = getStepsSequence(state.structure)
 
 	return sequence
 }

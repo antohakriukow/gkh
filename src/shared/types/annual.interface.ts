@@ -13,6 +13,12 @@ export type TypeAnnualReportStructure =
 	| 'cash/services'
 	| 'accruals/services'
 
+// Банковский счет или счет бухгалтерского учета
+export interface IAccount {
+	type: TypeAnnualDirection
+	number: string
+}
+
 // //  Формат исходных данных после парсинга:
 
 // Исходный формат операции в журнале проводок 1С
@@ -50,13 +56,15 @@ export interface IBankOperation {
 	paymentPurpose: string
 }
 
-// Банковский счет или счет бухгалтерского учета
-export interface IAccount {
-	type: TypeAnnualDirection
-	number: string
+export interface IExtendedBankOperation
+	extends Omit<
+		IBankOperation,
+		'payerKPP' | 'payerCheckingAccount' | 'recipientCheckingAccount'
+	> {
+	_id: string
+	direction: TypeAnnualDirection
+	categoryId: string
 }
-
-// //  Формат исходных данных для работы:
 
 export interface IOperation {
 	_id: string
@@ -67,6 +75,12 @@ export interface IOperation {
 	document: string
 	description: string
 	partnerName?: string
+}
+
+export interface IExtendedAccountingOperation extends IAccountingOperation {
+	_id: string
+	direction: TypeAnnualDirection
+	categoryId: string
 }
 
 export interface IAnnualCategory {
@@ -89,7 +103,9 @@ export interface IAnnualReportData {
 	directions?: TypeAnnualDirection[]
 	accounts?: IAccount[]
 	categories?: IAnnualCategory[]
-	operations?: IOperation[]
+	operations?: IExtendedBankOperation[] | IExtendedAccountingOperation[]
+	bankOperations?: IExtendedBankOperation[]
+	accountingOperations?: IExtendedAccountingOperation[]
 	settings?: IAnnualReportSettings
 	temporary?: ITemporaryData
 }

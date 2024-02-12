@@ -1,7 +1,7 @@
 import {
 	IAccount,
 	IBankOperation,
-	IOperation,
+	IExtendedBankOperation,
 	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
 
@@ -54,24 +54,17 @@ const separateOperations = (
 const processExternalOperations = (
 	operations: IBankOperation[],
 	accounts: IAccount[]
-) => {
+): IExtendedBankOperation[] => {
 	return operations.map((operation, index) => {
 		const isIncome = accounts.some(
 			account => account.number === operation.recipientAccount
 		)
 
 		return {
+			...operation,
 			_id: index.toString(),
-			partnerName: isIncome
-				? operation.payerName.toString()
-				: operation.recipientName,
 			categoryId: '',
 			amount: isIncome ? operation.amount : -operation.amount,
-			date: operation.date,
-			document: `${isIncome ? 'Поступление' : 'Списание'} №${
-				operation.documentNumber
-			} от ${operation.date}`,
-			description: operation.paymentPurpose,
 			direction: isIncome
 				? setDirection(accounts, operation.recipientAccount)
 				: setDirection(accounts, operation.payerAccount)
@@ -89,30 +82,25 @@ const processExternalOperations = (
 const processInternalOperations = (
 	internalOperations: IBankOperation[],
 	accounts: IAccount[]
-): IOperation[] => {
-	let operations: IOperation[] = []
+): IExtendedBankOperation[] => {
+	let operations: IExtendedBankOperation[] = []
 
 	internalOperations.forEach((transfer, index) => {
 		const baseId = index * 2
 		operations.push({
+			...transfer,
 			_id: baseId.toString(),
-			partnerName: transfer.payerName,
 			categoryId: '',
 			amount: -transfer.amount,
-			date: transfer.date,
-			document: `Списание №${transfer.documentNumber} от ${transfer.date}`,
-			description: transfer.paymentPurpose,
 			direction: setDirection(accounts, transfer.payerAccount)
 		})
 
 		operations.push({
+			...transfer,
 			_id: (baseId + 1).toString(),
-			partnerName: transfer.payerName,
 			categoryId: '',
 			amount: transfer.amount,
 			date: transfer.date,
-			document: `Поступление №${transfer.documentNumber} от ${transfer.date}`,
-			description: transfer.paymentPurpose,
 			direction: setDirection(accounts, transfer.recipientAccount)
 		})
 	})
@@ -147,7 +135,7 @@ const setDirection = (
 export const unifyBankOperations = (
 	operations: IBankOperation[],
 	accounts: IAccount[]
-): IOperation[] => {
+): IExtendedBankOperation[] => {
 	const { internalOperations, externalOperations } = separateOperations(
 		operations,
 		accounts

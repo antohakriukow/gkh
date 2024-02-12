@@ -3,6 +3,8 @@ import {
 	IAnnualCategory,
 	IAnnualCategoryState,
 	IBankOperation,
+	IExtendedAccountingOperation,
+	IExtendedBankOperation,
 	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
 
@@ -30,6 +32,12 @@ export const isBankOperation = (
 	operation: IAccountingOperation | IBankOperation
 ): operation is IBankOperation => {
 	return (operation as IBankOperation).paymentPurpose !== undefined
+}
+
+export const isExtendedBankOperation = (
+	operation: IExtendedAccountingOperation | IExtendedBankOperation
+): operation is IExtendedBankOperation => {
+	return (operation as IExtendedBankOperation).paymentPurpose !== undefined
 }
 
 /**

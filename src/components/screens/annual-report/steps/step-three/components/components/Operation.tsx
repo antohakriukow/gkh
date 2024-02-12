@@ -1,11 +1,14 @@
 import { FC } from 'react'
 
-import { IOperation } from '~/shared/types/annual.interface'
+import {
+	IExtendedBankOperation,
+	IOperation
+} from '~/shared/types/annual.interface'
 
 import styles from './styles.module.scss'
 
 interface IOperationProps {
-	operation: IOperation
+	operation: IExtendedBankOperation
 	toggleOperationSelection: (id: string) => void
 	selectedOperations: string[]
 }
@@ -23,8 +26,8 @@ const Operation: FC<IOperationProps> = ({
 		<div id={operation._id} className={styles.operation}>
 			<div>{operation.date}</div>
 			<div>{operation.amount}</div>
-			<div className={styles.description} title={operation.description}>
-				{operation.description}
+			<div className={styles.description} title={operation.paymentPurpose}>
+				{operation.paymentPurpose}
 			</div>
 			<input
 				type='checkbox'

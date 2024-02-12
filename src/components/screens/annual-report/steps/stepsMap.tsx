@@ -15,11 +15,11 @@ const stepsMap = (
 	stepThree: IQuizStep[]
 ): IQuizStep[] => {
 	const isCashPartners =
-		annualReportInDB?.data.settings?.structure === 'cash/partners'
+		annualReportInDB?.data?.settings?.structure === 'cash/partners'
 	const isCashServices =
-		annualReportInDB?.data.settings?.structure === 'cash/services'
+		annualReportInDB?.data?.settings?.structure === 'cash/services'
 	const isAccrualsServices =
-		annualReportInDB?.data.settings?.structure === 'accruals/services'
+		annualReportInDB?.data?.settings?.structure === 'accruals/services'
 
 	const initialStep = {
 		stepTitle: 'Структура отчета',

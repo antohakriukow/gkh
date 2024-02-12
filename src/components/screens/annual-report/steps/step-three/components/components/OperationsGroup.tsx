@@ -2,13 +2,13 @@ import Operation from './Operation'
 import { FC, useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa6'
 
-import { IOperation } from '~/shared/types/annual.interface'
+import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
 import styles from './styles.module.scss'
 
 interface OperationsGroupProps {
 	partnerName: string
-	operations: IOperation[]
+	operations: IExtendedBankOperation[]
 	toggleOperationSelection: (id: string) => void
 	selectedOperations: string[]
 }
