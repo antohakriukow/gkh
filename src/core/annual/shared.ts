@@ -77,3 +77,18 @@ export const removeCollapsedFromCategories = (
 			: {})
 	}))
 }
+
+export const getAnnualDirectionTitle = (direction: TypeAnnualDirection) => {
+	switch (direction) {
+		case 'main':
+			return 'ЖКУ'
+		case 'renovation':
+			return 'Капитальный ремонт'
+		case 'commerce':
+			return 'Коммерческая деятельность'
+		case 'target':
+			return 'Целевые взносы'
+		default:
+			return ''
+	}
+}

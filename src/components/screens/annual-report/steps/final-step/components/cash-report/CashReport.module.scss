@@ -1,0 +1,11 @@
+.container {
+	@apply bg-white p-4;
+
+	> h4 {
+		@apply pt-2 m-0;
+	}
+
+	> div {
+		@apply mt-4;
+	}
+}

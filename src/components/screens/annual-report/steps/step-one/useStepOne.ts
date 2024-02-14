@@ -98,8 +98,8 @@ export const useStepOne = () => {
 			}
 
 			modifiedState.structure === 'accruals/services'
-				? (data.bankOperations = modifiedState.operations)
-				: (data.accountingOperations = modifiedState.operations)
+				? (data.accountingOperations = modifiedState.operations)
+				: (data.bankOperations = modifiedState.operations)
 
 			console.log('data: ', data)
 
@@ -116,7 +116,8 @@ export const useStepOne = () => {
 	const stepOneDone =
 		!!annualReportInitialDataSavedToDb ||
 		(!!currentAnnualReport?.data?.accounts &&
-			!!currentAnnualReport?.data?.operations &&
+			(!!currentAnnualReport?.data?.bankOperations ||
+				!!currentAnnualReport?.data?.accountingOperations) &&
 			!!currentAnnualReport?.data?.settings?.structure)
 
 	return {

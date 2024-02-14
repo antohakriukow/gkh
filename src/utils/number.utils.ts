@@ -41,3 +41,6 @@ export const divideAndRoundNumbers = (
 		| IBudgetFinancing
 		| IRenovationCosts
 }
+
+export const formatNumber = (number: number) =>
+	number.toLocaleString('ru-RU', { style: 'decimal', maximumFractionDigits: 2 })

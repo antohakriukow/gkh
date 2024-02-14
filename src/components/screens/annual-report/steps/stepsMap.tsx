@@ -47,7 +47,7 @@ const stepsMap = (
 	}
 
 	const finalStep = {
-		stepTitle: 'Финал',
+		stepTitle: 'Предварительный просмотр',
 		onNext: () => {},
 		backButtonHidden: (isCashPartners || isAccrualsServices) && stepOneDone,
 		component: <FinalStep />
