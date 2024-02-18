@@ -12,7 +12,8 @@ const stepsMap = (
 	annualReportInDB: IAnnualReport | null | undefined,
 	stepOne: IQuizStep[],
 	stepOneDone: boolean,
-	stepThree: IQuizStep[]
+	stepThree: IQuizStep[],
+	downloadXLSX: () => false | Promise<void>
 ): IQuizStep[] => {
 	const isCashPartners =
 		annualReportInDB?.data?.settings?.structure === 'cash/partners'
@@ -48,7 +49,8 @@ const stepsMap = (
 
 	const finalStep = {
 		stepTitle: 'Предварительный просмотр',
-		onNext: () => {},
+		onNext: () => downloadXLSX(),
+		onNextButtonTitle: 'Скачать отчет',
 		backButtonHidden: (isCashPartners || isAccrualsServices) && stepOneDone,
 		component: <FinalStep />
 	}

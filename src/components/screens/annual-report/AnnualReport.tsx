@@ -1,3 +1,4 @@
+import { useFinalStep } from './steps/final-step/components/useFinalStep'
 import stepOneMap from './steps/step-one/stepOneMap'
 import { useStepOne } from './steps/step-one/useStepOne'
 import stepThreeMap from './steps/step-three/stepThreeMap'
@@ -39,9 +40,17 @@ const AnnualReport: FC = () => {
 		setAnnualReportInitialDataSavedToDb
 	)
 
+	const { downloadXLSX } = useFinalStep()
+
 	const stepThree = stepThreeMap(annualReportInDB ?? ({} as IAnnualReport))
 
-	const steps = stepsMap(annualReportInDB, stepOne, stepOneDone, stepThree)
+	const steps = stepsMap(
+		annualReportInDB,
+		stepOne,
+		stepOneDone,
+		stepThree,
+		downloadXLSX
+	)
 
 	useEffect(() => {
 		console.log('stepOneDone: ', stepOneDone)

@@ -1,11 +1,34 @@
 .container {
 	@apply bg-white p-4;
 
-	> h4 {
-		@apply pt-2 m-0;
-	}
-
 	> div {
 		@apply mt-4;
+	}
+}
+
+.header {
+	> h4 {
+		@apply pb-4 m-0 text-center;
+	}
+}
+
+.footer {
+	.signature {
+		@apply grid mt-10 gap-2;
+		grid-template-columns: 1fr 120px 1fr;
+		> div {
+			@apply font-semibold;
+		}
+		> div:nth-of-type(2) {
+			border-bottom: solid 1px black;
+		}
+	}
+
+	.imprint {
+		@apply mt-2 font-semibold;
+	}
+
+	.date {
+		@apply mt-6;
 	}
 }

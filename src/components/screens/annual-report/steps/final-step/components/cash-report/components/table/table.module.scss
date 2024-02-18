@@ -1,4 +1,4 @@
-@import '../../../../../../../../styles/colors.scss';
+@import '../../../../../../../../../styles/colors.scss';
 
 .gridTable {
 	@apply w-full grid gap-0 box-border;
@@ -6,15 +6,11 @@
 	border: 1px solid $primary-800;
 }
 
-// .gridHeader {
-// 	display: contents;
-// 	> div {
-// 		background: $primary-200;
-// 	}
-// }
-
 .gridRow:nth-of-type(1) {
 	@apply font-semibold;
+	> div {
+		background: $primary-100;
+	}
 }
 
 .gridRow {
