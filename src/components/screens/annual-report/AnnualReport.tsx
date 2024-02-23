@@ -4,9 +4,11 @@ import { useStepOne } from './steps/step-one/useStepOne'
 import stepThreeMap from './steps/step-three/stepThreeMap'
 import { useStepThree } from './steps/step-three/useStepThree'
 import stepsMap from './steps/stepsMap'
+import { useAnnualReport } from './useAnnualReport'
 import { FC, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import { Quiz } from '~/components/ui'
+import { Button, Quiz, SubHeading } from '~/components/ui'
 
 import { IAnnualReport } from '~/shared/types/annual.interface'
 
@@ -14,6 +16,10 @@ import styles from './AnnualReport.module.scss'
 
 const AnnualReport: FC = () => {
 	const [initialStepIndex, setInitialStepIndex] = useState(0)
+	const { deleteAnnualReport } = useAnnualReport()
+	const navigate = useNavigate()
+
+	const handleCloseReport = () => navigate(`/annual-reports`)
 
 	const {
 		handleSaveAnnualReportStructure,
@@ -53,12 +59,20 @@ const AnnualReport: FC = () => {
 	)
 
 	useEffect(() => {
-		console.log('stepOneDone: ', stepOneDone)
 		if (stepOneDone) setInitialStepIndex(1)
 	}, [stepOneDone])
 
+	const title = `Отчет об исполнении сметы ${annualReportInDB?.company.name.short}`
+
 	return (
 		<div className={styles.container}>
+			<div className={styles.header}>
+				<SubHeading title={title} />
+				<div className={styles.toolbar}>
+					<Button onClick={deleteAnnualReport}>Удалить</Button>
+					<Button onClick={handleCloseReport}>Закрыть</Button>
+				</div>
+			</div>
 			<Quiz steps={steps} initialStepIndex={initialStepIndex} />
 		</div>
 	)

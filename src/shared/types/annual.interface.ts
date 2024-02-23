@@ -13,6 +13,16 @@ export type TypeAnnualReportStructure =
 	| 'cash/services'
 	| 'accruals/services'
 
+export type TypeAnnualOperationTag =
+	| 'ownersIncome'
+	| 'commercialIncome'
+	| 'percents'
+	| 'fkr'
+	| 'partnerCashback'
+	| 'internal'
+	| 'other'
+	| undefined
+
 // Банковский счет или счет бухгалтерского учета
 export interface IAccount {
 	type: TypeAnnualDirection
@@ -54,6 +64,7 @@ export interface IBankOperation {
 	budgetClassificationCode: string
 	paymentPriority: number
 	paymentPurpose: string
+	tag?: string
 }
 
 export interface IExtendedBankOperation

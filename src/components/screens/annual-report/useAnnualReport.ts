@@ -2,10 +2,14 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useActions } from '~/hooks/useActions'
+import { useAuth } from '~/hooks/useAuth'
 import { useData } from '~/hooks/useData'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
 
+import { AnnualService } from '~/services/annual.service'
+
 export const useAnnualReport = () => {
+	const { user } = useAuth()
 	const [isLoading, setIsLoading] = useState(true)
 	const { annuals } = useData()
 	const { reportId } = useParams<{ reportId: string }>()
@@ -32,6 +36,16 @@ export const useAnnualReport = () => {
 		setCurrentAnnualReport
 	])
 
+	const deleteAnnualReport = () => {
+		if (!user || !reportId) return
+
+		try {
+			AnnualService.remove(user?.uid, reportId)
+		} catch (error) {
+			console.log('error: ', error)
+		}
+	}
+
 	const finalFunction = () => console.log('finalFunction')
 	const finalButtonTitle = 'Предпросмотр'
 
@@ -41,6 +55,7 @@ export const useAnnualReport = () => {
 		finalButtonTitle,
 		currentAnnualReport,
 		annualReportInitialDataSavedToDb,
-		isLoading
+		isLoading,
+		deleteAnnualReport
 	}
 }

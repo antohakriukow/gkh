@@ -101,8 +101,6 @@ export const useStepOne = () => {
 				? (data.accountingOperations = modifiedState.operations)
 				: (data.bankOperations = modifiedState.operations)
 
-			console.log('data: ', data)
-
 			AnnualService.update(user?.uid, currentAnnualReport._id.toString(), data)
 			setAnnualReportInitialDataSavedToDb(true)
 		} catch (error) {

@@ -1,7 +1,7 @@
 @import '../../../styles/colors.scss';
 
 .container {
-	@apply h-full w-full flex flex-col  p-4 rounded-sm bg-gray-25 box-border;
+	@apply h-full w-full flex flex-col p-4 rounded-sm bg-gray-25 box-border;
 	border: 1px solid #ccc;
 }
 
@@ -45,9 +45,9 @@
 	color: green;
 }
 
-.currentStep {
-	margin-top: 20px;
-}
+// .currentStep {
+// 	margin-top: 20px;
+// }
 
 .stepNavigation {
 	@apply flex flex-row justify-between;

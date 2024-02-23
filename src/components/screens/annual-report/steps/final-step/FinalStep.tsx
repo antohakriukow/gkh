@@ -1,5 +1,5 @@
 import AccrualsReport from './components/accruals-report/AccrualsReport'
-import CashReport from './components/cash-report/CashReport'
+import CashReport from './components/cash-partners-report/CashReport'
 import { FC } from 'react'
 
 import { Loader } from '~/components/ui'
@@ -11,7 +11,6 @@ const FinalStep: FC = () => {
 
 	if (!annualReportInDB || !annualReportInDB.data) return null
 
-	console.log('annualReportInDB: ', annualReportInDB)
 	if (!!annualReportInDB.data.bankOperations) {
 		return (
 			<CashReport

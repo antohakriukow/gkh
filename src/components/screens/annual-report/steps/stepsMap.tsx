@@ -1,5 +1,6 @@
 import FinalStep from './final-step/FinalStep'
 import StepTwo from './step-two/StepTwo'
+import { BaseSyntheticEvent } from 'react'
 
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
@@ -22,6 +23,11 @@ const stepsMap = (
 	const isAccrualsServices =
 		annualReportInDB?.data?.settings?.structure === 'accruals/services'
 
+	const totalCategoriesAmount = annualReportInDB?.data.categories?.reduce(
+		(sum, category) => (category.amount ? sum + category.amount : sum),
+		0
+	)
+
 	const initialStep = {
 		stepTitle: 'Структура отчета',
 		onNext: () => {},
@@ -31,7 +37,8 @@ const stepsMap = (
 	const accrualsStep = {
 		stepTitle: 'Начисления',
 		onNext: () => {},
-		backButtonHidden: stepOneDone,
+		// backButtonHidden: stepOneDone,
+		nextButtonHidden: totalCategoriesAmount === 0,
 		component: <StepTwo />
 	}
 

@@ -1,8 +1,7 @@
 @import '../../../../../../../styles/colors.scss';
 
 .group {
-	@apply box-border;
-	max-width: 400px;
+	@apply box-border w-full;
 	border: solid 1px $gray-200;
 	border-radius: 4px;
 	overflow: hidden;
@@ -28,7 +27,7 @@
 
 .partnerName {
 	@apply whitespace-nowrap overflow-hidden overflow-ellipsis;
-	max-width: 200px;
+	max-width: 400px;
 }
 
 .counter {
@@ -36,6 +35,7 @@
 }
 
 .body {
+	// @apply w-full;
 	padding: 4px 6px;
 	background-color: $gray-0;
 }

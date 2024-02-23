@@ -1,6 +1,10 @@
 import { IAnnualReportCategoriesFormInput } from './step-two.interface'
 import { useEffect, useState } from 'react'
-import { SubmitHandler, UseFormSetValue } from 'react-hook-form'
+import {
+	SubmitHandler,
+	UseFormHandleSubmit,
+	UseFormSetValue
+} from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -13,7 +17,8 @@ import { AnnualService } from '~/services/annual.service'
 import { useAnnualReport } from '../../useAnnualReport'
 
 export const useStepTwo = (
-	setValue: UseFormSetValue<IAnnualReportCategoriesFormInput>
+	setValue: UseFormSetValue<IAnnualReportCategoriesFormInput>,
+	handleSubmit: UseFormHandleSubmit<IAnnualReportCategoriesFormInput, undefined>
 ) => {
 	const { user } = useAuth()
 	const { annualReportInDB } = useAnnualReport()

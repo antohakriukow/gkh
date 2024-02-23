@@ -5,6 +5,17 @@
 	height: calc(100vh - 148px);
 }
 
+.header {
+	@apply w-full flex flex-row justify-between items-center;
+
+	.toolbar {
+		@apply mb-2;
+		> button {
+			@apply ml-3 py-1;
+		}
+	}
+}
+
 .loader {
 	@apply flex flex-col justify-center items-start bg-white p-4 box-border select-none;
 	height: calc(100vh - 148px);

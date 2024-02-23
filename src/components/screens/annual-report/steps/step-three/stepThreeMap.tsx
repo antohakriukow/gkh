@@ -1,6 +1,9 @@
 import BankIncomeOperations from './components/BankIncomeOperations'
 import FinalStep from './components/final-step/FinalStep'
+import Workspace from './workspace/Workspace'
+import { getAnnualTagVariationsData } from '~/data/annual-tag-variations'
 
+import { Loader } from '~/components/ui'
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
 import {
@@ -33,9 +36,11 @@ const stepThreeMap = (annualReport: IAnnualReport): IQuizStep[] => {
 		stepTitle: `Поступления по направлению "${step.title}"`,
 		onNext: () => {},
 		component: (
-			<BankIncomeOperations
-				title={`Распределите операции направления "${step.title}"`}
-				operations={filterOperationsByDirection(operations, step.direction)}
+			<Workspace
+				variations={getAnnualTagVariationsData(step.direction)}
+				property='tag'
+				component={BankIncomeOperations}
+				data={filterOperationsByDirection(operations, step.direction)}
 			/>
 		)
 	})
@@ -68,8 +73,6 @@ const stepThreeMap = (annualReport: IAnnualReport): IQuizStep[] => {
 		nextButtonHidden: true,
 		component: <FinalStep />
 	}
-
-	console.log('sequence: ', sequence)
 	return [...sequence, final]
 }
 

@@ -76,8 +76,6 @@ export const useDataImporter = () => {
 				if (!!allOperations)
 					setAnnualFinalDate(allOperations[allOperations.length - 1].date)
 
-				console.log('allAccounts: ', allAccounts)
-
 				setAnnualOperations(
 					allOperations as IAccountingOperation[] | IBankOperation[]
 				)

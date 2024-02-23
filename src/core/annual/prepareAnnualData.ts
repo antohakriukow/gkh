@@ -1,3 +1,4 @@
+import { data } from './../../components/screens/annual-report/steps/step-one/components/structure-selector/data'
 import { unifyAccountingOperations } from './prepareAccountingData'
 import { unifyBankOperations } from './prepareBankData'
 
@@ -5,6 +6,8 @@ import {
 	IAnnualCategory,
 	IAnnualCategoryState
 } from '~/shared/types/annual.interface'
+
+import { GetDateIntervalBoundaries } from '~/utils/time.utils'
 
 import { AnnualState } from '~/store/annual/annual.interface'
 
@@ -39,11 +42,12 @@ export const prepareAnnualState = (state: AnnualState) => {
 	if (
 		internalState.structure === 'cash/partners' ||
 		internalState.structure === 'cash/services'
-	)
+	) {
 		internalState.operations = unifyBankOperations(
 			internalState.operations,
 			internalState.accounts
 		)
+	}
 
 	// Унификация бухгалтерских операций
 	if (internalState.structure === 'accruals/services') {
@@ -53,6 +57,13 @@ export const prepareAnnualState = (state: AnnualState) => {
 			internalState.accounts
 		).filter((operation: IOperation) => !!operation.direction)
 	}
+
+	internalState.startDate = GetDateIntervalBoundaries(
+		state.operations.map(operation => operation.date)
+	).earliest
+	internalState.finalDate = GetDateIntervalBoundaries(
+		state.operations.map(operation => operation.date)
+	).latest
 
 	return internalState
 }

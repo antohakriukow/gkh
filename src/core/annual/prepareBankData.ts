@@ -2,7 +2,8 @@ import {
 	IAccount,
 	IBankOperation,
 	IExtendedBankOperation,
-	TypeAnnualDirection
+	TypeAnnualDirection,
+	TypeAnnualOperationTag
 } from '~/shared/types/annual.interface'
 
 /**
@@ -44,6 +45,16 @@ const separateOperations = (
 	return { internalOperations, externalOperations }
 }
 
+const setTag = (string: string): TypeAnnualOperationTag => {
+	if (string.toLowerCase().includes('аренд')) return 'commercialIncome'
+	if (string.toLowerCase().includes('возврат')) return 'partnerCashback'
+	if (
+		string.toLowerCase().includes('процент') ||
+		string.toLowerCase().includes('%%')
+	)
+		return 'percents'
+}
+
 /**
  * Обрабатывает массив внешних банковских операций, преобразуя каждую операцию в формат IOperation.
  *
@@ -60,7 +71,7 @@ const processExternalOperations = (
 			account => account.number === operation.recipientAccount
 		)
 
-		return {
+		const response = {
 			...operation,
 			_id: index.toString(),
 			categoryId: '',
@@ -69,6 +80,11 @@ const processExternalOperations = (
 				? setDirection(accounts, operation.recipientAccount)
 				: setDirection(accounts, operation.payerAccount)
 		}
+
+		if (!!setTag(response.paymentPurpose))
+			response.tag = setTag(response.paymentPurpose)
+
+		return response
 	})
 }
 
@@ -92,7 +108,8 @@ const processInternalOperations = (
 			_id: baseId.toString(),
 			categoryId: '',
 			amount: -transfer.amount,
-			direction: setDirection(accounts, transfer.payerAccount)
+			direction: setDirection(accounts, transfer.payerAccount),
+			tag: 'internal'
 		})
 
 		operations.push({
@@ -145,6 +162,7 @@ export const unifyBankOperations = (
 		externalOperations,
 		accounts
 	)
+
 	let processedInternalTransfers = processInternalOperations(
 		internalOperations,
 		accounts

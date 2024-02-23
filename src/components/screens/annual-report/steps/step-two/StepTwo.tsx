@@ -13,7 +13,7 @@ const StepTwo: FC = () => {
 		useForm<IAnnualReportCategoriesFormInput>({
 			mode: 'onSubmit'
 		})
-	const { annualReportInDB, onSubmit } = useStepTwo(setValue)
+	const { annualReportInDB, onSubmit } = useStepTwo(setValue, handleSubmit)
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
@@ -33,6 +33,18 @@ const StepTwo: FC = () => {
 							))
 					: null}
 				<Button type='submit'>Сохранить</Button>
+				{annualReportInDB?.data?.categories && (
+					<p>
+						Итого начислено:{' '}
+						{annualReportInDB?.data?.categories
+							.reduce(
+								(sum, category) =>
+									category.amount ? sum + category.amount : sum,
+								0
+							)
+							.toFixed(2)}
+					</p>
+				)}
 			</div>
 		</form>
 	)

@@ -1,11 +1,8 @@
 import { FC } from 'react'
 
-import {
-	IExtendedBankOperation,
-	IOperation
-} from '~/shared/types/annual.interface'
+import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
-import styles from './styles.module.scss'
+import styles from './operations.module.scss'
 
 interface IOperationProps {
 	operation: IExtendedBankOperation

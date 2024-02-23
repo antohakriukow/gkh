@@ -26,8 +26,6 @@ const stepOneMap = (
 		'ui/setAnnualReportInitialDataSavedToDb'
 	>
 ): IQuizStep[] => {
-	console.log('state: ', state)
-
 	const selectStructure = {
 		stepTitle: 'Выбор структуры отчета',
 		onNext: () => {

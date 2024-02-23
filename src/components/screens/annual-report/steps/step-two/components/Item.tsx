@@ -30,6 +30,8 @@ const Item: FC<IAnnualReportCategoriesField> = ({
 				placeholder={`${placeholder}, руб:`}
 				type='number'
 				autoComplete='off'
+				step='0.01'
+				pattern='\d+(\.\d{1,2})?'
 			/>
 		</>
 	)

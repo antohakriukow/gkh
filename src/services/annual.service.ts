@@ -1,5 +1,8 @@
-import { IAnnualReportSettings } from './../shared/types/annual.interface'
-import { child, get, ref, set, update } from 'firebase/database'
+import {
+	IAnnualReportSettings,
+	TypeAnnualOperationTag
+} from './../shared/types/annual.interface'
+import { child, get, ref, remove, set, update } from 'firebase/database'
 import { toast } from 'react-toastify'
 
 import {
@@ -93,6 +96,14 @@ export const AnnualService = {
 		}
 	},
 
+	async remove(userId: string, annualId: string) {
+		try {
+			await remove(ref(db, `users/${userId}/annuals/${annualId}`))
+		} catch (error) {
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
+		}
+	},
+
 	async updateSettings(
 		userId: string,
 		annualId: string,
@@ -103,27 +114,6 @@ export const AnnualService = {
 		try {
 			await update(
 				ref(db, `users/${userId}/annuals/${annualId}/data/settings`),
-				data
-			)
-		} catch (error) {
-			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
-		}
-	},
-
-	async updateCategory(
-		userId: string,
-		annualId: string,
-		categoryId: string,
-		data: IAnnualCategory
-	) {
-		if (!data.id) return
-
-		try {
-			await update(
-				ref(
-					db,
-					`users/${userId}/annuals/${annualId}/data/categories/${categoryId}`
-				),
 				data
 			)
 		} catch (error) {
@@ -142,6 +132,28 @@ export const AnnualService = {
 			await set(
 				ref(db, `users/${userId}/annuals/${annualId}/data/categories`),
 				data
+			)
+		} catch (error) {
+			console.log('ERROR: ', error)
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
+		}
+	},
+
+	async updateBankOperationTag(
+		userId: string,
+		annualId: string,
+		tag: TypeAnnualOperationTag,
+		operationId: string
+	) {
+		if (!tag || !operationId) return
+
+		try {
+			await set(
+				ref(
+					db,
+					`users/${userId}/annuals/${annualId}/data/bankOperations/${operationId}/tag`
+				),
+				tag
 			)
 		} catch (error) {
 			console.log('ERROR: ', error)

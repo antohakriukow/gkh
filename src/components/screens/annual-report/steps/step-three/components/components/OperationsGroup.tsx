@@ -4,7 +4,7 @@ import { FaChevronDown, FaChevronUp } from 'react-icons/fa6'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
-import styles from './styles.module.scss'
+import styles from './operations.module.scss'
 
 interface OperationsGroupProps {
 	partnerName: string

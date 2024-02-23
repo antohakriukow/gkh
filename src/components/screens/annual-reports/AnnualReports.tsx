@@ -14,6 +14,7 @@ import { useTypedSelector } from '~/hooks/useTypedSelector'
 import Intro from '~/shared/Intro'
 import { IAnnualReport } from '~/shared/types/annual.interface'
 
+import { getAnnualReportStructureName } from '~/utils/annual.utils'
 import { convertTypeReport } from '~/utils/report.utils'
 import { convertTimestampToDate } from '~/utils/time.utils'
 
@@ -38,6 +39,8 @@ const AnnualReports: FC = () => {
 				_id: annual._id.toString(),
 				data: [
 					convertTypeReport(annual.type),
+					getAnnualReportStructureName(annual.data?.settings?.structure) ??
+						'Не выбран',
 					convertTimestampToDate(+annual.updatedAt)
 				]
 			}))
@@ -53,9 +56,9 @@ const AnnualReports: FC = () => {
 			</div>
 			<AddReportBtn onClick={handleAdd} />
 			<Table
-				titles={['Наименование', 'Дата изменения']}
+				titles={['Наименование', 'Шаблон', 'Дата изменения']}
 				rows={convertReportsData(annuals)}
-				columnWidths={[5, 5]}
+				columnWidths={[5, 5, 5]}
 				onClick={handleOpenReport}
 				height={85}
 			/>
