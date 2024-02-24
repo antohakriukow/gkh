@@ -1,0 +1,41 @@
+@import '../../../../../../styles/colors.scss';
+
+.container {
+	@apply w-full;
+	max-width: 500px;
+
+	.body {
+		@apply box-border;
+		max-height: calc(100vh - 290px);
+
+		overflow-y: auto;
+
+		> div {
+			@apply ml-4 box-border;
+		}
+	}
+}
+
+.header {
+	@apply box-border w-full mb-0.5 overflow-hidden flex flex-row justify-between items-center p-2 bg-primary-100;
+	border: solid 1px $gray-200;
+
+	> div {
+		@apply flex flex-row items-center;
+
+		> svg {
+			@apply cursor-pointer;
+		}
+
+		> h2,
+		h4 {
+			@apply block m-0 ml-2 text-primary-700 font-semibold;
+			max-width: 420px;
+		}
+	}
+	> button {
+		@apply flex items-center justify-center p-0;
+		height: 18px;
+		width: 18px;
+	}
+}

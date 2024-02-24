@@ -1,4 +1,7 @@
-import { TypeAnnualReportStructure } from '~/shared/types/annual.interface'
+import {
+	IAnnualCategory,
+	TypeAnnualReportStructure
+} from '~/shared/types/annual.interface'
 
 export const getAnnualReportStructureName = (
 	name: TypeAnnualReportStructure | undefined
@@ -13,4 +16,25 @@ export const getAnnualReportStructureName = (
 		default:
 			return 'Не выбран'
 	}
+}
+
+export const getCategoriesWithoutChildren = (
+	categories: IAnnualCategory[]
+): { title: string; value: string }[] => {
+	function traverse(
+		categories: IAnnualCategory[],
+		acc: { title: string; value: string }[]
+	): void {
+		categories.forEach(category => {
+			if (!category.children) {
+				acc.push({ title: category.value, value: category.id.toString() })
+			} else {
+				traverse(category.children, acc)
+			}
+		})
+	}
+
+	const result: { title: string; value: string }[] = []
+	traverse(categories, result)
+	return result
 }

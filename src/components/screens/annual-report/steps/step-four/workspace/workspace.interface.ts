@@ -1,5 +1,7 @@
 import { Dispatch, FC, SetStateAction } from 'react'
 
+import { IAnnualCategory } from '~/shared/types/annual.interface'
+
 export interface IVariation<T1> {
 	title: string
 	value: T1
@@ -28,6 +30,7 @@ export interface IWorkspace<T, T1> {
 	property: keyof T
 	variations: IVariation<T1>[]
 	handleSubmit: TypeHandleSubmit<T1>
+	categories?: IAnnualCategory[]
 }
 
 export interface IWorkspaceComponentProps<T, T1> {

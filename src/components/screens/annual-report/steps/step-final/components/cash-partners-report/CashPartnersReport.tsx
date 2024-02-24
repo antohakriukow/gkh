@@ -12,7 +12,7 @@ import {
 } from '~/shared/types/annual.interface'
 import { ICompany } from '~/shared/types/company.interface'
 
-import styles from './CashReport.module.scss'
+import styles from './CashPartnersReport.module.scss'
 
 type GroupedOperations = {
 	[key: string]: IExtendedBankOperation[]
@@ -34,7 +34,7 @@ const groupOperationsByDirectionAndAccount = (
 	return grouped
 }
 
-const CashReport: FC<{
+const CashPartnersReport: FC<{
 	operations: IExtendedBankOperation[]
 	company: ICompany
 }> = ({ operations, company }) => {
@@ -75,4 +75,4 @@ const CashReport: FC<{
 	)
 }
 
-export default CashReport
+export default CashPartnersReport

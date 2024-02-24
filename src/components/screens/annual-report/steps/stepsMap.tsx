@@ -1,6 +1,5 @@
-import FinalStep from './final-step/FinalStep'
+import FinalStep from './step-final/FinalStep'
 import StepTwo from './step-two/StepTwo'
-import { BaseSyntheticEvent } from 'react'
 
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
@@ -14,6 +13,7 @@ const stepsMap = (
 	stepOne: IQuizStep[],
 	stepOneDone: boolean,
 	stepThree: IQuizStep[],
+	stepFour: IQuizStep[],
 	downloadXLSX: () => false | Promise<void>
 ): IQuizStep[] => {
 	const isCashPartners =
@@ -23,10 +23,17 @@ const stepsMap = (
 	const isAccrualsServices =
 		annualReportInDB?.data?.settings?.structure === 'accruals/services'
 
-	const totalCategoriesAmount = annualReportInDB?.data.categories?.reduce(
+	const totalCategoriesAmount = annualReportInDB?.data?.categories?.reduce(
 		(sum, category) => (category.amount ? sum + category.amount : sum),
 		0
 	)
+
+	const hasOutgoingBankOperationsWithoutCategoryId = Object.values(
+		annualReportInDB?.data.bankOperations ?? {}
+	)
+		.filter(operation => operation.amount < 0)
+		.filter(operation => operation.direction === 'main')
+		.find(operation => operation.categoryId === '')
 
 	const initialStep = {
 		stepTitle: 'Структура отчета',
@@ -51,7 +58,8 @@ const stepsMap = (
 	const costsStep = {
 		stepTitle: 'Списания',
 		onNext: () => {},
-		component: <></>
+		// nextButtonHidden: hasOutgoingBankOperationsWithoutCategoryId,
+		children: stepFour
 	}
 
 	const finalStep = {

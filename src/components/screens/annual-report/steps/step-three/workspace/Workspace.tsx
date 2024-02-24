@@ -6,23 +6,19 @@ import {
 } from './workspace.interface'
 import { useState } from 'react'
 
-import { TypeAnnualOperationTag } from '~/shared/types/annual.interface'
-
-import { useStepThree } from '../useStepThree'
-
 import styles from './Workspace.module.scss'
 
-const Workspace = <T extends IDataObject, T1 extends TypeAnnualOperationTag>({
+const Workspace = <T extends IDataObject, T1>({
 	component: Component,
 	data,
 	property,
-	variations
+	variations,
+	handleSubmit
 }: IWorkspace<T, T1>) => {
 	const [buffer, setBuffer] = useState<string[]>([])
-	const { setBankOperationsTag } = useStepThree()
 
-	const handleSubmit = (data: string[], tag: TypeAnnualOperationTag) => {
-		setBankOperationsTag(data, tag)
+	const onSubmit = (data: string[], newPropertyValue: T1) => {
+		handleSubmit(data, newPropertyValue)
 		setBuffer([])
 	}
 
@@ -45,7 +41,7 @@ const Workspace = <T extends IDataObject, T1 extends TypeAnnualOperationTag>({
 					data: filteredData,
 					buffer,
 					setBuffer,
-					handleSubmit
+					handleSubmit: onSubmit
 				})
 			})
 
@@ -53,12 +49,14 @@ const Workspace = <T extends IDataObject, T1 extends TypeAnnualOperationTag>({
 	}
 
 	const dataWithUndefinedProperty: IResultObject<T, T1> = {
-		title: 'Поступления от собственников',
-		value: undefined as T1,
-		data: data.filter(object => object[property] === undefined) as T[],
+		title: '',
+		value: '' as T1,
+		data: data.filter(
+			object => object[property] === '' || object[property] === undefined
+		) as T[],
 		buffer,
 		setBuffer,
-		handleSubmit
+		handleSubmit: onSubmit
 	}
 
 	const sortedData = filterDataByVariation(data, property, variations)
@@ -69,9 +67,9 @@ const Workspace = <T extends IDataObject, T1 extends TypeAnnualOperationTag>({
 				<Component componentData={dataWithUndefinedProperty} />
 			</div>
 			<div>
-				{sortedData.map(dataSet => (
+				{sortedData.map((dataSet, index) => (
 					<Component
-						key={dataSet.value}
+						key={index}
 						componentData={dataSet as IResultObject<T, T1>}
 					/>
 				))}

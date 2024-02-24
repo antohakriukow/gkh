@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { useActions } from '~/hooks/useActions'
 import { useAuth } from '~/hooks/useAuth'
@@ -16,6 +16,7 @@ export const useAnnualReport = () => {
 	const { currentAnnualReport, annualReportInitialDataSavedToDb } =
 		useTypedSelector(state => state.ui)
 	const { setCurrentAnnualReport } = useActions()
+	const navigate = useNavigate()
 
 	const annualReportInDB = reportId
 		? annuals.find(
@@ -36,11 +37,14 @@ export const useAnnualReport = () => {
 		setCurrentAnnualReport
 	])
 
+	const closeAnnualReport = () => navigate(`/annual-reports`)
+
 	const deleteAnnualReport = () => {
 		if (!user || !reportId) return
 
 		try {
 			AnnualService.remove(user?.uid, reportId)
+			closeAnnualReport()
 		} catch (error) {
 			console.log('error: ', error)
 		}
@@ -56,6 +60,7 @@ export const useAnnualReport = () => {
 		currentAnnualReport,
 		annualReportInitialDataSavedToDb,
 		isLoading,
+		closeAnnualReport,
 		deleteAnnualReport
 	}
 }

@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { ICompany } from '~/shared/types/company.interface'
 
-import styles from '../CashReport.module.scss'
+import styles from '../CashServicesReport.module.scss'
 
 const ReportFooter: FC<{ company: ICompany }> = ({ company }) => {
 	return (

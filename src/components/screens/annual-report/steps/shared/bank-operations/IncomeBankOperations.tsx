@@ -1,7 +1,11 @@
 import OperationsGroup from './components/OperationsGroup'
 import ToolBar from './components/ToolBar'
-import { FC } from 'react'
-import { isExtendedBankOperation } from '~/core/annual/shared'
+import { FC, useState } from 'react'
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
+import {
+	getAnnualDirectionTitle,
+	isExtendedBankOperation
+} from '~/core/annual/shared'
 
 import { SubHeading } from '~/components/ui'
 
@@ -10,16 +14,17 @@ import {
 	TypeAnnualOperationTag
 } from '~/shared/types/annual.interface'
 
-import { IWorkspaceComponentProps } from '../workspace/workspace.interface'
+import { IWorkspaceComponentProps } from '../../step-three/workspace/workspace.interface'
 
-import styles from './BankIncomeOperations.module.scss'
+import styles from './BankOperations.module.scss'
 
-const BankIncomeOperations: FC<
+const BankOperations: FC<
 	IWorkspaceComponentProps<IExtendedBankOperation, TypeAnnualOperationTag>
 > = ({ componentData }) => {
 	const { data, title, value, buffer, setBuffer, handleSubmit } = componentData
+	const [isVisible, setIsVisible] = useState(true)
 
-	console.log(`${title} data:  `, data)
+	const toggleVisible = () => setIsVisible(!isVisible)
 
 	const toggleOperationSelection = (id: string) => {
 		setBuffer(prev =>
@@ -30,7 +35,6 @@ const BankIncomeOperations: FC<
 	const operationsGroupedByPartner = data
 		? data
 				.filter(isExtendedBankOperation)
-				.filter(operation => operation.amount > 0)
 				.reduce(
 					(
 						acc: { [key: string]: IExtendedBankOperation[] },
@@ -54,33 +58,45 @@ const BankIncomeOperations: FC<
 		  )
 		: []
 
-	const onSubmit = () => {
-		if (!!value) handleSubmit(buffer, value)
-	}
+	const onSubmit = () => handleSubmit(buffer, value)
 
 	const disabled = buffer.length === 0
+
+	const heading = title
+		? title
+		: `${getAnnualDirectionTitle(
+				data?.[0].direction
+		  )}: Поступления от собственников`
 
 	return (
 		<div className={styles.container}>
 			<div className={styles.header}>
-				<SubHeading title={title} />
+				<div>
+					{isVisible ? (
+						<FaChevronUp onClick={toggleVisible} />
+					) : (
+						<FaChevronDown onClick={toggleVisible} />
+					)}
+					<SubHeading title={heading} />
+				</div>
 				<ToolBar onSubmit={onSubmit} disabled={disabled} />
 			</div>
 			<div className={styles.workspace}>
 				<div className={styles.body}>
-					{sortedOperationsArray.map(([partnerName, operations]) => (
-						<OperationsGroup
-							key={partnerName}
-							partnerName={partnerName}
-							operations={operations}
-							toggleOperationSelection={toggleOperationSelection}
-							selectedOperations={buffer}
-						/>
-					))}
+					{isVisible &&
+						sortedOperationsArray.map(([partnerName, operations]) => (
+							<OperationsGroup
+								key={partnerName}
+								partnerName={partnerName}
+								operations={operations}
+								toggleOperationSelection={toggleOperationSelection}
+								selectedOperations={buffer}
+							/>
+						))}
 				</div>
 				<div></div>
 			</div>
 		</div>
 	)
 }
-export default BankIncomeOperations
+export default BankOperations

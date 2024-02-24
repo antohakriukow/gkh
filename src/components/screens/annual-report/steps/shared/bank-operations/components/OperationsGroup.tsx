@@ -39,9 +39,9 @@ const OperationsGroup: FC<OperationsGroupProps> = ({
 			<div className={styles.header}>
 				<div>
 					{isVisible ? (
-						<FaChevronUp onClick={toggleVisible} />
+						<FaChevronUp color='#262e59' onClick={toggleVisible} />
 					) : (
-						<FaChevronDown onClick={toggleVisible} />
+						<FaChevronDown color='#262e59' onClick={toggleVisible} />
 					)}
 					<span className={styles.partnerName}>{partnerName}</span>
 				</div>
@@ -58,12 +58,12 @@ const OperationsGroup: FC<OperationsGroupProps> = ({
 			</div>
 			{isVisible && (
 				<div className={styles.body}>
-					<div className={styles.heading}>
+					{/* <div className={styles.heading}>
 						<div className={styles.date}>Дата</div>
 						<div className={styles.amount}>Сумма</div>
 						<div className={styles.description}>Содержание</div>
 						<div />
-					</div>
+					</div> */}
 					{operations.map(operation => (
 						<Operation
 							key={operation._id}

@@ -139,22 +139,48 @@ export const AnnualService = {
 		}
 	},
 
-	async updateBankOperationTag(
+	async updateBankOperationTags(
 		userId: string,
 		annualId: string,
 		tag: TypeAnnualOperationTag,
-		operationId: string
+		operationIds: string[]
 	) {
-		if (!tag || !operationId) return
+		if (tag === undefined || operationIds.length === 0) return
+
+		// Объявление объекта updates с индексируемым типом
+		const updates: { [key: string]: TypeAnnualOperationTag } = {}
+		operationIds.forEach(operationId => {
+			updates[
+				`/users/${userId}/annuals/${annualId}/data/bankOperations/${operationId}/tag`
+			] = tag
+		})
 
 		try {
-			await set(
-				ref(
-					db,
-					`users/${userId}/annuals/${annualId}/data/bankOperations/${operationId}/tag`
-				),
-				tag
-			)
+			await update(ref(db), updates)
+		} catch (error) {
+			console.log('ERROR: ', error)
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
+		}
+	},
+
+	async updateBankOperationCategories(
+		userId: string,
+		annualId: string,
+		categoryId: string,
+		operationIds: string[]
+	) {
+		if (categoryId === undefined || operationIds.length === 0) return
+
+		// Объявление объекта updates с индексируемым типом
+		const updates: { [key: string]: string } = {}
+		operationIds.forEach(operationId => {
+			updates[
+				`/users/${userId}/annuals/${annualId}/data/bankOperations/${operationId}/categoryId`
+			] = categoryId
+		})
+
+		try {
+			await update(ref(db), updates)
 		} catch (error) {
 			console.log('ERROR: ', error)
 			if (error instanceof Error) toast(error.message, { autoClose: 3000 })

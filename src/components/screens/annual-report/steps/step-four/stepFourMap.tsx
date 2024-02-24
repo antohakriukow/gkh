@@ -1,27 +1,27 @@
 import Workspace from './workspace/Workspace'
-import { getAnnualTagVariationsData } from '~/data/annual-tag-variations'
 
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
 import {
 	IAnnualReport,
 	IExtendedBankOperation,
-	TypeAnnualDirection,
-	TypeAnnualOperationTag
+	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
 
-import BankOperations from '../shared/bank-operations/IncomeBankOperations'
+import { getCategoriesWithoutChildren } from '~/utils/annual.utils'
+
+import OutgoingBankOperations from '../shared/bank-operations/OutgoingBankOperations'
 
 interface IStepData {
 	title: string
 	direction: TypeAnnualDirection
 }
 
-const stepThreeMap = (
+const stepFourMap = (
 	annualReport: IAnnualReport,
-	setBankOperationsTag: (
+	setBankOperationsCategoryId: (
 		operationIds: string[],
-		tag: TypeAnnualOperationTag
+		categoryId: string
 	) => void
 ): IQuizStep[] => {
 	const filterOperationsByDirection = (
@@ -32,10 +32,10 @@ const stepThreeMap = (
 	}
 
 	const stepsData = [
-		{ title: 'ЖКУ', direction: 'main' },
-		{ title: 'Капремонт', direction: 'renovation' },
-		{ title: 'Целевые взносы', direction: 'target' },
-		{ title: 'Коммерческая деятельность', direction: 'commerce' }
+		{ title: 'ЖКУ', direction: 'main' }
+		// { title: 'Капремонт', direction: 'renovation' },
+		// { title: 'Целевые взносы', direction: 'target' },
+		// { title: 'Коммерческая деятельность', direction: 'commerce' }
 	] as IStepData[]
 
 	const getStep = (operations: IExtendedBankOperation[], step: IStepData) => ({
@@ -43,14 +43,19 @@ const stepThreeMap = (
 		onNext: () => {},
 		component: (
 			<Workspace
-				variations={getAnnualTagVariationsData(step.direction)}
-				property='tag'
-				component={BankOperations}
+				variations={
+					annualReport.data.categories
+						? getCategoriesWithoutChildren(annualReport.data.categories)
+						: []
+				}
+				property='categoryId'
+				component={OutgoingBankOperations}
 				data={filterOperationsByDirection(
-					operations.filter(operation => operation.amount > 0),
+					operations.filter(operation => operation.amount < 0),
 					step.direction
 				)}
-				handleSubmit={setBankOperationsTag}
+				handleSubmit={setBankOperationsCategoryId}
+				categories={annualReport.data.categories}
 			/>
 		)
 	})
@@ -80,4 +85,4 @@ const stepThreeMap = (
 	return sequence
 }
 
-export default stepThreeMap
+export default stepFourMap

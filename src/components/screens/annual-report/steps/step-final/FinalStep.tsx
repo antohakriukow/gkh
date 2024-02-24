@@ -1,5 +1,6 @@
 import AccrualsReport from './components/accruals-report/AccrualsReport'
-import CashReport from './components/cash-partners-report/CashReport'
+import CashPartnersReport from './components/cash-partners-report/CashPartnersReport'
+import CashServicesReport from './components/cash-services-report/CashServicesReport'
 import { FC } from 'react'
 
 import { Loader } from '~/components/ui'
@@ -11,9 +12,24 @@ const FinalStep: FC = () => {
 
 	if (!annualReportInDB || !annualReportInDB.data) return null
 
-	if (!!annualReportInDB.data.bankOperations) {
+	if (
+		!!annualReportInDB.data.bankOperations &&
+		annualReportInDB.data.settings?.structure === 'cash/partners'
+	) {
 		return (
-			<CashReport
+			<CashPartnersReport
+				company={annualReportInDB.company}
+				operations={annualReportInDB?.data?.bankOperations}
+			/>
+		)
+	}
+
+	if (
+		!!annualReportInDB.data.bankOperations &&
+		annualReportInDB.data.settings?.structure === 'cash/services'
+	) {
+		return (
+			<CashServicesReport
 				company={annualReportInDB.company}
 				operations={annualReportInDB?.data?.bankOperations}
 			/>

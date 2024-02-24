@@ -21,6 +21,7 @@ export type TypeAnnualOperationTag =
 	| 'partnerCashback'
 	| 'internal'
 	| 'other'
+	| ''
 	| undefined
 
 // Банковский счет или счет бухгалтерского учета

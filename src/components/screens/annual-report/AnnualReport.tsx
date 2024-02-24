@@ -1,4 +1,6 @@
-import { useFinalStep } from './steps/final-step/components/useFinalStep'
+import { useFinalStep } from './steps/step-final/components/useFinalStep'
+import stepFourMap from './steps/step-four/stepFourMap'
+import { useStepFour } from './steps/step-four/useStepFour'
 import stepOneMap from './steps/step-one/stepOneMap'
 import { useStepOne } from './steps/step-one/useStepOne'
 import stepThreeMap from './steps/step-three/stepThreeMap'
@@ -6,7 +8,6 @@ import { useStepThree } from './steps/step-three/useStepThree'
 import stepsMap from './steps/stepsMap'
 import { useAnnualReport } from './useAnnualReport'
 import { FC, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { Button, Quiz, SubHeading } from '~/components/ui'
 
@@ -16,10 +17,8 @@ import styles from './AnnualReport.module.scss'
 
 const AnnualReport: FC = () => {
 	const [initialStepIndex, setInitialStepIndex] = useState(0)
-	const { deleteAnnualReport } = useAnnualReport()
-	const navigate = useNavigate()
-
-	const handleCloseReport = () => navigate(`/annual-reports`)
+	const { deleteAnnualReport, closeAnnualReport, annualReportInDB } =
+		useAnnualReport()
 
 	const {
 		handleSaveAnnualReportStructure,
@@ -33,8 +32,6 @@ const AnnualReport: FC = () => {
 		stepOneDone
 	} = useStepOne()
 
-	const { annualReportInDB } = useStepThree()
-
 	const stepOne = stepOneMap(
 		annualState,
 		handleSaveAnnualReportStructure,
@@ -46,15 +43,28 @@ const AnnualReport: FC = () => {
 		setAnnualReportInitialDataSavedToDb
 	)
 
-	const { downloadXLSX } = useFinalStep()
+	const { setBankOperationsTag } = useStepThree()
 
-	const stepThree = stepThreeMap(annualReportInDB ?? ({} as IAnnualReport))
+	const stepThree = stepThreeMap(
+		annualReportInDB ?? ({} as IAnnualReport),
+		setBankOperationsTag
+	)
+
+	const { setBankOperationsCategory } = useStepFour()
+
+	const stepFour = stepFourMap(
+		annualReportInDB ?? ({} as IAnnualReport),
+		setBankOperationsCategory
+	)
+
+	const { downloadXLSX } = useFinalStep()
 
 	const steps = stepsMap(
 		annualReportInDB,
 		stepOne,
 		stepOneDone,
 		stepThree,
+		stepFour,
 		downloadXLSX
 	)
 
@@ -70,7 +80,7 @@ const AnnualReport: FC = () => {
 				<SubHeading title={title} />
 				<div className={styles.toolbar}>
 					<Button onClick={deleteAnnualReport}>Удалить</Button>
-					<Button onClick={handleCloseReport}>Закрыть</Button>
+					<Button onClick={closeAnnualReport}>Закрыть</Button>
 				</div>
 			</div>
 			<Quiz steps={steps} initialStepIndex={initialStepIndex} />

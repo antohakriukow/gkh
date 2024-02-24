@@ -71,20 +71,18 @@ const processExternalOperations = (
 			account => account.number === operation.recipientAccount
 		)
 
-		const response = {
+		return {
 			...operation,
 			_id: index.toString(),
 			categoryId: '',
 			amount: isIncome ? operation.amount : -operation.amount,
 			direction: isIncome
 				? setDirection(accounts, operation.recipientAccount)
-				: setDirection(accounts, operation.payerAccount)
+				: setDirection(accounts, operation.payerAccount),
+			tag: !!setTag(operation.paymentPurpose)
+				? setTag(operation.paymentPurpose)
+				: ''
 		}
-
-		if (!!setTag(response.paymentPurpose))
-			response.tag = setTag(response.paymentPurpose)
-
-		return response
 	})
 }
 
