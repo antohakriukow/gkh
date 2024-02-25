@@ -49,7 +49,7 @@ export const TreeProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 					const maxInChildren = category.children
 						? findMaxId(category.children as IAnnualCategoryState[], maxId)
 						: maxId
-					return Math.max(maxId, category.id, maxInChildren)
+					return Math.max(maxId, +category.id, maxInChildren)
 				}, currentMax)
 			}
 

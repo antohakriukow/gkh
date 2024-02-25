@@ -42,5 +42,25 @@ export const divideAndRoundNumbers = (
 		| IRenovationCosts
 }
 
-export const formatNumber = (number: number) =>
-	number.toLocaleString('ru-RU', { style: 'decimal', maximumFractionDigits: 2 })
+export const formatNumber = (number: number | string | undefined) => {
+	// Обработка случая, когда значение не определено
+	if (number === undefined) {
+		return ''
+	}
+
+	// Приведение строкового значения к числу, если это возможно
+	const num = typeof number === 'string' ? parseFloat(number) : number
+
+	// Проверка на NaN, в случае если преобразование не удалось
+	if (isNaN(num)) {
+		console.error('Provided value cannot be converted to a number.')
+		return ''
+	}
+
+	// Форматирование числа
+	return num.toLocaleString('ru-RU', {
+		style: 'decimal',
+		minimumFractionDigits: 2,
+		maximumFractionDigits: 2
+	})
+}

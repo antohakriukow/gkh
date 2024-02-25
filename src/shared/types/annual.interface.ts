@@ -99,6 +99,7 @@ export interface IAnnualCategory {
 	id: number
 	value: string
 	amount?: number
+	calculatedIncome?: number
 	children?: IAnnualCategory[]
 }
 

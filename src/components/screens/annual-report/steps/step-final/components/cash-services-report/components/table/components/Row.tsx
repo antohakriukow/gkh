@@ -14,9 +14,10 @@ const Row: React.FC<OperationRowProps> = ({ operation }) => {
 	return (
 		<div className={`${styles.gridRow} ${styles.operationRow}`}>
 			<div></div> {/* Заполнитель для иконки */}
-			<div title={operation.paymentPurpose}>{operation.paymentPurpose}</div>
-			<div>{operation.amount > 0 ? formatNumber(operation.amount) : ''}</div>
-			<div>{operation.amount < 0 ? formatNumber(-operation.amount) : ''}</div>
+			<div>{operation.paymentPurpose}</div>
+			<div></div>
+			<div></div>
+			<div>{formatNumber(operation.amount)}</div>
 		</div>
 	)
 }

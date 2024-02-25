@@ -30,6 +30,7 @@ const FinalStep: FC = () => {
 	) {
 		return (
 			<CashServicesReport
+				categories={annualReportInDB?.data.categories ?? []}
 				company={annualReportInDB.company}
 				operations={annualReportInDB?.data?.bankOperations}
 			/>

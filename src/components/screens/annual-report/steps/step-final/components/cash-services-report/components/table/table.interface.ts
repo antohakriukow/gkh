@@ -1,16 +1,25 @@
-import { IExtendedBankOperation } from '~/shared/types/annual.interface'
+import {
+	IAnnualCategory,
+	IExtendedBankOperation
+} from '~/shared/types/annual.interface'
 
 export interface IOperationGroup {
 	name: string
-	INN: string
+	inn: string
 	operations: IExtendedBankOperation[]
 	total: number
 }
 
-export interface IGroupedOperations {
+export interface ICompanyOperations {
 	[key: string]: {
+		name: string
+		inn: string
+		operations: IExtendedBankOperation[]
 		total: number
-		groups: Record<string, IOperationGroup>
-		expanded: boolean
 	}
+}
+
+export interface IRow {
+	operations: IExtendedBankOperation[]
+	category: IAnnualCategory
 }

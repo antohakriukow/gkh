@@ -1,12 +1,13 @@
 import ReportFooter from './components/ReportFooter'
 import ReportHeader from './components/ReportHeader'
-import BankOperationsTable from './components/table/BankOperationsTable'
+import BankCashServicesTable from './components/table/BankCashServicesTable'
 import { FC } from 'react'
 import { getAnnualDirectionTitle } from '~/core/annual/shared'
 
 import { SubHeading } from '~/components/ui'
 
 import {
+	IAnnualCategory,
 	IExtendedBankOperation,
 	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
@@ -36,8 +37,9 @@ const groupOperationsByDirectionAndAccount = (
 
 const CashServicesReport: FC<{
 	operations: IExtendedBankOperation[]
+	categories: IAnnualCategory[]
 	company: ICompany
-}> = ({ operations, company }) => {
+}> = ({ operations, company, categories }) => {
 	const groupedOperations = groupOperationsByDirectionAndAccount(operations)
 	const preferredOrder = ['main', 'commerce', 'target', 'renovation']
 
@@ -66,7 +68,10 @@ const CashServicesReport: FC<{
 				return (
 					<div key={key}>
 						<SubHeading title={`${directionTitle} - Счет: ${account}`} />
-						<BankOperationsTable operations={groupedOperations[key]} />
+						<BankCashServicesTable
+							operations={groupedOperations[key]}
+							categories={categories}
+						/>
 					</div>
 				)
 			})}
