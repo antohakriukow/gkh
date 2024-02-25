@@ -23,3 +23,11 @@ export interface IRow {
 	operations: IExtendedBankOperation[]
 	category: IAnnualCategory
 }
+
+export interface IResultsRow {
+	accruals: string
+	income: string
+	costs: string
+}
+
+export interface IAccountRow extends IResultsRow, Pick<IRow, 'operations'> {}

@@ -11,13 +11,14 @@ interface OperationRowProps {
 }
 
 const Row: React.FC<OperationRowProps> = ({ operation }) => {
+	const isIncome = operation.amount > 0
 	return (
 		<div className={`${styles.gridRow} ${styles.operationRow}`}>
 			<div></div> {/* Заполнитель для иконки */}
 			<div>{operation.paymentPurpose}</div>
 			<div></div>
-			<div></div>
-			<div>{formatNumber(operation.amount)}</div>
+			<div>{isIncome ? formatNumber(operation.amount) : ''}</div>
+			<div>{isIncome ? '' : formatNumber(operation.amount)}</div>
 		</div>
 	)
 }

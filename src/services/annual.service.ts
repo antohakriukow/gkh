@@ -1,6 +1,7 @@
 import {
 	IAnnualReportSettings,
-	TypeAnnualOperationTag
+	TypeAnnualOperationTag,
+	TypeDefinedAnnualDirection
 } from './../shared/types/annual.interface'
 import { child, get, ref, remove, set, update } from 'firebase/database'
 import { toast } from 'react-toastify'
@@ -124,13 +125,17 @@ export const AnnualService = {
 	async updateCategories(
 		userId: string,
 		annualId: string,
+		direction: TypeDefinedAnnualDirection,
 		data: IAnnualCategory[]
 	) {
 		if (!data.length) return
 
 		try {
 			await set(
-				ref(db, `users/${userId}/annuals/${annualId}/data/categories`),
+				ref(
+					db,
+					`users/${userId}/annuals/${annualId}/data/categories/${direction}`
+				),
 				data
 			)
 		} catch (error) {

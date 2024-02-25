@@ -1,0 +1,11 @@
+.container {
+	@apply bg-danger-500 rounded-sm;
+
+	> h4 {
+		@apply px-3 pt-1 m-0 text-lg font-bold text-white;
+	}
+
+	> p {
+		@apply m-0 px-3 py-2 text-base font-semibold text-white;
+	}
+}

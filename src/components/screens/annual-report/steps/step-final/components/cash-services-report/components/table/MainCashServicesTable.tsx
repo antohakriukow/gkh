@@ -1,6 +1,6 @@
 import ResultsRow from './components/ResultsRow'
 import TotalRow from './components/TotalRow'
-import { useBankOperationsTable } from './useBankOperationsTable'
+import { useBankCashServicesTable } from './useBankCashServicesTable'
 import cn from 'clsx'
 import { FC } from 'react'
 
@@ -11,7 +11,7 @@ import {
 
 import styles from './table.module.scss'
 
-const BankCashServicesTable: FC<{
+const MainCashServicesTable: FC<{
 	operations: IExtendedBankOperation[]
 	categories: IAnnualCategory[]
 }> = ({ operations, categories }) => {
@@ -22,7 +22,7 @@ const BankCashServicesTable: FC<{
 		getCategoryOperations,
 		totalIncome,
 		totalCosts
-	} = useBankOperationsTable(operations)
+	} = useBankCashServicesTable(operations)
 
 	if (!operations || operations.length === 0) return null
 
@@ -30,13 +30,6 @@ const BankCashServicesTable: FC<{
 		(sum, cat) => sum + (cat.amount ?? 0),
 		0
 	)
-
-	const totalCategory = {
-		value: 'Итого',
-		id: 10000,
-		calculatedIncome: +totalIncome,
-		amount: totalAccruals
-	} as IAnnualCategory
 
 	const otherIncomeCategory = {
 		value: 'Прочие доходы',
@@ -101,4 +94,4 @@ const BankCashServicesTable: FC<{
 	)
 }
 
-export default BankCashServicesTable
+export default MainCashServicesTable

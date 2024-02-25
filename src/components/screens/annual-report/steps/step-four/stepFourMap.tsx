@@ -1,4 +1,5 @@
 import Workspace from './workspace/Workspace'
+import { directionTitles } from '~/data/directions-titles'
 
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
@@ -8,7 +9,10 @@ import {
 	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
 
-import { getCategoriesWithoutChildren } from '~/utils/annual.utils'
+import {
+	getCategoriesWithoutChildren,
+	getExistingDirections
+} from '~/utils/annual.utils'
 
 import OutgoingBankOperations from '../shared/bank-operations/OutgoingBankOperations'
 
@@ -31,6 +35,12 @@ const stepFourMap = (
 		return bankOperations.filter(operation => operation.direction === direction)
 	}
 
+	// const stepsData = directionTitles.filter(step =>
+	// 	getExistingDirections(annualReport.data?.accounts ?? []).includes(
+	// 		step.direction
+	// 	)
+	// )
+
 	const stepsData = [
 		{ title: 'ЖКУ', direction: 'main' }
 		// { title: 'Капремонт', direction: 'renovation' },
@@ -44,8 +54,8 @@ const stepFourMap = (
 		component: (
 			<Workspace
 				variations={
-					annualReport.data.categories
-						? getCategoriesWithoutChildren(annualReport.data.categories)
+					!!annualReport.data.categories && !!annualReport.data.categories.main
+						? getCategoriesWithoutChildren(annualReport.data.categories.main)
 						: []
 				}
 				property='categoryId'
@@ -55,7 +65,11 @@ const stepFourMap = (
 					step.direction
 				)}
 				handleSubmit={setBankOperationsCategoryId}
-				categories={annualReport.data.categories}
+				categories={
+					!!annualReport.data.categories && !!annualReport.data.categories.main
+						? annualReport.data.categories.main
+						: []
+				}
 			/>
 		)
 	})

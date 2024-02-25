@@ -3,13 +3,8 @@ import { FC } from 'react'
 
 import { formatNumber } from '~/utils/number.utils'
 
+import { IResultsRow } from '../table.interface'
 import styles from '../table.module.scss'
-
-interface IResultsRow {
-	accruals: string
-	income: string
-	costs: string
-}
 
 const ResultsRow: FC<IResultsRow> = ({ accruals, income, costs }) => {
 	return (

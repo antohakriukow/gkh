@@ -10,7 +10,10 @@ import { toast } from 'react-toastify'
 
 import { useAuth } from '~/hooks/useAuth'
 
-import { IAnnualCategory } from '~/shared/types/annual.interface'
+import {
+	IAnnualCategory,
+	TypeDefinedAnnualDirection
+} from '~/shared/types/annual.interface'
 
 import { AnnualService } from '~/services/annual.service'
 
@@ -18,7 +21,11 @@ import { useAnnualReport } from '../../useAnnualReport'
 
 export const useStepTwo = (
 	setValue: UseFormSetValue<IAnnualReportCategoriesFormInput>,
-	handleSubmit: UseFormHandleSubmit<IAnnualReportCategoriesFormInput, undefined>
+	handleSubmit: UseFormHandleSubmit<
+		IAnnualReportCategoriesFormInput,
+		undefined
+	>,
+	direction: TypeDefinedAnnualDirection
 ) => {
 	const { user } = useAuth()
 	const { annualReportInDB } = useAnnualReport()
@@ -28,7 +35,7 @@ export const useStepTwo = (
 	useEffect(() => {
 		setIsLoading(true)
 		if (annualReportInDB?.data?.categories) {
-			annualReportInDB.data.categories.forEach(category => {
+			annualReportInDB.data.categories.main?.forEach(category => {
 				setValue(`categories.${category.id}.amount`, category.amount ?? 0)
 			})
 		}
@@ -43,9 +50,9 @@ export const useStepTwo = (
 			const categoriesToUpdate = Object.entries(data.categories)
 				.map(([key, { amount }]) => {
 					const id = parseInt(key)
-					const existingCategory = annualReportInDB?.data?.categories?.find(
-						category => category.id === id
-					)
+					const existingCategory = annualReportInDB?.data?.categories?.[
+						direction
+					]?.find(category => category.id === id)
 					return existingCategory ? { ...existingCategory, amount } : null
 				})
 				.filter(Boolean)
@@ -54,6 +61,7 @@ export const useStepTwo = (
 				AnnualService.updateCategories(
 					user.uid,
 					reportId,
+					direction,
 					categoriesToUpdate as IAnnualCategory[]
 				)
 					.then(() => {

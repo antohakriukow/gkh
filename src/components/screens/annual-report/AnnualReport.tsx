@@ -5,6 +5,7 @@ import stepOneMap from './steps/step-one/stepOneMap'
 import { useStepOne } from './steps/step-one/useStepOne'
 import stepThreeMap from './steps/step-three/stepThreeMap'
 import { useStepThree } from './steps/step-three/useStepThree'
+import stepTwoMap from './steps/step-two/stepTwoMap'
 import stepsMap from './steps/stepsMap'
 import { useAnnualReport } from './useAnnualReport'
 import { FC, useEffect, useState } from 'react'
@@ -43,6 +44,8 @@ const AnnualReport: FC = () => {
 		setAnnualReportInitialDataSavedToDb
 	)
 
+	const stepTwo = stepTwoMap(annualReportInDB ?? ({} as IAnnualReport))
+
 	const { setBankOperationsTag } = useStepThree()
 
 	const stepThree = stepThreeMap(
@@ -63,6 +66,7 @@ const AnnualReport: FC = () => {
 		annualReportInDB,
 		stepOne,
 		stepOneDone,
+		stepTwo,
 		stepThree,
 		stepFour,
 		downloadXLSX

@@ -5,6 +5,8 @@ import { FC } from 'react'
 
 import { Loader } from '~/components/ui'
 
+import { TypeCategoriesMap } from '~/shared/types/annual.interface'
+
 import { useAnnualReport } from '../../useAnnualReport'
 
 const FinalStep: FC = () => {
@@ -30,7 +32,9 @@ const FinalStep: FC = () => {
 	) {
 		return (
 			<CashServicesReport
-				categories={annualReportInDB?.data.categories ?? []}
+				categories={
+					(annualReportInDB?.data.categories ?? []) as TypeCategoriesMap
+				}
 				company={annualReportInDB.company}
 				operations={annualReportInDB?.data?.bankOperations}
 			/>

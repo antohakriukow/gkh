@@ -5,7 +5,7 @@ import {
 	IExtendedBankOperation
 } from '~/shared/types/annual.interface'
 
-export const useBankOperationsTable = (
+export const useBankCashServicesTable = (
 	operations: IExtendedBankOperation[]
 ) => {
 	const outgoingOperationsWithEmptyCategoryId = operations

@@ -1,5 +1,7 @@
 import {
+	IAccount,
 	IAnnualCategory,
+	TypeAnnualDirection,
 	TypeAnnualReportStructure
 } from '~/shared/types/annual.interface'
 
@@ -38,3 +40,12 @@ export const getCategoriesWithoutChildren = (
 	traverse(categories, result)
 	return result
 }
+
+export const getExistingDirections = (accounts: IAccount[]) =>
+	accounts.reduce(
+		(directions: TypeAnnualDirection[], account) =>
+			directions.includes(account.type)
+				? directions
+				: [...directions, account.type],
+		[]
+	)

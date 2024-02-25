@@ -1,5 +1,4 @@
 import FinalStep from './step-final/FinalStep'
-import StepTwo from './step-two/StepTwo'
 
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
@@ -12,6 +11,7 @@ const stepsMap = (
 	annualReportInDB: IAnnualReport | null | undefined,
 	stepOne: IQuizStep[],
 	stepOneDone: boolean,
+	stepTwo: IQuizStep[],
 	stepThree: IQuizStep[],
 	stepFour: IQuizStep[],
 	downloadXLSX: () => false | Promise<void>
@@ -23,10 +23,11 @@ const stepsMap = (
 	const isAccrualsServices =
 		annualReportInDB?.data?.settings?.structure === 'accruals/services'
 
-	const totalCategoriesAmount = annualReportInDB?.data?.categories?.reduce(
-		(sum, category) => (category.amount ? sum + category.amount : sum),
-		0
-	)
+	const totalCategoriesAmount =
+		annualReportInDB?.data?.categories?.main?.reduce(
+			(sum, category) => (category.amount ? sum + category.amount : sum),
+			0
+		)
 
 	const hasOutgoingBankOperationsWithoutCategoryId = Object.values(
 		annualReportInDB?.data.bankOperations ?? {}
@@ -46,7 +47,7 @@ const stepsMap = (
 		onNext: () => {},
 		// backButtonHidden: stepOneDone,
 		nextButtonHidden: totalCategoriesAmount === 0,
-		component: <StepTwo />
+		children: stepTwo
 	}
 
 	const incomeStep = {

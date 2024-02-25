@@ -7,7 +7,7 @@ import { formatNumber } from '~/utils/number.utils'
 
 import { IRow } from '../table.interface'
 import styles from '../table.module.scss'
-import { useBankOperationsTable } from '../useBankOperationsTable'
+import { useBankCashServicesTable } from '../useBankCashServicesTable'
 
 const TotalRow: FC<IRow> = ({ operations, category }) => {
 	const [isVisible, setIsVisible] = useState(false)
@@ -16,11 +16,9 @@ const TotalRow: FC<IRow> = ({ operations, category }) => {
 		getGroupedByCompaniesIncomingOperations,
 		totalCosts,
 		getCategoryOperations
-	} = useBankOperationsTable(operations)
+	} = useBankCashServicesTable(operations)
 
 	const toggleVisible = () => setIsVisible(!isVisible)
-
-	if (category.id === 10002) console.log('operations: ', operations)
 
 	return (
 		<Fragment>

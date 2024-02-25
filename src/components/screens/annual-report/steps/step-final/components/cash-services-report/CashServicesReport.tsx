@@ -1,6 +1,7 @@
 import ReportFooter from './components/ReportFooter'
 import ReportHeader from './components/ReportHeader'
-import BankCashServicesTable from './components/table/BankCashServicesTable'
+import CashServicesTable from './components/table/CashServicesTable'
+import MainCashServicesTable from './components/table/MainCashServicesTable'
 import { FC } from 'react'
 import { getAnnualDirectionTitle } from '~/core/annual/shared'
 
@@ -9,7 +10,9 @@ import { SubHeading } from '~/components/ui'
 import {
 	IAnnualCategory,
 	IExtendedBankOperation,
-	TypeAnnualDirection
+	TypeAnnualDirection,
+	TypeCategoriesMap,
+	TypeDefinedAnnualDirection
 } from '~/shared/types/annual.interface'
 import { ICompany } from '~/shared/types/company.interface'
 
@@ -37,7 +40,7 @@ const groupOperationsByDirectionAndAccount = (
 
 const CashServicesReport: FC<{
 	operations: IExtendedBankOperation[]
-	categories: IAnnualCategory[]
+	categories: TypeCategoriesMap
 	company: ICompany
 }> = ({ operations, company, categories }) => {
 	const groupedOperations = groupOperationsByDirectionAndAccount(operations)
@@ -45,8 +48,8 @@ const CashServicesReport: FC<{
 
 	// Получаем ключи, отсортированные согласно preferredOrder
 	const sortedKeys = Object.keys(groupedOperations).sort((a, b) => {
-		const directionA = a.split('-')[0] as TypeAnnualDirection
-		const directionB = b.split('-')[0] as TypeAnnualDirection
+		const directionA = a.split('-')[0] as TypeDefinedAnnualDirection
+		const directionB = b.split('-')[0] as TypeDefinedAnnualDirection
 		const indexA = preferredOrder.indexOf(directionA ?? '')
 		const indexB = preferredOrder.indexOf(directionB ?? '')
 		if (indexA !== -1 || indexB !== -1) {
@@ -64,14 +67,26 @@ const CashServicesReport: FC<{
 				const [direction, account] = key.split('-')
 				const directionTitle = account.startsWith('42')
 					? 'Депозит'
-					: getAnnualDirectionTitle(direction as TypeAnnualDirection)
+					: getAnnualDirectionTitle(direction as TypeDefinedAnnualDirection)
 				return (
 					<div key={key}>
 						<SubHeading title={`${directionTitle} - Счет: ${account}`} />
-						<BankCashServicesTable
-							operations={groupedOperations[key]}
-							categories={categories}
-						/>
+						{direction === 'main' ? (
+							<MainCashServicesTable
+								operations={groupedOperations[key]}
+								categories={
+									categories[direction as TypeDefinedAnnualDirection] ?? []
+								}
+							/>
+						) : (
+							<CashServicesTable
+								accountNumber={account}
+								operations={groupedOperations[key]}
+								categories={
+									categories[direction as TypeDefinedAnnualDirection] ?? []
+								}
+							/>
+						)}
 					</div>
 				)
 			})}

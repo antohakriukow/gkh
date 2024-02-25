@@ -1,5 +1,6 @@
 import Workspace from './workspace/Workspace'
 import { getAnnualTagVariationsData } from '~/data/annual-tag-variations'
+import { directionTitles } from '~/data/directions-titles'
 
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
@@ -9,6 +10,8 @@ import {
 	TypeAnnualDirection,
 	TypeAnnualOperationTag
 } from '~/shared/types/annual.interface'
+
+import { getExistingDirections } from '~/utils/annual.utils'
 
 import BankOperations from '../shared/bank-operations/IncomeBankOperations'
 
@@ -31,11 +34,17 @@ const stepThreeMap = (
 		return bankOperations.filter(operation => operation.direction === direction)
 	}
 
+	// const stepsData = directionTitles.filter(step =>
+	// 	getExistingDirections(annualReport.data?.accounts ?? []).includes(
+	// 		step.direction
+	// 	)
+	// )
+
 	const stepsData = [
-		{ title: 'ЖКУ', direction: 'main' },
-		{ title: 'Капремонт', direction: 'renovation' },
-		{ title: 'Целевые взносы', direction: 'target' },
-		{ title: 'Коммерческая деятельность', direction: 'commerce' }
+		{ title: 'ЖКУ', direction: 'main' }
+		// { title: 'Капремонт', direction: 'renovation' },
+		// { title: 'Целевые взносы', direction: 'target' },
+		// { title: 'Коммерческая деятельность', direction: 'commerce' }
 	] as IStepData[]
 
 	const getStep = (operations: IExtendedBankOperation[], step: IStepData) => ({

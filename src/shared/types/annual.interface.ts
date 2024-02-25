@@ -8,6 +8,16 @@ export type TypeAnnualDirection =
 	| 'target'
 	| ''
 	| undefined
+
+export type TypeDefinedAnnualDirection = Exclude<
+	TypeAnnualDirection,
+	'' | undefined
+>
+
+export type TypeCategoriesMap = {
+	[K in TypeDefinedAnnualDirection]?: IAnnualCategory[]
+}
+
 export type TypeAnnualReportStructure =
 	| 'cash/partners'
 	| 'cash/services'
@@ -115,7 +125,7 @@ export interface IAnnualReportSettings {
 export interface IAnnualReportData {
 	directions?: TypeAnnualDirection[]
 	accounts?: IAccount[]
-	categories?: IAnnualCategory[]
+	categories?: TypeCategoriesMap
 	operations?: IExtendedBankOperation[] | IExtendedAccountingOperation[]
 	bankOperations?: IExtendedBankOperation[]
 	accountingOperations?: IExtendedAccountingOperation[]
@@ -140,3 +150,8 @@ export interface IAnnualReport {
 
 export interface IAnnualReportCreate
 	extends Pick<IAnnualReport, 'type' | 'company'> {}
+
+export interface IAnnualStepData {
+	title: string
+	direction: TypeDefinedAnnualDirection
+}
