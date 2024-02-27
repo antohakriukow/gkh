@@ -1,12 +1,14 @@
 @import '../../../styles/colors.scss';
 
 .container {
-	@apply h-full w-full flex flex-col p-4 rounded-sm bg-gray-25 box-border;
+	@apply w-full flex flex-col p-4 rounded-sm bg-gray-25 box-border;
 	border: 1px solid #ccc;
+	height: calc(100% - 48px);
 }
 
 .stepContent {
 	@apply h-full;
+	max-height: 100%;
 	margin-bottom: 20px;
 	overflow-y: auto;
 	scrollbar-width: thin;

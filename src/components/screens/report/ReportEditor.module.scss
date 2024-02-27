@@ -1,8 +1,8 @@
 @import '../../../styles/colors.scss';
 
 .container {
-	@apply flex flex-col justify-center items-start bg-white p-4 pb-8 rounded-md box-border select-none;
-	height: calc(100vh - 148px);
+	@apply flex flex-col justify-center items-start bg-white p-4  box-border select-none;
+	height: calc(100% - 100px);
 }
 
 .notFound {

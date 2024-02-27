@@ -1,14 +1,14 @@
 @import '../../../styles/colors.scss';
 
 .container {
-	@apply box-border select-none;
-	min-height: calc(100vh - 118px);
+	@apply box-border select-none bg-gray-0;
+	min-height: calc(100vh - 100px);
 }
 
 .issues {
 	@apply grid gap-4 p-4 w-full box-border;
 	grid-template-columns: repeat(3, 1fr);
-	max-height: calc(100vh - 118px);
+	max-height: calc(100vh - 100px);
 	overflow-y: auto;
 	scrollbar-width: thin;
 	-ms-overflow-style: -ms-autohiding-scrollbar;

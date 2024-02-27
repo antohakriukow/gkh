@@ -56,7 +56,7 @@ const Reports: FC = () => {
 				rows={convertReportsData(reports)}
 				columnWidths={[5, 5, 5]}
 				onClick={handleOpenReport}
-				height={85}
+				height={90}
 			/>
 			<Intro />
 		</div>

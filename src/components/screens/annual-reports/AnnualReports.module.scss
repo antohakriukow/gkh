@@ -1,8 +1,8 @@
 @import '../../../styles/colors.scss';
 
 .container {
-	@apply bg-white p-4 pb-8 rounded-md box-border select-none;
-	height: calc(100vh - 148px);
+	@apply bg-white p-4 pb-8 box-border select-none;
+	height: calc(100vh - 100px);
 
 	> button {
 		@apply mb-4;
@@ -14,8 +14,14 @@
 }
 
 .heading {
-	@apply mb-0 mt-0 text-3xl font-light text-left;
+	@apply mb-0 mt-2 font-light text-left;
+	font-size: 20px;
+	line-height: 22px;
 	color: $gray-700;
+	@media (max-width: 450px) {
+		font-size: 16px;
+		line-height: 18px;
+	}
 }
 
 @media (max-width: 500px) {

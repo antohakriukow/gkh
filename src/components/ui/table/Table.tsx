@@ -20,7 +20,7 @@ const Table: FC<ITable> = ({
 }) => {
 	const [filters, setFilters] = useState<IFilters>({})
 
-	const calculatedHeight = `calc(${height ? `${height}vh` : '100vh'} - 200px)`
+	// const calculatedHeight = `calc(${height ? `${height}vh` : '100vh'} - 200px)`
 
 	const handleFilterChange = useCallback(
 		(title: string, value: string) => {
@@ -56,7 +56,7 @@ const Table: FC<ITable> = ({
 				columnWidths={columnWidths}
 				onFilterChange={hasFilters ? handleFilterChange : undefined}
 			/>
-			<div className={styles.body} style={{ height: calculatedHeight }}>
+			<div className={styles.body}>
 				{(hasFilters ? filteredRows : rows).map(row => (
 					<TableItem
 						key={row._id}
