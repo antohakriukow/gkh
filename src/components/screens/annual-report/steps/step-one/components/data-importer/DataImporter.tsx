@@ -30,11 +30,17 @@ const DataImporter: FC = () => {
 				)}
 				{hasOperations && (
 					<div className={styles.resume}>
-						<p>{`Найдено операций: ${state.operations.length} по ${
-							state.accounts.length
-						} счетам за период с ${state.operations[0].date} по ${
-							state.operations[state.operations.length - 1].date
-						}.`}</p>
+						<p>
+							Загружено файлов: {state.fileNames.length} (
+							{state.fileNames.toString()})
+						</p>
+						<p>Найдено счетов: {state.accounts.length}</p>
+						<p>Найдено операций: {state.operations.length}</p>
+						<p>Начало периода: {state.operations[0].date}</p>
+						<p>
+							Конец периода:{' '}
+							{state.operations[state.operations.length - 1].date}
+						</p>
 					</div>
 				)}
 			</>

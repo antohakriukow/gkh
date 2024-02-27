@@ -7,6 +7,8 @@ import { Button, SubHeading } from '~/components/ui'
 
 import { TypeDefinedAnnualDirection } from '~/shared/types/annual.interface'
 
+import { formatNumber } from '~/utils/number.utils'
+
 import { IAnnualReportCategoriesFormInput } from '../step-two.interface'
 import { useStepTwo } from '../useStepTwo'
 
@@ -58,13 +60,13 @@ const Accruals: FC<{ direction: TypeDefinedAnnualDirection }> = ({
 				{categories && (
 					<p>
 						Итого начислено:{' '}
-						{categories
-							.reduce(
+						{formatNumber(
+							categories.reduce(
 								(sum, category) =>
 									category.amount ? sum + category.amount : sum,
 								0
 							)
-							.toFixed(2)}
+						)}
 					</p>
 				)}
 			</div>

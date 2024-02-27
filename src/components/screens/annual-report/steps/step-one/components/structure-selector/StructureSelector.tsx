@@ -50,6 +50,8 @@ const StructureSelector: FC = () => {
 							onClick={handleLinkClick}
 							className={styles.link}
 							href={item.link}
+							target='_blank'
+							rel='noopener noreferrer'
 						>
 							Смотреть образец
 						</a>

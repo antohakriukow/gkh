@@ -120,15 +120,23 @@ const Quiz: React.FC<{
 		}
 	})()
 
+	const stepText =
+		currentStepIndex > 0
+			? `Шаг ${currentStepIndex + 1} из ${steps.length}: ${
+					currentStep.stepTitle
+			  }`
+			: `Шаг ${currentStepIndex + 1}: ${currentStep.stepTitle}`
+
 	return (
 		<div className={styles.container}>
-			<div className={styles.stepIndicator}>
-				Шаг {currentStepIndex + 1} из {steps.length}: {currentStep.stepTitle}
-			</div>
+			<div className={styles.stepIndicator}>{stepText}</div>
 			<div className={styles.stepContent}>{renderStepContent()}</div>
 			<div className={styles.stepNavigation}>
 				{(currentStepIndex > 0 || currentChildIndex > 0) && (
-					<Button disabled={backButtonDisabled} onClick={goToPreviousStep}>
+					<Button
+						disabled={backButtonDisabled && currentChildIndex === 0}
+						onClick={goToPreviousStep}
+					>
 						Назад
 					</Button>
 				)}

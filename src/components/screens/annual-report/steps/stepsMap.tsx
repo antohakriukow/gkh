@@ -45,7 +45,7 @@ const stepsMap = (
 	const accrualsStep = {
 		stepTitle: 'Начисления',
 		onNext: () => {},
-		// backButtonHidden: stepOneDone,
+		backButtonHidden: stepOneDone,
 		nextButtonHidden: totalCategoriesAmount === 0,
 		children: stepTwo
 	}

@@ -2,7 +2,8 @@ import {
 	IAccount,
 	IAnnualCategory,
 	TypeAnnualDirection,
-	TypeAnnualReportStructure
+	TypeAnnualReportStructure,
+	TypeDefinedAnnualDirection
 } from '~/shared/types/annual.interface'
 
 export const getAnnualReportStructureName = (
@@ -49,3 +50,19 @@ export const getExistingDirections = (accounts: IAccount[]) =>
 				: [...directions, account.type],
 		[]
 	)
+
+export const createMockCategoriesFromAccounts = (
+	accounts: IAccount[],
+	direction: TypeDefinedAnnualDirection
+) => {
+	if (getExistingDirections(accounts).includes(direction)) {
+		const incrementNumber =
+			direction === 'renovation' ? 1001 : direction === 'target' ? 2001 : 3001
+		return accounts
+			.filter(account => account.type === direction)
+			.map((account, index) => ({
+				id: index + incrementNumber,
+				value: account.number.toString()
+			}))
+	}
+}

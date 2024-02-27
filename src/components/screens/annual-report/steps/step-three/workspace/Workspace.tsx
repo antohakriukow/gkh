@@ -51,9 +51,10 @@ const Workspace = <T extends IDataObject, T1>({
 	const dataWithUndefinedProperty: IResultObject<T, T1> = {
 		title: '',
 		value: '' as T1,
-		data: data.filter(
-			object => object[property] === '' || object[property] === undefined
-		) as T[],
+		data:
+			(data.filter(
+				object => object[property] === '' || object[property] === undefined
+			) as T[]) ?? [],
 		buffer,
 		setBuffer,
 		handleSubmit: onSubmit

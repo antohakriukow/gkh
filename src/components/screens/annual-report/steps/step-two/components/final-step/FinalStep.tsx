@@ -4,6 +4,7 @@ import { getAnnualDirectionTitle } from '~/core/annual/shared'
 import { useAnnualReport } from '~/components/screens/annual-report/useAnnualReport'
 
 import { getExistingDirections } from '~/utils/annual.utils'
+import { formatNumber } from '~/utils/number.utils'
 
 import styles from './FinalStep.module.scss'
 
@@ -15,7 +16,7 @@ const FinalStep: FC = () => {
 	const actualDirections = getExistingDirections(
 		annualReportInDB.data?.accounts ?? []
 	)
-	const categories = annualReportInDB.data.categories
+	const categories = annualReportInDB?.data?.categories
 
 	return (
 		<div className={styles.container}>
@@ -25,9 +26,12 @@ const FinalStep: FC = () => {
 					direction && categories[direction] ? (
 						<p key={direction}>
 							{getAnnualDirectionTitle(direction)}:{' '}
-							{(categories[direction] ?? [])
-								.reduce((sum, cat) => (cat.amount ? sum + cat.amount : sum), 0)
-								.toFixed(2)}
+							{formatNumber(
+								(categories[direction] ?? []).reduce(
+									(sum, cat) => (cat.amount ? sum + cat.amount : sum),
+									0
+								) ?? 0
+							)}
 						</p>
 					) : null
 				)}

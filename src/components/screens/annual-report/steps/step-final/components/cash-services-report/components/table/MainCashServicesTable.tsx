@@ -42,6 +42,8 @@ const MainCashServicesTable: FC<{
 		id: 10002
 	} as IAnnualCategory
 
+	console.log('incomingOperationsWithTag: ', incomingOperationsWithTag)
+
 	return (
 		<div className={styles.gridTable}>
 			<div className={cn(styles.gridRow, styles.gridHeader)}>
@@ -73,15 +75,20 @@ const MainCashServicesTable: FC<{
 				)
 			})}
 
-			<TotalRow
-				operations={incomingOperationsWithTag}
-				category={otherIncomeCategory}
-			/>
+			{!!incomingOperationsWithTag && !!incomingOperationsWithTag.length && (
+				<TotalRow
+					operations={incomingOperationsWithTag}
+					category={otherIncomeCategory}
+				/>
+			)}
 
-			<TotalRow
-				operations={outgoingOperationsWithEmptyCategoryId}
-				category={otherCostsCategory}
-			/>
+			{outgoingOperationsWithEmptyCategoryId &&
+				!!outgoingOperationsWithEmptyCategoryId.length && (
+					<TotalRow
+						operations={outgoingOperationsWithEmptyCategoryId}
+						category={otherCostsCategory}
+					/>
+				)}
 
 			<ResultsRow
 				accruals={totalAccruals.toFixed(2)}

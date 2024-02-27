@@ -58,7 +58,9 @@ const OutgoingBankOperations: FC<
 
 	const heading = title
 		? title
-		: `${getAnnualDirectionTitle(data?.[0].direction)}: Не указана статья сметы`
+		: `${
+				getAnnualDirectionTitle(data?.[0]?.direction) ?? 'ЖКУ'
+		  }: Не указана статья сметы`
 
 	return (
 		<div className={styles.container}>

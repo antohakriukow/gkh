@@ -24,6 +24,8 @@ export const useAnnualReport = () => {
 		  )
 		: null
 
+	// console.log(user?.uid)
+
 	useEffect(() => {
 		if (currentAnnualReport?._id !== reportId && annualReportInDB) {
 			setCurrentAnnualReport(annualReportInDB)

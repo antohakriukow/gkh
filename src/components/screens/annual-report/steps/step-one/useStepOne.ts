@@ -8,8 +8,17 @@ import { useActions } from '~/hooks/useActions'
 import { useAuth } from '~/hooks/useAuth'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
 
+import {
+	TypeCategoriesMap,
+	TypeDefinedAnnualDirection
+} from '~/shared/types/annual.interface'
+
 import { AnnualService } from '~/services/annual.service'
 
+import {
+	createMockCategoriesFromAccounts,
+	getExistingDirections
+} from '~/utils/annual.utils'
 import { handleDBErrors } from '~/utils/error.utils'
 
 import { useAnnualReport } from '../../useAnnualReport'
@@ -17,8 +26,11 @@ import { useAnnualReport } from '../../useAnnualReport'
 export const useStepOne = () => {
 	const { user } = useAuth()
 	const navigate = useNavigate()
-	const { currentAnnualReport, annualReportInitialDataSavedToDb } =
-		useAnnualReport()
+	const {
+		currentAnnualReport,
+		annualReportInitialDataSavedToDb,
+		annualReportInDB
+	} = useAnnualReport()
 	const annualState = useTypedSelector(state => state.annual)
 	const {
 		setAnnualReportInitialDataSavedToDb,
@@ -87,12 +99,25 @@ export const useStepOne = () => {
 		setIsLoading(true)
 		const modifiedState = prepareAnnualState(annualState)
 
+		const categoriesData = {} as TypeCategoriesMap
+		categoriesData.main = modifiedState.categories
+		;(['renovation', 'target', 'commerce'] as TypeDefinedAnnualDirection[]).map(
+			direction => {
+				if (getExistingDirections(annualState.accounts).includes(direction)) {
+					categoriesData.renovation = createMockCategoriesFromAccounts(
+						annualState.accounts,
+						direction
+					)
+				}
+			}
+		)
+
 		try {
 			const data = {
 				settings: { structure: modifiedState.structure },
 				directions: modifiedState.directions ?? [],
 				accounts: modifiedState.accounts,
-				categories: modifiedState.categories,
+				categories: categoriesData,
 				bankOperations: [],
 				accountingOperations: []
 			}
@@ -111,12 +136,7 @@ export const useStepOne = () => {
 		}
 	}
 
-	const stepOneDone =
-		!!annualReportInitialDataSavedToDb ||
-		(!!currentAnnualReport?.data?.accounts &&
-			(!!currentAnnualReport?.data?.bankOperations ||
-				!!currentAnnualReport?.data?.accountingOperations) &&
-			!!currentAnnualReport?.data?.settings?.structure)
+	const stepOneDone = !!annualReportInDB?.data?.accounts
 
 	return {
 		isLoading,

@@ -15,9 +15,16 @@ const stepTwoMap = (annualReport: IAnnualReport): IQuizStep[] => {
 		)
 	)
 
+	const hasNoMainAccruals =
+		!annualReport?.data?.categories?.main?.reduce(
+			(sum, cat) => (!!cat.amount ? sum + cat.amount : sum),
+			0
+		) ?? false
+
 	const getStep = (step: IAnnualStepData) => ({
 		stepTitle: `Начисления по направлению "${step.title}"`,
 		onNext: () => {},
+		nextButtonHidden: hasNoMainAccruals,
 		component: <Accruals direction={step.direction} />
 	})
 

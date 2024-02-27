@@ -145,8 +145,11 @@ export const downloadCashPartnersReport = async (report: IAnnualReport) => {
 							) {
 								const emptyRow = worksheet.addRow([''])
 								emptyRow.outlineLevel = 1
-								emptyRow.height = 0.1
-								emptyRow.hidden = true
+								emptyRow.getCell(1).style = simpleCell
+								emptyRow.getCell(2).style = simpleCell
+								emptyRow.getCell(3).style = simpleCell
+								// emptyRow.height = 0.1
+								// emptyRow.hidden = true
 							}
 						})
 				}
