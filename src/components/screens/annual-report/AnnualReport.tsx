@@ -1,3 +1,4 @@
+import ReportDeleteModal from './report-delete-modal/ReportDeleteModal'
 import { useFinalStep } from './steps/step-final/components/useFinalStep'
 import stepFourMap from './steps/step-four/stepFourMap'
 import { useStepFour } from './steps/step-four/useStepFour'
@@ -12,6 +13,8 @@ import { FC, useEffect, useState } from 'react'
 
 import { Button, Quiz, SubHeading } from '~/components/ui'
 
+import { useModal } from '~/hooks/useModal'
+
 import { IAnnualReport } from '~/shared/types/annual.interface'
 
 import styles from './AnnualReport.module.scss'
@@ -20,6 +23,11 @@ const AnnualReport: FC = () => {
 	const [initialStepIndex, setInitialStepIndex] = useState(0)
 	const { deleteAnnualReport, closeAnnualReport, annualReportInDB } =
 		useAnnualReport()
+	const { showModal, hideModal } = useModal()
+
+	const handleShowReportDeleteModal = () => {
+		showModal(<ReportDeleteModal deleteAnnualReport={deleteAnnualReport} />)
+	}
 
 	const {
 		handleSaveAnnualReportStructure,
@@ -83,7 +91,7 @@ const AnnualReport: FC = () => {
 			<div className={styles.header}>
 				<SubHeading title={title} />
 				<div className={styles.toolbar}>
-					<Button onClick={deleteAnnualReport}>Удалить</Button>
+					<Button onClick={handleShowReportDeleteModal}>Удалить</Button>
 					<Button onClick={closeAnnualReport}>Закрыть</Button>
 				</div>
 			</div>

@@ -14,7 +14,7 @@ const stepsMap = (
 	stepTwo: IQuizStep[],
 	stepThree: IQuizStep[],
 	stepFour: IQuizStep[],
-	downloadXLSX: () => false | Promise<void>
+	downloadXLSX: () => void
 ): IQuizStep[] => {
 	const isCashPartners =
 		annualReportInDB?.data?.settings?.structure === 'cash/partners'
@@ -29,12 +29,12 @@ const stepsMap = (
 			0
 		)
 
-	const hasOutgoingBankOperationsWithoutCategoryId = Object.values(
-		annualReportInDB?.data.bankOperations ?? {}
-	)
-		.filter(operation => operation.amount < 0)
-		.filter(operation => operation.direction === 'main')
-		.find(operation => operation.categoryId === '')
+	// const hasOutgoingBankOperationsWithoutCategoryId = Object.values(
+	// 	annualReportInDB?.data.bankOperations ?? {}
+	// )
+	// 	.filter(operation => operation.amount < 0)
+	// 	.filter(operation => operation.direction === 'main')
+	// 	.find(operation => operation.categoryId === '')
 
 	const initialStep = {
 		stepTitle: 'Структура отчета',

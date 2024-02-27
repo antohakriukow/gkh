@@ -1,5 +1,13 @@
 import ExcelJS from 'exceljs'
 
+interface IAlignment {
+	alignment: {
+		horizontal: string
+		vertical: string
+		indent?: number
+	}
+}
+
 const isAlignCenter = {
 	alignment: {
 		horizontal: 'center',
@@ -7,11 +15,18 @@ const isAlignCenter = {
 	}
 }
 
-const isAlignLeft = {
-	alignment: {
-		horizontal: 'left',
-		vertical: 'middle'
+const isAlignLeft = (paddingLeft?: number) => {
+	const style = {
+		alignment: {
+			horizontal: 'left',
+			vertical: 'middle'
+		}
+	} as IAlignment
+	if (paddingLeft) {
+		style.alignment.indent = paddingLeft
 	}
+
+	return style
 }
 
 const hasBorder = {
@@ -40,27 +55,28 @@ export const isBoldAndCentered = {
 	...isAlignCenter
 } as Partial<ExcelJS.Style>
 
-export const hasLeftPadding = {
-	alignment: {
-		indent: 2
-	}
-}
-
-export const firstSimpleCell = {
-	...hasBorder,
-	...isAlignLeft
-} as Partial<ExcelJS.Style>
+export const firstSimpleCell = (paddingLeft?: number) =>
+	({
+		...hasBorder,
+		...isAlignLeft(paddingLeft)
+	}) as Partial<ExcelJS.Style>
 
 export const simpleCell = {
-	...firstSimpleCell,
+	...firstSimpleCell(),
 	...isAlignCenter,
 	...isNum
 } as Partial<ExcelJS.Style>
 
-export const firstResultCell = {
-	...firstSimpleCell,
-	...isBold
-} as Partial<ExcelJS.Style>
+export const firstResultCell = (paddingLeft?: number) => {
+	const style = {
+		...firstSimpleCell(paddingLeft),
+		...isBold
+	} as Partial<ExcelJS.Style>
+
+	if (style.alignment) style.alignment.wrapText = true
+
+	return style
+}
 
 export const resultCell = {
 	...simpleCell,
@@ -68,7 +84,7 @@ export const resultCell = {
 } as Partial<ExcelJS.Style>
 
 export const firstHeaderCell = {
-	...firstResultCell,
+	...firstResultCell(),
 	...hasFilling
 } as Partial<ExcelJS.Style>
 
