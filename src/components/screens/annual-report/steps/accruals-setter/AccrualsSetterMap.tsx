@@ -1,5 +1,5 @@
 import Accruals from './components/Accruals'
-import FinalStep from './components/final-step/FinalStep'
+import AccrualsSummary from './components/accruals-summary/AccrualsSummary'
 import { directionTitles } from '~/data/directions-titles'
 
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
@@ -8,7 +8,7 @@ import { IAnnualReport, IAnnualStepData } from '~/shared/types/annual.interface'
 
 import { getExistingDirections } from '~/utils/annual.utils'
 
-const stepTwoMap = (annualReport: IAnnualReport): IQuizStep[] => {
+const AccrualsSetterMap = (annualReport: IAnnualReport): IQuizStep[] => {
 	const stepsData = directionTitles.filter(step =>
 		getExistingDirections(annualReport.data?.accounts ?? []).includes(
 			step.direction
@@ -35,10 +35,10 @@ const stepTwoMap = (annualReport: IAnnualReport): IQuizStep[] => {
 	const finalStep = {
 		stepTitle: '',
 		onNext: () => {},
-		component: <FinalStep />
+		component: <AccrualsSummary />
 	}
 
 	return [...sequence, finalStep]
 }
 
-export default stepTwoMap
+export default AccrualsSetterMap

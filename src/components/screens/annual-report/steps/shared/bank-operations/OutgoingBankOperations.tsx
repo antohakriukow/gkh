@@ -9,7 +9,7 @@ import {
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
-import { IWorkspaceComponentProps } from '../../step-four/workspace/workspace.interface'
+import { IWorkspaceComponentProps } from '../../debit-sorter/workspace/workspace.interface'
 
 import styles from './BankOperations.module.scss'
 

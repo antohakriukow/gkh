@@ -1,4 +1,3 @@
-import { data } from './../../components/screens/annual-report/steps/step-one/components/structure-selector/data'
 import { unifyAccountingOperations } from './prepareAccountingData'
 import { unifyBankOperations } from './prepareBankData'
 
@@ -11,6 +10,7 @@ import { GetDateIntervalBoundaries } from '~/utils/time.utils'
 
 import { AnnualState } from '~/store/annual/annual.interface'
 
+import { data } from '../../components/screens/annual-report/steps/initial-step/components/structure-selector/data'
 import { IOperation } from '../../shared/types/annual.interface'
 import { createDeepCopy } from '../../utils/object.utils'
 

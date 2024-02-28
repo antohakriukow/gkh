@@ -6,9 +6,9 @@ import { useAnnualReport } from '~/components/screens/annual-report/useAnnualRep
 import { getExistingDirections } from '~/utils/annual.utils'
 import { formatNumber } from '~/utils/number.utils'
 
-import styles from './FinalStep.module.scss'
+import styles from './AccrualsSummary.module.scss'
 
-const FinalStep: FC = () => {
+const AccrualsSummary: FC = () => {
 	const { annualReportInDB } = useAnnualReport()
 
 	if (!annualReportInDB) return null
@@ -38,4 +38,4 @@ const FinalStep: FC = () => {
 		</div>
 	)
 }
-export default FinalStep
+export default AccrualsSummary

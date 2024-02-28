@@ -1,4 +1,4 @@
-import { IAnnualReportCategoriesFormInput } from './step-two.interface'
+import { IAnnualReportCategoriesFormInput } from './accruals-setter.interface'
 import { useEffect, useState } from 'react'
 import {
 	SubmitHandler,
@@ -19,7 +19,7 @@ import { AnnualService } from '~/services/annual.service'
 
 import { useAnnualReport } from '../../useAnnualReport'
 
-export const useStepTwo = (
+export const useAccrualsSetter = (
 	setValue: UseFormSetValue<IAnnualReportCategoriesFormInput>,
 	handleSubmit: UseFormHandleSubmit<
 		IAnnualReportCategoriesFormInput,

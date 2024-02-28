@@ -5,7 +5,7 @@ import { Field } from '~/components/ui'
 import {
 	IAnnualReportCategoriesField,
 	IAnnualReportCategoriesFormInput
-} from '../step-two.interface'
+} from '../accruals-setter.interface'
 
 const Item: FC<IAnnualReportCategoriesField> = ({
 	register,

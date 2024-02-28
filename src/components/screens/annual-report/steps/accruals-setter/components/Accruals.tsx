@@ -9,10 +9,10 @@ import { TypeDefinedAnnualDirection } from '~/shared/types/annual.interface'
 
 import { formatNumber } from '~/utils/number.utils'
 
-import { IAnnualReportCategoriesFormInput } from '../step-two.interface'
-import { useStepTwo } from '../useStepTwo'
+import { IAnnualReportCategoriesFormInput } from '../accruals-setter.interface'
+import { useAccrualsSetter } from '../useAccrualsSetter'
 
-import styles from './StepTwo.module.scss'
+import styles from './Accruals.module.scss'
 
 const Accruals: FC<{ direction: TypeDefinedAnnualDirection }> = ({
 	direction
@@ -21,7 +21,7 @@ const Accruals: FC<{ direction: TypeDefinedAnnualDirection }> = ({
 		useForm<IAnnualReportCategoriesFormInput>({
 			mode: 'onSubmit'
 		})
-	const { annualReportInDB, onSubmit } = useStepTwo(
+	const { annualReportInDB, onSubmit } = useAccrualsSetter(
 		setValue,
 		handleSubmit,
 		direction

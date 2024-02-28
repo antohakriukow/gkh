@@ -1,4 +1,4 @@
-import FinalStep from './step-final/FinalStep'
+import Preview from './preview/Preview'
 
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
@@ -9,11 +9,11 @@ import {
 
 const stepsMap = (
 	annualReportInDB: IAnnualReport | null | undefined,
-	stepOne: IQuizStep[],
-	stepOneDone: boolean,
-	stepTwo: IQuizStep[],
-	stepThree: IQuizStep[],
-	stepFour: IQuizStep[],
+	initialStepComponent: IQuizStep[],
+	initialStepDone: boolean,
+	accrualsStepComponent: IQuizStep[],
+	creditStepComponent: IQuizStep[],
+	debitStepComponent: IQuizStep[],
 	downloadXLSX: () => void
 ): IQuizStep[] => {
 	const isCashPartners =
@@ -39,36 +39,36 @@ const stepsMap = (
 	const initialStep = {
 		stepTitle: 'Структура отчета',
 		onNext: () => {},
-		children: stepOne
+		children: initialStepComponent
 	}
 
 	const accrualsStep = {
 		stepTitle: 'Начисления',
 		onNext: () => {},
-		backButtonHidden: stepOneDone,
+		backButtonHidden: initialStepDone,
 		nextButtonHidden: totalCategoriesAmount === 0,
-		children: stepTwo
+		children: accrualsStepComponent
 	}
 
-	const incomeStep = {
+	const creditSorterStep = {
 		stepTitle: 'Поступления',
 		onNext: () => {},
-		children: stepThree
+		children: creditStepComponent
 	}
 
-	const costsStep = {
+	const debitSorterStep = {
 		stepTitle: 'Списания',
 		onNext: () => {},
 		// nextButtonHidden: hasOutgoingBankOperationsWithoutCategoryId,
-		children: stepFour
+		children: debitStepComponent
 	}
 
-	const finalStep = {
+	const previewStep = {
 		stepTitle: 'Предварительный просмотр',
 		onNext: () => downloadXLSX(),
 		onNextButtonTitle: 'Скачать отчет',
-		backButtonHidden: (isCashPartners || isAccrualsServices) && stepOneDone,
-		component: <FinalStep />
+		backButtonHidden: (isCashPartners || isAccrualsServices) && initialStepDone,
+		component: <Preview />
 	}
 
 	const getStepsSequence = (
@@ -76,13 +76,25 @@ const stepsMap = (
 	) => {
 		switch (structure) {
 			case 'cash/partners':
-				return [initialStep, finalStep]
+				return [initialStep, previewStep]
 			case 'accruals/services':
-				return [initialStep, finalStep]
+				return [initialStep, previewStep]
 			case 'cash/services':
-				return [initialStep, accrualsStep, incomeStep, costsStep, finalStep]
+				return [
+					initialStep,
+					accrualsStep,
+					creditSorterStep,
+					debitSorterStep,
+					previewStep
+				]
 			default:
-				return [initialStep, accrualsStep, incomeStep, costsStep, finalStep]
+				return [
+					initialStep,
+					accrualsStep,
+					creditSorterStep,
+					debitSorterStep,
+					previewStep
+				]
 		}
 	}
 

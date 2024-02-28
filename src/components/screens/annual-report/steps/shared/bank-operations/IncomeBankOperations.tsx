@@ -14,7 +14,7 @@ import {
 	TypeAnnualOperationTag
 } from '~/shared/types/annual.interface'
 
-import { IWorkspaceComponentProps } from '../../step-three/workspace/workspace.interface'
+import { IWorkspaceComponentProps } from '../../credit-sorter/workspace/workspace.interface'
 
 import styles from './BankOperations.module.scss'
 

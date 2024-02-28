@@ -9,7 +9,7 @@ import { TypeCategoriesMap } from '~/shared/types/annual.interface'
 
 import { useAnnualReport } from '../../useAnnualReport'
 
-const FinalStep: FC = () => {
+const Preview: FC = () => {
 	const { annualReportInDB } = useAnnualReport()
 
 	if (!annualReportInDB || !annualReportInDB.data) return null
@@ -50,4 +50,4 @@ const FinalStep: FC = () => {
 
 	return <Loader />
 }
-export default FinalStep
+export default Preview

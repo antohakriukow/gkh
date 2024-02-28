@@ -1,27 +1,31 @@
 import Workspace from './workspace/Workspace'
-import { getAnnualTagVariationsData } from '~/data/annual-tag-variations'
+import { directionTitles } from '~/data/directions-titles'
 
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
 import {
 	IAnnualReport,
 	IExtendedBankOperation,
-	TypeAnnualDirection,
-	TypeAnnualOperationTag
+	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
 
-import BankOperations from '../shared/bank-operations/IncomeBankOperations'
+import {
+	getCategoriesWithoutChildren,
+	getExistingDirections
+} from '~/utils/annual.utils'
+
+import OutgoingBankOperations from '../shared/bank-operations/OutgoingBankOperations'
 
 interface IStepData {
 	title: string
 	direction: TypeAnnualDirection
 }
 
-const stepThreeMap = (
+const DebitSorter = (
 	annualReport: IAnnualReport,
-	setBankOperationsTag: (
+	setBankOperationsCategoryId: (
 		operationIds: string[],
-		tag: TypeAnnualOperationTag
+		categoryId: string
 	) => void
 ): IQuizStep[] => {
 	const filterOperationsByDirection = (
@@ -49,14 +53,23 @@ const stepThreeMap = (
 		onNext: () => {},
 		component: (
 			<Workspace
-				variations={getAnnualTagVariationsData(step.direction)}
-				property='tag'
-				component={BankOperations}
+				variations={
+					!!annualReport.data.categories && !!annualReport.data.categories.main
+						? getCategoriesWithoutChildren(annualReport.data.categories.main)
+						: []
+				}
+				property='categoryId'
+				component={OutgoingBankOperations}
 				data={filterOperationsByDirection(
-					operations.filter(operation => operation.amount > 0),
+					operations.filter(operation => operation.amount < 0),
 					step.direction
 				)}
-				handleSubmit={setBankOperationsTag}
+				handleSubmit={setBankOperationsCategoryId}
+				categories={
+					!!annualReport.data.categories && !!annualReport.data.categories.main
+						? annualReport.data.categories.main
+						: []
+				}
 			/>
 		)
 	})
@@ -86,4 +99,4 @@ const stepThreeMap = (
 	return sequence
 }
 
-export default stepThreeMap
+export default DebitSorter

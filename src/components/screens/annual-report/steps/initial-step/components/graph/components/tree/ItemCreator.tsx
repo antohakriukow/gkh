@@ -12,7 +12,7 @@ const ItemCreator: FC = () => {
 
 	const handleAddItem = () => {
 		if (newItemTitle.trim() !== '') {
-			createItem(newItemTitle)
+			createItem(newItemTitle.trim())
 			setNewItemTitle('')
 		}
 	}

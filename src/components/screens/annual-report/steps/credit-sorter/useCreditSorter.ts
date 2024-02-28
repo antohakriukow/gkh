@@ -1,24 +1,26 @@
 import { useAuth } from '~/hooks/useAuth'
 
+import { TypeAnnualOperationTag } from '~/shared/types/annual.interface'
+
 import { AnnualService } from '~/services/annual.service'
 
 import { useAnnualReport } from '../../useAnnualReport'
 
-export const useStepFour = () => {
+export const useCreditSorter = () => {
 	const { user } = useAuth()
 	const { annualReportInDB, isLoading } = useAnnualReport()
 
-	const setBankOperationsCategory = (
+	const setBankOperationsTag = (
 		operationIds: string[],
-		categoryId: string
+		tag: TypeAnnualOperationTag
 	) => {
 		if (!user || !annualReportInDB) return
 
 		try {
-			AnnualService.updateBankOperationCategories(
+			AnnualService.updateBankOperationTags(
 				user.uid,
 				annualReportInDB?._id.toString(),
-				categoryId,
+				tag,
 				operationIds
 			)
 		} catch (error) {
@@ -26,5 +28,5 @@ export const useStepFour = () => {
 		}
 	}
 
-	return { annualReportInDB, isLoading, setBankOperationsCategory }
+	return { annualReportInDB, isLoading, setBankOperationsTag }
 }

@@ -1,11 +1,6 @@
 import { FC } from 'react'
 
-import {
-	IExtendedAccountingOperation,
-	IExtendedBankOperation
-} from '~/shared/types/annual.interface'
-
-import { useFinalStep } from '../useFinalStep'
+import { IExtendedAccountingOperation } from '~/shared/types/annual.interface'
 
 const AccrualsReport: FC<{
 	operations: IExtendedAccountingOperation[]

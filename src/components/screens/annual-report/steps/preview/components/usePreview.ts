@@ -3,7 +3,7 @@ import { downloadCashServicesReport } from '~/core/annual/downloadCashServicesRe
 
 import { useAnnualReport } from '../../../useAnnualReport'
 
-export const useFinalStep = () => {
+export const usePreview = () => {
 	const { annualReportInDB } = useAnnualReport()
 
 	const downloadXLSX = () => {

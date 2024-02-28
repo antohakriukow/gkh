@@ -13,7 +13,7 @@ import { TypeAnnualReportStructure } from '~/shared/types/annual.interface'
 // import { getAnnualCategoriesGraph } from '~/utils/annual.utils'
 import { AnnualState } from '~/store/annual/annual.interface'
 
-const stepOneMap = (
+const InitialStepMap = (
 	state: AnnualState,
 	handleStepOneOnNext: () => void,
 	handleRefreshStepTwo: () => void,
@@ -127,4 +127,4 @@ const stepOneMap = (
 	return sequence
 }
 
-export default stepOneMap
+export default InitialStepMap

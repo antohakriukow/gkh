@@ -23,7 +23,7 @@ import { handleDBErrors } from '~/utils/error.utils'
 
 import { useAnnualReport } from '../../useAnnualReport'
 
-export const useStepOne = () => {
+export const useInitialStepMap = () => {
 	const { user } = useAuth()
 	const navigate = useNavigate()
 	const {

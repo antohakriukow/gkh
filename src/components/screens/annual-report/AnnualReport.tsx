@@ -1,12 +1,12 @@
 import ReportDeleteModal from './report-delete-modal/ReportDeleteModal'
-import { useFinalStep } from './steps/step-final/components/useFinalStep'
-import stepFourMap from './steps/step-four/stepFourMap'
-import { useStepFour } from './steps/step-four/useStepFour'
-import stepOneMap from './steps/step-one/stepOneMap'
-import { useStepOne } from './steps/step-one/useStepOne'
-import stepThreeMap from './steps/step-three/stepThreeMap'
-import { useStepThree } from './steps/step-three/useStepThree'
-import stepTwoMap from './steps/step-two/stepTwoMap'
+import stepTwoMap from './steps/accruals-setter/AccrualsSetterMap'
+import CreditSorterMap from './steps/credit-sorter/CreditSorterMap'
+import { useCreditSorter } from './steps/credit-sorter/useCreditSorter'
+import DebitSorterMap from './steps/debit-sorter/DebitSorterMap'
+import { useDebitSorter } from './steps/debit-sorter/useDebitSorter'
+import InitialStepMap from './steps/initial-step/InitialStepMap'
+import { useInitialStepMap } from './steps/initial-step/useInitialStepMap'
+import { usePreview } from './steps/preview/components/usePreview'
 import stepsMap from './steps/stepsMap'
 import { useAnnualReport } from './useAnnualReport'
 import { FC, useEffect, useState } from 'react'
@@ -39,9 +39,9 @@ const AnnualReport: FC = () => {
 		saveReportData,
 		setAnnualReportInitialDataSavedToDb,
 		stepOneDone
-	} = useStepOne()
+	} = useInitialStepMap()
 
-	const stepOne = stepOneMap(
+	const stepOne = InitialStepMap(
 		annualState,
 		handleSaveAnnualReportStructure,
 		clearAccountsAndOperations,
@@ -54,21 +54,21 @@ const AnnualReport: FC = () => {
 
 	const stepTwo = stepTwoMap(annualReportInDB ?? ({} as IAnnualReport))
 
-	const { setBankOperationsTag } = useStepThree()
+	const { setBankOperationsTag } = useCreditSorter()
 
-	const stepThree = stepThreeMap(
+	const stepThree = CreditSorterMap(
 		annualReportInDB ?? ({} as IAnnualReport),
 		setBankOperationsTag
 	)
 
-	const { setBankOperationsCategory } = useStepFour()
+	const { setBankOperationsCategory } = useDebitSorter()
 
-	const stepFour = stepFourMap(
+	const stepFour = DebitSorterMap(
 		annualReportInDB ?? ({} as IAnnualReport),
 		setBankOperationsCategory
 	)
 
-	const { downloadXLSX } = useFinalStep()
+	const { downloadXLSX } = usePreview()
 
 	const steps = stepsMap(
 		annualReportInDB,

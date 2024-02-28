@@ -1,31 +1,27 @@
 import Workspace from './workspace/Workspace'
-import { directionTitles } from '~/data/directions-titles'
+import { getAnnualTagVariationsData } from '~/data/annual-tag-variations'
 
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
 import {
 	IAnnualReport,
 	IExtendedBankOperation,
-	TypeAnnualDirection
+	TypeAnnualDirection,
+	TypeAnnualOperationTag
 } from '~/shared/types/annual.interface'
 
-import {
-	getCategoriesWithoutChildren,
-	getExistingDirections
-} from '~/utils/annual.utils'
-
-import OutgoingBankOperations from '../shared/bank-operations/OutgoingBankOperations'
+import BankOperations from '../shared/bank-operations/IncomeBankOperations'
 
 interface IStepData {
 	title: string
 	direction: TypeAnnualDirection
 }
 
-const stepFourMap = (
+const CreditSorterMap = (
 	annualReport: IAnnualReport,
-	setBankOperationsCategoryId: (
+	setBankOperationsTag: (
 		operationIds: string[],
-		categoryId: string
+		tag: TypeAnnualOperationTag
 	) => void
 ): IQuizStep[] => {
 	const filterOperationsByDirection = (
@@ -53,23 +49,14 @@ const stepFourMap = (
 		onNext: () => {},
 		component: (
 			<Workspace
-				variations={
-					!!annualReport.data.categories && !!annualReport.data.categories.main
-						? getCategoriesWithoutChildren(annualReport.data.categories.main)
-						: []
-				}
-				property='categoryId'
-				component={OutgoingBankOperations}
+				variations={getAnnualTagVariationsData(step.direction)}
+				property='tag'
+				component={BankOperations}
 				data={filterOperationsByDirection(
-					operations.filter(operation => operation.amount < 0),
+					operations.filter(operation => operation.amount > 0),
 					step.direction
 				)}
-				handleSubmit={setBankOperationsCategoryId}
-				categories={
-					!!annualReport.data.categories && !!annualReport.data.categories.main
-						? annualReport.data.categories.main
-						: []
-				}
+				handleSubmit={setBankOperationsTag}
 			/>
 		)
 	})
@@ -99,4 +86,4 @@ const stepFourMap = (
 	return sequence
 }
 
-export default stepFourMap
+export default CreditSorterMap
