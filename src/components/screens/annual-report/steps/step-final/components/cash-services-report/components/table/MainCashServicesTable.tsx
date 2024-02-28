@@ -42,8 +42,6 @@ const MainCashServicesTable: FC<{
 		id: 10002
 	} as IAnnualCategory
 
-	console.log('incomingOperationsWithTag: ', incomingOperationsWithTag)
-
 	return (
 		<div className={styles.gridTable}>
 			<div className={cn(styles.gridRow, styles.gridHeader)}>

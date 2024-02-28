@@ -48,3 +48,18 @@
 		@apply cursor-pointer;
 	}
 }
+
+.separating {
+	grid-template-columns: 1fr 1fr 4fr 0.2fr 0.2fr;
+
+	> svg {
+		@apply cursor-pointer;
+		&:hover {
+			transform: scale(1.05);
+		}
+	}
+}
+
+.separated {
+	@apply bg-neutral-50;
+}

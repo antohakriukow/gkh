@@ -34,6 +34,11 @@ const OperationsGroup: FC<OperationsGroupProps> = ({
 		})
 	}
 
+	const isThisSelected = (operation: IExtendedBankOperation) =>
+		selectedOperations.includes(operation._id) &&
+		selectedOperations.length === 1 &&
+		operation.amount < 0
+
 	return (
 		<div className={styles.group}>
 			<div className={styles.header}>
@@ -70,6 +75,7 @@ const OperationsGroup: FC<OperationsGroupProps> = ({
 							operation={operation}
 							selectedOperations={selectedOperations}
 							toggleOperationSelection={toggleOperationSelection}
+							showSeparateButton={isThisSelected}
 						/>
 					))}
 				</div>

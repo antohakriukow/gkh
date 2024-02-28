@@ -1,6 +1,5 @@
 import Workspace from './workspace/Workspace'
 import { getAnnualTagVariationsData } from '~/data/annual-tag-variations'
-import { directionTitles } from '~/data/directions-titles'
 
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
@@ -10,8 +9,6 @@ import {
 	TypeAnnualDirection,
 	TypeAnnualOperationTag
 } from '~/shared/types/annual.interface'
-
-import { getExistingDirections } from '~/utils/annual.utils'
 
 import BankOperations from '../shared/bank-operations/IncomeBankOperations'
 

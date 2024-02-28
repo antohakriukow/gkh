@@ -1,5 +1,6 @@
 import {
 	IAnnualReportSettings,
+	IExtendedBankOperation,
 	TypeAnnualOperationTag,
 	TypeDefinedAnnualDirection
 } from './../shared/types/annual.interface'
@@ -186,6 +187,37 @@ export const AnnualService = {
 
 		try {
 			await update(ref(db), updates)
+		} catch (error) {
+			console.log('ERROR: ', error)
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
+		}
+	},
+
+	async replaceOperation(
+		userId: string,
+		annualId: string,
+		newOperations: IExtendedBankOperation[],
+		removingOperationId: string
+	) {
+		try {
+			// Удаление указанной операции
+			const removingRef = ref(
+				db,
+				`/users/${userId}/annuals/${annualId}/data/bankOperations/${removingOperationId}`
+			)
+			await remove(removingRef)
+
+			// Подготовка объекта для добавления новых операций с явной индексной сигнатурой
+			const updates: { [operationPath: string]: IExtendedBankOperation } = {}
+			newOperations.forEach(operation => {
+				const operationPath = `/users/${userId}/annuals/${annualId}/data/bankOperations/${operation._id}`
+				updates[operationPath] = operation
+			})
+
+			// Добавление новых операций с использованием метода update для обновления на уровне базы данных
+			if (Object.keys(updates).length > 0) {
+				await update(ref(db), updates)
+			}
 		} catch (error) {
 			console.log('ERROR: ', error)
 			if (error instanceof Error) toast(error.message, { autoClose: 3000 })

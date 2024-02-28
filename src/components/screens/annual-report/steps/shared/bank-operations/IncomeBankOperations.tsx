@@ -18,7 +18,7 @@ import { IWorkspaceComponentProps } from '../../step-three/workspace/workspace.i
 
 import styles from './BankOperations.module.scss'
 
-const BankOperations: FC<
+const IncomeBankOperations: FC<
 	IWorkspaceComponentProps<IExtendedBankOperation, TypeAnnualOperationTag>
 > = ({ componentData }) => {
 	const { data, title, value, buffer, setBuffer, handleSubmit } = componentData
@@ -51,7 +51,6 @@ const BankOperations: FC<
 				)
 		: []
 
-	// Преобразование в массив и сортировка
 	const sortedOperationsArray = operationsGroupedByPartner
 		? Object.entries(operationsGroupedByPartner).sort(
 				(a, b) => b[1].length - a[1].length
@@ -99,4 +98,4 @@ const BankOperations: FC<
 		</div>
 	)
 }
-export default BankOperations
+export default IncomeBankOperations

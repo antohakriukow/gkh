@@ -24,7 +24,14 @@ export const useAnnualReport = () => {
 		  )
 		: null
 
-	// console.log(user?.uid)
+	const [lastBankOperationId, setLastBankOperationId] = useState(
+		Number(annualReportInDB?.data?.bankOperations?.length) - 1
+	)
+
+	useEffect(() => {
+		const operationsLength = annualReportInDB?.data?.bankOperations?.length ?? 0
+		setLastBankOperationId(operationsLength - 1)
+	}, [annualReportInDB?.data?.bankOperations])
 
 	useEffect(() => {
 		if (currentAnnualReport?._id !== reportId && annualReportInDB) {
@@ -55,14 +62,18 @@ export const useAnnualReport = () => {
 	const finalFunction = () => console.log('finalFunction')
 	const finalButtonTitle = 'Предпросмотр'
 
+	const annualReportInDBId = annualReportInDB?._id.toString()
+
 	return {
 		annualReportInDB,
+		annualReportInDBId,
 		finalFunction,
 		finalButtonTitle,
 		currentAnnualReport,
 		annualReportInitialDataSavedToDb,
 		isLoading,
 		closeAnnualReport,
-		deleteAnnualReport
+		deleteAnnualReport,
+		lastBankOperationId
 	}
 }
