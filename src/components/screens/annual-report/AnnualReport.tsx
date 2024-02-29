@@ -92,9 +92,48 @@ const AnnualReport: FC = () => {
 		downloadXLSX
 	)
 
+	const hasCategories =
+		(annualReportInDB?.data?.categories?.main?.length ?? 0) > 0
+
+	const hasAccruals =
+		(annualReportInDB?.data?.categories?.main?.reduce(
+			(sum, category) => (category.amount ? sum + category.amount : sum),
+			0
+		) ?? 0) > 0
+
+	const hasBankOperationWithCategoryId = annualReportInDB?.data?.bankOperations
+		?.filter(operation => operation.amount < 0)
+		?.find(operation => !!operation.categoryId)
+
+	const hasNoBankOperationWithCategoryId =
+		annualReportInDB?.data?.bankOperations
+			?.filter(
+				operation => operation.amount < 0 && operation.tag !== 'internal'
+			)
+			?.find(operation => !!operation.categoryId)
+
+	console.log(
+		'!!!!!: ',
+		annualReportInDB?.data?.bankOperations?.filter(
+			operation => operation.amount < 0 && !operation.categoryId
+		)
+	)
+
 	useEffect(() => {
 		if (initialStepDone) setInitialStepIndex(1)
-	}, [initialStepDone])
+		if (hasCategories) {
+			setInitialStepIndex(2)
+			if (hasAccruals) setInitialStepIndex(3)
+			if (hasBankOperationWithCategoryId) setInitialStepIndex(4)
+			if (hasNoBankOperationWithCategoryId) setInitialStepIndex(5)
+		}
+	}, [
+		initialStepDone,
+		hasCategories,
+		hasAccruals,
+		hasBankOperationWithCategoryId,
+		hasNoBankOperationWithCategoryId
+	])
 
 	const title = `Отчет об исполнении сметы ${annualReportInDB?.company.name.short}`
 

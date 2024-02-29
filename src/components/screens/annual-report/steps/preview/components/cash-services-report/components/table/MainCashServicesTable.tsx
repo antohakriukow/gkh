@@ -67,6 +67,7 @@ const MainCashServicesTable: FC<{
 
 				return (
 					<TotalRow
+						key={index}
 						operations={getCategoryOperations(category)}
 						category={category}
 					/>
