@@ -15,6 +15,7 @@ import {
 	setCurrentAnnualReport,
 	setCurrentCompany,
 	setCurrentReport,
+	setIsLoading,
 	setNewCompany
 } from './ui/ui.slice'
 
@@ -25,6 +26,7 @@ export const allActions = {
 	setCurrentAnnualReport,
 	setNewCompany,
 	setAnnualReportInitialDataSavedToDb,
+	setIsLoading,
 
 	clearAnnualState,
 	setAnnualStructure,

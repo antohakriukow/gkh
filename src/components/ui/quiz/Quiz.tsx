@@ -2,13 +2,15 @@ import { IQuizStep } from './quiz.interface'
 import React, { useEffect, useState } from 'react'
 
 import Button from '../form-elements/Button'
+import Loader from '../loader/Loader'
 
 import styles from './quiz.module.scss'
 
 const Quiz: React.FC<{
 	steps: IQuizStep[]
+	isLoading?: boolean
 	initialStepIndex?: number
-}> = ({ steps, initialStepIndex = 0 }) => {
+}> = ({ steps, isLoading, initialStepIndex = 0 }) => {
 	const [currentStepIndex, setCurrentStepIndex] = useState(initialStepIndex)
 	const [currentChildIndex, setCurrentChildIndex] = useState(0)
 
@@ -129,21 +131,25 @@ const Quiz: React.FC<{
 
 	return (
 		<div className={styles.container}>
-			<div className={styles.stepIndicator}>{stepText}</div>
-			<div className={styles.stepContent}>{renderStepContent()}</div>
-			<div className={styles.stepNavigation}>
-				{(currentStepIndex > 0 || currentChildIndex > 0) && (
-					<Button
-						disabled={backButtonDisabled && currentChildIndex === 0}
-						onClick={goToPreviousStep}
-					>
-						Назад
-					</Button>
-				)}
-				<Button disabled={nextButtonDisabled} onClick={goToNextStep}>
-					{buttonText}
-				</Button>
+			<div className={styles.stepIndicator}>{!isLoading && stepText}</div>
+			<div className={styles.stepContent}>
+				{isLoading ? <Loader loaderType='medium' /> : renderStepContent()}
 			</div>
+			{!isLoading && (
+				<div className={styles.stepNavigation}>
+					{(currentStepIndex > 0 || currentChildIndex > 0) && (
+						<Button
+							disabled={backButtonDisabled && currentChildIndex === 0}
+							onClick={goToPreviousStep}
+						>
+							Назад
+						</Button>
+					)}
+					<Button disabled={nextButtonDisabled} onClick={goToNextStep}>
+						{buttonText}
+					</Button>
+				</div>
+			)}
 		</div>
 	)
 }

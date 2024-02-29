@@ -11,19 +11,21 @@ import { useInitialStepMap } from './steps/initial-step/useInitialStepMap'
 import { usePreview } from './steps/preview/components/usePreview'
 import stepsMap from './steps/stepsMap'
 import { useAnnualReport } from './useAnnualReport'
-import { FC, useEffect, useState } from 'react'
+import { FC, Fragment, useEffect, useState } from 'react'
 
-import { Button, Quiz, SubHeading } from '~/components/ui'
+import { Button, Loader, Quiz, SubHeading } from '~/components/ui'
 
 import { useModal } from '~/hooks/useModal'
 
 import { IAnnualReport } from '~/shared/types/annual.interface'
 
+import { setIsLoading } from '~/store/ui/ui.slice'
+
 import styles from './AnnualReport.module.scss'
 
 const AnnualReport: FC = () => {
 	const [initialStepIndex, setInitialStepIndex] = useState(0)
-	const { deleteAnnualReport, closeAnnualReport, annualReportInDB } =
+	const { isLoading, deleteAnnualReport, closeAnnualReport, annualReportInDB } =
 		useAnnualReport()
 	const { showModal } = useModal()
 
@@ -135,7 +137,9 @@ const AnnualReport: FC = () => {
 		hasNoBankOperationWithCategoryId
 	])
 
-	const title = `Отчет об исполнении сметы ${annualReportInDB?.company.name.short}`
+	const title = `Отчет об исполнении сметы ${
+		annualReportInDB?.company.name.short ?? ''
+	}`
 
 	return (
 		<div className={styles.container}>
@@ -146,7 +150,11 @@ const AnnualReport: FC = () => {
 					<Button onClick={closeAnnualReport}>Закрыть</Button>
 				</div>
 			</div>
-			<Quiz steps={steps} initialStepIndex={initialStepIndex} />
+			<Quiz
+				isLoading={isLoading}
+				steps={steps}
+				initialStepIndex={initialStepIndex}
+			/>
 		</div>
 	)
 }

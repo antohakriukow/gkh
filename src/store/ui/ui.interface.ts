@@ -7,6 +7,7 @@ export interface IuiState {
 	currentReport: IReport | null
 	currentAnnualReport: IAnnualReport | null
 	annualReportInitialDataSavedToDb: boolean
+	isLoading: boolean
 
 	newCompany: ICompany | null
 }

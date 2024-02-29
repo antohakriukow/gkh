@@ -10,12 +10,11 @@ import { AnnualService } from '~/services/annual.service'
 
 export const useAnnualReport = () => {
 	const { user } = useAuth()
-	const [isLoading, setIsLoading] = useState(true)
 	const { annuals } = useData()
 	const { reportId } = useParams<{ reportId: string }>()
-	const { currentAnnualReport, annualReportInitialDataSavedToDb } =
+	const { isLoading, currentAnnualReport, annualReportInitialDataSavedToDb } =
 		useTypedSelector(state => state.ui)
-	const { setCurrentAnnualReport } = useActions()
+	const { setCurrentAnnualReport, setIsLoading } = useActions()
 	const navigate = useNavigate()
 
 	const annualReportInDB = reportId
@@ -34,6 +33,7 @@ export const useAnnualReport = () => {
 	}, [annualReportInDB?.data?.bankOperations])
 
 	useEffect(() => {
+		if (!currentAnnualReport?._id) setIsLoading(true)
 		if (currentAnnualReport?._id !== reportId && annualReportInDB) {
 			setCurrentAnnualReport(annualReportInDB)
 			setIsLoading(false)
@@ -43,7 +43,8 @@ export const useAnnualReport = () => {
 		reportId,
 		annuals,
 		currentAnnualReport,
-		setCurrentAnnualReport
+		setCurrentAnnualReport,
+		setIsLoading
 	])
 
 	const closeAnnualReport = () => navigate(`/annual-reports`)

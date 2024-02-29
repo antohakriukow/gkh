@@ -10,6 +10,7 @@ const initialState: IuiState = {
 	currentReport: null,
 	currentAnnualReport: null,
 	annualReportInitialDataSavedToDb: false,
+	isLoading: false,
 
 	newCompany: null
 }
@@ -43,6 +44,9 @@ export const uiSlice = createSlice({
 			action: PayloadAction<boolean>
 		) => {
 			state.annualReportInitialDataSavedToDb = action.payload
+		},
+		setIsLoading: (state, action: PayloadAction<boolean>) => {
+			state.isLoading = action.payload
 		}
 	}
 })
@@ -53,6 +57,7 @@ export const {
 	setCurrentReport,
 	setCurrentAnnualReport,
 	setNewCompany,
-	setAnnualReportInitialDataSavedToDb
+	setAnnualReportInitialDataSavedToDb,
+	setIsLoading
 } = uiSlice.actions
 export const uiReducer = uiSlice.reducer
