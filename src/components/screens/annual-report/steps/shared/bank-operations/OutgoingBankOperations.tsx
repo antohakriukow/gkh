@@ -1,23 +1,28 @@
 import OperationsGroup from './components/OperationsGroup'
 import ToolBar from './components/ToolBar'
-import { FC, useEffect, useState } from 'react'
+import { FC, memo, useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 import {
 	getAnnualDirectionTitle,
 	isExtendedBankOperation
 } from '~/core/annual/shared'
 
+import { useModal } from '~/hooks/useModal'
+
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
+import { useAnnualReport } from '../../../useAnnualReport'
 import { IWorkspaceComponentProps } from '../../debit-sorter/workspace/workspace.interface'
 
 import styles from './BankOperations.module.scss'
 
 const OutgoingBankOperations: FC<
 	IWorkspaceComponentProps<IExtendedBankOperation, string>
-> = ({ componentData }) => {
+> = memo(({ componentData }) => {
 	const { data, title, value, buffer, setBuffer, handleSubmit } = componentData
 	const [isVisible, setIsVisible] = useState(true)
+	const { lastBankOperationId, annualReportInDBId } = useAnnualReport()
+	const { showModal } = useModal()
 
 	const toggleVisible = () => setIsVisible(!isVisible)
 
@@ -85,6 +90,9 @@ const OutgoingBankOperations: FC<
 								operations={operations}
 								toggleOperationSelection={toggleOperationSelection}
 								selectedOperations={buffer}
+								showModal={showModal}
+								lastBankOperationId={lastBankOperationId}
+								annualReportInDBId={annualReportInDBId}
 							/>
 						))}
 				</div>
@@ -92,5 +100,6 @@ const OutgoingBankOperations: FC<
 			</div>
 		</div>
 	)
-}
+})
+
 export default OutgoingBankOperations
