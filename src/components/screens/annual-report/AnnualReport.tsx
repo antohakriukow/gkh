@@ -114,13 +114,6 @@ const AnnualReport: FC = () => {
 			)
 			?.find(operation => !!operation.categoryId)
 
-	console.log(
-		'!!!!!: ',
-		annualReportInDB?.data?.bankOperations?.filter(
-			operation => operation.amount < 0 && !operation.categoryId
-		)
-	)
-
 	useEffect(() => {
 		if (initialStepDone) setInitialStepIndex(1)
 		if (hasCategories) {

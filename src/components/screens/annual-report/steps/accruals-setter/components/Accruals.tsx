@@ -30,6 +30,7 @@ const Accruals: FC<{ direction: TypeDefinedAnnualDirection }> = ({
 	if (!direction || !annualReportInDB?.data?.categories) return null
 
 	const categories = annualReportInDB?.data?.categories[direction] ?? []
+	console.log('direction: ', direction, 'categories: ', categories)
 
 	if (!categories) return null
 
@@ -41,7 +42,7 @@ const Accruals: FC<{ direction: TypeDefinedAnnualDirection }> = ({
 						direction
 					)}":`}
 				/>
-				{categories?.map(category => {
+				{categories.map(category => {
 					const placeholder =
 						direction === 'main'
 							? `${category.value}, руб:`

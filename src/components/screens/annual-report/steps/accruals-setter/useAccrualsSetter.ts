@@ -35,12 +35,12 @@ export const useAccrualsSetter = (
 	useEffect(() => {
 		setIsLoading(true)
 		if (annualReportInDB?.data?.categories) {
-			annualReportInDB.data.categories.main?.forEach(category => {
+			annualReportInDB.data.categories[direction]?.forEach(category => {
 				setValue(`categories.${category.id}.amount`, category.amount ?? 0)
 			})
 		}
 		setIsLoading(false)
-	}, [annualReportInDB, setValue])
+	}, [annualReportInDB, setValue, direction])
 
 	const onSubmit: SubmitHandler<IAnnualReportCategoriesFormInput> = data => {
 		if (!user || !reportId) return
