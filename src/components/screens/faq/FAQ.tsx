@@ -1,10 +1,9 @@
 import { tips } from './data/faq.data'
-import Tip from './tip/Tip'
 import { FC } from 'react'
 import { AiOutlineCloseSquare } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 
-import { Heading } from '~/components/ui'
+import { Heading, Tip } from '~/components/ui'
 
 import styles from './FAQ.module.scss'
 

@@ -4,7 +4,7 @@ import { convertLineBreaksToHTML } from '~/utils/string.utils'
 
 import styles from './Tip.module.scss'
 
-interface ITip {
+export interface ITip {
 	title: string
 	text: string
 }

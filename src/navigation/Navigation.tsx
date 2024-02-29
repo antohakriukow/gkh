@@ -10,6 +10,7 @@ import FAQ from '~/components/screens/faq/FAQ'
 import Issues from '~/components/screens/issues/Issues'
 import LoginPage from '~/components/screens/landing/LoginPage'
 import RegisterPage from '~/components/screens/landing/RegisterPage'
+import Prices from '~/components/screens/prices/Prices'
 import ReportEditor from '~/components/screens/report/ReportEditor'
 import Reports from '~/components/screens/reports/Reports'
 import ResetPassword from '~/components/screens/reset-password/ResetPassword'
@@ -75,6 +76,14 @@ const router = createBrowserRouter([
 				element: (
 					<ProtectedRoute>
 						<FAQ />
+					</ProtectedRoute>
+				)
+			},
+			{
+				path: '/prices',
+				element: (
+					<ProtectedRoute>
+						<Prices />
 					</ProtectedRoute>
 				)
 			},

@@ -14,3 +14,5 @@ export { default as Button } from './form-elements/Button'
 export { default as HomeButton } from '../ui/home-button/HomeButton'
 
 export { default as Loader } from './loader/Loader'
+
+export { default as Tip } from './tip/Tip'
