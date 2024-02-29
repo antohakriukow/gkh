@@ -1,6 +1,7 @@
 import {
 	IAccount,
 	IAnnualCategory,
+	IAnnualCategoryState,
 	TypeAnnualDirection,
 	TypeAnnualReportStructure,
 	TypeDefinedAnnualDirection
@@ -19,6 +20,31 @@ export const getAnnualReportStructureName = (
 		default:
 			return 'Не выбран'
 	}
+}
+
+export const removeCollapsedFromCategories = (
+	categories: IAnnualCategoryState[]
+): IAnnualCategory[] => {
+	const response = categories.map(({ id, value, amount, children }) => {
+		// Инициализируем объект категории только с обязательными полями
+		const categoryObject: IAnnualCategory = { id, value }
+
+		// Динамически добавляем amount, если он существует
+		if (amount !== undefined) {
+			categoryObject.amount = amount
+		}
+
+		// Рекурсивно обрабатываем дочерние элементы, если они существуют
+		if (children) {
+			categoryObject.children = removeCollapsedFromCategories(
+				children as IAnnualCategoryState[]
+			)
+		}
+
+		return categoryObject
+	})
+
+	return response
 }
 
 export const getCategoriesWithoutChildren = (

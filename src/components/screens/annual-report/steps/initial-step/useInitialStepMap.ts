@@ -80,6 +80,8 @@ export const useInitialStepMap = () => {
 		setAnnualFileNames([])
 	}
 
+	// Только для метода начислений (Вернуться когда буду делать отчет методом начислений)
+
 	const setInitialCategories = () => {
 		if (annualState.structure === 'accruals/services') {
 			const categories = getAnnualCategoriesGraph(annualState)
@@ -88,6 +90,7 @@ export const useInitialStepMap = () => {
 	}
 
 	const clearError = () => setAnnualError('')
+
 	const clearAccountTypes = () =>
 		setAnnualAccounts(
 			annualState.accounts.map(account => ({ ...account, type: undefined }))
@@ -100,7 +103,6 @@ export const useInitialStepMap = () => {
 		const modifiedState = prepareAnnualState(annualState)
 
 		const categoriesData = {} as TypeCategoriesMap
-		categoriesData.main = modifiedState.categories
 		;(['renovation', 'target', 'commerce'] as TypeDefinedAnnualDirection[]).map(
 			direction => {
 				if (getExistingDirections(annualState.accounts).includes(direction)) {
@@ -136,7 +138,7 @@ export const useInitialStepMap = () => {
 		}
 	}
 
-	const stepOneDone = !!annualReportInDB?.data?.accounts
+	const initialStepDone = !!annualReportInDB?.data?.accounts
 
 	return {
 		isLoading,
@@ -151,6 +153,6 @@ export const useInitialStepMap = () => {
 		setInitialCategories,
 		saveReportData,
 		setAnnualReportInitialDataSavedToDb,
-		stepOneDone
+		initialStepDone
 	}
 }

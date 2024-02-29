@@ -9,11 +9,15 @@ import {
 
 const stepsMap = (
 	annualReportInDB: IAnnualReport | null | undefined,
+
 	initialStepComponent: IQuizStep[],
-	initialStepDone: boolean,
+	categoriesStepComponent: IQuizStep[],
 	accrualsStepComponent: IQuizStep[],
 	creditStepComponent: IQuizStep[],
 	debitStepComponent: IQuizStep[],
+
+	initialStepDone: boolean,
+
 	downloadXLSX: () => void
 ): IQuizStep[] => {
 	const isCashPartners =
@@ -42,10 +46,16 @@ const stepsMap = (
 		children: initialStepComponent
 	}
 
+	const categoriesStep = {
+		stepTitle: 'Структура отчета',
+		backButtonHidden: initialStepDone,
+		onNext: () => {},
+		children: categoriesStepComponent
+	}
+
 	const accrualsStep = {
 		stepTitle: 'Начисления',
 		onNext: () => {},
-		backButtonHidden: initialStepDone,
 		nextButtonHidden: totalCategoriesAmount === 0,
 		children: accrualsStepComponent
 	}
@@ -82,6 +92,7 @@ const stepsMap = (
 			case 'cash/services':
 				return [
 					initialStep,
+					categoriesStep,
 					accrualsStep,
 					creditSorterStep,
 					debitSorterStep,

@@ -69,18 +69,6 @@ const InitialStepMap = (
 		)
 	}
 
-	const createGraph = {
-		stepTitle: 'Настройка статей отчета',
-		onPrevious: () => {
-			clearError()
-			setAnnualReportInitialDataSavedToDb(false)
-		},
-		onNext: () => {
-			clearError()
-		},
-		component: <Graph />
-	}
-
 	const final = {
 		stepTitle: '',
 		onPrevious: () => setAnnualReportInitialDataSavedToDb(false),
@@ -92,39 +80,7 @@ const InitialStepMap = (
 		component: <FinalStep />
 	}
 
-	const getStepsSequence = (
-		structure: TypeAnnualReportStructure | null | undefined
-	) => {
-		switch (structure) {
-			case 'cash/partners':
-				return [selectStructure, importData, selectDirections, final]
-
-			case 'accruals/services':
-				return [selectStructure, importData, selectDirections, final]
-
-			case 'cash/services':
-				return [
-					selectStructure,
-					importData,
-					selectDirections,
-					createGraph,
-					final
-				]
-
-			default:
-				return [
-					selectStructure,
-					importData,
-					selectDirections,
-					createGraph,
-					final
-				]
-		}
-	}
-
-	const sequence = getStepsSequence(state.structure)
-
-	return sequence
+	return [selectStructure, importData, selectDirections, final]
 }
 
 export default InitialStepMap

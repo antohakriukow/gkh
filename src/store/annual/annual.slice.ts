@@ -21,7 +21,7 @@ const initialState: AnnualState = {
 }
 
 export const annualSlice = createSlice({
-	name: 'ui',
+	name: 'annual',
 	initialState,
 	reducers: {
 		clearAnnualState: state => {

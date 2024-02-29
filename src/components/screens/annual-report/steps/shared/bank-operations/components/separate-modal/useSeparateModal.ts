@@ -71,9 +71,6 @@ export const useSeparateModal = (
 		}))
 
 		try {
-			console.log('lastBankOperationId: ', lastBankOperationId)
-			console.log('newOperations: ', newOperations)
-			console.log('operation: ', operation)
 			await AnnualService.replaceOperation(
 				user.uid,
 				annualReportInDBId,
