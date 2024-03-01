@@ -1,4 +1,9 @@
-import { IDataObject, IResultObject, IWorkspace } from './workspace.interface'
+import {
+	IDataObject,
+	IResultObject,
+	IVariation,
+	IWorkspace
+} from './workspace.interface'
 import { useCallback, useState } from 'react'
 
 import CategoryRenderer from '../../shared/category-render/CategoryRenderer'
@@ -23,6 +28,34 @@ const Workspace = <T extends IDataObject, T1>({
 		[handleSubmit]
 	)
 
+	const filterDataByVariation = (
+		data: T[],
+		property: keyof T,
+		variations: IVariation<T1>[]
+	): IResultObject<T, T1>[] => {
+		const result: IResultObject<T, T1>[] = []
+
+		variations
+			.sort((a, b) => a.title.localeCompare(b.title))
+			.forEach(variation => {
+				const filteredData = data.filter(
+					item => item[property] === variation.value
+				)
+				result.push({
+					title: variation.title,
+					value: variation.value,
+					data: filteredData,
+					buffer,
+					setBuffer,
+					handleSubmit: onSubmit
+				})
+			})
+
+		return result
+	}
+
+	const sortedData = filterDataByVariation(data, property, variations)
+
 	const dataWithUndefinedProperty: IResultObject<T, T1> = {
 		title: '',
 		value: '' as T1,
@@ -40,25 +73,12 @@ const Workspace = <T extends IDataObject, T1>({
 				<Component componentData={dataWithUndefinedProperty} />
 			</div>
 			<div>
-				{categories && (
-					<CategoryRenderer
-						categories={categories}
-						RenderComponent={({ category }) => (
-							<Component
-								componentData={{
-									title: category.value,
-									value: category.id.toString() as T1,
-									data: data.filter(
-										item => item[property] === category.id.toString()
-									),
-									buffer,
-									setBuffer,
-									handleSubmit: onSubmit
-								}}
-							/>
-						)}
+				{sortedData.map((dataSet, index) => (
+					<Component
+						key={index}
+						componentData={dataSet as IResultObject<T, T1>}
 					/>
-				)}
+				))}
 			</div>
 		</div>
 	)
