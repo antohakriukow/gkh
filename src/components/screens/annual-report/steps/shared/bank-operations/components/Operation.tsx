@@ -1,5 +1,5 @@
 import cn from 'clsx'
-import { FC, memo } from 'react'
+import { FC, memo, useCallback } from 'react'
 import { PiCopyBold } from 'react-icons/pi'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
@@ -22,9 +22,9 @@ const Operation: FC<IOperationProps> = memo(
 		showSeparateModal,
 		isChecked
 	}) => {
-		const handleChange = () => {
+		const handleChange = useCallback(() => {
 			toggleOperationSelection(operation._id)
-		}
+		}, [operation._id, toggleOperationSelection])
 
 		const handleShowSeparateModal = () => showSeparateModal(operation)
 

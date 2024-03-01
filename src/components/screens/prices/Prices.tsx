@@ -31,8 +31,8 @@ const Prices: FC = () => {
 				))}
 			</div>
 			<div className={styles.info}>
-				{infoData.map(tip => (
-					<Tip title={tip.title} text={tip.text} />
+				{infoData.map((tip, index) => (
+					<Tip key={index} title={tip.title} text={tip.text} />
 				))}
 			</div>
 			<div className={styles.downloads}>

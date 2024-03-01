@@ -1,6 +1,6 @@
 import OperationsGroup from './components/OperationsGroup'
 import ToolBar from './components/ToolBar'
-import { FC, memo, useState } from 'react'
+import { FC, memo, useCallback, useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 import {
 	getAnnualDirectionTitle,
@@ -26,11 +26,14 @@ const OutgoingBankOperations: FC<
 
 	const toggleVisible = () => setIsVisible(!isVisible)
 
-	const toggleOperationSelection = (id: string) => {
-		setBuffer(prev =>
-			prev.includes(id) ? prev.filter(prevId => prevId !== id) : [...prev, id]
-		)
-	}
+	const toggleOperationSelection = useCallback(
+		(id: string) => {
+			setBuffer(prev =>
+				prev.includes(id) ? prev.filter(prevId => prevId !== id) : [...prev, id]
+			)
+		},
+		[setBuffer]
+	)
 
 	const operationsGroupedByPartner = data
 		? data

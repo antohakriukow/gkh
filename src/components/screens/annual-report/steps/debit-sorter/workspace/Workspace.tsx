@@ -1,5 +1,5 @@
 import { IDataObject, IResultObject, IWorkspace } from './workspace.interface'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import CategoryRenderer from '../../shared/category-render/CategoryRenderer'
 
@@ -15,10 +15,13 @@ const Workspace = <T extends IDataObject, T1>({
 }: IWorkspace<T, T1>) => {
 	const [buffer, setBuffer] = useState<string[]>([])
 
-	const onSubmit = (data: string[], newPropertyValue: T1) => {
-		handleSubmit(data, newPropertyValue)
-		setBuffer([])
-	}
+	const onSubmit = useCallback(
+		(data: string[], newPropertyValue: T1) => {
+			handleSubmit(data, newPropertyValue)
+			setBuffer([])
+		},
+		[handleSubmit]
+	)
 
 	const dataWithUndefinedProperty: IResultObject<T, T1> = {
 		title: '',

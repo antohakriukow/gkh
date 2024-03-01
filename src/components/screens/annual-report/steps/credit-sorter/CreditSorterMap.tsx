@@ -10,7 +10,7 @@ import {
 	TypeAnnualOperationTag
 } from '~/shared/types/annual.interface'
 
-import BankOperations from '../shared/bank-operations/IncomeBankOperations'
+import IncomeBankOperations from '../shared/bank-operations/IncomeBankOperations'
 
 interface IStepData {
 	title: string
@@ -51,7 +51,7 @@ const CreditSorterMap = (
 			<Workspace
 				variations={getAnnualTagVariationsData(step.direction)}
 				property='tag'
-				component={BankOperations}
+				component={IncomeBankOperations}
 				data={filterOperationsByDirection(
 					operations.filter(operation => operation.amount > 0),
 					step.direction

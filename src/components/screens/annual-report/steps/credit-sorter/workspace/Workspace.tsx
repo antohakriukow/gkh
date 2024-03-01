@@ -4,7 +4,7 @@ import {
 	IVariation,
 	IWorkspace
 } from './workspace.interface'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import styles from './Workspace.module.scss'
 
@@ -17,10 +17,13 @@ const Workspace = <T extends IDataObject, T1>({
 }: IWorkspace<T, T1>) => {
 	const [buffer, setBuffer] = useState<string[]>([])
 
-	const onSubmit = (data: string[], newPropertyValue: T1) => {
-		handleSubmit(data, newPropertyValue)
-		setBuffer([])
-	}
+	const onSubmit = useCallback(
+		(data: string[], newPropertyValue: T1) => {
+			handleSubmit(data, newPropertyValue)
+			setBuffer([])
+		},
+		[handleSubmit]
+	)
 
 	const filterDataByVariation = (
 		data: T[],

@@ -1,6 +1,6 @@
 import Operation from './Operation'
 import SeparateModal from './separate-modal/SeparateModal'
-import { FC, ReactNode, memo, useState } from 'react'
+import { FC, ReactNode, memo, useCallback, useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa6'
 
 import { useAnnualReport } from '~/components/screens/annual-report/useAnnualReport'
@@ -31,29 +31,40 @@ const OperationsGroup: FC<OperationsGroupProps> = memo(
 	}) => {
 		const [isVisible, setIsVisible] = useState(false)
 
-		const showSeparateModal = (operation: IExtendedBankOperation) => {
-			showModal(
-				<SeparateModal
-					operation={operation}
-					lastBankOperationId={lastBankOperationId}
-					annualReportInDBId={annualReportInDBId}
-					clearSelectedOperation={() => toggleOperationSelection(operation._id)}
-				/>
-			)
-		}
+		const showSeparateModal = useCallback(
+			(operation: IExtendedBankOperation) => {
+				showModal(
+					<SeparateModal
+						operation={operation}
+						lastBankOperationId={lastBankOperationId}
+						annualReportInDBId={annualReportInDBId}
+						clearSelectedOperation={() =>
+							toggleOperationSelection(operation._id)
+						}
+					/>
+				)
+			},
+			[
+				annualReportInDBId,
+				lastBankOperationId,
+				showModal,
+				toggleOperationSelection
+			]
+		)
 
 		const toggleVisible = () => setIsVisible(!isVisible)
 
-		const handleGroupCheckboxChange = (
-			e: React.ChangeEvent<HTMLInputElement>
-		) => {
-			const isChecked = e.target.checked
-			operations.forEach(operation => {
-				if (isChecked !== selectedOperations.includes(operation._id)) {
-					toggleOperationSelection(operation._id)
-				}
-			})
-		}
+		const handleGroupCheckboxChange = useCallback(
+			(e: React.ChangeEvent<HTMLInputElement>) => {
+				const isChecked = e.target.checked
+				operations.forEach(operation => {
+					if (isChecked !== selectedOperations.includes(operation._id)) {
+						toggleOperationSelection(operation._id)
+					}
+				})
+			},
+			[operations, selectedOperations, toggleOperationSelection]
+		)
 
 		const isThisSelected = (operation: IExtendedBankOperation) =>
 			selectedOperations.includes(operation._id) &&
