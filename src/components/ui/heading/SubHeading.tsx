@@ -9,7 +9,7 @@ interface ISubHeading {
 }
 
 const SubHeading: FC<ISubHeading> = ({ title, className }) => {
-	return <h2 className={cn(styles.heading, className)}>{title}</h2>
+	return <h2 className={cn(styles.subheading, className)}>{title}</h2>
 }
 
 export default SubHeading

@@ -30,6 +30,11 @@ export interface IField extends TypeInputPropsField {}
 export interface ICheckbox extends TypeCheckboxPropsField {}
 export interface ITextarea extends TypeTextareaPropsField {}
 
+export interface IUploadField extends TypeInputPropsField {
+	handleFiles: (files: File[]) => Promise<void>
+	fileNames: string[]
+}
+
 export interface IOption {
 	label: string
 	value: string | number | boolean | null

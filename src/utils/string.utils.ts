@@ -26,3 +26,13 @@ export const extractLastLink = (string: string) => string.split('.').pop()
 export const convertLineBreaksToHTML = (text: string) => {
 	return text.replace(/\n/g, '<br/>')
 }
+
+export function trimStringAtSymbol(str: string, symbol: string) {
+	const index = str.indexOf(symbol)
+
+	if (index !== -1) {
+		return str.slice(0, index)
+	}
+
+	return str
+}

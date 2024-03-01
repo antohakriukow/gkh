@@ -1,0 +1,23 @@
+@import '../../../../styles/colors.scss';
+
+.container {
+	@apply w-full h-full p-4 bg-gray-50 rounded-md box-border cursor-pointer flex flex-col justify-between items-start;
+	border: $gray-200 1px solid;
+
+	&:hover {
+		@apply bg-primary-50;
+		border: $primary-200 1px solid;
+	}
+}
+
+.title {
+	@apply text-base m-0 font-semibold text-primary-800;
+}
+
+.description {
+	@apply mb-0 mt-2 text-primary-800;
+}
+
+.price {
+	@apply font-semibold;
+}

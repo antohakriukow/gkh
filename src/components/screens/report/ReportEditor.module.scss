@@ -1,8 +1,8 @@
 @import '../../../styles/colors.scss';
 
 .container {
-	@apply flex flex-col justify-center items-start bg-white p-4 pb-8 rounded-md box-border select-none;
-	height: calc(100vh - 118px);
+	@apply flex flex-col justify-center items-start bg-white p-4  box-border select-none;
+	height: calc(100% - 100px);
 }
 
 .notFound {
@@ -23,11 +23,11 @@
 	-ms-overflow-style: -ms-autohiding-scrollbar;
 
 	&::-webkit-scrollbar {
-		width: 8px;
+		width: 4px;
 	}
 
 	&::-webkit-scrollbar-thumb {
-		background-color: $primary-500;
+		background-color: $gray-400;
 		border-radius: 0px;
 	}
 

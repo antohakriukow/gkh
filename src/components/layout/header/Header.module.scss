@@ -7,8 +7,26 @@
 	height: 52px;
 }
 
-.title {
-	@apply text-xl font-extralight text-gray-700 cursor-pointer;
+.menu {
+	@apply flex justify-start  text-primary-700 items-center;
+	height: 26px;
+
+	.menuItem {
+		@apply flex flex-row items-center justify-center cursor-pointer px-2 h-full transition-colors box-border;
+		min-width: 82px;
+
+		> p {
+			@apply m-0;
+		}
+
+		&:hover {
+			@apply bg-primary-200;
+		}
+
+		&.active {
+			@apply font-bold bg-primary-500 text-gray-0;
+		}
+	}
 }
 
 .tools {

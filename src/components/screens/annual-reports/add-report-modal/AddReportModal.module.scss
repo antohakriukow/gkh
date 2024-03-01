@@ -1,0 +1,20 @@
+.container {
+	@apply flex flex-col items-center;
+}
+.setterContainer {
+	@apply flex flex-row mt-4;
+	> :first-child {
+		@apply mr-4;
+	}
+}
+
+.title {
+	@apply text-center text-lg m-0;
+}
+
+.reportSubtitle {
+	@apply text-center text-lg mb-0 mt-4 font-normal;
+}
+.periodSubtitle {
+	@apply text-center text-lg mb-0 mt-1 font-semibold;
+}

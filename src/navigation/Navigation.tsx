@@ -4,10 +4,13 @@ import { FC } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import Layout from '~/components/layout/Layout'
+import AnnualReport from '~/components/screens/annual-report/AnnualReport'
+import AnnualReports from '~/components/screens/annual-reports/AnnualReports'
 import FAQ from '~/components/screens/faq/FAQ'
 import Issues from '~/components/screens/issues/Issues'
 import LoginPage from '~/components/screens/landing/LoginPage'
 import RegisterPage from '~/components/screens/landing/RegisterPage'
+import Prices from '~/components/screens/prices/Prices'
 import ReportEditor from '~/components/screens/report/ReportEditor'
 import Reports from '~/components/screens/reports/Reports'
 import ResetPassword from '~/components/screens/reset-password/ResetPassword'
@@ -45,6 +48,22 @@ const router = createBrowserRouter([
 				)
 			},
 			{
+				path: 'annual-reports',
+				element: (
+					<ProtectedRoute>
+						<AnnualReports />
+					</ProtectedRoute>
+				)
+			},
+			{
+				path: '/annual-reports/edit/:reportId',
+				element: (
+					<ProtectedRoute>
+						<AnnualReport />
+					</ProtectedRoute>
+				)
+			},
+			{
 				path: '/issues',
 				element: (
 					<ProtectedRoute>
@@ -57,6 +76,14 @@ const router = createBrowserRouter([
 				element: (
 					<ProtectedRoute>
 						<FAQ />
+					</ProtectedRoute>
+				)
+			},
+			{
+				path: '/prices',
+				element: (
+					<ProtectedRoute>
+						<Prices />
 					</ProtectedRoute>
 				)
 			},
