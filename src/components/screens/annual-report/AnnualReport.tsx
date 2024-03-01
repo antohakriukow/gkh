@@ -25,8 +25,13 @@ import styles from './AnnualReport.module.scss'
 
 const AnnualReport: FC = () => {
 	const [initialStepIndex, setInitialStepIndex] = useState(0)
-	const { isLoading, deleteAnnualReport, closeAnnualReport, annualReportInDB } =
-		useAnnualReport()
+	const {
+		isLoading,
+		deleteAnnualReport,
+		closeAnnualReport,
+		annualReportInDB,
+		isReportPayed
+	} = useAnnualReport()
 	const { showModal } = useModal()
 
 	const handleShowReportDeleteModal = () => {
@@ -83,6 +88,8 @@ const AnnualReport: FC = () => {
 
 	const { downloadXLSX } = usePreview()
 
+	const showPaymentScreen = () => {}
+
 	const steps = stepsMap(
 		annualReportInDB,
 		initialStep,
@@ -91,7 +98,9 @@ const AnnualReport: FC = () => {
 		stepCreditSorter,
 		stepDebitSorter,
 		initialStepDone,
-		downloadXLSX
+		downloadXLSX,
+		isReportPayed,
+		showPaymentScreen
 	)
 
 	const hasCategories =
@@ -139,7 +148,9 @@ const AnnualReport: FC = () => {
 			<div className={styles.header}>
 				<SubHeading title={title} />
 				<div className={styles.toolbar}>
-					<Button onClick={handleShowReportDeleteModal}>Удалить</Button>
+					{!isReportPayed && (
+						<Button onClick={handleShowReportDeleteModal}>Удалить</Button>
+					)}
 					<Button onClick={closeAnnualReport}>Закрыть</Button>
 				</div>
 			</div>

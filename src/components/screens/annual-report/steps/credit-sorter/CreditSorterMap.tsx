@@ -1,3 +1,4 @@
+import IncomeBankOperations from './IncomeBankOperations/IncomeBankOperations'
 import Workspace from './workspace/Workspace'
 import { getAnnualTagVariationsData } from '~/data/annual-tag-variations'
 
@@ -9,8 +10,6 @@ import {
 	TypeAnnualDirection,
 	TypeAnnualOperationTag
 } from '~/shared/types/annual.interface'
-
-import IncomeBankOperations from '../shared/bank-operations/IncomeBankOperations'
 
 interface IStepData {
 	title: string

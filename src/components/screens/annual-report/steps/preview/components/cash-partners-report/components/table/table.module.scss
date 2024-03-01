@@ -33,6 +33,9 @@
 	> div:nth-of-type(3),
 	> div:nth-of-type(4) {
 		@apply text-center;
+		> p {
+			@apply text-center m-0;
+		}
 	}
 }
 
@@ -46,4 +49,9 @@
 
 .total {
 	font-weight: bold;
+}
+
+.blurred {
+	@apply filter; /* Если нужно применить базовые стили фильтра */
+	filter: blur(4px); /* Произвольное значение размытия */
 }

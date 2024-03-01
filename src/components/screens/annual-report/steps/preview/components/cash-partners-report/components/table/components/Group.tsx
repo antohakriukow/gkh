@@ -1,8 +1,12 @@
 import Row from './Row'
+import cn from 'clsx'
 import React, { useState } from 'react'
 import { FaMinus, FaPlus } from 'react-icons/fa'
 
-import { formatNumber } from '~/utils/number.utils'
+import {
+	formatNumber,
+	replaceAmountWithFakeIfFalse
+} from '~/utils/number.utils'
 import { trimStringAtSymbol } from '~/utils/string.utils'
 
 import { IOperationGroup } from '../table.interface'
@@ -13,9 +17,14 @@ import styles from '../table.module.scss'
 interface IOperationGroupProps {
 	groupKey: string
 	group: IOperationGroup
+	isReportPayed: boolean
 }
 
-const Group: React.FC<IOperationGroupProps> = ({ groupKey, group }) => {
+const Group: React.FC<IOperationGroupProps> = ({
+	groupKey,
+	group,
+	isReportPayed
+}) => {
 	const [expanded, setExpanded] = useState(false) // Локальное состояние для контроля видимости операций
 
 	return (
@@ -27,12 +36,34 @@ const Group: React.FC<IOperationGroupProps> = ({ groupKey, group }) => {
 			>
 				<div>{expanded ? <FaMinus /> : <FaPlus />}</div>
 				<div>{trimStringAtSymbol(group.name, '//')}</div>
-				<div>{group.total > 0 ? formatNumber(group.total) : ''}</div>
-				<div>{group.total < 0 ? formatNumber(-group.total) : ''}</div>
+				<div>
+					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+						{group.total > 0
+							? replaceAmountWithFakeIfFalse(
+									formatNumber(group.total),
+									isReportPayed
+							  )
+							: ''}
+					</p>
+				</div>
+				<div>
+					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+						{group.total < 0
+							? replaceAmountWithFakeIfFalse(
+									formatNumber(-group.total),
+									isReportPayed
+							  )
+							: ''}
+					</p>
+				</div>
 			</div>
 			{expanded &&
 				group.operations.map(operation => (
-					<Row key={operation._id} operation={operation} />
+					<Row
+						key={operation._id}
+						operation={operation}
+						isReportPayed={isReportPayed}
+					/>
 				))}
 		</>
 	)

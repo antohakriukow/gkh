@@ -64,3 +64,11 @@ export const formatNumber = (number: number | string | undefined) => {
 		maximumFractionDigits: 2
 	})
 }
+
+export const replaceAmountWithFakeIfFalse = (
+	input: string | undefined,
+	flag: boolean
+): string => {
+	if (flag) return input ? input.toString() : ''
+	return input === '' || input === undefined ? '' : input.replace(/\d/g, '0')
+}

@@ -1,3 +1,4 @@
+import OutgoingBankOperations from './OutgoingBankOperations/OutgoingBankOperations'
 import Workspace from './workspace/Workspace'
 import { directionTitles } from '~/data/directions-titles'
 
@@ -13,8 +14,6 @@ import {
 	getCategoriesWithoutChildren,
 	getExistingDirections
 } from '~/utils/annual.utils'
-
-import OutgoingBankOperations from '../shared/bank-operations/OutgoingBankOperations'
 
 interface IStepData {
 	title: string

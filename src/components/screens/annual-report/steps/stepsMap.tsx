@@ -18,7 +18,10 @@ const stepsMap = (
 
 	initialStepDone: boolean,
 
-	downloadXLSX: () => void
+	downloadXLSX: () => void,
+
+	isReportPayed: boolean,
+	showPaymentScreen: () => void
 ): IQuizStep[] => {
 	const isCashPartners =
 		annualReportInDB?.data?.settings?.structure === 'cash/partners'
@@ -75,8 +78,8 @@ const stepsMap = (
 
 	const previewStep = {
 		stepTitle: 'Предварительный просмотр',
-		onNext: () => downloadXLSX(),
-		onNextButtonTitle: 'Скачать отчет',
+		onNext: isReportPayed ? () => downloadXLSX() : () => showPaymentScreen(),
+		onNextButtonTitle: isReportPayed ? 'Скачать отчет' : 'Оплатить 990 рублей',
 		backButtonHidden: (isCashPartners || isAccrualsServices) && initialStepDone,
 		component: <Preview />
 	}

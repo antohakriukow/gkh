@@ -5,9 +5,14 @@ import cn from 'clsx'
 import { FC, Fragment } from 'react'
 import { FaMinus, FaPlus } from 'react-icons/fa'
 
+import { useAnnualReport } from '~/components/screens/annual-report/useAnnualReport'
+
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
-import { formatNumber } from '~/utils/number.utils'
+import {
+	formatNumber,
+	replaceAmountWithFakeIfFalse
+} from '~/utils/number.utils'
 
 import styles from './table.module.scss'
 
@@ -15,6 +20,7 @@ const BankOperationsTable: FC<{ operations: IExtendedBankOperation[] }> = ({
 	operations
 }) => {
 	const { groupedOperations, toggleGroup } = useBankOperationsTable(operations)
+	const { isReportPayed } = useAnnualReport()
 
 	return (
 		<div className={styles.gridTable}>
@@ -31,8 +37,26 @@ const BankOperationsTable: FC<{ operations: IExtendedBankOperation[] }> = ({
 						<div className={styles.total}>
 							{typeKey === 'incoming' ? 'Доходы' : 'Расходы'}, всего:
 						</div>
-						<div>{total > 0 ? formatNumber(total) : ''}</div>
-						<div>{total < 0 ? formatNumber(-total) : ''}</div>
+						<div>
+							<p className={cn({ [styles.blurred]: !isReportPayed })}>
+								{total > 0
+									? replaceAmountWithFakeIfFalse(
+											formatNumber(total),
+											isReportPayed
+									  )
+									: ''}
+							</p>
+						</div>
+						<div>
+							<p className={cn({ [styles.blurred]: !isReportPayed })}>
+								{total < 0
+									? replaceAmountWithFakeIfFalse(
+											formatNumber(-total),
+											isReportPayed
+									  )
+									: ''}
+							</p>
+						</div>
 					</div>
 					{expanded &&
 						Object.entries(groups).map(([groupKey, group]) => (
@@ -40,6 +64,7 @@ const BankOperationsTable: FC<{ operations: IExtendedBankOperation[] }> = ({
 								key={groupKey}
 								groupKey={groupKey}
 								group={group as IOperationGroup}
+								isReportPayed={isReportPayed}
 							/>
 						))}
 				</Fragment>

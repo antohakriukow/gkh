@@ -23,8 +23,9 @@ const Operation: FC<IOperationProps> = memo(
 		isChecked
 	}) => {
 		const handleChange = useCallback(() => {
+			console.log('operation: ', operation)
 			toggleOperationSelection(operation._id)
-		}, [operation._id, toggleOperationSelection])
+		}, [operation, toggleOperationSelection])
 
 		const handleShowSeparateModal = () => showSeparateModal(operation)
 

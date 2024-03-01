@@ -1,6 +1,6 @@
 @import '../../../../../../styles/colors.scss';
 
 .container {
-	@apply grid gap-10 w-full;
+	@apply grid gap-6 w-full;
 	grid-template-columns: repeat(2, 1fr);
 }

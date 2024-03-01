@@ -16,6 +16,7 @@ export const useAnnualReport = () => {
 		useTypedSelector(state => state.ui)
 	const { setCurrentAnnualReport, setIsLoading } = useActions()
 	const navigate = useNavigate()
+	const isReportPayed = false
 
 	const annualReportInDB = reportId
 		? annuals.find(
@@ -75,6 +76,7 @@ export const useAnnualReport = () => {
 		isLoading,
 		closeAnnualReport,
 		deleteAnnualReport,
-		lastBankOperationId
+		lastBankOperationId,
+		isReportPayed
 	}
 }
