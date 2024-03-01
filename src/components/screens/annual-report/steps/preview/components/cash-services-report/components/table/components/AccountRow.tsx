@@ -1,8 +1,12 @@
 import CompanyRow from './CompanyRow'
+import cn from 'clsx'
 import { FC, Fragment, useState } from 'react'
 import { FaMinus, FaPlus } from 'react-icons/fa'
 
-import { formatNumber } from '~/utils/number.utils'
+import {
+	formatNumber,
+	replaceAmountWithFakeIfFalse
+} from '~/utils/number.utils'
 
 import { IAccountRow } from '../table.interface'
 import styles from '../table.module.scss'
@@ -12,7 +16,8 @@ const AccountRow: FC<IAccountRow> = ({
 	accruals,
 	income,
 	costs,
-	operations
+	operations,
+	isReportPayed
 }) => {
 	const [isVisible, setIsVisible] = useState(false)
 	const { getGroupedByCompaniesOutgoingOperations } =
@@ -34,15 +39,34 @@ const AccountRow: FC<IAccountRow> = ({
 					<div />
 				)}
 				<div>Доходы и расходы, всего:</div>
-				<div>{formatNumber(accruals)}</div>
-				<div>{formatNumber(income)}</div>
-				<div>{formatNumber(costs)}</div>
+				<div>
+					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+						{replaceAmountWithFakeIfFalse(
+							formatNumber(accruals),
+							isReportPayed
+						)}
+					</p>
+				</div>
+				<div>
+					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+						{replaceAmountWithFakeIfFalse(formatNumber(income), isReportPayed)}
+					</p>
+				</div>
+				<div>
+					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+						{replaceAmountWithFakeIfFalse(formatNumber(costs), isReportPayed)}
+					</p>
+				</div>
 			</div>
 			{isVisible && (
 				<Fragment>
 					{Object.values(getGroupedByCompaniesOutgoingOperations()).map(
 						group => (
-							<CompanyRow group={group} />
+							<CompanyRow
+								key={group.name}
+								group={group}
+								isReportPayed={isReportPayed}
+							/>
 						)
 					)}
 				</Fragment>

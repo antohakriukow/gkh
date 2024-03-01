@@ -1,15 +1,19 @@
 import CompanyRow from './CompanyRow'
 import ServiceRow from './ServiceRow'
+import cn from 'clsx'
 import { FC, Fragment, useState } from 'react'
 import { FaMinus, FaPlus } from 'react-icons/fa'
 
-import { formatNumber } from '~/utils/number.utils'
+import {
+	formatNumber,
+	replaceAmountWithFakeIfFalse
+} from '~/utils/number.utils'
 
 import { IRow } from '../table.interface'
 import styles from '../table.module.scss'
 import { useBankCashServicesTable } from '../useBankCashServicesTable'
 
-const TotalRow: FC<IRow> = ({ operations, category }) => {
+const TotalRow: FC<IRow> = ({ operations, category, isReportPayed }) => {
 	const [isVisible, setIsVisible] = useState(false)
 	const {
 		getGroupedByCompaniesOutgoingOperations,
@@ -30,10 +34,31 @@ const TotalRow: FC<IRow> = ({ operations, category }) => {
 					{isVisible ? <FaMinus /> : <FaPlus />}
 				</div>
 				<div>{category.value}</div>
-				<div>{formatNumber(category.amount)}</div>
-				<div>{formatNumber(category.calculatedIncome)}</div>
 				<div>
-					{formatNumber(totalCosts) !== '0,00' ? formatNumber(totalCosts) : ''}
+					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+						{replaceAmountWithFakeIfFalse(
+							formatNumber(category.amount),
+							isReportPayed
+						)}
+					</p>
+				</div>
+				<div>
+					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+						{replaceAmountWithFakeIfFalse(
+							formatNumber(category.calculatedIncome),
+							isReportPayed
+						)}
+					</p>
+				</div>
+				<div>
+					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+						{formatNumber(totalCosts) !== '0,00'
+							? replaceAmountWithFakeIfFalse(
+									formatNumber(totalCosts),
+									isReportPayed
+							  )
+							: ''}
+					</p>
 				</div>
 			</div>
 			{isVisible && (
@@ -41,15 +66,23 @@ const TotalRow: FC<IRow> = ({ operations, category }) => {
 					{category.children
 						? category.children.map(cat => (
 								<ServiceRow
+									key={cat.id}
 									category={cat}
 									operations={getCategoryOperations(cat)}
+									isReportPayed={isReportPayed}
 								/>
 						  ))
 						: Object.values(
 								category.id === 10001
 									? getGroupedByCompaniesIncomingOperations()
 									: getGroupedByCompaniesOutgoingOperations()
-						  ).map(group => <CompanyRow group={group} />)}
+						  ).map(group => (
+								<CompanyRow
+									key={group.name}
+									group={group}
+									isReportPayed={isReportPayed}
+								/>
+						  ))}
 				</Fragment>
 			)}
 		</Fragment>

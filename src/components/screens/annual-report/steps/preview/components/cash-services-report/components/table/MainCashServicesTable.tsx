@@ -4,6 +4,8 @@ import { useBankCashServicesTable } from './useBankCashServicesTable'
 import cn from 'clsx'
 import { FC } from 'react'
 
+import { useAnnualReport } from '~/components/screens/annual-report/useAnnualReport'
+
 import {
 	IAnnualCategory,
 	IExtendedBankOperation
@@ -23,6 +25,7 @@ const MainCashServicesTable: FC<{
 		totalIncome,
 		totalCosts
 	} = useBankCashServicesTable(operations)
+	const { isReportPayed } = useAnnualReport()
 
 	if (!operations || operations.length === 0) return null
 
@@ -70,6 +73,7 @@ const MainCashServicesTable: FC<{
 						key={index}
 						operations={getCategoryOperations(category)}
 						category={category}
+						isReportPayed={isReportPayed}
 					/>
 				)
 			})}
@@ -78,6 +82,7 @@ const MainCashServicesTable: FC<{
 				<TotalRow
 					operations={incomingOperationsWithTag}
 					category={otherIncomeCategory}
+					isReportPayed={isReportPayed}
 				/>
 			)}
 
@@ -86,6 +91,7 @@ const MainCashServicesTable: FC<{
 					<TotalRow
 						operations={outgoingOperationsWithEmptyCategoryId}
 						category={otherCostsCategory}
+						isReportPayed={isReportPayed}
 					/>
 				)}
 
@@ -95,6 +101,7 @@ const MainCashServicesTable: FC<{
 					+totalIncome + +incomingOperationsWithTagTotalSum
 				).toFixed(2)}
 				costs={totalCosts}
+				isReportPayed={isReportPayed}
 			/>
 		</div>
 	)

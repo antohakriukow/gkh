@@ -49,3 +49,8 @@
 .total {
 	font-weight: bold;
 }
+
+.blurred {
+	@apply filter m-0;
+	filter: blur(4px);
+}

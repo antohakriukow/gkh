@@ -22,12 +22,14 @@ export interface ICompanyOperations {
 export interface IRow {
 	operations: IExtendedBankOperation[]
 	category: IAnnualCategory
+	isReportPayed: boolean
 }
 
 export interface IResultsRow {
 	accruals: string
 	income: string
 	costs: string
+	isReportPayed: boolean
 }
 
 export interface IAccountRow extends IResultsRow, Pick<IRow, 'operations'> {}

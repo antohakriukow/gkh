@@ -25,7 +25,7 @@ const Group: React.FC<IOperationGroupProps> = ({
 	group,
 	isReportPayed
 }) => {
-	const [expanded, setExpanded] = useState(false) // Локальное состояние для контроля видимости операций
+	const [expanded, setExpanded] = useState(false)
 
 	return (
 		<>

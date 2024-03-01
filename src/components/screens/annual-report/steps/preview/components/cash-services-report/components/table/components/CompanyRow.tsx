@@ -1,14 +1,21 @@
 import Row from './Row'
+import cn from 'clsx'
 import { FC, Fragment, useState } from 'react'
 import { FaMinus, FaPlus } from 'react-icons/fa'
 
-import { formatNumber } from '~/utils/number.utils'
+import {
+	formatNumber,
+	replaceAmountWithFakeIfFalse
+} from '~/utils/number.utils'
 
 import { IOperationGroup } from '../table.interface'
 import styles from '../table.module.scss'
 import { useBankCashServicesTable } from '../useBankCashServicesTable'
 
-const CompanyRow: FC<{ group: IOperationGroup }> = ({ group }) => {
+const CompanyRow: FC<{ group: IOperationGroup; isReportPayed: boolean }> = ({
+	group,
+	isReportPayed
+}) => {
 	const { name, inn, operations, total } = group
 	const [isVisible, setIsVisible] = useState(false)
 	const {} = useBankCashServicesTable(operations)
@@ -31,20 +38,34 @@ const CompanyRow: FC<{ group: IOperationGroup }> = ({ group }) => {
 				<div>{name}</div>
 				<div></div>
 				<div>
-					{formatNumber(totalPositive) !== '0,00'
-						? formatNumber(totalPositive)
-						: ''}
+					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+						{formatNumber(totalPositive) !== '0,00'
+							? replaceAmountWithFakeIfFalse(
+									formatNumber(totalPositive),
+									isReportPayed
+							  )
+							: ''}
+					</p>
 				</div>
 				<div>
-					{formatNumber(totalNegative) !== '0,00'
-						? formatNumber(totalNegative)
-						: ''}
+					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+						{formatNumber(totalNegative) !== '0,00'
+							? replaceAmountWithFakeIfFalse(
+									formatNumber(totalNegative),
+									isReportPayed
+							  )
+							: ''}
+					</p>
 				</div>
 			</div>
 			{isVisible && (
 				<Fragment>
 					{operations.map(operation => (
-						<Row operation={operation} />
+						<Row
+							key={operation._id}
+							operation={operation}
+							isReportPayed={isReportPayed}
+						/>
 					))}
 				</Fragment>
 			)}

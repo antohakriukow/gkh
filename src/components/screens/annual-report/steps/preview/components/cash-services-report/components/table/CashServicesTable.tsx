@@ -5,6 +5,8 @@ import { useBankCashServicesTable } from './useBankCashServicesTable'
 import cn from 'clsx'
 import { FC } from 'react'
 
+import { useAnnualReport } from '~/components/screens/annual-report/useAnnualReport'
+
 import {
 	IAnnualCategory,
 	IExtendedBankOperation
@@ -19,6 +21,7 @@ const CashServicesTable: FC<{
 }> = ({ operations, categories, accountNumber }) => {
 	const { incomingOperationsWithTagTotalSum, totalIncome, totalCosts } =
 		useBankCashServicesTable(operations)
+	const { isReportPayed } = useAnnualReport()
 
 	if (!operations || operations.length === 0) return null
 
@@ -43,6 +46,7 @@ const CashServicesTable: FC<{
 					+totalIncome + +incomingOperationsWithTagTotalSum
 				).toFixed(2)}
 				costs={totalCosts}
+				isReportPayed={isReportPayed}
 			/>
 		</div>
 	)

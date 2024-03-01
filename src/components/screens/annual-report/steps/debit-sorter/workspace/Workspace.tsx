@@ -6,10 +6,6 @@ import {
 } from './workspace.interface'
 import { useCallback, useState } from 'react'
 
-import { IAnnualCategory } from '~/shared/types/annual.interface'
-
-import CategoryRenderer from '../../shared/category-render/CategoryRenderer'
-
 import styles from './Workspace.module.scss'
 
 const Workspace = <T extends IDataObject, T1>({
@@ -22,29 +18,14 @@ const Workspace = <T extends IDataObject, T1>({
 }: IWorkspace<T, T1>) => {
 	const [buffer, setBuffer] = useState<string[]>([])
 
-	const existingCategoriesIds = variations?.reduce<number[]>(
-		(array, variation) => {
-			const category = variation as unknown as IAnnualCategory
-			return !category.children || category.children.length === 0
-				? [...array, category.id]
-				: array
-		},
-		[]
-	)
-
-	const dataSetWithDefinedProperty = data.filter(
-		dataItem => existingCategoriesIds?.includes(dataItem[property])
-	)
-
 	const dataSetWithUndefinedProperty = data.filter(
 		dataItem =>
-			!existingCategoriesIds?.includes(dataItem[property]) ||
+			!(variations as IVariation<typeof property>[])
+				.map(variation => variation.value)
+				.includes(dataItem[property]) ||
 			dataItem[property] === '' ||
 			dataItem[property] === undefined
 	)
-
-	console.log('variations: ', variations)
-	console.log('existingCategoriesIds: ', existingCategoriesIds)
 
 	const onSubmit = useCallback(
 		(data: string[], newPropertyValue: T1) => {
