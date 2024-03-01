@@ -1,3 +1,4 @@
+import { IAnnualReport } from './annual.interface'
 import { ICompany } from './company.interface'
 import { IReport } from './report.interface'
 
@@ -10,4 +11,5 @@ export interface IData {
 	currentCompanyInn: string
 	companies: ICompany[]
 	reports: IReport[]
+	annuals: IAnnualReport[]
 }

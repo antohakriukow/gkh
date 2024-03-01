@@ -1,17 +1,7 @@
 @import '../../../../styles/colors.scss';
 
 .reportForm {
-	@apply w-full;
-	height: calc(100vh - 300px);
-	@media (max-width: 800px) {
-		height: calc(100vh - 296px);
-	}
-	@media (max-width: 560px) {
-		height: calc(100vh - 312px);
-	}
-	@media (max-width: 450px) {
-		height: calc(100vh - 284px);
-	}
+	@apply w-full h-full;
 }
 
 .fieldSet {

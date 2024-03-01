@@ -1,0 +1,18 @@
+.container {
+	@apply px-2 pb-3 rounded-md;
+	max-width: 500px;
+}
+
+.item {
+	@apply flex flex-row items-center mb-2;
+
+	> p {
+		@apply w-full whitespace-nowrap overflow-hidden overflow-ellipsis m-0;
+		max-width: 400px;
+	}
+
+	> input {
+		@apply bg-transparent text-base my-0 whitespace-nowrap overflow-hidden overflow-ellipsis;
+		outline: none;
+	}
+}

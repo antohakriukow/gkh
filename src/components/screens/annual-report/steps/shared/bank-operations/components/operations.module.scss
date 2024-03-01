@@ -1,0 +1,65 @@
+@import '../../../../../../../styles/colors.scss';
+
+.group {
+	@apply box-border mb-0.5 overflow-hidden;
+}
+
+.header {
+	@apply box-border px-2 py-2 flex flex-row items-center justify-between mb-0.5;
+	border: solid 1px $gray-200;
+	height: 36px;
+
+	> div {
+		@apply flex flex-row items-center;
+
+		> svg {
+			@apply mr-2 cursor-pointer;
+		}
+
+		> input {
+			@apply cursor-pointer;
+		}
+	}
+}
+
+.partnerName {
+	@apply whitespace-nowrap overflow-hidden overflow-ellipsis;
+	max-width: 364px;
+}
+
+.counter {
+	@apply ml-2;
+}
+
+.operation {
+	@apply grid gap-3 box-border px-2 py-2 ml-4 mb-0.5 h-9;
+	grid-template-columns: 1fr 1fr 4fr 0.2fr;
+	border: solid 1px $gray-200;
+
+	> div {
+		@apply text-sm text-center;
+	}
+
+	.description {
+		@apply whitespace-nowrap overflow-hidden overflow-ellipsis;
+	}
+
+	> input {
+		@apply cursor-pointer;
+	}
+}
+
+.separating {
+	grid-template-columns: 1fr 1fr 4fr 0.2fr 0.2fr;
+
+	> svg {
+		@apply cursor-pointer;
+		&:hover {
+			transform: scale(1.05);
+		}
+	}
+}
+
+.separated {
+	@apply bg-neutral-50;
+}

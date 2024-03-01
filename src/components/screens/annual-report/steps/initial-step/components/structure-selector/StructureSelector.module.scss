@@ -1,0 +1,54 @@
+@import '../../../../../../../styles/colors.scss';
+
+.container {
+	@apply px-2 pb-3 rounded-md;
+}
+
+.cards {
+	@apply grid gap-3;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 320px));
+	@media (max-width: 1031px) {
+		grid-template-columns: repeat(auto-fill, minmax(240px, 31%));
+	}
+	@media (max-width: 900px) {
+		grid-template-columns: repeat(2, minmax(240px, 1fr));
+	}
+	@media (max-width: 542px) {
+		grid-template-columns: repeat(1, minmax(240px, 1fr));
+	}
+}
+
+.card {
+	@apply flex flex-col items-end justify-between p-4 bg-gray-50 rounded-md box-border;
+	width: 100%;
+
+	&:hover {
+		outline: 1px solid $primary-200;
+	}
+
+	> label {
+		@apply cursor-pointer;
+		> span:nth-of-type(1) {
+			@apply block mb-2;
+		}
+		> span:nth-of-type(2) {
+			@apply block pb-4;
+		}
+	}
+
+	> a {
+		@apply no-underline text-primary-500 font-bold text-base;
+	}
+}
+
+.title {
+	@apply text-primary-800 font-bold;
+}
+
+.description {
+	@apply text-sm text-gray-600;
+}
+
+.active {
+	@apply bg-primary-200;
+}

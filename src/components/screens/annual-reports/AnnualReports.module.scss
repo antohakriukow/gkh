@@ -1,0 +1,36 @@
+@import '../../../styles/colors.scss';
+
+.container {
+	@apply bg-white p-4 pb-8 box-border select-none;
+	height: calc(100vh - 100px);
+
+	> button {
+		@apply mb-4;
+	}
+}
+
+.headingContainer {
+	@apply w-full flex flex-row items-center justify-between;
+}
+
+.heading {
+	@apply mb-0 mt-2 font-light text-left;
+	font-size: 20px;
+	line-height: 22px;
+	color: $gray-700;
+	@media (max-width: 450px) {
+		font-size: 16px;
+		line-height: 18px;
+	}
+}
+
+@media (max-width: 500px) {
+	.heading {
+		@apply text-2xl;
+	}
+	.container {
+		> button {
+			@apply text-sm;
+		}
+	}
+}

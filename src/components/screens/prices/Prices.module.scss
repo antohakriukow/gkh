@@ -1,0 +1,52 @@
+@import '../../../styles/colors.scss';
+
+.container {
+	@apply bg-gray-0 box-border select-none p-4;
+	height: calc(100vh - 100px);
+	max-width: 800px;
+
+	overflow-y: auto;
+	scrollbar-width: thin;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+
+	&::-webkit-scrollbar {
+		width: 4px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: $gray-400;
+		border-radius: 0px;
+	}
+}
+
+.services {
+	@apply grid gap-2 mt-4;
+	grid-template-columns: repeat(2, 1fr);
+
+	@media (max-width: 500px) {
+		grid-template-columns: 1fr;
+	}
+}
+.info {
+	@apply mt-4;
+}
+
+.downloads {
+	> div {
+		@apply rounded-md px-4 inline-flex mt-2 items-center cursor-pointer mr-4;
+		border: $primary-100 1px solid;
+
+		&:hover {
+			@apply bg-primary-50;
+			border: $primary-200 1px solid;
+		}
+
+		> svg {
+			@apply mr-2;
+		}
+
+		> p {
+			@apply font-semibold text-primary-800;
+		}
+	}
+}

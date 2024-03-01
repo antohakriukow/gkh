@@ -17,7 +17,8 @@ export const useData = () => {
 		needToShowIntro: false,
 		currentCompanyInn: '',
 		companies: [],
-		reports: []
+		reports: [],
+		annuals: []
 	} as IData)
 	const [issuesData, setIssuesData] = useState<IIssue[]>([])
 	const [messagesData, setMessagesData] = useState<IMessage[]>([])
@@ -40,12 +41,13 @@ export const useData = () => {
 							userUid: user.uid,
 							displayName: snapshot.val().displayName,
 							email: snapshot.val().email,
-							needToShowIntro:snapshot.val().needToShowIntro,
+							needToShowIntro: snapshot.val().needToShowIntro,
 							currentCompanyInn: snapshot.val().currentCompanyInn,
 							companies: snapshot.val().companies
 								? snapshot.val().companies
 								: [],
 							reports: snapshot.val().reports ? snapshot.val().reports : [],
+							annuals: snapshot.val().annuals ? snapshot.val().annuals : []
 						}
 					}
 					if (dataFromDB) {
@@ -59,7 +61,8 @@ export const useData = () => {
 							needToShowIntro: false,
 							currentCompanyInn: '',
 							companies: [],
-							reports: []
+							reports: [],
+							annuals: []
 						})
 					}
 				})
@@ -105,6 +108,7 @@ export const useData = () => {
 			currentCompanyInn: data.currentCompanyInn,
 			companies: Object.values(data.companies),
 			reports: Object.values(data.reports),
+			annuals: Object.values(data.annuals),
 			displayName: data.displayName,
 			email: data.email,
 			needToShowIntro: data.needToShowIntro,

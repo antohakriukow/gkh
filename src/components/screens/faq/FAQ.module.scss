@@ -1,8 +1,21 @@
 @import '../../../styles/colors.scss';
 
 .container {
-	@apply box-border select-none;
-	min-height: calc(100vh - 118px);
+	@apply bg-gray-0 box-border select-none;
+	height: calc(100vh - 100px);
+
+	overflow-y: auto;
+	scrollbar-width: thin;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+
+	&::-webkit-scrollbar {
+		width: 4px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: $gray-400;
+		border-radius: 0px;
+	}
 }
 
 .header {
@@ -36,20 +49,6 @@
 
 .faq {
 	@apply p-4 w-full box-border;
-
-	max-height: calc(100vh - 118px);
-	overflow-y: auto;
-	scrollbar-width: thin;
-	-ms-overflow-style: -ms-autohiding-scrollbar;
-
-	&::-webkit-scrollbar {
-		width: 8px;
-	}
-
-	&::-webkit-scrollbar-thumb {
-		background-color: $primary-500;
-		border-radius: 0px;
-	}
 }
 
 .video {

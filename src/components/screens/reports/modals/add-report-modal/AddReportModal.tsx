@@ -12,7 +12,7 @@ import { IReport } from '~/shared/types/report.interface'
 
 import styles from './AddReportModal.module.scss'
 
-const ReportModal: FC<{ handleOpenReport: (_id: number) => void }> = ({
+const ReportModal: FC<{ handleOpenReport: (_id: string) => void }> = ({
 	handleOpenReport
 }) => {
 	const { reports } = useData()
@@ -63,14 +63,15 @@ const ReportModal: FC<{ handleOpenReport: (_id: number) => void }> = ({
 			},
 			data: getReportInitialData(previousReport)
 		})) as IReport
-		if (!!newReport && !!newReport._id) handleOpenReport(newReport._id)
+		if (!!newReport && !!newReport._id)
+			handleOpenReport(newReport._id.toString())
 	}
 
 	const handleCreate = () =>
 		!!existingReport ? setIsReportExisting(true) : handleCreateReport()
 
 	const handleGoToReport = () => {
-		if (!!existingReport) handleOpenReport(existingReport?._id)
+		if (!!existingReport) handleOpenReport(existingReport?._id.toString())
 		hideModal()
 	}
 
