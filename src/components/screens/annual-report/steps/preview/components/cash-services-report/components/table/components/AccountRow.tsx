@@ -40,7 +40,7 @@ const AccountRow: FC<IAccountRow> = ({
 				)}
 				<div>Доходы и расходы, всего:</div>
 				<div>
-					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+					<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 						{replaceAmountWithFakeIfFalse(
 							formatNumber(accruals),
 							isReportPayed
@@ -48,12 +48,12 @@ const AccountRow: FC<IAccountRow> = ({
 					</p>
 				</div>
 				<div>
-					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+					<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 						{replaceAmountWithFakeIfFalse(formatNumber(income), isReportPayed)}
 					</p>
 				</div>
 				<div>
-					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+					<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 						{replaceAmountWithFakeIfFalse(formatNumber(costs), isReportPayed)}
 					</p>
 				</div>

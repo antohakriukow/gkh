@@ -21,7 +21,7 @@ const Row: React.FC<OperationRowProps> = ({ operation, isReportPayed }) => {
 			<div></div> {/* Заполнитель для иконки */}
 			<div title={operation.paymentPurpose}>{operation.paymentPurpose}</div>
 			<div>
-				<p className={cn({ [styles.blurred]: !isReportPayed })}>
+				<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 					{operation.amount > 0
 						? replaceAmountWithFakeIfFalse(
 								formatNumber(operation.amount),
@@ -31,7 +31,7 @@ const Row: React.FC<OperationRowProps> = ({ operation, isReportPayed }) => {
 				</p>
 			</div>
 			<div>
-				<p className={cn({ [styles.blurred]: !isReportPayed })}>
+				<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 					{operation.amount < 0
 						? replaceAmountWithFakeIfFalse(
 								formatNumber(-operation.amount),

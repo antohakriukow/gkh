@@ -35,7 +35,7 @@ const TotalRow: FC<IRow> = ({ operations, category, isReportPayed }) => {
 				</div>
 				<div>{category.value}</div>
 				<div>
-					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+					<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 						{replaceAmountWithFakeIfFalse(
 							formatNumber(category.amount),
 							isReportPayed
@@ -43,7 +43,7 @@ const TotalRow: FC<IRow> = ({ operations, category, isReportPayed }) => {
 					</p>
 				</div>
 				<div>
-					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+					<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 						{replaceAmountWithFakeIfFalse(
 							formatNumber(category.calculatedIncome),
 							isReportPayed
@@ -51,7 +51,7 @@ const TotalRow: FC<IRow> = ({ operations, category, isReportPayed }) => {
 					</p>
 				</div>
 				<div>
-					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+					<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 						{formatNumber(totalCosts) !== '0,00'
 							? replaceAmountWithFakeIfFalse(
 									formatNumber(totalCosts),

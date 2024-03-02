@@ -4,7 +4,7 @@ import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import AddReportBtn from '~/components/screens/reports/buttons/AddReportBtn'
-import { Heading, Table } from '~/components/ui'
+import { Button, Heading, Table } from '~/components/ui'
 import { IRow } from '~/components/ui/table/table.interface'
 
 import { useData } from '~/hooks/useData'
@@ -54,7 +54,7 @@ const AnnualReports: FC = () => {
 					className={styles.heading}
 				/>
 			</div>
-			<AddReportBtn onClick={handleAdd} />
+			<Button onClick={handleAdd}>Создать отчет</Button>
 			<Table
 				titles={['Наименование', 'Шаблон', 'Дата изменения']}
 				rows={convertReportsData(annuals)}

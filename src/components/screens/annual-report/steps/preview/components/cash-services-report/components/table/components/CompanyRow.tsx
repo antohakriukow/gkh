@@ -38,7 +38,7 @@ const CompanyRow: FC<{ group: IOperationGroup; isReportPayed: boolean }> = ({
 				<div>{name}</div>
 				<div></div>
 				<div>
-					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+					<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 						{formatNumber(totalPositive) !== '0,00'
 							? replaceAmountWithFakeIfFalse(
 									formatNumber(totalPositive),
@@ -48,7 +48,7 @@ const CompanyRow: FC<{ group: IOperationGroup; isReportPayed: boolean }> = ({
 					</p>
 				</div>
 				<div>
-					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+					<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 						{formatNumber(totalNegative) !== '0,00'
 							? replaceAmountWithFakeIfFalse(
 									formatNumber(totalNegative),

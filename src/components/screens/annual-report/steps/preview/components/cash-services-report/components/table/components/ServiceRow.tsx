@@ -26,7 +26,7 @@ const ServiceRow: FC<IRow> = ({ operations, category, isReportPayed }) => {
 				</div>
 				<div>{category.value}</div>
 				<div>
-					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+					<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 						{category.amount
 							? replaceAmountWithFakeIfFalse(
 									String(category.amount),
@@ -36,7 +36,7 @@ const ServiceRow: FC<IRow> = ({ operations, category, isReportPayed }) => {
 					</p>
 				</div>
 				<div>
-					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+					<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 						{replaceAmountWithFakeIfFalse(
 							category.calculatedIncome?.toFixed(2),
 							isReportPayed
@@ -44,7 +44,7 @@ const ServiceRow: FC<IRow> = ({ operations, category, isReportPayed }) => {
 					</p>
 				</div>
 				<div>
-					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+					<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 						{replaceAmountWithFakeIfFalse(
 							formatNumber(totalCosts),
 							isReportPayed

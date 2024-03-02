@@ -47,6 +47,10 @@
 	display: contents;
 }
 
+.value {
+	@apply m-0;
+}
+
 .total {
 	font-weight: bold;
 }

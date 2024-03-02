@@ -38,7 +38,11 @@ const BankOperationsTable: FC<{ operations: IExtendedBankOperation[] }> = ({
 							{typeKey === 'incoming' ? 'Доходы' : 'Расходы'}, всего:
 						</div>
 						<div>
-							<p className={cn({ [styles.blurred]: !isReportPayed })}>
+							<p
+								className={cn(styles.value, {
+									[styles.blurred]: !isReportPayed
+								})}
+							>
 								{total > 0
 									? replaceAmountWithFakeIfFalse(
 											formatNumber(total),
@@ -48,7 +52,11 @@ const BankOperationsTable: FC<{ operations: IExtendedBankOperation[] }> = ({
 							</p>
 						</div>
 						<div>
-							<p className={cn({ [styles.blurred]: !isReportPayed })}>
+							<p
+								className={cn(styles.value, {
+									[styles.blurred]: !isReportPayed
+								})}
+							>
 								{total < 0
 									? replaceAmountWithFakeIfFalse(
 											formatNumber(-total),

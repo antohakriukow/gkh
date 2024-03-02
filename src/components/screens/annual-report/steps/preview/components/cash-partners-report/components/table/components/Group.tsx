@@ -37,7 +37,7 @@ const Group: React.FC<IOperationGroupProps> = ({
 				<div>{expanded ? <FaMinus /> : <FaPlus />}</div>
 				<div>{trimStringAtSymbol(group.name, '//')}</div>
 				<div>
-					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+					<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 						{group.total > 0
 							? replaceAmountWithFakeIfFalse(
 									formatNumber(group.total),
@@ -47,7 +47,7 @@ const Group: React.FC<IOperationGroupProps> = ({
 					</p>
 				</div>
 				<div>
-					<p className={cn({ [styles.blurred]: !isReportPayed })}>
+					<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 						{group.total < 0
 							? replaceAmountWithFakeIfFalse(
 									formatNumber(-group.total),

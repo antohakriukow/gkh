@@ -1,4 +1,5 @@
 import Preview from './preview/Preview'
+import { IPaymentButtonData } from '~/payment/payment.interface'
 
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
@@ -21,7 +22,7 @@ const stepsMap = (
 	downloadXLSX: () => void,
 
 	isReportPayed: boolean,
-	showPaymentScreen: () => void
+	paymentButtonData: IPaymentButtonData
 ): IQuizStep[] => {
 	const isCashPartners =
 		annualReportInDB?.data?.settings?.structure === 'cash/partners'
@@ -78,8 +79,12 @@ const stepsMap = (
 
 	const previewStep = {
 		stepTitle: 'Предварительный просмотр',
-		onNext: isReportPayed ? () => downloadXLSX() : () => showPaymentScreen(),
-		onNextButtonTitle: isReportPayed ? 'Скачать отчет' : 'Оплатить 990 рублей',
+		onNext: isReportPayed
+			? () => downloadXLSX()
+			: () => paymentButtonData.onClick(),
+		onNextButtonTitle: isReportPayed
+			? 'Скачать отчет'
+			: paymentButtonData.buttonTitle,
 		backButtonHidden: (isCashPartners || isAccrualsServices) && initialStepDone,
 		component: <Preview />
 	}

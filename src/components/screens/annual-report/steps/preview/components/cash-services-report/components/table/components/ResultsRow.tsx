@@ -20,17 +20,17 @@ const ResultsRow: FC<IResultsRow> = ({
 			<div></div> {/* Заполнитель для иконки */}
 			<div>Итого</div>
 			<div>
-				<p className={cn({ [styles.blurred]: !isReportPayed })}>
+				<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 					{replaceAmountWithFakeIfFalse(formatNumber(accruals), isReportPayed)}
 				</p>
 			</div>
 			<div>
-				<p className={cn({ [styles.blurred]: !isReportPayed })}>
+				<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 					{replaceAmountWithFakeIfFalse(formatNumber(income), isReportPayed)}
 				</p>
 			</div>
 			<div>
-				<p className={cn({ [styles.blurred]: !isReportPayed })}>
+				<p className={cn(styles.value, { [styles.blurred]: !isReportPayed })}>
 					{replaceAmountWithFakeIfFalse(formatNumber(costs), isReportPayed)}
 				</p>
 			</div>

@@ -20,6 +20,7 @@ export interface IResultObject<T, T1> {
 	buffer: string[]
 	setBuffer: Dispatch<SetStateAction<string[]>>
 	handleSubmit: TypeHandleSubmit<T1>
+	parents: string[]
 }
 
 export interface IWorkspace<T, T1> {

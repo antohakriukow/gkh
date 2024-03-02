@@ -25,7 +25,8 @@ const DebitSorter = (
 	setBankOperationsCategoryId: (
 		operationIds: string[],
 		categoryId: string
-	) => void
+	) => void,
+	clearCategoryIdIFNotExists: () => void
 ): IQuizStep[] => {
 	const filterOperationsByDirection = (
 		bankOperations: IExtendedBankOperation[],
@@ -49,7 +50,7 @@ const DebitSorter = (
 
 	const getStep = (operations: IExtendedBankOperation[], step: IStepData) => ({
 		stepTitle: `Поступления по направлению "${step.title}"`,
-		onNext: () => {},
+		onNext: () => clearCategoryIdIFNotExists(),
 		component: (
 			<Workspace
 				variations={

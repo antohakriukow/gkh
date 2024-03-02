@@ -11,15 +11,16 @@ import { useInitialStepMap } from './steps/initial-step/useInitialStepMap'
 import { usePreview } from './steps/preview/components/usePreview'
 import stepsMap from './steps/stepsMap'
 import { useAnnualReport } from './useAnnualReport'
-import { FC, Fragment, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
+import createPaymentButtonData from '~/payment/createPaymentData'
+import { annualReceipt } from '~/payment/receipts/annualReceipt'
 
-import { Button, Loader, Quiz, SubHeading } from '~/components/ui'
+import { Button, Quiz, SubHeading } from '~/components/ui'
 
+import { useAuth } from '~/hooks/useAuth'
 import { useModal } from '~/hooks/useModal'
 
 import { IAnnualReport } from '~/shared/types/annual.interface'
-
-import { setIsLoading } from '~/store/ui/ui.slice'
 
 import styles from './AnnualReport.module.scss'
 
@@ -33,6 +34,7 @@ const AnnualReport: FC = () => {
 		isReportPayed
 	} = useAnnualReport()
 	const { showModal } = useModal()
+	const { user } = useAuth()
 
 	const handleShowReportDeleteModal = () => {
 		showModal(<ReportDeleteModal deleteAnnualReport={deleteAnnualReport} />)
@@ -79,16 +81,27 @@ const AnnualReport: FC = () => {
 		setBankOperationsTag
 	)
 
-	const { setBankOperationsCategory } = useDebitSorter()
+	const { setBankOperationsCategory, clearCategoryIdIFNotExists } =
+		useDebitSorter()
 
 	const stepDebitSorter = DebitSorterMap(
 		annualReportInDB ?? ({} as IAnnualReport),
-		setBankOperationsCategory
+		setBankOperationsCategory,
+		clearCategoryIdIFNotExists
 	)
 
 	const { downloadXLSX } = usePreview()
 
-	const showPaymentScreen = () => {}
+	const paymentButtonData = createPaymentButtonData({
+		cost: 990,
+		invoiceId: 1,
+		description: '',
+		receipt: annualReceipt,
+		isTest: 1,
+		userId: user ? user.uid : '',
+		type: 'annual',
+		instanceId: annualReportInDB ? annualReportInDB._id.toString() : ''
+	})
 
 	const steps = stepsMap(
 		annualReportInDB,
@@ -100,7 +113,7 @@ const AnnualReport: FC = () => {
 		initialStepDone,
 		downloadXLSX,
 		isReportPayed,
-		showPaymentScreen
+		paymentButtonData
 	)
 
 	const hasCategories =
