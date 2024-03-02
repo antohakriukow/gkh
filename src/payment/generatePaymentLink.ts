@@ -68,9 +68,6 @@ export const generatePaymentLink = ({
 		Shp_userId: userId
 	})
 
-	console.log('OutSum: ', cost.toString())
-	console.log('receiptString: ', receiptString)
-
 	const robokassaPaymentUrl = 'https://auth.robokassa.ru/Merchant/Index.aspx'
 	return `${robokassaPaymentUrl}?${queryParams.toString()}`
 }

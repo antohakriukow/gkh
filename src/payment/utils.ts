@@ -7,7 +7,6 @@ import md5 from 'md5'
  */
 
 export function calculateSignature(...args: (string | number)[]): string {
-	console.log('signatureRow: ', args.join(':'))
 	return md5(args.join(':'))
 }
 /**

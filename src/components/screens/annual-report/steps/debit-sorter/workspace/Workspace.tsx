@@ -20,9 +20,6 @@ const Workspace = <T extends IDataObject, T1>({
 }: IWorkspace<T, T1>) => {
 	const [buffer, setBuffer] = useState<string[]>([])
 
-	// console.log('categories: ', categories)
-	// console.log('variations: ', variations)
-
 	function findParents(
 		value: T1,
 		categories: IAnnualCategory[],
