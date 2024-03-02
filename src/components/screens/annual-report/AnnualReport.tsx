@@ -12,12 +12,9 @@ import { usePreview } from './steps/preview/components/usePreview'
 import stepsMap from './steps/stepsMap'
 import { useAnnualReport } from './useAnnualReport'
 import { FC, useEffect, useState } from 'react'
-import createPaymentButtonData from '~/payment/createPaymentData'
-import { annualReceipt } from '~/payment/receipts/annualReceipt'
 
 import { Button, Quiz, SubHeading } from '~/components/ui'
 
-import { useAuth } from '~/hooks/useAuth'
 import { useModal } from '~/hooks/useModal'
 
 import { IAnnualReport } from '~/shared/types/annual.interface'
@@ -31,10 +28,10 @@ const AnnualReport: FC = () => {
 		deleteAnnualReport,
 		closeAnnualReport,
 		annualReportInDB,
+		paymentButtonData,
 		isReportPayed
 	} = useAnnualReport()
 	const { showModal } = useModal()
-	const { user } = useAuth()
 
 	const handleShowReportDeleteModal = () => {
 		showModal(<ReportDeleteModal deleteAnnualReport={deleteAnnualReport} />)
@@ -91,17 +88,6 @@ const AnnualReport: FC = () => {
 	)
 
 	const { downloadXLSX } = usePreview()
-
-	const paymentButtonData = createPaymentButtonData({
-		cost: 990,
-		invoiceId: 1,
-		description: '',
-		receipt: annualReceipt,
-		isTest: 1,
-		userId: user ? user.uid : '',
-		type: 'annual',
-		instanceId: annualReportInDB ? annualReportInDB._id.toString() : ''
-	})
 
 	const steps = stepsMap(
 		annualReportInDB,

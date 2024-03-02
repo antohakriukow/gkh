@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { AnnualReportPrice } from '~/payment/_prices'
+import createPaymentButtonData from '~/payment/createPaymentData'
+import { annualReceipt } from '~/payment/receipts/annualReceipt'
 
 import { useActions } from '~/hooks/useActions'
 import { useAuth } from '~/hooks/useAuth'
@@ -10,13 +13,12 @@ import { AnnualService } from '~/services/annual.service'
 
 export const useAnnualReport = () => {
 	const { user } = useAuth()
-	const { annuals } = useData()
+	const { annuals, payments, userId } = useData()
 	const { reportId } = useParams<{ reportId: string }>()
 	const { isLoading, currentAnnualReport, annualReportInitialDataSavedToDb } =
 		useTypedSelector(state => state.ui)
 	const { setCurrentAnnualReport, setIsLoading } = useActions()
 	const navigate = useNavigate()
-	const isReportPayed = false
 
 	const annualReportInDB = reportId
 		? annuals.find(
@@ -66,6 +68,24 @@ export const useAnnualReport = () => {
 
 	const annualReportInDBId = annualReportInDB?._id.toString()
 
+	const paymentButtonData = createPaymentButtonData({
+		cost: AnnualReportPrice,
+		invoiceId: payments.length + 1,
+		description: 'Плата за генерацию отчета на 22gkh.ru',
+		receipt: annualReceipt,
+		isTest: 0,
+		userId: user ? user.uid : '',
+		shortId: userId,
+		type: 'annual',
+		instanceId: annualReportInDB ? annualReportInDB._id.toString() : ''
+	})
+
+	const isReportPayed = payments.some(
+		payment =>
+			payment.type === 'annual' &&
+			payment.instanceId === annualReportInDB?._id.toString()
+	)
+
 	return {
 		annualReportInDB,
 		annualReportInDBId,
@@ -77,6 +97,8 @@ export const useAnnualReport = () => {
 		closeAnnualReport,
 		deleteAnnualReport,
 		lastBankOperationId,
+
+		paymentButtonData,
 		isReportPayed
 	}
 }

@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { IData } from '~/shared/types/data.interface'
 import { IIssue } from '~/shared/types/issue.interface'
 import { IMessage } from '~/shared/types/message.interface'
+import { IPayment } from '~/shared/types/payment.interface'
 
 import { auth, db } from '~/services/_firebase'
 
@@ -22,6 +23,7 @@ export const useData = () => {
 	} as IData)
 	const [issuesData, setIssuesData] = useState<IIssue[]>([])
 	const [messagesData, setMessagesData] = useState<IMessage[]>([])
+	const [paymentsData, setPaymentsData] = useState<IPayment[]>([])
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
@@ -31,6 +33,7 @@ export const useData = () => {
 				const userRef = ref(db, `users/${user.uid}`)
 				const issuesRef = ref(db, `issues/${user.uid}`)
 				const messagesRef = ref(db, `messages/${user.uid}`)
+				const paymentsRef = ref(db, `payments/${user.uid}`)
 
 				// prettier-ignore
 				const userUnsubscribe = onValue(userRef, snapshot => {
@@ -83,10 +86,19 @@ export const useData = () => {
 					}
 				})
 
+				const paymentsUnsubscribe = onValue(paymentsRef, snapshot => {
+					if (snapshot.exists() && snapshot.val()) {
+						setPaymentsData(Object.values(snapshot.val()))
+					} else {
+						setPaymentsData([])
+					}
+				})
+
 				return () => {
 					off(userRef, 'value', userUnsubscribe)
 					off(issuesRef, 'value', issuesUnsubscribe)
 					off(messagesRef, 'value', messagesUnsubscribe)
+					off(paymentsRef, 'value', paymentsUnsubscribe)
 				}
 			}
 		}
@@ -113,8 +125,9 @@ export const useData = () => {
 			email: data.email,
 			needToShowIntro: data.needToShowIntro,
 			issues: issuesData,
-			messages: messagesData
+			messages: messagesData,
+			payments: paymentsData
 		}),
-		[data, issuesData, messagesData, isLoading]
+		[data, issuesData, messagesData, paymentsData, isLoading]
 	)
 }

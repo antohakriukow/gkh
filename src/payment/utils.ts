@@ -1,8 +1,5 @@
 import md5 from 'md5'
 
-// import { stringify } from 'querystring'
-// import { parse as parseUrl } from 'url'
-
 /**
  * Создает подпись MD5 из переданных аргументов.
  * @param args Аргументы, из которых формируется подпись.

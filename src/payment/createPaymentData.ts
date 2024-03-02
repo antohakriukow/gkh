@@ -1,5 +1,9 @@
 import { generatePaymentLink } from './generatePaymentLink'
-import { IPaymentButtonData, IPaymentData } from './payment.interface'
+
+import {
+	IPaymentButtonData,
+	IPaymentData
+} from '../shared/types/payment.interface'
 
 // Функция, принимающая параметры оплаты и возвращающая объект с заголовком кнопки и функцией onClick
 const createPaymentButtonData = ({
@@ -9,6 +13,7 @@ const createPaymentButtonData = ({
 	receipt,
 	isTest = 0,
 	userId,
+	shortId,
 	type,
 	instanceId
 }: IPaymentData): IPaymentButtonData => {
@@ -21,13 +26,13 @@ const createPaymentButtonData = ({
 			receipt,
 			isTest,
 			userId,
+			shortId,
 			type,
 			instanceId
 		})
 
 		if (paymentUrl) {
 			// Перенаправление пользователя на страницу оплаты
-			console.log('paymentUrl: ', paymentUrl)
 			window.open(paymentUrl, '_blank')
 		} else {
 			// Обработка ошибки

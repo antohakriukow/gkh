@@ -1,5 +1,4 @@
 import Preview from './preview/Preview'
-import { IPaymentButtonData } from '~/payment/payment.interface'
 
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
@@ -7,6 +6,7 @@ import {
 	IAnnualReport,
 	TypeAnnualReportStructure
 } from '~/shared/types/annual.interface'
+import { IPaymentButtonData } from '~/shared/types/payment.interface'
 
 const stepsMap = (
 	annualReportInDB: IAnnualReport | null | undefined,

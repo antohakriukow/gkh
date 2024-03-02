@@ -1,5 +1,6 @@
-import { IPaymentData } from './payment.interface'
 import { calculateSignature } from './utils'
+
+import { IPaymentData } from '../shared/types/payment.interface'
 
 /**
  * Генерирует URL для перенаправления пользователя на страницу оплаты RoboKassa.
@@ -21,11 +22,12 @@ export const generatePaymentLink = ({
 	receipt,
 	isTest = 0,
 	userId,
+	shortId,
 	type,
 	instanceId
 }: IPaymentData): string => {
 	const merchantLogin = process.env.REACT_APP_ROBOKASSA_MERCHANT_LOGIN
-	const merchantPassword1 = process.env.REACT_APP_ROBOKASSA_PASSWORD_TEST1
+	const merchantPassword1 = process.env.REACT_APP_ROBOKASSA_PASSWORD1
 
 	if (!merchantLogin || !merchantPassword1) {
 		console.error(
@@ -46,6 +48,7 @@ export const generatePaymentLink = ({
 		encodedReceipt,
 		merchantPassword1,
 		`Shp_instanceId=${instanceId}`,
+		`Shp_shortId=${shortId}`,
 		`Shp_type=${type}`,
 		`Shp_userId=${userId}`
 	)
@@ -60,9 +63,13 @@ export const generatePaymentLink = ({
 		Receipt: encodedReceipt,
 		IsTest: isTest.toString(),
 		Shp_instanceId: instanceId,
+		Shp_shortId: shortId,
 		Shp_type: type,
 		Shp_userId: userId
 	})
+
+	console.log('OutSum: ', cost.toString())
+	console.log('receiptString: ', receiptString)
 
 	const robokassaPaymentUrl = 'https://auth.robokassa.ru/Merchant/Index.aspx'
 	return `${robokassaPaymentUrl}?${queryParams.toString()}`

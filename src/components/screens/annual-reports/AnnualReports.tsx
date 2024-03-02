@@ -3,7 +3,6 @@ import cn from 'clsx'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import AddReportBtn from '~/components/screens/reports/buttons/AddReportBtn'
 import { Button, Heading, Table } from '~/components/ui'
 import { IRow } from '~/components/ui/table/table.interface'
 
@@ -21,7 +20,7 @@ import { convertTimestampToDate } from '~/utils/time.utils'
 import styles from './AnnualReports.module.scss'
 
 const AnnualReports: FC = () => {
-	const { annuals } = useData()
+	const { annuals, payments } = useData()
 	const { currentCompany } = useTypedSelector(state => state.ui)
 	const { showModal } = useModal()
 	const navigate = useNavigate()
@@ -41,7 +40,14 @@ const AnnualReports: FC = () => {
 					convertTypeReport(annual.type),
 					getAnnualReportStructureName(annual.data?.settings?.structure) ??
 						'Не выбран',
-					convertTimestampToDate(+annual.updatedAt)
+					convertTimestampToDate(+annual.updatedAt),
+					payments.some(
+						payment =>
+							payment.type === 'annual' &&
+							payment.instanceId === annual._id.toString()
+					)
+						? 'Оплачен'
+						: 'Не оплачен'
 				]
 			}))
 	}
@@ -56,9 +62,9 @@ const AnnualReports: FC = () => {
 			</div>
 			<Button onClick={handleAdd}>Создать отчет</Button>
 			<Table
-				titles={['Наименование', 'Шаблон', 'Дата изменения']}
+				titles={['Наименование', 'Шаблон', 'Дата изменения', 'Статус оплаты']}
 				rows={convertReportsData(annuals)}
-				columnWidths={[5, 5, 5]}
+				columnWidths={[5, 4, 3, 3]}
 				onClick={handleOpenReport}
 				height={85}
 			/>

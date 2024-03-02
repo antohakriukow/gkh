@@ -1,5 +1,11 @@
 export type TypeService = 'annual'
 
+export interface IUserData {
+	_id: string
+	email: string
+	shortId: string
+}
+
 export interface IReceiptItemData {
 	name: string
 	quantity: number
@@ -21,6 +27,7 @@ export interface IPaymentData {
 	receipt: IReceiptData
 	isTest: number
 	userId: string
+	shortId: string
 	type: TypeService
 	instanceId: string
 }
@@ -28,4 +35,13 @@ export interface IPaymentData {
 export interface IPaymentButtonData {
 	buttonTitle: string
 	onClick: () => void
+}
+
+export interface IPayment {
+	invoiceId: string
+	instanceId: string
+	paymentSum: string
+	type: TypeService
+	timestamp: number
+	user: IUserData
 }
