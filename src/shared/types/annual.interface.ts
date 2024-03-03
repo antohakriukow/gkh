@@ -106,7 +106,7 @@ export interface IExtendedAccountingOperation extends IAccountingOperation {
 }
 
 export interface IAnnualCategory {
-	id: number
+	id: string
 	value: string
 	amount?: number
 	calculatedIncome?: number

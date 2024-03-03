@@ -78,12 +78,12 @@ const AnnualReport: FC = () => {
 		setBankOperationsTag
 	)
 
-	const { setBankOperationsCategory, clearCategoryIdIFNotExists } =
+	const { saveBankOperationsToDB, clearCategoryIdIFNotExists } =
 		useDebitSorter()
 
 	const stepDebitSorter = DebitSorterMap(
 		annualReportInDB ?? ({} as IAnnualReport),
-		setBankOperationsCategory,
+		saveBankOperationsToDB,
 		clearCategoryIdIFNotExists
 	)
 

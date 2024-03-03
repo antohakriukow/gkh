@@ -85,7 +85,7 @@ export const useInitialStepMap = () => {
 	const setInitialCategories = () => {
 		if (annualState.structure === 'accruals/services') {
 			const categories = getAnnualCategoriesGraph(annualState)
-			setAnnualCategories(categories)
+			// setAnnualCategories(categories)
 		}
 	}
 

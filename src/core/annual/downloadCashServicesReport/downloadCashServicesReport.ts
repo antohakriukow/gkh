@@ -142,7 +142,7 @@ export const downloadCashServicesReport = async (report: IAnnualReport) => {
 				if (otherIncome.length > 0 || otherCosts.length > 0)
 					getTotalCategoryRow(
 						worksheet,
-						{ id: 10001, value: 'Прочие доходы и расходы' },
+						{ id: '10001', value: 'Прочие доходы и расходы' },
 						data.tableOperations,
 						0
 					)
@@ -170,7 +170,7 @@ export const downloadCashServicesReport = async (report: IAnnualReport) => {
 									operation.recipientAccount === tableAccount.number
 							),
 							{
-								id: 10002,
+								id: '10002',
 								value: 'Доходы'
 							}
 						)
@@ -188,7 +188,7 @@ export const downloadCashServicesReport = async (report: IAnnualReport) => {
 									operation.payerAccount === tableAccount.number
 							),
 							{
-								id: 10001,
+								id: '10001',
 								value: 'Расходы'
 							}
 						)

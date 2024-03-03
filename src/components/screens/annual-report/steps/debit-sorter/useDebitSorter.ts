@@ -1,4 +1,5 @@
 import { useAuth } from '~/hooks/useAuth'
+import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
@@ -10,6 +11,7 @@ import { useAnnualReport } from '../../useAnnualReport'
 
 export const useDebitSorter = () => {
 	const { user } = useAuth()
+	const { bankOperations } = useTypedSelector(state => state.ui)
 	const { annualReportInDB, isLoading } = useAnnualReport()
 
 	const setBankOperationsCategory = (
@@ -59,10 +61,24 @@ export const useDebitSorter = () => {
 		if (!!operationsToClear) setBankOperationsCategory(operationsToClear, '')
 	}
 
+	const saveBankOperationsToDB = () => {
+		if (!user || !annualReportInDB) return
+		try {
+			AnnualService.updateBankOperations(
+				user.uid,
+				annualReportInDB._id.toString(),
+				bankOperations
+			)
+		} catch (error) {
+			console.log('ERROR: ', error)
+		}
+	}
+
 	return {
 		annualReportInDB,
 		isLoading,
 		setBankOperationsCategory,
-		clearCategoryIdIFNotExists
+		clearCategoryIdIFNotExists,
+		saveBankOperationsToDB
 	}
 }

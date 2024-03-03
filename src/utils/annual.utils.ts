@@ -2,6 +2,7 @@ import {
 	IAccount,
 	IAnnualCategory,
 	IAnnualCategoryState,
+	IExtendedBankOperation,
 	TypeAnnualDirection,
 	TypeAnnualReportStructure,
 	TypeDefinedAnnualDirection
@@ -83,7 +84,11 @@ export const createMockCategoriesFromAccounts = (
 ) => {
 	if (getExistingDirections(accounts).includes(direction)) {
 		const incrementNumber =
-			direction === 'renovation' ? 1001 : direction === 'target' ? 2001 : 3001
+			direction === 'renovation'
+				? '1001'
+				: direction === 'target'
+				? '2001'
+				: '3001'
 		return accounts
 			.filter(account => account.type === direction)
 			.map((account, index) => ({
@@ -91,4 +96,45 @@ export const createMockCategoriesFromAccounts = (
 				value: account.number.toString()
 			}))
 	}
+}
+
+export const groupOperationsByRecipientName = (
+	operations: IExtendedBankOperation[]
+) =>
+	operations.reduce(
+		(
+			acc: { [key: string]: IExtendedBankOperation[] },
+			operation: IExtendedBankOperation
+		) => {
+			const { recipientName = 'Unknown' } = operation
+			acc[recipientName] = acc[recipientName] || []
+			acc[recipientName].push(operation)
+			return acc
+		},
+		{}
+	)
+
+export const sortOperationsGroupsArray = (groupedOperations: {
+	[key: string]: IExtendedBankOperation[]
+}) =>
+	Object.entries(groupedOperations)
+		.map(([recipientName, operations]) => ({ recipientName, operations }))
+		.sort((a, b) => b.operations.length - a.operations.length)
+
+export const getOperationsByCategory = (
+	operations: IExtendedBankOperation[],
+	category: IAnnualCategory
+) => {
+	const categoryIds = getCategoriesWithoutChildren([category]).map(
+		cat => cat.value
+	)
+	return operations.reduce(
+		(result: IExtendedBankOperation[], operation: IExtendedBankOperation) => {
+			if (categoryIds.includes(operation.categoryId.toString())) {
+				return [...result, operation]
+			}
+			return result
+		},
+		[] as IExtendedBankOperation[]
+	)
 }

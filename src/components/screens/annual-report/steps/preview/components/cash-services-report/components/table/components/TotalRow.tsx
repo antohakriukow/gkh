@@ -73,7 +73,7 @@ const TotalRow: FC<IRow> = ({ operations, category, isReportPayed }) => {
 								/>
 						  ))
 						: Object.values(
-								category.id === 10001
+								category.id === '10001'
 									? getGroupedByCompaniesIncomingOperations()
 									: getGroupedByCompaniesOutgoingOperations()
 						  ).map(group => (

@@ -1,0 +1,4 @@
+.container {
+	@apply grid gap-3;
+	grid-template-columns: repeat(2, 1fr);
+}

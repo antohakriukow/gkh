@@ -49,7 +49,7 @@ export const useAccrualsSetter = (
 		try {
 			const categoriesToUpdate = Object.entries(data.categories)
 				.map(([key, { amount }]) => {
-					const id = parseInt(key)
+					const id = String(parseInt(key))
 					const existingCategory = annualReportInDB?.data?.categories?.[
 						direction
 					]?.find(category => category.id === id)

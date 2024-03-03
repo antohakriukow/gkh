@@ -36,13 +36,13 @@ const MainCashServicesTable: FC<{
 
 	const otherIncomeCategory = {
 		value: 'Прочие доходы',
-		id: 10001,
+		id: '10001',
 		calculatedIncome: incomingOperationsWithTagTotalSum
 	} as IAnnualCategory
 
 	const otherCostsCategory = {
 		value: 'Прочие расходы',
-		id: 10002
+		id: '10002'
 	} as IAnnualCategory
 
 	return (

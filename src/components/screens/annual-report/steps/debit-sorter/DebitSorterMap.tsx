@@ -1,5 +1,4 @@
-import OutgoingBankOperations from './OutgoingBankOperations/OutgoingBankOperations'
-import Workspace from './workspace/Workspace'
+import DebitSorterComponent from './DebitSorterComponent'
 import { directionTitles } from '~/data/directions-titles'
 
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
@@ -22,10 +21,7 @@ interface IStepData {
 
 const DebitSorter = (
 	annualReport: IAnnualReport,
-	setBankOperationsCategoryId: (
-		operationIds: string[],
-		categoryId: string
-	) => void,
+	saveBankOperationsToDB: () => void,
 	clearCategoryIdIFNotExists: () => void
 ): IQuizStep[] => {
 	const filterOperationsByDirection = (
@@ -50,26 +46,12 @@ const DebitSorter = (
 
 	const getStep = (operations: IExtendedBankOperation[], step: IStepData) => ({
 		stepTitle: `Поступления по направлению "${step.title}"`,
-		onNext: () => clearCategoryIdIFNotExists(),
+		onPrevious: () => saveBankOperationsToDB(),
+		onNext: () => saveBankOperationsToDB(),
 		component: (
-			<Workspace
-				variations={
-					!!annualReport.data.categories && !!annualReport.data.categories.main
-						? getCategoriesWithoutChildren(annualReport.data.categories.main)
-						: []
-				}
-				property='categoryId'
-				component={OutgoingBankOperations}
-				data={filterOperationsByDirection(
-					operations.filter(operation => operation.amount < 0),
-					step.direction
-				)}
-				handleSubmit={setBankOperationsCategoryId}
-				categories={
-					!!annualReport.data.categories && !!annualReport.data.categories.main
-						? annualReport.data.categories.main
-						: []
-				}
+			<DebitSorterComponent
+				report={annualReport}
+				// handleSubmit={setBankOperationsCategoryId}
 			/>
 		)
 	})

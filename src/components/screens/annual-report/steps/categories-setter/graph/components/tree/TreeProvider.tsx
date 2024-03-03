@@ -77,7 +77,7 @@ export const TreeProvider: FC<PropsWithChildren<ITreeProvider>> = ({
 
 			// Создаем новую категорию с уникальным ID
 			const newCategory: IAnnualCategoryState = {
-				id: maxId + 1,
+				id: String(maxId + 1),
 				value,
 				collapsed: false,
 				children: []

@@ -145,6 +145,24 @@ export const AnnualService = {
 		}
 	},
 
+	async updateBankOperations(
+		userId: string,
+		annualId: string,
+		data: IExtendedBankOperation[]
+	) {
+		if (!data.length) return
+
+		try {
+			await set(
+				ref(db, `users/${userId}/annuals/${annualId}/data/bankOperations`),
+				data
+			)
+		} catch (error) {
+			console.log('ERROR: ', error)
+			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
+		}
+	},
+
 	async updateBankOperationTags(
 		userId: string,
 		annualId: string,

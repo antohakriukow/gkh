@@ -12,6 +12,7 @@ import {
 import {
 	clearUI,
 	setAnnualReportInitialDataSavedToDb,
+	setBankOperations,
 	setCurrentAnnualReport,
 	setCurrentCompany,
 	setCurrentReport,
@@ -27,6 +28,7 @@ export const allActions = {
 	setNewCompany,
 	setAnnualReportInitialDataSavedToDb,
 	setIsLoading,
+	setBankOperations,
 
 	clearAnnualState,
 	setAnnualStructure,

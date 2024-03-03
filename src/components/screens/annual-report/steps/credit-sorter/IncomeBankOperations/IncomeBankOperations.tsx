@@ -75,8 +75,10 @@ const IncomeBankOperations: FC<
 	const heading = title
 		? title
 		: `${getAnnualDirectionTitle(
-				data?.[0].direction
+				data?.[0]?.direction
 		  )}: Поступления от собственников`
+
+	console.log('data: ', data)
 
 	return (
 		<div className={styles.container}>

@@ -89,7 +89,7 @@ export const getTotalCategoryRow = (
 	const row = worksheet.addRow([
 		category.value,
 		category.amount,
-		category.id > 10000
+		Number(category.id) > 10000
 			? calculateOperationsSum(
 					operations.filter(
 						operation => operation.amount > 0 && operation.tag !== ''
