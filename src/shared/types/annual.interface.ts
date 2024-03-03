@@ -75,7 +75,7 @@ export interface IBankOperation {
 	budgetClassificationCode: string
 	paymentPriority: number
 	paymentPurpose: string
-	tag?: string
+	tag?: TypeAnnualOperationTag
 }
 
 export interface IExtendedBankOperation

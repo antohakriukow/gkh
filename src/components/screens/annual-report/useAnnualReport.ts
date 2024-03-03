@@ -86,8 +86,6 @@ export const useAnnualReport = () => {
 			payment.instanceId === annualReportInDB?._id.toString()
 	)
 
-	console.log('annualReportInDB: ', annualReportInDB)
-
 	// const isReportPayed = true
 
 	return {

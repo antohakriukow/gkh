@@ -3,8 +3,6 @@ import SeparateModal from './separate-modal/SeparateModal'
 import { FC, ReactNode, memo, useCallback, useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa6'
 
-import { useAnnualReport } from '~/components/screens/annual-report/useAnnualReport'
-
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
 import styles from './operations.module.scss'
@@ -16,7 +14,7 @@ interface OperationsGroupProps {
 	selectedOperations: string[]
 	showModal: (component: ReactNode) => void
 	lastBankOperationId: number
-	annualReportInDBId: string | undefined
+	level?: number
 }
 
 const OperationsGroup: FC<OperationsGroupProps> = memo(
@@ -27,32 +25,23 @@ const OperationsGroup: FC<OperationsGroupProps> = memo(
 		selectedOperations,
 		showModal,
 		lastBankOperationId,
-		annualReportInDBId
+		level = 1
 	}) => {
 		const [isVisible, setIsVisible] = useState(false)
-
 		const showSeparateModal = useCallback(
 			(operation: IExtendedBankOperation) => {
 				showModal(
 					<SeparateModal
 						operation={operation}
 						lastBankOperationId={lastBankOperationId}
-						annualReportInDBId={annualReportInDBId}
 						clearSelectedOperation={() =>
 							toggleOperationSelection(operation._id)
 						}
 					/>
 				)
 			},
-			[
-				annualReportInDBId,
-				lastBankOperationId,
-				showModal,
-				toggleOperationSelection
-			]
+			[lastBankOperationId, showModal, toggleOperationSelection]
 		)
-
-		const toggleVisible = () => setIsVisible(!isVisible)
 
 		const handleGroupCheckboxChange = useCallback(
 			(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,13 +55,15 @@ const OperationsGroup: FC<OperationsGroupProps> = memo(
 			[operations, selectedOperations, toggleOperationSelection]
 		)
 
+		const toggleVisible = () => setIsVisible(!isVisible)
+
 		const isThisSelected = (operation: IExtendedBankOperation) =>
 			selectedOperations.includes(operation._id) &&
 			selectedOperations.length === 1 &&
 			operation.amount < 0
 
 		return (
-			<div className={styles.group}>
+			<div className={styles.group} style={{ marginLeft: `${level * 16}px` }}>
 				<div className={styles.header}>
 					<div>
 						{isVisible ? (
@@ -80,18 +71,16 @@ const OperationsGroup: FC<OperationsGroupProps> = memo(
 						) : (
 							<FaChevronDown color='#262e59' onClick={toggleVisible} />
 						)}
-						<span className={styles.partnerName}>{partnerName}</span>
 					</div>
-					<div>
-						<div className={styles.counter}>({operations.length})</div>
-						<input
-							type='checkbox'
-							onChange={handleGroupCheckboxChange}
-							checked={operations.every(op =>
-								selectedOperations.includes(op._id)
-							)}
-						/>
-					</div>
+					<span className={styles.partnerName}>{partnerName}</span>
+					<div className={styles.counter}>({operations.length})</div>
+					<input
+						type='checkbox'
+						onChange={handleGroupCheckboxChange}
+						checked={operations.every(op =>
+							selectedOperations.includes(op._id)
+						)}
+					/>
 				</div>
 				{isVisible && (
 					<div className={styles.body}>

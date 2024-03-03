@@ -71,19 +71,24 @@ const AnnualReport: FC = () => {
 		annualReportInDB ?? ({} as IAnnualReport)
 	)
 
-	const { setBankOperationsTag } = useCreditSorter()
+	const {
+		setBankOperationsTag,
+		saveBankOperationsToDB: saveCreditBankOperationsToDB
+	} = useCreditSorter()
 
 	const stepCreditSorter = CreditSorterMap(
 		annualReportInDB ?? ({} as IAnnualReport),
-		setBankOperationsTag
+		saveCreditBankOperationsToDB
 	)
 
-	const { saveBankOperationsToDB, clearCategoryIdIFNotExists } =
-		useDebitSorter()
+	const {
+		saveBankOperationsToDB: saveDebitBankOperationsToDB,
+		clearCategoryIdIFNotExists
+	} = useDebitSorter()
 
 	const stepDebitSorter = DebitSorterMap(
 		annualReportInDB ?? ({} as IAnnualReport),
-		saveBankOperationsToDB,
+		saveDebitBankOperationsToDB,
 		clearCategoryIdIFNotExists
 	)
 

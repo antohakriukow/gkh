@@ -11,14 +11,12 @@ import styles from './SeparateModal.module.scss'
 interface ISeparateModal {
 	operation: IExtendedBankOperation
 	lastBankOperationId: number
-	annualReportInDBId: string | undefined
 	clearSelectedOperation: () => void
 }
 
 const SeparateModal: FC<ISeparateModal> = ({
 	operation,
 	lastBankOperationId,
-	annualReportInDBId,
 	clearSelectedOperation
 }) => {
 	const {
@@ -30,12 +28,7 @@ const SeparateModal: FC<ISeparateModal> = ({
 		isOperationsChanged,
 		isTotalAmountAbsExcess,
 		hasWrongAmountValue
-	} = useSeparateModal(
-		operation,
-		lastBankOperationId,
-		annualReportInDBId,
-		clearSelectedOperation
-	)
+	} = useSeparateModal(operation, lastBankOperationId, clearSelectedOperation)
 
 	return (
 		<div className={styles.container}>

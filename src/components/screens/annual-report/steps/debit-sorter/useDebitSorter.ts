@@ -72,6 +72,7 @@ export const useDebitSorter = () => {
 		} catch (error) {
 			console.log('ERROR: ', error)
 		}
+		// console.log('useDebitSorter bankOperations: ', bankOperations)
 	}
 
 	return {

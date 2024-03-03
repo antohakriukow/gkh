@@ -1,10 +1,9 @@
 import { useState } from 'react'
 
-import { useAnnualReport } from '~/components/screens/annual-report/useAnnualReport'
-
-import { useAnnual } from '~/hooks/useAnnual'
+import { useActions } from '~/hooks/useActions'
 import { useAuth } from '~/hooks/useAuth'
 import { useModal } from '~/hooks/useModal'
+import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
@@ -13,11 +12,12 @@ import { AnnualService } from '~/services/annual.service'
 export const useSeparateModal = (
 	operation: IExtendedBankOperation,
 	lastBankOperationId: number,
-	annualReportInDBId: string | undefined,
 	clearSelectedOperation: () => void
 ) => {
 	const { user } = useAuth()
 	const { hideModal } = useModal()
+	const { setBankOperations } = useActions()
+	const { bankOperations } = useTypedSelector(state => state.ui)
 	const [operations, setOperations] = useState([
 		{ ...operation, amount: Math.abs(operation.amount) }
 	])
@@ -58,7 +58,7 @@ export const useSeparateModal = (
 	}
 
 	const handleSubmit = async () => {
-		if (!user || !annualReportInDBId) return
+		if (!user) return
 
 		const newOperations = operations.map((operation, index) => ({
 			...operation,
@@ -70,18 +70,13 @@ export const useSeparateModal = (
 				: `${operation.paymentPurpose}: [Часть операции]`
 		}))
 
-		try {
-			await AnnualService.replaceOperation(
-				user.uid,
-				annualReportInDBId,
-				newOperations,
-				operation._id
-			)
-			hideModal()
-			clearSelectedOperation()
-		} catch (error) {
-			console.log('ERROR: ', error)
-		}
+		setBankOperations([
+			...bankOperations.filter(op => op._id !== operation._id),
+			...newOperations
+		])
+
+		clearSelectedOperation()
+		hideModal()
 	}
 
 	const isOperationsChanged = operations.length > 1

@@ -114,11 +114,34 @@ export const groupOperationsByRecipientName = (
 		{}
 	)
 
-export const sortOperationsGroupsArray = (groupedOperations: {
+export const groupOperationsByPayerName = (
+	operations: IExtendedBankOperation[]
+) =>
+	operations.reduce(
+		(
+			acc: { [key: string]: IExtendedBankOperation[] },
+			operation: IExtendedBankOperation
+		) => {
+			const { payerName = 'Unknown' } = operation
+			acc[payerName] = acc[payerName] || []
+			acc[payerName].push(operation)
+			return acc
+		},
+		{}
+	)
+
+export const sortOperationsGroupsArrayByRecipientName = (groupedOperations: {
 	[key: string]: IExtendedBankOperation[]
 }) =>
 	Object.entries(groupedOperations)
 		.map(([recipientName, operations]) => ({ recipientName, operations }))
+		.sort((a, b) => b.operations.length - a.operations.length)
+
+export const sortOperationsGroupsArrayByPayerName = (groupedOperations: {
+	[key: string]: IExtendedBankOperation[]
+}) =>
+	Object.entries(groupedOperations)
+		.map(([payerName, operations]) => ({ payerName, operations }))
 		.sort((a, b) => b.operations.length - a.operations.length)
 
 export const getOperationsByCategory = (

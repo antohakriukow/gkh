@@ -1,6 +1,6 @@
 import OperationsGroup from './OperationsGroup'
 import ToolBar from './ToolBar'
-import { FC, Fragment, ReactNode, useCallback, useState } from 'react'
+import { FC, Fragment, ReactNode, useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa6'
 
 import {
@@ -11,7 +11,7 @@ import {
 import {
 	getOperationsByCategory,
 	groupOperationsByRecipientName,
-	sortOperationsGroupsArray
+	sortOperationsGroupsArrayByRecipientName
 } from '~/utils/annual.utils'
 
 import styles from './operations.module.scss'
@@ -42,8 +42,10 @@ const Category: FC<{
 	const groupedOperations = category.children
 		? []
 		: category.id === '10000'
-		? sortOperationsGroupsArray(groupOperationsByRecipientName(operations))
-		: sortOperationsGroupsArray(
+		? sortOperationsGroupsArrayByRecipientName(
+				groupOperationsByRecipientName(operations)
+		  )
+		: sortOperationsGroupsArrayByRecipientName(
 				groupOperationsByRecipientName(
 					operations.filter(
 						operation => operation.categoryId === category.id.toString()

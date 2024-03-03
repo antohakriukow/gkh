@@ -1,15 +1,18 @@
-import IncomeBankOperations from './IncomeBankOperations/IncomeBankOperations'
-import Workspace from './workspace/Workspace'
-import { getAnnualTagVariationsData } from '~/data/annual-tag-variations'
+import CreditSorterComponent from './CreditSorterComponent'
+import { directionTitles } from '~/data/directions-titles'
 
 import { IQuizStep } from '~/components/ui/quiz/quiz.interface'
 
 import {
 	IAnnualReport,
 	IExtendedBankOperation,
-	TypeAnnualDirection,
-	TypeAnnualOperationTag
+	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
+
+import {
+	getCategoriesWithoutChildren,
+	getExistingDirections
+} from '~/utils/annual.utils'
 
 interface IStepData {
 	title: string
@@ -18,10 +21,7 @@ interface IStepData {
 
 const CreditSorterMap = (
 	annualReport: IAnnualReport,
-	setBankOperationsTag: (
-		operationIds: string[],
-		tag: TypeAnnualOperationTag
-	) => void
+	saveBankOperationsToDB: () => void
 ): IQuizStep[] => {
 	const filterOperationsByDirection = (
 		bankOperations: IExtendedBankOperation[],
@@ -45,17 +45,12 @@ const CreditSorterMap = (
 
 	const getStep = (operations: IExtendedBankOperation[], step: IStepData) => ({
 		stepTitle: `Поступления по направлению "${step.title}"`,
-		onNext: () => {},
+		onPrevious: () => saveBankOperationsToDB(),
+		onNext: () => saveBankOperationsToDB(),
 		component: (
-			<Workspace
-				variations={getAnnualTagVariationsData(step.direction)}
-				property='tag'
-				component={IncomeBankOperations}
-				data={filterOperationsByDirection(
-					operations.filter(operation => operation.amount > 0),
-					step.direction
-				)}
-				handleSubmit={setBankOperationsTag}
+			<CreditSorterComponent
+				report={annualReport}
+				// handleSubmit={setBankOperationsCategoryId}
 			/>
 		)
 	})

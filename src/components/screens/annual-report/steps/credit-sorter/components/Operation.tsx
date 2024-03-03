@@ -4,6 +4,8 @@ import { PiCopyBold } from 'react-icons/pi'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
+import { formatNumber } from '~/utils/number.utils'
+
 import styles from './operations.module.scss'
 
 interface IOperationProps {
@@ -24,7 +26,7 @@ const Operation: FC<IOperationProps> = memo(
 	}) => {
 		const handleChange = useCallback(() => {
 			toggleOperationSelection(operation._id)
-		}, [operation._id, toggleOperationSelection])
+		}, [operation, toggleOperationSelection])
 
 		const handleShowSeparateModal = () => showSeparateModal(operation)
 
@@ -40,7 +42,7 @@ const Operation: FC<IOperationProps> = memo(
 				})}
 			>
 				<div>{operation.date}</div>
-				<div>{operation.amount}</div>
+				<div>{formatNumber(operation.amount)}</div>
 				<div className={styles.description} title={operation.paymentPurpose}>
 					{operation.paymentPurpose}
 				</div>

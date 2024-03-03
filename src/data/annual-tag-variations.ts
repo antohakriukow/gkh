@@ -3,7 +3,7 @@ import {
 	TypeAnnualOperationTag
 } from '~/shared/types/annual.interface'
 
-interface IAnnualOperationTagData {
+export interface IAnnualOperationTagData {
 	title: string
 	value: TypeAnnualOperationTag
 }

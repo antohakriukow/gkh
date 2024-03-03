@@ -1,24 +1,20 @@
-import Category from './components/Category'
+import Tag from './components/Tag'
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
+import { getAnnualTagVariationsData } from '~/data/annual-tag-variations'
 
 import { useActions } from '~/hooks/useActions'
 import { useModal } from '~/hooks/useModal'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import {
-	IAnnualCategory,
 	IAnnualReport,
-	IExtendedBankOperation
+	IExtendedBankOperation,
+	TypeAnnualOperationTag
 } from '~/shared/types/annual.interface'
 
-import { getOperationsByCategory } from '~/utils/annual.utils'
+import styles from './credit-sorter.module.scss'
 
-import styles from './debit-sorter.module.scss'
-
-const DebitSorterComponent: FC<{
-	report: IAnnualReport
-	// handleSubmit: (operationIds: string[], categoryId: string) => void
-}> = ({ report }) => {
+const CreditSorterComponent: FC<{ report: IAnnualReport }> = ({ report }) => {
 	// const initialOperations = useMemo(
 	// 	() =>
 	// 		report.data.bankOperations?.filter(
@@ -27,6 +23,7 @@ const DebitSorterComponent: FC<{
 	// 	[report.data.bankOperations]
 	// )
 
+	const { showModal } = useModal()
 	// Временное решение до тех пор, пока не откажусь от компонента Quiz в пользу навигации
 	const { bankOperations: localOperations } = useTypedSelector(
 		state => state.ui
@@ -46,10 +43,6 @@ const DebitSorterComponent: FC<{
 	// 	useState<IExtendedBankOperation[]>(initialOperations)
 	const [selectedOperations, setSelectedOperations] = useState<string[]>([])
 
-	const { showModal } = useModal()
-
-	const lastBankOperationId = localOperations.length - 1
-
 	const toggleOperationSelection = useCallback(
 		(id: string) => {
 			setSelectedOperations(prev =>
@@ -59,73 +52,61 @@ const DebitSorterComponent: FC<{
 		[setSelectedOperations]
 	)
 
-	const handleSubmit = (categoryId: string) => {
+	const handleSubmit = (tag: TypeAnnualOperationTag) => {
 		setLocalOperations(
 			localOperations.map(operation =>
 				selectedOperations.includes(operation._id)
-					? { ...operation, categoryId: categoryId }
+					? { ...operation, tag }
 					: operation
 			)
 		)
 		setSelectedOperations([])
 	}
 
-	const categoriesWithoutChildrenIds = useMemo(
-		() =>
-			((report.data.categories?.main ?? []) as IAnnualCategory[])
-				.filter(category => !category.children)
-				.map(category => category.id),
-		[report.data.categories]
-	)
-
-	const { sortedOperations, unsortedOperations } = useMemo(() => {
-		let sortedOps = [] as IExtendedBankOperation[]
-		let unsortedOps = [] as IExtendedBankOperation[]
+	const { operationsWithTag, operationsWithoutTag } = useMemo(() => {
+		let operationsWithTag = [] as IExtendedBankOperation[]
+		let operationsWithoutTag = [] as IExtendedBankOperation[]
 
 		localOperations
-			.filter(operation => operation.amount < 0)
+			.filter(operation => operation.amount > 0)
 			.forEach(operation => {
-				!categoriesWithoutChildrenIds.includes(operation.categoryId) ||
-				operation.categoryId === '' ||
-				operation.categoryId === undefined
-					? unsortedOps.push(operation)
-					: sortedOps.push(operation)
+				operation.tag === undefined || operation.tag === ''
+					? operationsWithoutTag.push(operation)
+					: operationsWithTag.push(operation)
 			})
 
 		return {
-			sortedOperations: sortedOps,
-			unsortedOperations: unsortedOps
+			operationsWithTag,
+			operationsWithoutTag
 		}
-	}, [localOperations, categoriesWithoutChildrenIds])
+	}, [localOperations])
 
-	const mockUnsortedCategory = {
-		value: 'Неотсортированные операции',
-		id: ''
-	}
+	const tags = getAnnualTagVariationsData('main')
+	const lastBankOperationId = localOperations.length - 1
 
 	return (
 		<div className={styles.container}>
 			<div className={styles.leftSide}>
-				<Category
-					category={mockUnsortedCategory}
+				<Tag
+					tag={{ title: 'Поступления от собственников', value: '' }}
 					toggleOperationSelection={toggleOperationSelection}
 					selectedOperations={selectedOperations}
 					showModal={showModal}
 					lastBankOperationId={lastBankOperationId}
-					operations={unsortedOperations}
+					operations={operationsWithoutTag}
 					handleSubmit={handleSubmit}
 				/>
 			</div>
 			<div className={styles.rightSide}>
-				{report?.data?.categories?.main?.map(category => (
-					<Category
-						key={category.id}
-						category={category}
-						operations={getOperationsByCategory(sortedOperations, category)}
+				{tags.map(tag => (
+					<Tag
+						key={tag.value}
+						tag={tag}
 						toggleOperationSelection={toggleOperationSelection}
 						selectedOperations={selectedOperations}
 						showModal={showModal}
 						lastBankOperationId={lastBankOperationId}
+						operations={operationsWithTag.filter(op => op.tag === tag.value)}
 						handleSubmit={handleSubmit}
 					/>
 				))}
@@ -133,5 +114,4 @@ const DebitSorterComponent: FC<{
 		</div>
 	)
 }
-
-export default DebitSorterComponent
+export default CreditSorterComponent

@@ -1,4 +1,5 @@
 import { useAuth } from '~/hooks/useAuth'
+import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { TypeAnnualOperationTag } from '~/shared/types/annual.interface'
 
@@ -8,6 +9,8 @@ import { useAnnualReport } from '../../useAnnualReport'
 
 export const useCreditSorter = () => {
 	const { user } = useAuth()
+	const { bankOperations } = useTypedSelector(state => state.ui)
+
 	const { annualReportInDB, isLoading } = useAnnualReport()
 
 	const setBankOperationsTag = (
@@ -28,5 +31,24 @@ export const useCreditSorter = () => {
 		}
 	}
 
-	return { annualReportInDB, isLoading, setBankOperationsTag }
+	const saveBankOperationsToDB = () => {
+		if (!user || !annualReportInDB) return
+		try {
+			AnnualService.updateBankOperations(
+				user.uid,
+				annualReportInDB._id.toString(),
+				bankOperations
+			)
+		} catch (error) {
+			console.log('ERROR: ', error)
+		}
+		// console.log('useCreditSorter bankOperations: ', bankOperations)
+	}
+
+	return {
+		annualReportInDB,
+		isLoading,
+		setBankOperationsTag,
+		saveBankOperationsToDB
+	}
 }
