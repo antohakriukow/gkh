@@ -17,12 +17,15 @@ import {
 	getCategoryOperations,
 	getGroupedByCompaniesIncomingOperations,
 	getGroupedByCompaniesOutgoingOperations,
-	getGroupedOperations
+	getGroupedOperations,
+	replaceAccountNumbersInMainOperations,
+	replaceMainAccountNumbers
 } from './utils'
 import ExcelJS from 'exceljs'
 import { saveAs } from 'file-saver'
 
 import {
+	IAccount,
 	IAnnualCategory,
 	IAnnualReport,
 	IExtendedBankOperation,
@@ -32,8 +35,10 @@ import {
 import { convertTimestampToDate } from '~/utils/time.utils'
 
 export const downloadCashServicesReport = async (report: IAnnualReport) => {
-	const operations = report.data.bankOperations ?? []
-	const accounts = report.data.accounts ?? []
+	const operations = replaceAccountNumbersInMainOperations(
+		report.data.bankOperations ?? []
+	)
+	const accounts = replaceMainAccountNumbers(report.data.accounts ?? [])
 
 	// Создание книги и листа EXCEL
 	const workbook = new ExcelJS.Workbook()
@@ -50,7 +55,10 @@ export const downloadCashServicesReport = async (report: IAnnualReport) => {
 
 	// Разделение данных по направлениям
 	const dataSeparatedByDirection = directions.map(direction => {
-		const tableAccounts = getAccountsInDirection(accounts, direction)
+		const tableAccounts =
+			direction === 'main'
+				? [{ number: 'consolidatedMainAccount', type: 'main' } as IAccount]
+				: getAccountsInDirection(accounts, direction)
 
 		const tableOperations = operations.filter(
 			operation => operation.direction === direction
@@ -84,7 +92,7 @@ export const downloadCashServicesReport = async (report: IAnnualReport) => {
 	dataSeparatedByDirection.map(data => {
 		if (!data.operationGroups.incoming && !data.operationGroups.outgoing)
 			return null
-
+		if (data.direction === 'main') console.log(data)
 		// Пустая строка
 		worksheet.addRow([])
 
@@ -102,7 +110,7 @@ export const downloadCashServicesReport = async (report: IAnnualReport) => {
 			)
 
 			// Строка счёта (если счетов несколько и это не ЖКУ)
-			if (data.tableAccounts.length > 1 || data.direction !== 'main') {
+			if (data.tableAccounts.length > 1 && data.direction !== 'main') {
 				const accountAccruals =
 					data.tableCategories &&
 					data.tableCategories.find(

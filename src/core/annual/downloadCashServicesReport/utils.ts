@@ -23,6 +23,24 @@ export const directions = [
 	'renovation'
 ] as TypeAnnualDirection[]
 
+export const replaceMainAccountNumbers = (accounts: IAccount[]) =>
+	accounts.map(account =>
+		account.type === 'main'
+			? { ...account, number: 'consolidatedMainAccount' }
+			: account
+	)
+
+export const replaceAccountNumbersInMainOperations = (
+	operations: IExtendedBankOperation[]
+) =>
+	operations
+		.filter(operation => operation.direction === 'main')
+		.map(operation =>
+			operation.amount > 0
+				? { ...operation, recipientAccount: 'consolidatedMainAccount' }
+				: { ...operation, payerAccount: 'consolidatedMainAccount' }
+		)
+
 export const getAccountsInDirection = (
 	accounts: IAccount[],
 	direction: TypeAnnualDirection

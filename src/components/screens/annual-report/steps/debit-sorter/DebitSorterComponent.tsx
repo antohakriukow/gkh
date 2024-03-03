@@ -99,7 +99,7 @@ const DebitSorterComponent: FC<{
 	}, [localOperations, categoriesWithoutChildrenIds])
 
 	const mockUnsortedCategory = {
-		value: 'Неотсортированные операции',
+		value: 'ЖКУ: Прочие списания',
 		id: ''
 	}
 

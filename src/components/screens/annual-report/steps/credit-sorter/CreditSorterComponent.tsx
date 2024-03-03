@@ -88,7 +88,7 @@ const CreditSorterComponent: FC<{ report: IAnnualReport }> = ({ report }) => {
 		<div className={styles.container}>
 			<div className={styles.leftSide}>
 				<Tag
-					tag={{ title: 'Поступления от собственников', value: '' }}
+					tag={{ title: 'ЖКУ: Поступления от собственников', value: '' }}
 					toggleOperationSelection={toggleOperationSelection}
 					selectedOperations={selectedOperations}
 					showModal={showModal}

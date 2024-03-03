@@ -26,15 +26,38 @@ const groupOperationsByDirectionAndAccount = (
 	operations: IExtendedBankOperation[]
 ): GroupedOperations => {
 	const grouped: GroupedOperations = {}
+	const mainAccounts = new Set<string>()
+
 	operations.forEach(operation => {
-		const accountKey =
-			operation.amount > 0 ? operation.recipientAccount : operation.payerAccount
-		const directionKey = `${operation.direction}-${accountKey}`
-		if (!grouped[directionKey]) {
-			grouped[directionKey] = []
+		if (operation.direction === 'main') {
+			// Для входящих операций 'main' добавляем recipientAccount
+			if (operation.amount > 0) {
+				mainAccounts.add(operation.recipientAccount)
+			}
+			// Для исходящих операций 'main' добавляем payerAccount
+			else if (operation.amount < 0) {
+				mainAccounts.add(operation.payerAccount)
+			}
+		} else {
+			// Для всех остальных направлений работаем как раньше
+			const accountKey =
+				operation.amount > 0
+					? operation.recipientAccount
+					: operation.payerAccount
+			const directionKey = `${operation.direction}-${accountKey}`
+			grouped[directionKey] = grouped[directionKey] || []
+			grouped[directionKey].push(operation)
 		}
-		grouped[directionKey].push(operation)
 	})
+
+	// После того, как все операции обработаны, добавляем операции 'main' в группу
+	if (mainAccounts.size > 0) {
+		const mainKey = `main-${Array.from(mainAccounts).join(', ')}`
+		grouped[mainKey] = operations.filter(
+			operation => operation.direction === 'main'
+		)
+	}
+
 	return grouped
 }
 
