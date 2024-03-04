@@ -29,7 +29,7 @@ const InitialStepMap = (
 	const selectStructure = {
 		stepTitle: 'Выбор структуры отчета',
 		onNext: () => {
-			handleStepOneOnNext()
+			// handleStepOneOnNext()
 			clearError()
 		},
 		component: <StructureSelector />,
