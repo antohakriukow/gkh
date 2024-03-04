@@ -92,7 +92,7 @@ export const downloadCashServicesReport = async (report: IAnnualReport) => {
 	dataSeparatedByDirection.map(data => {
 		if (!data.operationGroups.incoming && !data.operationGroups.outgoing)
 			return null
-		if (data.direction === 'main') console.log(data)
+
 		// Пустая строка
 		worksheet.addRow([])
 

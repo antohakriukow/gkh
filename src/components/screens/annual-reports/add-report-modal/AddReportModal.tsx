@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { toast } from 'react-toastify'
 
 import { Button } from '~/components/ui'
 
@@ -7,16 +8,25 @@ import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import styles from './AddReportModal.module.scss'
 
-const ReportModal: FC = () => {
+interface IReportModalProps {
+	handleOpenReport: (reportId: string) => void
+}
+
+const ReportModal: FC<IReportModalProps> = ({ handleOpenReport }) => {
 	const { create } = useAnnual()
 	const { currentCompany } = useTypedSelector(state => state.ui)
 
 	const handleCreateReport = async () => {
 		if (!currentCompany) return
-		await create({
-			type: 'annual',
-			company: currentCompany
-		})
+
+		try {
+			await create({
+				type: 'annual',
+				company: currentCompany
+			}).then(response => handleOpenReport(response._id))
+		} catch (error) {
+			toast('Ошибка при создании отчета', { type: 'error' })
+		}
 	}
 
 	return (
