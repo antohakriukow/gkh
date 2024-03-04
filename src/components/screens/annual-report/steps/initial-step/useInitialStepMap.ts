@@ -38,7 +38,8 @@ export const useInitialStepMap = () => {
 		setAnnualAccounts,
 		setAnnualOperations,
 		setAnnualFileNames,
-		setAnnualError
+		setAnnualError,
+		clearAnnualState
 	} = useActions()
 	const [isLoading, setIsLoading] = useState(false)
 	const [initialStep, setInitialStep] = useState(0)
@@ -96,7 +97,7 @@ export const useInitialStepMap = () => {
 			annualState.accounts.map(account => ({ ...account, type: undefined }))
 		)
 
-	const saveReportData = () => {
+	const saveReportData = async () => {
 		if (!user?.uid || !currentAnnualReport) return
 
 		setIsLoading(true)
@@ -128,8 +129,13 @@ export const useInitialStepMap = () => {
 				? (data.accountingOperations = modifiedState.operations)
 				: (data.bankOperations = modifiedState.operations)
 
-			AnnualService.update(user?.uid, currentAnnualReport._id.toString(), data)
+			await AnnualService.update(
+				user?.uid,
+				currentAnnualReport._id.toString(),
+				data
+			)
 			setAnnualReportInitialDataSavedToDb(true)
+			clearAnnualState()
 		} catch (error) {
 			console.log('error: ', error)
 			setAnnualReportInitialDataSavedToDb(false)
