@@ -92,7 +92,7 @@ export const createMockCategoriesFromAccounts = (
 		return accounts
 			.filter(account => account.type === direction)
 			.map((account, index) => ({
-				id: index + incrementNumber,
+				id: String(index + Number(incrementNumber)),
 				value: account.number.toString()
 			}))
 	}
