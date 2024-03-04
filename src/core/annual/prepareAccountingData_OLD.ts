@@ -26,8 +26,7 @@ const findAccount = (accounts: IAccount[], account: string) =>
 const setAmount = (accounts: IAccount[], operation: IAccountingOperation) => {
 	const accountsList = accounts.map(account => account.number)
 	return accountsList.includes(operation.debitAccount)
-		? // ? -operation.amount
-		  operation.amount
+		? -operation.amount
 		: operation.amount
 }
 
@@ -113,10 +112,11 @@ const unifyAccountingOperation = (
 	accounts: IAccount[]
 ) => {
 	return {
-		...operation,
 		_id,
 		categoryId: setCategoryId(categories, operation),
 		amount: setAmount(accounts, operation),
+		date: operation.date,
+		document: operation.document,
 		description: operation.description ?? '',
 		direction: setDirection(accounts, operation)
 	} as IOperation
@@ -138,11 +138,11 @@ const copyInvertedOperation = (
 	accounts: IAccount[]
 ) => {
 	return {
-		...operation,
 		_id,
 		categoryId: setCategoryId(categories, operation, 'inverted'),
-		// amount: -operation.amount,
-		amount: operation.amount,
+		amount: -operation.amount,
+		date: operation.date,
+		document: operation.document,
 		description: operation.description ?? '',
 		direction: setDirection(accounts, operation, 'inverted')
 	} as IOperation

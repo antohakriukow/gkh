@@ -1,0 +1,56 @@
+@import '../../../../../../../../../styles/colors.scss';
+
+.container {
+}
+
+.gridTable {
+	@apply w-full grid gap-0 box-border;
+	grid-template-columns: 30px 1fr 148px 148px;
+	border: 1px solid $primary-800;
+}
+
+.gridRow:nth-of-type(1) {
+	@apply font-semibold;
+	> div {
+		background: $primary-100;
+	}
+}
+
+.gridRow {
+	display: contents;
+
+	> div {
+		@apply p-1.5 flex flex-row items-center justify-center text-center;
+		border: 1px solid $primary-800;
+		background-color: white;
+	}
+
+	> div:nth-of-type(1) {
+		@apply cursor-pointer;
+	}
+
+	> div:nth-of-type(2) {
+		@apply whitespace-nowrap overflow-hidden overflow-ellipsis justify-start;
+	}
+}
+
+.groupRow {
+	display: contents;
+}
+
+.operationRow {
+	display: contents;
+}
+
+.total {
+	font-weight: bold;
+}
+
+.blurred {
+	@apply filter m-0;
+	filter: blur(4px);
+}
+
+.value {
+	@apply m-0;
+}

@@ -35,7 +35,9 @@ const DirectionSelector: FC = () => {
 								<option value='main'>ЖКУ</option>
 								<option value='renovation'>Капремонт</option>
 								<option value='target'>Целевые взносы</option>
-								{/* <option value='commerce'>Коммерция</option> */}
+								{state.structure === 'accruals/services' && (
+									<option value='commerce'>Коммерция</option>
+								)}
 							</select>
 						</div>
 					))}

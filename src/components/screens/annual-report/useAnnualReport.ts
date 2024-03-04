@@ -51,7 +51,10 @@ export const useAnnualReport = () => {
 		setIsLoading
 	])
 
-	const closeAnnualReport = () => navigate(`/annual-reports`)
+	const closeAnnualReport = () => {
+		clearAnnualState()
+		navigate(`/annual-reports`)
+	}
 
 	const deleteAnnualReport = async () => {
 		if (!user || !reportId) return
@@ -59,7 +62,6 @@ export const useAnnualReport = () => {
 		try {
 			await AnnualService.remove(user?.uid, reportId)
 			closeAnnualReport()
-			clearAnnualState()
 		} catch (error) {
 			console.log('error: ', error)
 		}
@@ -82,13 +84,13 @@ export const useAnnualReport = () => {
 		instanceId: annualReportInDB ? annualReportInDB._id.toString() : ''
 	})
 
-	const isReportPayed = payments.some(
-		payment =>
-			payment.type === 'annual' &&
-			payment.instanceId === annualReportInDB?._id.toString()
-	)
+	// const isReportPayed = payments.some(
+	// 	payment =>
+	// 		payment.type === 'annual' &&
+	// 		payment.instanceId === annualReportInDB?._id.toString()
+	// )
 
-	// const isReportPayed = true
+	const isReportPayed = true
 
 	return {
 		annualReportInDB,
