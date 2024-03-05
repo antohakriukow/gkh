@@ -6,7 +6,7 @@ export const processPayment = functions.https.onRequest(
 		if (request.method === 'POST') {
 			const payload = request.body
 
-			const paymentSum = payload.OutSum.toFixed(2)
+			const paymentSum = String(payload.OutSum)
 			const type = payload.Shp_type
 			const instanceId = payload.Shp_instanceId
 			const invoiceId = payload.InvId
