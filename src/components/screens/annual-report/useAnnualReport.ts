@@ -90,13 +90,13 @@ export const useAnnualReport = () => {
 		instanceId: annualReportInDB ? annualReportInDB._id.toString() : ''
 	})
 
-	// const isReportPayed = payments.some(
-	// 	payment =>
-	// 		payment.type === 'annual' &&
-	// 		payment.instanceId === annualReportInDB?._id.toString()
-	// )
+	const isReportPayed = payments.some(
+		payment =>
+			payment.type === 'annual' &&
+			payment.instanceId === annualReportInDB?._id.toString()
+	)
 
-	const isReportPayed = true
+	// const isReportPayed = true
 
 	return {
 		annualReportInDB,
