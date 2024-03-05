@@ -72,9 +72,11 @@ export const useDataImporter = () => {
 					}
 				}
 
-				if (!!allOperations) setAnnualStartDate(allOperations[0].date)
+				if (!!allOperations) setAnnualStartDate(allOperations[0]?.date ?? '')
 				if (!!allOperations)
-					setAnnualFinalDate(allOperations[allOperations.length - 1].date)
+					setAnnualFinalDate(
+						allOperations[allOperations.length - 1]?.date ?? ''
+					)
 
 				setAnnualOperations(
 					allOperations as IAccountingOperation[] | IBankOperation[]
@@ -99,11 +101,13 @@ export const useDataImporter = () => {
 	const onFileChange = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
 			if (event.target.files) {
+				setAnnualError('')
+
 				const newFiles = Array.from(event.target.files)
 				handleFiles(newFiles)
 			}
 		},
-		[handleFiles]
+		[handleFiles, setAnnualError]
 	)
 
 	const handleClickOnInput = () => {

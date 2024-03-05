@@ -1,21 +1,21 @@
 import { IAccount, IBankOperation } from '~/shared/types/annual.interface'
 
 const mapToBankOperation = (data: Record<string, string>): IBankOperation => ({
-	documentNumber: data['Номер'] ?? '',
-	date: data['Дата'] ?? '',
-	amount: parseFloat(data['Сумма']) ?? '',
-	payerAccount: data['ПлательщикСчет'] ?? '',
-	payerName: data['Плательщик'] ?? '',
-	payerINN: data['ПлательщикИНН'] ?? '',
-	payerKPP: data['ПлательщикКПП'] ?? '',
-	payerCheckingAccount: data['ПлательщикРасчСчет'] ?? '',
-	recipientAccount: data['ПолучательСчет'] ?? '',
-	recipientName: data['Получатель'] ?? '',
-	recipientINN: data['ПолучательИНН'] ?? '',
-	recipientCheckingAccount: data['ПолучательРасчСчет'] ?? '',
+	documentNumber: data['Номер'] ?? 'НЕТ',
+	date: data['Дата'] ?? 'НЕТ',
+	amount: parseFloat(data['Сумма']) ?? '0.00',
+	payerAccount: data['ПлательщикСчет'] ?? '0000',
+	payerName: data['Плательщик'] ?? 'НАИМЕНОВАНИЕ ОТСУТСТВУЕТ',
+	payerINN: data['ПлательщикИНН'] ?? '0000',
+	payerKPP: data['ПлательщикКПП'] ?? '0000',
+	payerCheckingAccount: data['ПлательщикРасчСчет'] ?? '0000',
+	recipientAccount: data['ПолучательСчет'] ?? '0001',
+	recipientName: data['Получатель'] ?? 'НАИМЕНОВАНИЕ ОТСУТСТВУЕТ',
+	recipientINN: data['ПолучательИНН'] ?? '0001',
+	recipientCheckingAccount: data['ПолучательРасчСчет'] ?? '0001',
 	budgetClassificationCode: data['ПоказательКБК'] ?? '',
 	paymentPriority: parseInt(data['Очередность']) ?? '',
-	paymentPurpose: data['НазначениеПлатежа'] ?? ''
+	paymentPurpose: data['НазначениеПлатежа'] ?? 'НАЗНАЧЕНИЕ ПЛАТЕЖА ОТСУТСТВУЕТ'
 })
 
 export const parseTXTFile = async (

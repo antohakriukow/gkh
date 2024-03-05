@@ -6,6 +6,7 @@ import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 import { AnnualService } from '~/services/annual.service'
 
 import { getCategoriesWithoutChildren } from '~/utils/annual.utils'
+import { areArraysEqualByKey } from '~/utils/array.utils'
 
 import { useAnnualReport } from '../../useAnnualReport'
 
@@ -63,16 +64,29 @@ export const useDebitSorter = () => {
 
 	const saveBankOperationsToDB = () => {
 		if (!user || !annualReportInDB) return
+		const bankOperationsInDB = annualReportInDB.data.bankOperations ?? []
+		const notMainBankOperations = bankOperationsInDB.filter(
+			op => op.direction !== 'main'
+		)
+
+		const resultArray = [...bankOperations, ...notMainBankOperations]
+		if (
+			areArraysEqualByKey(bankOperationsInDB, resultArray, '_id', 'categoryId')
+		) {
+			// console.log('EJECTED')
+			return
+		}
+
 		try {
+			// console.log('result: ', resultArray)
 			AnnualService.updateBankOperations(
 				user.uid,
 				annualReportInDB._id.toString(),
-				bankOperations
+				resultArray
 			)
 		} catch (error) {
 			console.log('ERROR: ', error)
 		}
-		// console.log('useDebitSorter bankOperations: ', bankOperations)
 	}
 
 	return {

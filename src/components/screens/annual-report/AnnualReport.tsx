@@ -131,7 +131,7 @@ const AnnualReport: FC = () => {
 		if (initialStepDone) setInitialStepIndex(1)
 		if (hasCategories) {
 			setInitialStepIndex(2)
-			if (hasAccruals) setInitialStepIndex(3)
+			// if (hasAccruals) setInitialStepIndex(3)
 			if (hasBankOperationWithCategoryId) setInitialStepIndex(4)
 			if (hasNoBankOperationWithCategoryId) setInitialStepIndex(5)
 		}

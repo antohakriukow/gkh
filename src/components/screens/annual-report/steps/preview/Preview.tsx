@@ -45,6 +45,8 @@ const Preview: FC = () => {
 		return (
 			<AccrualsReport
 				operations={annualReportInDB?.data?.accountingOperations}
+				accounts={annualReportInDB?.data?.accounts ?? []}
+				company={annualReportInDB.company}
 			/>
 		)
 
