@@ -10,7 +10,7 @@ import { GetDateIntervalBoundaries } from '~/utils/time.utils'
 
 import { AnnualState } from '~/store/annual/annual.interface'
 
-import { data } from '../../components/screens/annual-report/steps/initial-step/components/structure-selector/data'
+import { data } from '../../components/screens/annual-report -OLD/steps-OLD/initial-step-OLD/components/structure-selector/data'
 import { IOperation } from '../../shared/types/annual.interface'
 import { createDeepCopy } from '../../utils/object.utils'
 

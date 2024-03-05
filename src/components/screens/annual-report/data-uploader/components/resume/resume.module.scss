@@ -1,0 +1,30 @@
+@import '../../../../../../styles/colors.scss';
+
+.danger {
+	@apply grid items-center gap-5;
+	grid-template-columns: 44px 1fr;
+
+	> p {
+		@apply m-0 pb-2;
+		border-bottom: $danger-200 solid 2px;
+		> span {
+			@apply font-semibold text-danger-500;
+		}
+	}
+}
+
+.list {
+	@apply ml-16 mt-4;
+}
+
+.item {
+	@apply grid items-center gap-4 mb-2;
+	grid-template-columns: 240px 1fr;
+
+	> p:nth-of-type(1) {
+		@apply font-semibold m-0;
+	}
+	> p:nth-of-type(2) {
+		@apply m-0;
+	}
+}

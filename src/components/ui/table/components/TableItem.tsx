@@ -20,6 +20,7 @@ const TableItem: FC<ITableItem> = ({ _id, data, columnWidths, onClick }) => {
 					data-tooltip-id={`cellTooltip-${index}-${item}`}
 					data-tooltip-content={item}
 					data-tooltip-place='bottom'
+					data-attribute={item}
 				>
 					<p className={styles.text}>{item}</p>
 					<Tooltip id={`cellTooltip-${index}-${item}`} delayShow={2000} />
