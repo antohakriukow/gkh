@@ -17,8 +17,12 @@ export const useAnnualReport = () => {
 	const { reportId } = useParams<{ reportId: string }>()
 	const { isLoading, currentAnnualReport, annualReportInitialDataSavedToDb } =
 		useTypedSelector(state => state.ui)
-	const { setCurrentAnnualReport, setIsLoading, clearAnnualState } =
-		useActions()
+	const {
+		setCurrentAnnualReport,
+		setIsLoading,
+		clearAnnualState,
+		setBankOperations
+	} = useActions()
 	const navigate = useNavigate()
 
 	const annualReportInDB = reportId
@@ -53,6 +57,7 @@ export const useAnnualReport = () => {
 
 	const closeAnnualReport = () => {
 		clearAnnualState()
+		setBankOperations([])
 		navigate(`/annual-reports`)
 	}
 
@@ -62,6 +67,7 @@ export const useAnnualReport = () => {
 		try {
 			await AnnualService.remove(user?.uid, reportId)
 			closeAnnualReport()
+			setBankOperations([])
 		} catch (error) {
 			console.log('error: ', error)
 		}
