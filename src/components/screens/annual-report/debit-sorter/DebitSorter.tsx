@@ -23,7 +23,7 @@ import { useAnnualReport } from '../useAnnualReport'
 import styles from './debit-sorter.module.scss'
 
 const DebitSorter: FC = memo(() => {
-	const [isLoading, setIsLoading] = useState(true)
+	const [isLoading, setIsLoading] = useState(false)
 	const { annualReportInDB } = useAnnualReport()
 	const { showModal } = useModal()
 	const { user } = useAuth()
