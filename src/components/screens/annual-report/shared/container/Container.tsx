@@ -1,6 +1,7 @@
+import Toolbar from './components/Toolbar'
 import { FC, PropsWithChildren } from 'react'
 
-import { Button } from '~/components/ui'
+import { Button, SubHeading } from '~/components/ui'
 
 import styles from './container.module.scss'
 
@@ -13,6 +14,9 @@ interface IContainerProps {
 	backButtonDisabled?: boolean
 	hasNoBackButton?: boolean
 	hasNoNextButton?: boolean
+	isReportPayed: boolean
+	handleCloseReport: () => void
+	handleDeleteReport: () => void
 }
 
 const Container: FC<PropsWithChildren<IContainerProps>> = ({
@@ -24,11 +28,19 @@ const Container: FC<PropsWithChildren<IContainerProps>> = ({
 	nextButtonDisabled,
 	backButtonDisabled,
 	hasNoBackButton,
-	hasNoNextButton
+	hasNoNextButton,
+	isReportPayed,
+	handleCloseReport,
+	handleDeleteReport
 }) => {
 	return (
 		<div className={styles.container}>
-			<div>{children}</div>
+			<Toolbar
+				isReportPayed={isReportPayed}
+				handleCloseReport={handleCloseReport}
+				handleDeleteReport={handleDeleteReport}
+			/>
+			<div className={styles.children}>{children}</div>
 			<div className={styles.buttons}>
 				{hasNoBackButton ? (
 					<div></div>

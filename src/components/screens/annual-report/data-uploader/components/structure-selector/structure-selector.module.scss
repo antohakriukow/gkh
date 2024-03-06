@@ -3,6 +3,9 @@
 .cards {
 	@apply grid gap-3;
 	grid-template-columns: repeat(auto-fill, minmax(240px, 320px));
+	padding-right: 1px;
+	padding-left: 1px;
+
 	@media (max-width: 1031px) {
 		grid-template-columns: repeat(auto-fill, minmax(240px, 31%));
 	}

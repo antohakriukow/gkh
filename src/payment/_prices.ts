@@ -1,1 +1,1 @@
-export const AnnualReportPrice = 990
+export const AnnualReportPrice = 100

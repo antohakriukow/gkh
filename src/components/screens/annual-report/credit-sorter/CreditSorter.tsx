@@ -24,7 +24,12 @@ import styles from './credit-sorter.module.scss'
 
 const CreditSorter: FC = () => {
 	const [isLoading, setIsLoading] = useState(false)
-	const { annualReportInDB } = useAnnualReport()
+	const {
+		annualReportInDB,
+		isReportPayed,
+		closeAnnualReport,
+		deleteAnnualReport
+	} = useAnnualReport()
 	const { showModal } = useModal()
 	const { user } = useAuth()
 	const navigate = useNavigate()
@@ -126,7 +131,7 @@ const CreditSorter: FC = () => {
 
 	const onNext = async () => {
 		await setIsLoading(true)
-		await new Promise(resolve => setTimeout(resolve, 1500))
+		await new Promise(resolve => setTimeout(resolve, 100))
 		await saveBankOperationsToDB()
 		await setIsLoading(false)
 		redirectToDebitSorter()
@@ -134,13 +139,23 @@ const CreditSorter: FC = () => {
 
 	if (isLoading || !annualReportInDB)
 		return (
-			<Container>
+			<Container
+				isReportPayed={isReportPayed}
+				handleCloseReport={closeAnnualReport}
+				handleDeleteReport={deleteAnnualReport}
+			>
 				<Loader loaderType='fullscreen' />
 			</Container>
 		)
 
 	return (
-		<Container onNext={onNext} onBack={redirectToAccrualsSetter}>
+		<Container
+			onNext={onNext}
+			onBack={redirectToAccrualsSetter}
+			isReportPayed={isReportPayed}
+			handleCloseReport={closeAnnualReport}
+			handleDeleteReport={deleteAnnualReport}
+		>
 			<div className={styles.container}>
 				<div className={styles.leftSide}>
 					<Tag

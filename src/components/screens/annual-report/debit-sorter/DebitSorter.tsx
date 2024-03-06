@@ -24,7 +24,12 @@ import styles from './debit-sorter.module.scss'
 
 const DebitSorter: FC = memo(() => {
 	const [isLoading, setIsLoading] = useState(false)
-	const { annualReportInDB } = useAnnualReport()
+	const {
+		annualReportInDB,
+		isReportPayed,
+		closeAnnualReport,
+		deleteAnnualReport
+	} = useAnnualReport()
 	const { showModal } = useModal()
 	const { user } = useAuth()
 	const navigate = useNavigate()
@@ -141,7 +146,7 @@ const DebitSorter: FC = memo(() => {
 
 	const onNext = async () => {
 		await setIsLoading(true)
-		await new Promise(resolve => setTimeout(resolve, 1500))
+		await new Promise(resolve => setTimeout(resolve, 100))
 		await saveBankOperationsToDB()
 		await setIsLoading(false)
 		redirectToPreview()
@@ -149,13 +154,23 @@ const DebitSorter: FC = memo(() => {
 
 	if (isLoading || !annualReportInDB)
 		return (
-			<Container>
+			<Container
+				isReportPayed={isReportPayed}
+				handleCloseReport={closeAnnualReport}
+				handleDeleteReport={deleteAnnualReport}
+			>
 				<Loader loaderType='fullscreen' />
 			</Container>
 		)
 
 	return (
-		<Container onNext={onNext} onBack={redirectToCreditSorter}>
+		<Container
+			onNext={onNext}
+			onBack={redirectToCreditSorter}
+			isReportPayed={isReportPayed}
+			handleCloseReport={closeAnnualReport}
+			handleDeleteReport={deleteAnnualReport}
+		>
 			<div className={styles.container}>
 				<div className={styles.leftSide}>
 					<Category

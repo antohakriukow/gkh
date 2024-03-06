@@ -21,7 +21,6 @@ import {
 } from '~/utils/annual.utils'
 
 export const useDataUploader = () => {
-	const [isLoading, setIsLoading] = useState(false)
 	const { user } = useAuth()
 	const { reportId } = useParams<{ reportId: string }>()
 	const navigate = useNavigate()
@@ -40,7 +39,6 @@ export const useDataUploader = () => {
 		structure: TypeAnnualReportStructure | undefined
 	) => {
 		if (!user?.uid || !reportId) return
-		setIsLoading(true)
 
 		const annualState = {
 			operations: annualOperations,
@@ -83,13 +81,10 @@ export const useDataUploader = () => {
 			await AnnualService.update(user?.uid, String(reportId), data)
 		} catch (error) {
 			console.log('error: ', error)
-		} finally {
-			setIsLoading(false)
 		}
 	}
 
 	return {
-		isLoading,
 		saveReportData,
 		redirectToCategoriesSetter,
 		redirectToPreview

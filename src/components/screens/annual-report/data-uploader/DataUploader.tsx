@@ -16,15 +16,16 @@ import {
 
 import Container from '../shared/container/Container'
 import StepStatus from '../shared/step-status/StepStatus'
+import { useAnnualReport } from '../useAnnualReport'
 
 const DataUploader: FC = () => {
+	const [isLoading, setIsLoading] = useState(false)
 	const [step, setStep] = useState<1 | 2 | 3 | 4>(1)
-	const {
-		isLoading,
-		saveReportData,
-		redirectToCategoriesSetter,
-		redirectToPreview
-	} = useDataUploader()
+	const { saveReportData, redirectToCategoriesSetter, redirectToPreview } =
+		useDataUploader()
+
+	const { isReportPayed, closeAnnualReport, deleteAnnualReport } =
+		useAnnualReport()
 
 	// data-importer state
 	const [annualOperations, setAnnualOperations] = useState<
@@ -67,6 +68,9 @@ const DataUploader: FC = () => {
 	const stepFourTitle = 'Подтверждение введенных данных'
 
 	const handleSubmit = async () => {
+		setIsLoading(true)
+
+		await new Promise(resolve => setTimeout(resolve, 100))
 		await saveReportData(
 			annualOperations,
 			annualAccounts,
@@ -75,6 +79,7 @@ const DataUploader: FC = () => {
 			annualFinalDate,
 			structure
 		)
+		setIsLoading(false)
 		structure === 'cash/services'
 			? redirectToCategoriesSetter()
 			: redirectToPreview()
@@ -86,6 +91,9 @@ const DataUploader: FC = () => {
 			hasNoBackButton
 			nextButtonDisabled={isNextButtonDisabled}
 			NextButtonText={step === 4 ? 'Сохранить и продолжить' : 'Далее'}
+			isReportPayed={isReportPayed}
+			handleCloseReport={closeAnnualReport}
+			handleDeleteReport={deleteAnnualReport}
 		>
 			<div>
 				{step === 1 && (
