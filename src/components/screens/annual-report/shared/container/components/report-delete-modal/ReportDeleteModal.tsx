@@ -1,6 +1,7 @@
-import { FC } from 'react'
+import { FC, Fragment, useState } from 'react'
+import { toast } from 'react-toastify'
 
-import { Button } from '~/components/ui'
+import { Button, Loader } from '~/components/ui'
 
 import { useModal } from '~/hooks/useModal'
 
@@ -9,23 +10,41 @@ import styles from './ReportDeleteModal.module.scss'
 const ReportDeleteModal: FC<{ deleteAnnualReport: () => void }> = ({
 	deleteAnnualReport
 }) => {
+	const [isLoading, setIsLoading] = useState(false)
+
 	const { hideModal } = useModal()
 
-	const accept = () => {
-		deleteAnnualReport()
-		hideModal()
+	const accept = async () => {
+		try {
+			setIsLoading(true)
+			await new Promise(resolve => setTimeout(resolve, 2000))
+			await deleteAnnualReport()
+			hideModal()
+		} catch (error) {
+			toast('Ошибка при создании отчета', { type: 'error' })
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
 	return (
 		<div className={styles.container}>
-			<h3 className={styles.title}>Вы действительно хотите удалить отчет?</h3>
-			<p className={styles.text}>Восстановление будет невозможно.</p>
-			<div className={styles.buttons}>
-				<Button onClick={hideModal}>Вернуться к отчету</Button>
-				<Button color='danger' onClick={accept}>
-					Удалить безвозвратно
-				</Button>
-			</div>
+			{isLoading ? (
+				<Loader />
+			) : (
+				<Fragment>
+					<h3 className={styles.title}>
+						Вы действительно хотите удалить отчет?
+					</h3>
+					<p className={styles.text}>Восстановление будет невозможно.</p>
+					<div className={styles.buttons}>
+						<Button onClick={hideModal}>Вернуться к отчету</Button>
+						<Button color='danger' onClick={accept}>
+							Удалить безвозвратно
+						</Button>
+					</div>
+				</Fragment>
+			)}
 		</div>
 	)
 }

@@ -77,7 +77,12 @@ const AccrualsSetter: FC = () => {
 					reportId,
 					directions[step],
 					categoriesToUpdate as IAnnualCategory[]
-				).then(() => toast('Данные успешно обновлены', { type: 'success' }))
+				).then(() =>
+					toast('Данные успешно обновлены', {
+						type: 'success',
+						autoClose: 1500
+					})
+				)
 			}
 		} catch (error) {
 			toast('Ошибка при обновлении данных', { type: 'error' })

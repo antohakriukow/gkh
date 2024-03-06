@@ -30,7 +30,10 @@ export const useCategoriesSetter = () => {
 				'main',
 				removeCollapsedFromCategories(categories) as IAnnualCategory[]
 			)
-			toast('Данные успешно обновлены', { type: 'success' })
+			toast('Данные успешно обновлены', {
+				type: 'success',
+				autoClose: 1500
+			})
 		} catch (error) {
 			toast('Ошибка при обновлении данных', { type: 'error' })
 		}

@@ -2,6 +2,7 @@ import Tag from './components/Tag'
 import SeparateModal from './components/separate-modal/SeparateModal'
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { getAnnualTagVariationsData } from '~/data/annual-tag-variations'
 
 import { Loader } from '~/components/ui'
@@ -146,6 +147,10 @@ const CreditSorter: FC = () => {
 				annualReportInDB._id.toString(),
 				resultArray
 			)
+			toast('Данные успешно обновлены', {
+				type: 'success',
+				autoClose: 1500
+			})
 		} catch (error) {
 			console.log('ERROR: ', error)
 		}

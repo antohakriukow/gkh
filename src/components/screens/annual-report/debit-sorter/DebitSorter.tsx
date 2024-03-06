@@ -2,6 +2,7 @@ import Category from './components/Category'
 import SeparateModal from './components/separate-modal/SeparateModal'
 import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { Loader } from '~/components/ui'
 
@@ -161,6 +162,10 @@ const DebitSorter: FC = memo(() => {
 				annualReportInDB._id.toString(),
 				resultArray
 			)
+			toast('Данные успешно обновлены', {
+				type: 'success',
+				autoClose: 1500
+			})
 		} catch (error) {
 			console.log('ERROR: ', error)
 		}
