@@ -1,7 +1,7 @@
 import Toolbar from './components/Toolbar'
 import { FC, PropsWithChildren } from 'react'
 
-import { Button, SubHeading } from '~/components/ui'
+import { Button } from '~/components/ui'
 
 import styles from './container.module.scss'
 

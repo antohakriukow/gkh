@@ -12,8 +12,6 @@ import { trimStringAtSymbol } from '~/utils/string.utils'
 import { IOperationGroup } from '../table.interface'
 import styles from '../table.module.scss'
 
-// Убедитесь, что пути к стилям верные
-
 interface IOperationGroupProps {
 	groupKey: string
 	group: IOperationGroup

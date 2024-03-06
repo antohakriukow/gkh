@@ -1,11 +1,9 @@
 import AccountRow from './components/AccountRow'
-import ResultsRow from './components/ResultsRow'
-import TotalRow from './components/TotalRow'
 import { useBankCashServicesTable } from './useBankCashServicesTable'
 import cn from 'clsx'
 import { FC } from 'react'
 
-import { useAnnualReport } from '~/components/screens/annual-report -OLD/useAnnualReport-OLD'
+import { useAnnualReport } from '~/components/screens/annual-report/useAnnualReport'
 
 import {
 	IAnnualCategory,

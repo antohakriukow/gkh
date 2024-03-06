@@ -1,5 +1,5 @@
 import ReportDeleteModal from './report-delete-modal/ReportDeleteModal'
-import { FC, Fragment } from 'react'
+import { FC } from 'react'
 
 import { Button, SubHeading } from '~/components/ui'
 

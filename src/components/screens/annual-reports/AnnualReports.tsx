@@ -1,6 +1,6 @@
 import ReportModal from './add-report-modal/AddReportModal'
 import cn from 'clsx'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Button, Heading, Table } from '~/components/ui'

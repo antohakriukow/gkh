@@ -4,7 +4,7 @@ import cn from 'clsx'
 import { FC } from 'react'
 import { getAnnualDirectionTitle } from '~/core/annual/shared'
 
-import { useAnnualReport } from '~/components/screens/annual-report -OLD/useAnnualReport-OLD'
+import { useAnnualReport } from '~/components/screens/annual-report/useAnnualReport'
 import { SubHeading } from '~/components/ui'
 
 import {

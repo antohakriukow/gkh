@@ -16,7 +16,7 @@ const CompanyRow: FC<{ group: IOperationGroup; isReportPayed: boolean }> = ({
 	group,
 	isReportPayed
 }) => {
-	const { name, inn, operations, total } = group
+	const { name, operations } = group
 	const [isVisible, setIsVisible] = useState(false)
 	const {} = useBankCashServicesTable(operations)
 	const toggleVisible = () => setIsVisible(!isVisible)

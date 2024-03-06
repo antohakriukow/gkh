@@ -8,9 +8,7 @@ import { getAnnualDirectionTitle } from '~/core/annual/shared'
 import { SubHeading } from '~/components/ui'
 
 import {
-	IAnnualCategory,
 	IExtendedBankOperation,
-	TypeAnnualDirection,
 	TypeCategoriesMap,
 	TypeDefinedAnnualDirection
 } from '~/shared/types/annual.interface'

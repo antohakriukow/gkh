@@ -4,8 +4,6 @@ import { RiDeleteBin2Line } from 'react-icons/ri'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
-import { formatNumber } from '~/utils/number.utils'
-
 import styles from './SeparateModal.module.scss'
 
 interface IOperation {

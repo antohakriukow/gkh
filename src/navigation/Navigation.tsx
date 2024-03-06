@@ -12,7 +12,6 @@ import {
 	DebitSorter,
 	Preview
 } from '~/components/screens/annual-report'
-import AnnualReport from '~/components/screens/annual-report -OLD/AnnualReport'
 import AnnualReports from '~/components/screens/annual-reports/AnnualReports'
 import FAQ from '~/components/screens/faq/FAQ'
 import Issues from '~/components/screens/issues/Issues'
@@ -63,14 +62,7 @@ const router = createBrowserRouter([
 					</ProtectedRoute>
 				)
 			},
-			// {
-			// 	path: '/annual-reports/edit/:reportId',
-			// 	element: (
-			// 		<ProtectedRoute>
-			// 			<AnnualReport />
-			// 		</ProtectedRoute>
-			// 	)
-			// },
+
 			{
 				path: '/annual-reports/edit/:reportId/data-uploader',
 				element: (

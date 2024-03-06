@@ -5,7 +5,7 @@ import cn from 'clsx'
 import { FC, Fragment } from 'react'
 import { FaMinus, FaPlus } from 'react-icons/fa'
 
-import { useAnnualReport } from '~/components/screens/annual-report -OLD/useAnnualReport-OLD'
+import { useAnnualReport } from '~/components/screens/annual-report/useAnnualReport'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 

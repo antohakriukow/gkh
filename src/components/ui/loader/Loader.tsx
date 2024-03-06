@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Hourglass, ProgressBar } from 'react-loader-spinner'
+import { Hourglass } from 'react-loader-spinner'
 
 import styles from './Loader.module.scss'
 
@@ -25,15 +25,6 @@ const Loader: FC<{ loaderType?: TypeLoader }> = ({ loaderType }) => {
 		return (
 			<div className={styles.container}>
 				<div className={styles.loader}>
-					{/* <ProgressBar
-						height={size}
-						width={size}
-						ariaLabel='progress-bar-loading'
-						wrapperStyle={{}}
-						wrapperClass='progress-bar-wrapper'
-						borderColor='#df4956'
-						barColor='#23c3ab'
-					/> */}
 					<Hourglass
 						visible={true}
 						height={size}
@@ -49,15 +40,6 @@ const Loader: FC<{ loaderType?: TypeLoader }> = ({ loaderType }) => {
 
 	return (
 		<div className={styles.loader}>
-			{/* <ProgressBar
-				height={size}
-				width={size}
-				ariaLabel='progress-bar-loading'
-				wrapperStyle={{}}
-				wrapperClass='progress-bar-wrapper'
-				borderColor='#df4956'
-				barColor='#23c3ab'
-			/> */}
 			<Hourglass
 				visible={true}
 				height={size}
