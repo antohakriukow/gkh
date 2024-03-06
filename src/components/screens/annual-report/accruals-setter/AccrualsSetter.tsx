@@ -98,6 +98,13 @@ const AccrualsSetter: FC = () => {
 	const onBack = () =>
 		step !== 0 ? setStep(step - 1) : redirectToCategoriesSetter()
 
+	if (isLoading || !annualReportInDB)
+		return (
+			<Container>
+				<Loader loaderType='fullscreen' />
+			</Container>
+		)
+
 	return (
 		<Container onNext={onNext} onBack={onBack}>
 			{step < directions.length ? (
@@ -110,7 +117,6 @@ const AccrualsSetter: FC = () => {
 			) : (
 				<Resume />
 			)}
-			{isLoading && <Loader loaderType='fullscreen' />}
 		</Container>
 	)
 }

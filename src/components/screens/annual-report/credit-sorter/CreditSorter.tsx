@@ -132,6 +132,13 @@ const CreditSorter: FC = () => {
 		redirectToDebitSorter()
 	}
 
+	if (isLoading || !annualReportInDB)
+		return (
+			<Container>
+				<Loader loaderType='fullscreen' />
+			</Container>
+		)
+
 	return (
 		<Container onNext={onNext} onBack={redirectToAccrualsSetter}>
 			<div className={styles.container}>
@@ -161,7 +168,6 @@ const CreditSorter: FC = () => {
 					))}
 				</div>
 			</div>
-			{isLoading && <Loader loaderType='fullscreen' />}
 		</Container>
 	)
 }

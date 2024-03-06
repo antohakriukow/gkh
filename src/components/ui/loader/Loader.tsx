@@ -14,8 +14,6 @@ const Loader: FC<{ loaderType?: TypeLoader }> = ({ loaderType }) => {
 				return 48
 			case 'large':
 				return 96
-			case 'fullscreen':
-				return 72
 			default:
 				return 48
 		}
@@ -38,8 +36,8 @@ const Loader: FC<{ loaderType?: TypeLoader }> = ({ loaderType }) => {
 					/> */}
 					<Hourglass
 						visible={true}
-						height='80'
-						width='80'
+						height={size}
+						width={size}
 						ariaLabel='hourglass-loading'
 						wrapperStyle={{}}
 						wrapperClass=''
@@ -62,8 +60,8 @@ const Loader: FC<{ loaderType?: TypeLoader }> = ({ loaderType }) => {
 			/> */}
 			<Hourglass
 				visible={true}
-				height='80'
-				width='80'
+				height={size}
+				width={size}
 				ariaLabel='hourglass-loading'
 				wrapperStyle={{}}
 				wrapperClass=''
