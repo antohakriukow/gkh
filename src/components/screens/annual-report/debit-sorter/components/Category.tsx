@@ -1,6 +1,6 @@
 import OperationsGroup from './OperationsGroup'
 import ToolBar from './ToolBar'
-import { FC, Fragment, ReactNode, memo, useState } from 'react'
+import { FC, Fragment, memo, useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa6'
 
 import {
@@ -21,9 +21,8 @@ const Category: FC<{
 	level?: number
 	toggleOperationSelection: (id: string) => void
 	selectedOperations: string[]
-	showModal: (component: ReactNode) => void
-	lastBankOperationId: number
 	handleSubmit: (categoryId: string) => void
+	showSeparateModal: (operation: IExtendedBankOperation) => void
 }> = memo(
 	({
 		category,
@@ -31,9 +30,8 @@ const Category: FC<{
 		level = 0,
 		toggleOperationSelection,
 		selectedOperations,
-		showModal,
-		lastBankOperationId,
-		handleSubmit
+		handleSubmit,
+		showSeparateModal
 	}) => {
 		const [isVisible, setIsVisible] = useState(true)
 
@@ -89,10 +87,9 @@ const Category: FC<{
 											)}
 											toggleOperationSelection={toggleOperationSelection}
 											selectedOperations={selectedOperations}
-											showModal={showModal}
-											lastBankOperationId={lastBankOperationId}
 											handleSubmit={handleSubmit}
 											level={level + 1}
+											showSeparateModal={showSeparateModal}
 										/>
 									)
 							  })
@@ -103,9 +100,8 @@ const Category: FC<{
 										operations={group.operations}
 										toggleOperationSelection={toggleOperationSelection}
 										selectedOperations={selectedOperations}
-										showModal={showModal}
-										lastBankOperationId={lastBankOperationId}
 										level={level + 1}
+										showSeparateModal={showSeparateModal}
 									/>
 							  ))}
 					</Fragment>

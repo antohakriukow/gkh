@@ -1,4 +1,5 @@
 import Category from './components/Category'
+import SeparateModal from './components/separate-modal/SeparateModal'
 import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -89,6 +90,27 @@ const DebitSorter: FC = memo(() => {
 		setSelectedOperations([])
 	}
 
+	const showSeparateModal = useCallback(
+		(operation: IExtendedBankOperation) => {
+			showModal(
+				<SeparateModal
+					operation={operation}
+					lastBankOperationId={lastBankOperationId}
+					clearSelectedOperation={() => toggleOperationSelection(operation._id)}
+					localOperations={localOperations}
+					setLocalOperations={setLocalOperations}
+				/>
+			)
+		},
+		[
+			lastBankOperationId,
+			showModal,
+			toggleOperationSelection,
+			localOperations,
+			setLocalOperations
+		]
+	)
+
 	const categoriesWithoutChildrenIds = useMemo(() => {
 		const mainCategories = annualReportInDB?.data.categories?.main ?? []
 		return getAllLeafCategoryIds(mainCategories)
@@ -177,10 +199,9 @@ const DebitSorter: FC = memo(() => {
 						category={mockUnsortedCategory}
 						toggleOperationSelection={toggleOperationSelection}
 						selectedOperations={selectedOperations}
-						showModal={showModal}
-						lastBankOperationId={lastBankOperationId}
 						operations={unsortedOperations}
 						handleSubmit={handleSubmit}
+						showSeparateModal={showSeparateModal}
 					/>
 				</div>
 				<div className={styles.rightSide}>
@@ -191,9 +212,8 @@ const DebitSorter: FC = memo(() => {
 							operations={getOperationsByCategory(sortedOperations, category)}
 							toggleOperationSelection={toggleOperationSelection}
 							selectedOperations={selectedOperations}
-							showModal={showModal}
-							lastBankOperationId={lastBankOperationId}
 							handleSubmit={handleSubmit}
+							showSeparateModal={showSeparateModal}
 						/>
 					))}
 				</div>

@@ -1,6 +1,6 @@
 import Operation from './Operation'
 import { useSeparateModal } from './useSeparateModal'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 
 import { Button } from '~/components/ui'
 
