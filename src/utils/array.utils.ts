@@ -4,8 +4,6 @@ export function areArraysEqualByKey<T>(
 	comparator: keyof T,
 	key: keyof T
 ): boolean {
-	console.log('areArraysEqualByKey data: ', arr1, arr2, comparator, key)
-
 	if (arr1.length !== arr2.length) {
 		return false
 	}

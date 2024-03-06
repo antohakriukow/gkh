@@ -31,10 +31,15 @@ const AccrualsSetter: FC = () => {
 	const { annualReportInDB } = useAnnualReport()
 	const { user } = useAuth()
 
-	const { register, control, handleSubmit, setValue } =
-		useForm<IAnnualReportCategoriesFormInput>({
-			mode: 'onSubmit'
-		})
+	const {
+		register,
+		control,
+		handleSubmit,
+		setValue,
+		formState: { isDirty }
+	} = useForm<IAnnualReportCategoriesFormInput>({
+		mode: 'onSubmit'
+	})
 
 	const directions = (
 		['main', 'renovation', 'target', 'commerce'] as TypeDefinedAnnualDirection[]
@@ -42,7 +47,7 @@ const AccrualsSetter: FC = () => {
 		getExistingDirections(annualReportInDB?.data?.accounts ?? []).includes(step)
 	)
 
-	const {} = useAccrualsSetter(setValue, directions[step])
+	const {} = useAccrualsSetter(setValue, directions[step]) // активация useEffect
 
 	const redirectToCategoriesSetter = () =>
 		navigate(`/annual-reports/edit/${reportId}/categories-setter`)
@@ -80,9 +85,9 @@ const AccrualsSetter: FC = () => {
 	}
 
 	const onNext = async () => {
-		if (step < directions.length + 1) {
+		if (step < directions.length) {
 			setIsLoading(true)
-			await new Promise(resolve => setTimeout(resolve, 100))
+			await new Promise(resolve => setTimeout(resolve, 1500))
 			await handleSubmit(onSubmit)().then(() => setIsLoading(false))
 			setStep(step + 1)
 		} else {

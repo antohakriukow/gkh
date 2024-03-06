@@ -1,0 +1,19 @@
+@import '../../../../styles/colors.scss';
+
+.container {
+	@apply h-full grid gap-3;
+	grid-template-columns: repeat(2, 1fr);
+
+	overflow-y: auto;
+	scrollbar-width: thin;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+
+	&::-webkit-scrollbar {
+		width: 4px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: $gray-400;
+		border-radius: 0px;
+	}
+}
