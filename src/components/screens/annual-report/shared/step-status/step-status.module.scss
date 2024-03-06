@@ -1,0 +1,23 @@
+.container {
+	@apply box-border w-full flex flex-row items-center justify-between bg-primary-50 p-2 mb-2 rounded-sm;
+	height: 44px;
+
+	> div {
+		@apply flex flex-row;
+		> p:nth-of-type(1) {
+			@apply font-semibold text-primary-900 m-0 whitespace-nowrap overflow-hidden overflow-ellipsis;
+		}
+
+		> p:nth-of-type(2) {
+			@apply font-semibold text-success-600 m-0;
+		}
+	}
+
+	> button {
+		@apply py-1 text-sm;
+	}
+}
+
+.isDone {
+	@apply bg-success-50;
+}

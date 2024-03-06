@@ -4,7 +4,14 @@ import { FC } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import Layout from '~/components/layout/Layout'
-import AnnualReport from '~/components/screens/annual-report/AnnualReport'
+import {
+	AccrualsSetter,
+	CategoriesSetter,
+	CreditSorter,
+	DataUploader,
+	DebitSorter,
+	Preview
+} from '~/components/screens/annual-report'
 import AnnualReports from '~/components/screens/annual-reports/AnnualReports'
 import FAQ from '~/components/screens/faq/FAQ'
 import Issues from '~/components/screens/issues/Issues'
@@ -55,11 +62,52 @@ const router = createBrowserRouter([
 					</ProtectedRoute>
 				)
 			},
+
 			{
-				path: '/annual-reports/edit/:reportId',
+				path: '/annual-reports/edit/:reportId/data-uploader',
 				element: (
 					<ProtectedRoute>
-						<AnnualReport />
+						<DataUploader />
+					</ProtectedRoute>
+				)
+			},
+			{
+				path: '/annual-reports/edit/:reportId/categories-setter',
+				element: (
+					<ProtectedRoute>
+						<CategoriesSetter />
+					</ProtectedRoute>
+				)
+			},
+			{
+				path: '/annual-reports/edit/:reportId/accruals-setter',
+				element: (
+					<ProtectedRoute>
+						<AccrualsSetter />
+					</ProtectedRoute>
+				)
+			},
+			{
+				path: '/annual-reports/edit/:reportId/credit-sorter',
+				element: (
+					<ProtectedRoute>
+						<CreditSorter />
+					</ProtectedRoute>
+				)
+			},
+			{
+				path: '/annual-reports/edit/:reportId/debit-sorter',
+				element: (
+					<ProtectedRoute>
+						<DebitSorter />
+					</ProtectedRoute>
+				)
+			},
+			{
+				path: '/annual-reports/edit/:reportId/preview',
+				element: (
+					<ProtectedRoute>
+						<Preview />
 					</ProtectedRoute>
 				)
 			},

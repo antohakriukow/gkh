@@ -1,6 +1,6 @@
 import ReportModal from './add-report-modal/AddReportModal'
 import cn from 'clsx'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Button, Heading, Table } from '~/components/ui'
@@ -26,7 +26,25 @@ const AnnualReports: FC = () => {
 	const navigate = useNavigate()
 
 	const handleOpenReport = (reportId: string) => {
-		navigate(`/annual-reports/edit/${reportId}`)
+		const annualReportInDB = reportId
+			? annuals.find(
+					annualReport => annualReport._id.toString() === reportId.toString()
+			  )
+			: null
+
+		let step = 'data-uploader'
+
+		if (
+			annualReportInDB?.data.settings?.structure === 'cash/partners' ||
+			annualReportInDB?.data.settings?.structure === 'accruals/services'
+		) {
+			step = 'preview'
+		}
+		if (annualReportInDB?.data.settings?.structure === 'cash/services') {
+			step = 'categories-setter'
+		}
+
+		navigate(`/annual-reports/edit/${reportId}/${step}`)
 	}
 
 	const handleAdd = () =>

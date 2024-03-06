@@ -144,20 +144,60 @@ export const sortOperationsGroupsArrayByPayerName = (groupedOperations: {
 		.map(([payerName, operations]) => ({ payerName, operations }))
 		.sort((a, b) => b.operations.length - a.operations.length)
 
+// export const getOperationsByCategory = (
+// 	operations: IExtendedBankOperation[],
+// 	category: IAnnualCategory
+// ) => {
+// 	const categoryIds = getCategoriesWithoutChildren([category]).map(
+// 		cat => cat.value
+// 	)
+// 	return operations.reduce(
+// 		(result: IExtendedBankOperation[], operation: IExtendedBankOperation) => {
+// 			if (categoryIds.includes(operation.categoryId.toString())) {
+// 				return [...result, operation]
+// 			}
+// 			return result
+// 		},
+// 		[] as IExtendedBankOperation[]
+// 	)
+// }
+
+// Функция для получения идентификаторов текущей категории и всех её дочерних категорий
+const getAllCategoryIds = (
+	category: IAnnualCategory,
+	ids: string[] = []
+): string[] => {
+	ids.push(category.id) // Теперь TypeScript знает, что id это строка
+	if (category.children && category.children.length > 0) {
+		category.children.forEach(child => getAllCategoryIds(child, ids)) // Рекурсивно добавляем идентификаторы дочерних категорий
+	}
+	return ids
+}
+
+// Обновлённая функция getOperationsByCategory
 export const getOperationsByCategory = (
 	operations: IExtendedBankOperation[],
 	category: IAnnualCategory
 ) => {
-	const categoryIds = getCategoriesWithoutChildren([category]).map(
-		cat => cat.value
+	const categoryIds = getAllCategoryIds(category)
+
+	const result = operations.filter(operation =>
+		categoryIds.includes(operation.categoryId.toString())
 	)
-	return operations.reduce(
-		(result: IExtendedBankOperation[], operation: IExtendedBankOperation) => {
-			if (categoryIds.includes(operation.categoryId.toString())) {
-				return [...result, operation]
-			}
-			return result
-		},
-		[] as IExtendedBankOperation[]
-	)
+	return result
+}
+
+export const getAllLeafCategoryIds = (
+	categories: IAnnualCategory[],
+	leafIds: string[] = []
+): string[] => {
+	categories.forEach(category => {
+		if (category.children && category.children.length > 0) {
+			getAllLeafCategoryIds(category.children, leafIds)
+		} else {
+			leafIds.push(category.id)
+		}
+	})
+
+	return leafIds
 }
