@@ -1,23 +1,19 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 
-import { useActions } from '~/hooks/useActions'
 import { useAuth } from '~/hooks/useAuth'
 import { useModal } from '~/hooks/useModal'
-import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
-
-import { AnnualService } from '~/services/annual.service'
 
 export const useSeparateModal = (
 	operation: IExtendedBankOperation,
 	lastBankOperationId: number,
-	clearSelectedOperation: () => void
+	clearSelectedOperation: () => void,
+	localOperations: IExtendedBankOperation[],
+	setLocalOperations: Dispatch<SetStateAction<IExtendedBankOperation[]>>
 ) => {
 	const { user } = useAuth()
 	const { hideModal } = useModal()
-	const { setBankOperations } = useActions()
-	const { bankOperations } = useTypedSelector(state => state.ui)
 	const [operations, setOperations] = useState([
 		{ ...operation, amount: Math.abs(operation.amount) }
 	])
@@ -70,8 +66,8 @@ export const useSeparateModal = (
 				: `${operation.paymentPurpose}: [Часть операции]`
 		}))
 
-		setBankOperations([
-			...bankOperations.filter(op => op._id !== operation._id),
+		setLocalOperations([
+			...localOperations.filter(op => op._id !== operation._id),
 			...newOperations
 		])
 

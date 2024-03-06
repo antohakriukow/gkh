@@ -1,6 +1,6 @@
 import Operation from './Operation'
 import { useSeparateModal } from './useSeparateModal'
-import { FC } from 'react'
+import { Dispatch, FC, SetStateAction } from 'react'
 
 import { Button } from '~/components/ui'
 
@@ -12,12 +12,16 @@ interface ISeparateModal {
 	operation: IExtendedBankOperation
 	lastBankOperationId: number
 	clearSelectedOperation: () => void
+	localOperations: IExtendedBankOperation[]
+	setLocalOperations: Dispatch<SetStateAction<IExtendedBankOperation[]>>
 }
 
 const SeparateModal: FC<ISeparateModal> = ({
 	operation,
 	lastBankOperationId,
-	clearSelectedOperation
+	clearSelectedOperation,
+	localOperations,
+	setLocalOperations
 }) => {
 	const {
 		operations,
@@ -28,7 +32,13 @@ const SeparateModal: FC<ISeparateModal> = ({
 		isOperationsChanged,
 		isTotalAmountAbsExcess,
 		hasWrongAmountValue
-	} = useSeparateModal(operation, lastBankOperationId, clearSelectedOperation)
+	} = useSeparateModal(
+		operation,
+		lastBankOperationId,
+		clearSelectedOperation,
+		localOperations,
+		setLocalOperations
+	)
 
 	return (
 		<div className={styles.container}>

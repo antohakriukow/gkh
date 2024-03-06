@@ -1,4 +1,5 @@
 import Tag from './components/Tag'
+import SeparateModal from './components/separate-modal/SeparateModal'
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getAnnualTagVariationsData } from '~/data/annual-tag-variations'
@@ -107,6 +108,27 @@ const CreditSorter: FC = () => {
 	const tags = getAnnualTagVariationsData('main')
 	const lastBankOperationId = localOperations.length - 1
 
+	const showSeparateModal = useCallback(
+		(operation: IExtendedBankOperation) => {
+			showModal(
+				<SeparateModal
+					operation={operation}
+					lastBankOperationId={lastBankOperationId}
+					clearSelectedOperation={() => toggleOperationSelection(operation._id)}
+					localOperations={localOperations}
+					setLocalOperations={setLocalOperations}
+				/>
+			)
+		},
+		[
+			lastBankOperationId,
+			showModal,
+			toggleOperationSelection,
+			localOperations,
+			setLocalOperations
+		]
+	)
+
 	const saveBankOperationsToDB = async () => {
 		if (!user || !annualReportInDB) return
 		const localOperationsInDB = annualReportInDB.data.bankOperations ?? []
@@ -162,10 +184,9 @@ const CreditSorter: FC = () => {
 						tag={{ title: 'ЖКУ: Поступления от собственников', value: '' }}
 						toggleOperationSelection={toggleOperationSelection}
 						selectedOperations={selectedOperations}
-						showModal={showModal}
-						lastBankOperationId={lastBankOperationId}
 						operations={operationsWithoutTag}
 						handleSubmit={handleSubmit}
+						showSeparateModal={showSeparateModal}
 					/>
 				</div>
 				<div className={styles.rightSide}>
@@ -175,10 +196,9 @@ const CreditSorter: FC = () => {
 							tag={tag}
 							toggleOperationSelection={toggleOperationSelection}
 							selectedOperations={selectedOperations}
-							showModal={showModal}
-							lastBankOperationId={lastBankOperationId}
 							operations={operationsWithTag.filter(op => op.tag === tag.value)}
 							handleSubmit={handleSubmit}
+							showSeparateModal={showSeparateModal}
 						/>
 					))}
 				</div>

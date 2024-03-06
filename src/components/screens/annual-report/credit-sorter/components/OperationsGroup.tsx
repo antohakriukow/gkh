@@ -1,6 +1,5 @@
 import Operation from './Operation'
-import SeparateModal from './separate-modal/SeparateModal'
-import { FC, ReactNode, memo, useCallback, useState } from 'react'
+import { FC, memo, useCallback, useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa6'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
@@ -12,8 +11,7 @@ interface OperationsGroupProps {
 	operations: IExtendedBankOperation[]
 	toggleOperationSelection: (id: string) => void
 	selectedOperations: string[]
-	showModal: (component: ReactNode) => void
-	lastBankOperationId: number
+	showSeparateModal: (operation: IExtendedBankOperation) => void
 	level?: number
 }
 
@@ -23,25 +21,10 @@ const OperationsGroup: FC<OperationsGroupProps> = memo(
 		operations,
 		toggleOperationSelection,
 		selectedOperations,
-		showModal,
-		lastBankOperationId,
-		level = 1
+		level = 1,
+		showSeparateModal
 	}) => {
 		const [isVisible, setIsVisible] = useState(false)
-		const showSeparateModal = useCallback(
-			(operation: IExtendedBankOperation) => {
-				showModal(
-					<SeparateModal
-						operation={operation}
-						lastBankOperationId={lastBankOperationId}
-						clearSelectedOperation={() =>
-							toggleOperationSelection(operation._id)
-						}
-					/>
-				)
-			},
-			[lastBankOperationId, showModal, toggleOperationSelection]
-		)
 
 		const handleGroupCheckboxChange = useCallback(
 			(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +43,7 @@ const OperationsGroup: FC<OperationsGroupProps> = memo(
 		const isThisSelected = (operation: IExtendedBankOperation) =>
 			selectedOperations.includes(operation._id) &&
 			selectedOperations.length === 1 &&
-			operation.amount < 0 // Условие, блокирующее функционал разделения для входящих операций
+			operation.amount > 0
 
 		return (
 			<div className={styles.group} style={{ marginLeft: `${level * 16}px` }}>

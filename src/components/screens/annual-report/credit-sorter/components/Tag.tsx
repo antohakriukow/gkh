@@ -1,43 +1,39 @@
 import OperationsGroup from './OperationsGroup'
 import ToolBar from './ToolBar'
-import { FC, Fragment, ReactNode, useCallback, useState } from 'react'
+import { FC, Fragment, useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa6'
 import { IAnnualOperationTagData } from '~/data/annual-tag-variations'
 
 import {
-	IAnnualCategory,
 	IExtendedBankOperation,
 	TypeAnnualOperationTag
 } from '~/shared/types/annual.interface'
 
 import {
-	getOperationsByCategory,
 	groupOperationsByPayerName,
-	groupOperationsByRecipientName,
-	sortOperationsGroupsArrayByPayerName,
-	sortOperationsGroupsArrayByRecipientName
+	sortOperationsGroupsArrayByPayerName
 } from '~/utils/annual.utils'
 
 import styles from './operations.module.scss'
 
-const Tag: FC<{
+interface ITagProps {
 	tag: IAnnualOperationTagData
 	operations?: IExtendedBankOperation[]
 	level?: number
 	toggleOperationSelection: (id: string) => void
 	selectedOperations: string[]
-	showModal: (component: ReactNode) => void
-	lastBankOperationId: number
+	showSeparateModal: (operation: IExtendedBankOperation) => void
 	handleSubmit: (tag: TypeAnnualOperationTag) => void
-}> = ({
+}
+
+const Tag: FC<ITagProps> = ({
 	tag = { title: '', value: '' },
 	operations = [],
 	level = 0,
 	toggleOperationSelection,
 	selectedOperations,
-	showModal,
-	lastBankOperationId,
-	handleSubmit
+	handleSubmit,
+	showSeparateModal
 }) => {
 	const [isVisible, setIsVisible] = useState(true)
 
@@ -77,9 +73,8 @@ const Tag: FC<{
 							operations={group.operations}
 							toggleOperationSelection={toggleOperationSelection}
 							selectedOperations={selectedOperations}
-							showModal={showModal}
-							lastBankOperationId={lastBankOperationId}
 							level={level + 1}
+							showSeparateModal={showSeparateModal}
 						/>
 					))}
 				</Fragment>
