@@ -35,12 +35,12 @@ const AnnualReports: FC = () => {
 		let step = 'data-uploader'
 
 		if (
-			annualReportInDB?.data.settings?.structure === 'cash/partners' ||
-			annualReportInDB?.data.settings?.structure === 'accruals/services'
+			annualReportInDB?.data?.settings?.structure === 'cash/partners' ||
+			annualReportInDB?.data?.settings?.structure === 'accruals/services'
 		) {
 			step = 'preview'
 		}
-		if (annualReportInDB?.data.settings?.structure === 'cash/services') {
+		if (annualReportInDB?.data?.settings?.structure === 'cash/services') {
 			step = 'categories-setter'
 		}
 
