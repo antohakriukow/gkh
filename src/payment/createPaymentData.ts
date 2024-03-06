@@ -41,7 +41,7 @@ const createPaymentButtonData = ({
 	}
 
 	return {
-		buttonTitle: `Оплатить ${cost.toFixed(0)} рублей`,
+		buttonTitle: `Скачать за ${cost.toFixed(0)} рублей`,
 		onClick: handlePayment
 	}
 }
