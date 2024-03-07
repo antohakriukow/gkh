@@ -37,7 +37,7 @@ const AddCompanyModal: FC = () => {
 		mode: 'onChange'
 	})
 
-	if (isLoading) return <Loader loaderType='large' />
+	if (isLoading) return <Loader loaderType='small' />
 
 	if (!!newCompany && !!hasEmptyFields(newCompany))
 		return (

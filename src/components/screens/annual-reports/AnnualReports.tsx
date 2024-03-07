@@ -3,11 +3,12 @@ import cn from 'clsx'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Button, Heading, Loader, Table } from '~/components/ui'
+import { Button, Heading, Table } from '~/components/ui'
 import { IRow } from '~/components/ui/table/table.interface'
 
 import { useAnnualReportsData } from '~/hooks/firebase-hooks/useAnnualReportsData'
 import { useAnnualReportsKeys } from '~/hooks/firebase-hooks/useAnnualReportsKeys'
+import { useCompaniesData } from '~/hooks/firebase-hooks/useCompaniesData'
 import { usePaymentsData } from '~/hooks/firebase-hooks/usePaymentsData'
 import { useModal } from '~/hooks/useModal'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
@@ -19,16 +20,19 @@ import { getAnnualReportStructureName } from '~/utils/annual.utils'
 import { convertTypeReport } from '~/utils/report.utils'
 import { convertTimestampToDate } from '~/utils/time.utils'
 
+import AddCompanyModal from '../reports/modals/add-company-modal/AddCompanyModal'
+
 import styles from './AnnualReports.module.scss'
 
 const AnnualReports: FC = () => {
-	const { payments } = usePaymentsData()
-	const { currentCompany } = useTypedSelector(state => state.ui)
+	const { companies, isLoading: isCompaniesLoading } = useCompaniesData()
 	const { keys } = useAnnualReportsKeys()
 	const { annualsDetails, isLoading: isAnnualsDetailsLoading } =
 		useAnnualReportsData(keys)
+	const { payments } = usePaymentsData()
 	const { showModal } = useModal()
 	const navigate = useNavigate()
+	const { currentCompany } = useTypedSelector(state => state.ui)
 
 	const handleOpenReport = (reportId: string) => {
 		const reportDetails = reportId
@@ -52,7 +56,9 @@ const AnnualReports: FC = () => {
 		navigate(`/annual-reports/edit/${reportId}/${step}`)
 	}
 
-	const handleAdd = () =>
+	const handleAddCompany = () => showModal(<AddCompanyModal />)
+
+	const handleAddReport = () =>
 		showModal(<ReportModal handleOpenReport={handleOpenReport} />)
 
 	const convertReportsData = (
@@ -87,7 +93,16 @@ const AnnualReports: FC = () => {
 					className={styles.heading}
 				/>
 			</div>
-			<Button onClick={handleAdd}>Создать отчет</Button>
+			{!!companies && companies.length > 0 ? (
+				<Button onClick={handleAddReport}>Создать отчет</Button>
+			) : (
+				<Button
+					className={cn('addReportButtonAnchor')}
+					onClick={handleAddCompany}
+				>
+					Добавить компанию
+				</Button>
+			)}
 			{!!annualsDetails && annualsDetails.length > 0 && (
 				<Table
 					titles={['Наименование', 'Шаблон', 'Дата изменения', 'Статус оплаты']}
