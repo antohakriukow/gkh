@@ -5,16 +5,29 @@ import { AnnualReportPrice } from '~/payment/_prices'
 import createPaymentButtonData from '~/payment/createPaymentData'
 import { annualReceipt } from '~/payment/receipts/annualReceipt'
 
+import { usePaymentsData } from '~/hooks/firebase-hooks/usePaymentsData'
+import { useSingleAnnualReportData } from '~/hooks/firebase-hooks/useSingleAnnualReportData'
+import { useUserData } from '~/hooks/firebase-hooks/useUserData'
 import { useAuth } from '~/hooks/useAuth'
-import { useData } from '~/hooks/useData'
 
 import { AnnualService } from '~/services/annual.service'
 
 export const useAnnualReport = () => {
-	const { user } = useAuth()
-	const { annuals, payments, userId } = useData()
+	const { user, isLoading: isAuthLoading } = useAuth()
+	const { userId, isLoading: isUserIdLoading } = useUserData()
+	const { payments, isLoading: isPaymentsLoading } = usePaymentsData()
 	const { reportId } = useParams<{ reportId: string }>()
 	const navigate = useNavigate()
+	const { annualReport, isLoading: isAnnualReportLoading } =
+		useSingleAnnualReportData(reportId ?? '')
+
+	const isDataLoading =
+		isAuthLoading &&
+		isUserIdLoading &&
+		isPaymentsLoading &&
+		isAnnualReportLoading
+
+	const annualReportInDB = annualReport ?? {}
 
 	const redirectToDataUploader = () =>
 		navigate(`/annual-reports/edit/${reportId}/data-uploader`)
@@ -28,12 +41,6 @@ export const useAnnualReport = () => {
 		navigate(`/annual-reports/edit/${reportId}/debit-sorter`)
 	const redirectToPreview = () =>
 		navigate(`/annual-reports/edit/${reportId}/preview`)
-
-	const annualReportInDB = reportId
-		? annuals.find(
-				annualReport => annualReport._id.toString() === reportId.toString()
-		  )
-		: null
 
 	const closeAnnualReport = () => navigate(`/annual-reports`)
 
@@ -57,7 +64,7 @@ export const useAnnualReport = () => {
 		userId: user ? user.uid : '',
 		shortId: userId,
 		type: 'annual',
-		instanceId: annualReportInDB ? annualReportInDB._id.toString() : ''
+		instanceId: annualReportInDB ? String(annualReportInDB._id) : ''
 	})
 
 	const downloadXLSX = () => {
@@ -70,15 +77,16 @@ export const useAnnualReport = () => {
 			downloadCashServicesReport(annualReportInDB)
 	}
 
-	// const isReportPayed = payments.some(
-	// 	payment =>
-	// 		payment.type === 'annual' &&
-	// 		payment.instanceId === annualReportInDB?._id.toString()
-	// )
+	const isReportPayed = payments.some(
+		payment =>
+			payment.type === 'annual' &&
+			payment.instanceId === String(annualReportInDB?._id)
+	)
 
-	const isReportPayed = true
+	// const isReportPayed = true
 
 	return {
+		isDataLoading,
 		annualReportInDB,
 		isReportPayed,
 		closeAnnualReport,

@@ -3,7 +3,7 @@ import { FC, useState } from 'react'
 
 import { Button } from '~/components/ui'
 
-import { useData } from '~/hooks/useData'
+import { useReportsData } from '~/hooks/firebase-hooks/useReportsData'
 import { useModal } from '~/hooks/useModal'
 import { useReport } from '~/hooks/useReport'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
@@ -15,7 +15,7 @@ import styles from './AddReportModal.module.scss'
 const ReportModal: FC<{ handleOpenReport: (_id: string) => void }> = ({
 	handleOpenReport
 }) => {
-	const { reports } = useData()
+	const { reports } = useReportsData()
 	const { create } = useReport()
 	const { hideModal } = useModal()
 	const { currentCompany } = useTypedSelector(state => state.ui)

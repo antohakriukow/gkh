@@ -17,7 +17,6 @@ const ReportDeleteModal: FC<{ deleteAnnualReport: () => void }> = ({
 	const accept = async () => {
 		try {
 			setIsLoading(true)
-			await new Promise(resolve => setTimeout(resolve, 2000))
 			await deleteAnnualReport()
 			hideModal()
 		} catch (error) {

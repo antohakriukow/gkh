@@ -40,7 +40,7 @@ export const IssuesService = {
 
 		const shortId = `${user.shortId}-${Object.values(issues).length + 1}`
 
-		const messageRef = push(ref(db, `issues/${user._id}/messages`))
+		const messageRef = push(ref(db, `issues/${user._id}/messages`)) /// WTF?
 		const newMessageKey = messageRef.key
 
 		if (!newMessageKey) return

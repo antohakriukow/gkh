@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom'
 
 import { Heading, Loader } from '~/components/ui'
 
-import { useData } from '~/hooks/useData'
+import { useReportsData } from '~/hooks/firebase-hooks/useReportsData'
 import { useModal } from '~/hooks/useModal'
 
 import { IReport } from '~/shared/types/report.interface'
@@ -18,6 +18,7 @@ import { IReport } from '~/shared/types/report.interface'
 import styles from './ReportEditor.module.scss'
 
 const ReportEditor: FC = () => {
+	const { reports, isLoading: isDataLoading } = useReportsData()
 	const [isLoading, setIsLoading] = useState(true)
 	const { register, setValue, control, formState, watch, reset, handleSubmit } =
 		useForm<IReport>({
@@ -37,7 +38,6 @@ const ReportEditor: FC = () => {
 	} = useReportEditor(setValue, reset)
 
 	const { reportId } = useParams()
-	const { reports, isLoading: isDataLoading } = useData()
 
 	useEffect(() => {
 		const timer = setTimeout(() => {

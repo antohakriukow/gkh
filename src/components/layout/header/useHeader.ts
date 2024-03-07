@@ -1,39 +1,42 @@
+import { useCompaniesData } from '~/hooks/firebase-hooks/useCompaniesData'
+import { useCurrentCompanyInnData } from '~/hooks/firebase-hooks/useCurrentCompanyInnData'
+import { useUserData } from '~/hooks/firebase-hooks/useUserData'
 import { useActions } from '~/hooks/useActions'
 import { useAuth } from '~/hooks/useAuth'
-import { useData } from '~/hooks/useData'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { cloudFunction } from '~/services/_functions'
 import { CompanyService } from '~/services/company.service'
 
 export const useHeader = () => {
-	const { logout } = useAuth()
-	const {
-		companies,
-		userId,
-		userUid,
-		currentCompanyInn,
-		isLoading: isDataLoading
-	} = useData()
+	const { logout, user } = useAuth()
+	const { companies, isLoading: isCompaniesDataLoading } = useCompaniesData()
+	const { currentCompanyInn, isLoading: isCurrentCompanyInnLoading } =
+		useCurrentCompanyInnData()
+	const { userId } = useUserData()
 	const { currentCompany } = useTypedSelector(state => state.ui)
 	const { setCurrentCompany, setCurrentReport } = useActions()
 
 	const handleLogout = () => {
+		if (!user) return
 		setCurrentReport(null)
 		setCurrentCompany(null)
 		try {
 			logout()
-			cloudFunction.createLog(userUid, 'info', 'auth/logout')
+			cloudFunction.createLog(user.uid, 'info', 'auth/logout')
 		} catch (error) {
-			cloudFunction.createLog(userUid, 'error', 'auth/logout', { error })
+			cloudFunction.createLog(user.uid, 'error', 'auth/logout', { error })
 		}
 	}
 
-	const handleSetCurrentCompany = (inn: string) =>
-		CompanyService.updateCurrentCompanyInn(userUid, inn.toString())
+	const handleSetCurrentCompany = (inn: string) => {
+		if (!user) return
+		CompanyService.updateCurrentCompanyInn(user.uid, inn.toString())
+	}
 
 	return {
-		isDataLoading,
+		isCompaniesDataLoading,
+		isCurrentCompanyInnLoading,
 		userId,
 		currentCompanyInn,
 		companies,

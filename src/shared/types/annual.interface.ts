@@ -138,7 +138,7 @@ export interface ITemporaryData {
 }
 
 export interface IAnnualReport {
-	_id: number
+	_id: string
 	type: TypeReport
 	startDate: number
 	finalDate: number
@@ -146,6 +146,12 @@ export interface IAnnualReport {
 	data: IAnnualReportData
 	createdAt: string
 	updatedAt: string
+}
+
+export interface IAnnualReportDetails
+	extends Pick<IAnnualReport, '_id' | 'type' | 'updatedAt'> {
+	inn: number
+	structure: TypeAnnualReportStructure
 }
 
 export interface IAnnualReportCreate

@@ -29,6 +29,7 @@ const AccrualsSetter: FC = () => {
 	const { reportId } = useParams<{ reportId: string }>()
 	const navigate = useNavigate()
 	const {
+		isDataLoading,
 		annualReportInDB,
 		isReportPayed,
 		closeAnnualReport,
@@ -92,7 +93,6 @@ const AccrualsSetter: FC = () => {
 	const onNext = async () => {
 		if (step < directions.length) {
 			setIsLoading(true)
-			await new Promise(resolve => setTimeout(resolve, 100))
 			await handleSubmit(onSubmit)().then(() => setIsLoading(false))
 			setStep(step + 1)
 		} else {
@@ -103,7 +103,7 @@ const AccrualsSetter: FC = () => {
 	const onBack = () =>
 		step !== 0 ? setStep(step - 1) : redirectToCategoriesSetter()
 
-	if (isLoading || !annualReportInDB)
+	if (isLoading || isDataLoading)
 		return (
 			<Container
 				isReportPayed={isReportPayed}

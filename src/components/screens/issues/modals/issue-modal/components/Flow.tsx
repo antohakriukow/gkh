@@ -1,8 +1,8 @@
 import cn from 'clsx'
 import { FC } from 'react'
 
+import { useMessagesData } from '~/hooks/firebase-hooks/useMessagesData'
 import { useAuth } from '~/hooks/useAuth'
-import { useData } from '~/hooks/useData'
 
 import { convertTimestampToDateWithTime } from '~/utils/time.utils'
 
@@ -11,7 +11,7 @@ import styles from '../IssueModal.module.scss'
 
 const Flow: FC<IIssueItem> = ({ issue }) => {
 	const { user } = useAuth()
-	const { messages } = useData()
+	const { messages } = useMessagesData()
 
 	const data = messages
 		.filter(message => message.parentId === issue._id)

@@ -6,12 +6,12 @@ import { useNavigate } from 'react-router-dom'
 
 import { Heading, Loader } from '~/components/ui'
 
-import { useData } from '~/hooks/useData'
+import { useIssuesData } from '~/hooks/firebase-hooks/useIssuesData'
 
 import styles from './Issues.module.scss'
 
 const Issues: FC = () => {
-	const { issues, isLoading } = useData()
+	const { issues, isLoading } = useIssuesData()
 	const navigate = useNavigate()
 
 	const handleGoBack = () => {

@@ -1,5 +1,6 @@
 import { IIssueCreate } from './../shared/types/issue.interface'
-import { useData } from './useData'
+import { useUserData } from './firebase-hooks/useUserData'
+import { useAuth } from './useAuth'
 import { useModal } from './useModal'
 import { FirebaseError } from 'firebase/app'
 import { useState } from 'react'
@@ -11,29 +12,35 @@ import { MessageService } from '~/services/message.service'
 import { handleDBErrors } from '~/utils/error.utils'
 
 export const useIssue = () => {
-	const { userUid, userId, displayName, email } = useData()
+	const { user } = useAuth()
+	const { userId, displayName, email } = useUserData()
 	const { hideModal } = useModal()
 	const [isLoading, setIsLoading] = useState(false)
 
 	const createIssue = async (data: IIssueCreate) => {
 		setIsLoading(true)
 		try {
-			if (!userUid) return
+			if (!user) return
 
 			const timestamp = Date.now().toString()
 
-			const user = {
-				_id: userUid,
+			const userData = {
+				_id: user.uid,
 				shortId: userId,
 				displayName: displayName ?? '',
 				email: email ?? ''
 			}
 
 			//Создание Issue и первого сообщения в треде
-			await IssuesService.create(user, data, timestamp)
-			await MessageService.create(user, 'issue', timestamp, data.description)
+			await IssuesService.create(userData, data, timestamp)
+			await MessageService.create(
+				userData,
+				'issue',
+				timestamp,
+				data.description
+			)
 
-			const newIssue = await IssuesService.getById(userUid, timestamp)
+			const newIssue = await IssuesService.getById(user.uid, timestamp)
 
 			if (!!newIssue) {
 				toast.success('Спасибо, что помогаете нам стать лучше!', {

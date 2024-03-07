@@ -3,8 +3,6 @@ import { IDropDown } from './drop-down.interface'
 import { FC, useEffect, useRef, useState } from 'react'
 import { MdOutlineMenu } from 'react-icons/md'
 
-import { Loader } from '~/components/ui'
-
 import { ICompany } from '~/shared/types/company.interface'
 
 import { useHeader } from '../../../useHeader'
@@ -16,7 +14,12 @@ import styles from './DropDown.module.scss'
 
 const DropDown: FC<IDropDown> = ({ data }) => {
 	const [isDropDownOpened, setIsDropDownOpened] = useState(false)
-	const { isDataLoading, handleSetCurrentCompany, currentCompany } = useHeader()
+	const {
+		isCompaniesDataLoading,
+		isCurrentCompanyInnLoading,
+		handleSetCurrentCompany,
+		currentCompany
+	} = useHeader()
 	const dropDownRef = useRef<HTMLDivElement>(null)
 
 	const toggleDropDown = () => setIsDropDownOpened(!isDropDownOpened)
@@ -51,7 +54,10 @@ const DropDown: FC<IDropDown> = ({ data }) => {
 		}
 	}, [dropDownRef])
 
-	if (isDataLoading) return <Loader />
+	if (isCompaniesDataLoading || isCurrentCompanyInnLoading)
+		return (
+			<MdOutlineMenu className='menuButtonAnchor' color='#a6a6a6' size={30} />
+		)
 
 	return (
 		<div ref={dropDownRef} className={styles.anchor}>

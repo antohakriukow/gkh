@@ -1,4 +1,4 @@
-import { useData } from './useData'
+import { useAuth } from './useAuth'
 import { useModal } from './useModal'
 import { FirebaseError } from 'firebase/app'
 import { useState } from 'react'
@@ -13,18 +13,18 @@ import { ReportService } from '~/services/report.service'
 import { handleDBErrors } from '~/utils/error.utils'
 
 export const useReport = () => {
-	const { userUid } = useData()
+	const { user } = useAuth()
 	const { hideModal } = useModal()
 	const [isLoading, setIsLoading] = useState(false)
 
 	const create = async (data: IReportCreate) => {
 		setIsLoading(true)
 		try {
-			if (!userUid) return
+			if (!user) return
 			const reportId = Date.now().toString()
 
 			const currentCompanyData = await CompanyService.getByInn(
-				userUid,
+				user.uid,
 				data.company.inn.toString()
 			)
 
@@ -33,7 +33,7 @@ export const useReport = () => {
 				!validEmail.test(currentCompanyData.email) ||
 				!validPhone.test(currentCompanyData.phone)
 			) {
-				await CompanyService.update(userUid, {
+				await CompanyService.update(user.uid, {
 					...currentCompanyData,
 					email: validPhone.test(currentCompanyData.email)
 						? currentCompanyData.email
@@ -44,9 +44,9 @@ export const useReport = () => {
 				})
 			}
 
-			await ReportService.create(userUid, data, reportId)
+			await ReportService.create(user.uid, data, reportId)
 
-			const createdReport = await ReportService.getById(userUid, reportId)
+			const createdReport = await ReportService.getById(user.uid, reportId)
 
 			if (!!createdReport) {
 				toast.success('Отчет создан', { autoClose: 3000 })

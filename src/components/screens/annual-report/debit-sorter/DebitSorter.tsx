@@ -27,6 +27,7 @@ import styles from './debit-sorter.module.scss'
 const DebitSorter: FC = memo(() => {
 	const [isLoading, setIsLoading] = useState(false)
 	const {
+		isDataLoading,
 		annualReportInDB,
 		isReportPayed,
 		closeAnnualReport,
@@ -44,26 +45,29 @@ const DebitSorter: FC = memo(() => {
 
 	const initialOperations = useMemo(
 		() =>
-			annualReportInDB?.data.bankOperations?.filter(
+			annualReportInDB?.data?.bankOperations?.filter(
 				operation => operation.direction === 'main'
 			) ?? [],
-		[annualReportInDB?.data.bankOperations]
+		[annualReportInDB?.data?.bankOperations]
 	)
 
 	const [localOperations, setLocalOperations] =
 		useState<IExtendedBankOperation[]>(initialOperations)
 
 	useEffect(() => {
-		if (localOperations.length === 0 && !!annualReportInDB?.data.bankOperations)
+		if (
+			localOperations.length === 0 &&
+			!!annualReportInDB?.data?.bankOperations
+		)
 			setLocalOperations(
-				annualReportInDB?.data.bankOperations?.filter(
+				annualReportInDB?.data?.bankOperations?.filter(
 					operation => operation.direction === 'main'
 				)
 			)
 	}, [
 		localOperations,
 		setLocalOperations,
-		annualReportInDB?.data.bankOperations
+		annualReportInDB?.data?.bankOperations
 	])
 
 	const [selectedOperations, setSelectedOperations] = useState<string[]>([])
@@ -113,9 +117,9 @@ const DebitSorter: FC = memo(() => {
 	)
 
 	const categoriesWithoutChildrenIds = useMemo(() => {
-		const mainCategories = annualReportInDB?.data.categories?.main ?? []
+		const mainCategories = annualReportInDB?.data?.categories?.main ?? []
 		return getAllLeafCategoryIds(mainCategories)
-	}, [annualReportInDB?.data.categories])
+	}, [annualReportInDB?.data?.categories])
 
 	const { sortedOperations, unsortedOperations } = useMemo(() => {
 		let sortedOps = [] as IExtendedBankOperation[]
@@ -173,13 +177,12 @@ const DebitSorter: FC = memo(() => {
 
 	const onNext = async () => {
 		await setIsLoading(true)
-		await new Promise(resolve => setTimeout(resolve, 100))
 		await saveBankOperationsToDB()
 		await setIsLoading(false)
 		redirectToPreview()
 	}
 
-	if (isLoading || !annualReportInDB)
+	if (isLoading || isDataLoading)
 		return (
 			<Container
 				isReportPayed={isReportPayed}

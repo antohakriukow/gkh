@@ -70,7 +70,6 @@ const DataUploader: FC = () => {
 	const handleSubmit = async () => {
 		setIsLoading(true)
 
-		await new Promise(resolve => setTimeout(resolve, 100))
 		await saveReportData(
 			annualOperations,
 			annualAccounts,

@@ -1,9 +1,9 @@
 import { FC, Fragment, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { useAddReportModal } from '~/components/screens/annual-reports/add-report-modal/useAddReportModal'
 import { Button, Loader } from '~/components/ui'
 
-import { useAnnual } from '~/hooks/useAnnual'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import styles from './AddReportModal.module.scss'
@@ -14,7 +14,7 @@ interface IReportModalProps {
 
 const ReportModal: FC<IReportModalProps> = ({ handleOpenReport }) => {
 	const [isLoading, setIsLoading] = useState(false)
-	const { create } = useAnnual()
+	const { create } = useAddReportModal()
 	const { currentCompany } = useTypedSelector(state => state.ui)
 
 	const handleCreateReport = async () => {
@@ -22,7 +22,6 @@ const ReportModal: FC<IReportModalProps> = ({ handleOpenReport }) => {
 
 		try {
 			setIsLoading(true)
-			await new Promise(resolve => setTimeout(resolve, 2000))
 			create({
 				type: 'annual',
 				company: currentCompany

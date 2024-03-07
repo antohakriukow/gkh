@@ -22,8 +22,12 @@ const CategoriesSetter: FC<{}> = () => {
 		IAnnualCategoryState[]
 	>([])
 	const { saveMainCategories, redirectToAccrualsSetter } = useCategoriesSetter()
-	const { isReportPayed, closeAnnualReport, deleteAnnualReport } =
-		useAnnualReport()
+	const {
+		isDataLoading,
+		isReportPayed,
+		closeAnnualReport,
+		deleteAnnualReport
+	} = useAnnualReport()
 
 	const direction = 'main' as TypeAnnualDirection
 
@@ -33,6 +37,8 @@ const CategoriesSetter: FC<{}> = () => {
 		setIsLoading(false)
 		redirectToAccrualsSetter()
 	}
+
+	if (isLoading || isDataLoading) return <Loader loaderType='fullscreen' />
 
 	return (
 		<TreeProvider
@@ -53,7 +59,6 @@ const CategoriesSetter: FC<{}> = () => {
 					<ItemCreator />
 				</div>
 			</Container>
-			{isLoading && <Loader loaderType='fullscreen' />}
 		</TreeProvider>
 	)
 }

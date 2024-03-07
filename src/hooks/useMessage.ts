@@ -1,5 +1,6 @@
 import { TypeMessage } from './../shared/types/message.interface'
-import { useData } from './useData'
+import { useUserData } from './firebase-hooks/useUserData'
+import { useAuth } from './useAuth'
 import { FirebaseError } from 'firebase/app'
 import { useState } from 'react'
 
@@ -8,7 +9,8 @@ import { MessageService } from '~/services/message.service'
 import { handleDBErrors } from '~/utils/error.utils'
 
 export const useMessage = () => {
-	const { userUid, userId, displayName } = useData()
+	const { user } = useAuth()
+	const { userId, displayName } = useUserData()
 	const [isLoading, setIsLoading] = useState(false)
 
 	const sendMessage = async (
@@ -18,14 +20,14 @@ export const useMessage = () => {
 	) => {
 		setIsLoading(true)
 		try {
-			if (!userUid) return
+			if (!user) return
 
-			const user = {
-				_id: userUid,
+			const userData = {
+				_id: user.uid,
 				shortId: userId,
 				displayName: displayName ?? ''
 			}
-			await MessageService.create(user, type, instanceId, message)
+			await MessageService.create(userData, type, instanceId, message)
 		} catch (error) {
 			if (error instanceof FirebaseError) handleDBErrors(error)
 		} finally {

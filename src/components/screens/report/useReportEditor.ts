@@ -6,9 +6,9 @@ import { toast } from 'react-toastify'
 import { downloadPDF } from '~/core/22gkh/pdf/pdf.download'
 import { downloadXML } from '~/core/22gkh/xml/xml.download'
 
+import { useReportsData } from '~/hooks/firebase-hooks/useReportsData'
 import { useActions } from '~/hooks/useActions'
 import { useAuth } from '~/hooks/useAuth'
-import { useData } from '~/hooks/useData'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { ICheckReportResult, IReport } from '~/shared/types/report.interface'
@@ -24,11 +24,11 @@ export const useReportEditor = (
 	reset: UseFormReset<IReport>
 ) => {
 	const { user } = useAuth()
+	const { reports } = useReportsData()
+	const [isLoading, setIsLoading] = useState(false)
 	const { currentReport } = useTypedSelector(state => state.ui)
 	const { setCurrentReport } = useActions()
-	const { reports } = useData()
 	const navigate = useNavigate()
-	const [isLoading, setIsLoading] = useState(false)
 
 	const reportEditorHeading = currentReport
 		? `Отчет 22-ЖКХ (Жилище) за ${convertPeriod(

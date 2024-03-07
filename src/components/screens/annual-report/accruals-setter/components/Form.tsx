@@ -10,8 +10,6 @@ import {
 	TypeDefinedAnnualDirection
 } from '~/shared/types/annual.interface'
 
-import { formatNumber } from '~/utils/number.utils'
-
 import { IAnnualReportCategoriesFormInput } from '../accruals-setter.interface'
 
 import styles from './accruals.module.scss'

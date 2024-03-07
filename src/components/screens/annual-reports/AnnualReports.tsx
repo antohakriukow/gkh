@@ -3,15 +3,17 @@ import cn from 'clsx'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Button, Heading, Table } from '~/components/ui'
+import { Button, Heading, Loader, Table } from '~/components/ui'
 import { IRow } from '~/components/ui/table/table.interface'
 
-import { useData } from '~/hooks/useData'
+import { useAnnualReportsData } from '~/hooks/firebase-hooks/useAnnualReportsData'
+import { useAnnualReportsKeys } from '~/hooks/firebase-hooks/useAnnualReportsKeys'
+import { usePaymentsData } from '~/hooks/firebase-hooks/usePaymentsData'
 import { useModal } from '~/hooks/useModal'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import Intro from '~/shared/Intro'
-import { IAnnualReport } from '~/shared/types/annual.interface'
+import { IAnnualReportDetails } from '~/shared/types/annual.interface'
 
 import { getAnnualReportStructureName } from '~/utils/annual.utils'
 import { convertTypeReport } from '~/utils/report.utils'
@@ -20,27 +22,30 @@ import { convertTimestampToDate } from '~/utils/time.utils'
 import styles from './AnnualReports.module.scss'
 
 const AnnualReports: FC = () => {
-	const { annuals, payments } = useData()
+	const { payments } = usePaymentsData()
 	const { currentCompany } = useTypedSelector(state => state.ui)
+	const { keys } = useAnnualReportsKeys()
+	const { annualsDetails, isLoading: isAnnualsDetailsLoading } =
+		useAnnualReportsData(keys)
 	const { showModal } = useModal()
 	const navigate = useNavigate()
 
 	const handleOpenReport = (reportId: string) => {
-		const annualReportInDB = reportId
-			? annuals.find(
-					annualReport => annualReport._id.toString() === reportId.toString()
+		const reportDetails = reportId
+			? annualsDetails.find(
+					annualReport => String(annualReport?._id) === reportId
 			  )
 			: null
 
 		let step = 'data-uploader'
 
 		if (
-			annualReportInDB?.data?.settings?.structure === 'cash/partners' ||
-			annualReportInDB?.data?.settings?.structure === 'accruals/services'
+			reportDetails?.structure === 'cash/partners' ||
+			reportDetails?.structure === 'accruals/services'
 		) {
 			step = 'preview'
 		}
-		if (annualReportInDB?.data?.settings?.structure === 'cash/services') {
+		if (reportDetails?.structure === 'cash/services') {
 			step = 'categories-setter'
 		}
 
@@ -50,15 +55,16 @@ const AnnualReports: FC = () => {
 	const handleAdd = () =>
 		showModal(<ReportModal handleOpenReport={handleOpenReport} />)
 
-	const convertReportsData = (annuals: IAnnualReport[]): IRow[] => {
-		return Object.values(annuals)
-			.filter(annual => annual.company.inn === currentCompany?.inn)
+	const convertReportsData = (
+		annualsDetails: IAnnualReportDetails[]
+	): IRow[] => {
+		return Object.values(annualsDetails)
+			.filter(annual => annual?.inn === currentCompany?.inn)
 			.map(annual => ({
-				_id: annual._id.toString(),
+				_id: String(annual._id),
 				data: [
 					convertTypeReport(annual.type),
-					getAnnualReportStructureName(annual.data?.settings?.structure) ??
-						'Не выбран',
+					getAnnualReportStructureName(annual?.structure) ?? 'Не выбран',
 					convertTimestampToDate(+annual.updatedAt),
 					payments.some(
 						payment =>
@@ -71,6 +77,8 @@ const AnnualReports: FC = () => {
 			}))
 	}
 
+	if (isAnnualsDetailsLoading) return <Loader />
+
 	return (
 		<div className={cn(styles.container, 'introAnchor')}>
 			<div className={styles.headingContainer}>
@@ -80,13 +88,15 @@ const AnnualReports: FC = () => {
 				/>
 			</div>
 			<Button onClick={handleAdd}>Создать отчет</Button>
-			<Table
-				titles={['Наименование', 'Шаблон', 'Дата изменения', 'Статус оплаты']}
-				rows={convertReportsData(annuals)}
-				columnWidths={[5, 4, 3, 3]}
-				onClick={handleOpenReport}
-				height={85}
-			/>
+			{!!annualsDetails && annualsDetails.length > 0 && (
+				<Table
+					titles={['Наименование', 'Шаблон', 'Дата изменения', 'Статус оплаты']}
+					rows={convertReportsData(annualsDetails)}
+					columnWidths={[5, 4, 3, 3]}
+					onClick={handleOpenReport}
+					height={85}
+				/>
+			)}
 			<Intro />
 		</div>
 	)

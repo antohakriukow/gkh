@@ -1,5 +1,5 @@
+import { useCompaniesData } from './firebase-hooks/useCompaniesData'
 import { useAuth } from './useAuth'
-import { useData } from './useData'
 import { FirebaseError } from 'firebase/app'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -12,7 +12,7 @@ import { handleDBErrors } from '~/utils/error.utils'
 
 export const useCompany = () => {
 	const { user } = useAuth()
-	const { companies } = useData()
+	const { companies } = useCompaniesData()
 	const [isLoading, setIsLoading] = useState(false)
 
 	const companyIsAlreadyExists = (inn: string) =>
