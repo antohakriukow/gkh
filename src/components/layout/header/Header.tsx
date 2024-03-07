@@ -1,5 +1,6 @@
 import FAQButton from './menu/buttons/FAQButton'
 import { menuItems, mobileMenuItems } from './menu/menu.data'
+import cn from 'clsx'
 import { FC } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -42,9 +43,14 @@ const Header: FC = () => {
 					{menuData.map(item => (
 						<div
 							key={item.path}
-							className={`${styles.menuItem} ${
-								isActive(item.path) ? styles.active : ''
-							}`}
+							className={cn(styles.menuItem, {
+								[styles.active]: isActive(item.path),
+								['reportsAnchor']: item.title.includes('22-ЖКХ'),
+								['annualsAnchor']:
+									item.title.includes('ОИС') ||
+									item.title.includes('Исполнение сметы'),
+								['priceAnchor']: item.title.includes('Цены')
+							})}
 							onClick={() => handleClick(item)}
 						>
 							<p>{item.title}</p>

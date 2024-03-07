@@ -77,7 +77,7 @@ const AnnualReports: FC = () => {
 			}))
 	}
 
-	if (isAnnualsDetailsLoading) return <Loader />
+	// if (isAnnualsDetailsLoading) return <Loader />
 
 	return (
 		<div className={cn(styles.container, 'introAnchor')}>

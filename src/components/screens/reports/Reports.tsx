@@ -59,7 +59,12 @@ const Reports: FC = () => {
 			{!!companies && companies.length > 0 ? (
 				<Button onClick={handleAddReport}>Добавить отчет</Button>
 			) : (
-				<Button onClick={handleAddCompany}>Добавить компанию</Button>
+				<Button
+					className={cn('addReportButtonAnchor')}
+					onClick={handleAddCompany}
+				>
+					Добавить компанию
+				</Button>
 			)}
 			{!!reports && reports.length > 0 && (
 				<Table
