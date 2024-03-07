@@ -50,7 +50,7 @@ export const getReportTableHeader = (
 	direction: TypeAnnualDirection
 ) => {
 	const row = worksheet.addRow([
-		'Услуга',
+		direction === 'main' ? 'Услуга' : 'Счет',
 		'Начислено, руб.',
 		'Доходы, руб.',
 		'Расходы, руб.'
@@ -106,6 +106,26 @@ export const getTotalCategoryRow = (
 				category
 			)
 		)
+	])
+	row.outlineLevel = level
+	row.getCell(1).style = firstResultCell()
+	row.getCell(2).style = resultCell
+	row.getCell(3).style = resultCell
+	row.getCell(4).style = resultCell
+}
+
+export const getTotalAccountRow = (
+	worksheet: ExcelJS.Worksheet,
+	category: IAnnualCategory,
+	operations: IExtendedBankOperation[],
+	totalAccruals: number,
+	level: number = 0
+) => {
+	const row = worksheet.addRow([
+		category.value,
+		category.amount,
+		operations.reduce((sum, op) => (op.amount > 0 ? sum + op.amount : sum), 0),
+		operations.reduce((sum, op) => (op.amount < 0 ? sum + op.amount : sum), 0)
 	])
 	row.outlineLevel = level
 	row.getCell(1).style = firstResultCell()

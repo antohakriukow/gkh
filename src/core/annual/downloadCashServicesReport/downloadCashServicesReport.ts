@@ -7,6 +7,7 @@ import {
 	getReportTableHeader,
 	getReportTitle,
 	getSignaturePlace,
+	getTotalAccountRow,
 	getTotalCategoryRow,
 	getTotalRow
 } from './rows'
@@ -90,6 +91,8 @@ export const downloadCashServicesReport = async (report: IAnnualReport) => {
 	})
 
 	dataSeparatedByDirection.map(data => {
+		// console.log(`${data.direction} data: `, data)
+
 		if (!data.operationGroups.incoming && !data.operationGroups.outgoing)
 			return null
 
@@ -104,27 +107,10 @@ export const downloadCashServicesReport = async (report: IAnnualReport) => {
 
 		// Внесение данных по каждому счету в таблицу
 		data.tableAccounts.map(tableAccount => {
-			const accountOperations = filterOperationsByAccount(
+			const accountOperationGroups = filterOperationsByAccount(
 				data.operationGroups,
 				tableAccount.number
 			)
-
-			// Строка счёта (если счетов несколько и это не ЖКУ)
-			if (data.tableAccounts.length > 1 && data.direction !== 'main') {
-				const accountAccruals =
-					data.tableCategories &&
-					data.tableCategories.find(
-						(category: IAnnualCategory) =>
-							category.value.toString() === tableAccount.number.toString()
-					)?.amount
-
-				getAccountRow(
-					worksheet,
-					tableAccount,
-					accountOperations,
-					accountAccruals
-				)
-			}
 
 			// Для ЖКУ при наличии статей затрат добавляем результирующие строки по каждой статье
 			if (data.direction === 'main' && data.tableCategories) {
@@ -164,10 +150,28 @@ export const downloadCashServicesReport = async (report: IAnnualReport) => {
 					1
 				)
 
-				getTotalRow(worksheet, accountOperations, data.tableAccruals)
+				getTotalRow(worksheet, accountOperationGroups, data.tableAccruals)
 			}
 
-			if (data.direction === 'target' || data.direction === 'renovation') {
+			if (
+				(data.direction === 'target' || data.direction === 'renovation') &&
+				data.tableCategories
+			) {
+				data.tableCategories.map(category => {
+					const modifiedOperations = operations.filter(
+						op =>
+							op.payerAccount === category.value ||
+							op.recipientAccount === category.value
+					)
+					getTotalAccountRow(
+						worksheet,
+						category,
+						modifiedOperations,
+						category.amount ?? 0
+					)
+					getCategory(worksheet, category, data.tableOperations, 1)
+				})
+
 				getDetailRows(
 					worksheet,
 					getGroupedByCompaniesIncomingOperations(

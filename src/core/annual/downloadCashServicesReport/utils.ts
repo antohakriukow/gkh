@@ -1,11 +1,4 @@
-import {
-	firstResultCell,
-	firstSimpleCell,
-	resultCell,
-	simpleCell
-} from './styles'
 import { ICompanyOperations, IGroupedOperations } from './types'
-import ExcelJS from 'exceljs'
 
 import {
 	IAccount,
@@ -13,8 +6,6 @@ import {
 	IExtendedBankOperation,
 	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
-
-import { trimStringAtSymbol } from '~/utils/string.utils'
 
 export const directions = [
 	'main',
@@ -32,14 +23,21 @@ export const replaceMainAccountNumbers = (accounts: IAccount[]) =>
 
 export const replaceAccountNumbersInMainOperations = (
 	operations: IExtendedBankOperation[]
-) =>
-	operations
+) => {
+	const mainOperations = operations
 		.filter(operation => operation.direction === 'main')
 		.map(operation =>
 			operation.amount > 0
 				? { ...operation, recipientAccount: 'consolidatedMainAccount' }
 				: { ...operation, payerAccount: 'consolidatedMainAccount' }
 		)
+
+	const otherOperations = operations.filter(
+		operation => operation.direction !== 'main'
+	)
+
+	return [...mainOperations, ...otherOperations]
+}
 
 export const getAccountsInDirection = (
 	accounts: IAccount[],
@@ -203,3 +201,16 @@ export const calculateIncomePart = (
 
 	return totalAccruals === 0 ? 0 : (accruals * totalIncome) / totalAccruals
 }
+
+// Unused
+export const getGroupedOperationsForEachAccount = (
+	operations: IExtendedBankOperation[],
+	accounts: IAccount[],
+	result = {} as { [key: string]: any }
+) =>
+	accounts.forEach(
+		acc =>
+			(result[String(acc.number)] = getGroupedOperations(
+				operations.filter(op => op.recipientAccount === acc.number)
+			))
+	)
