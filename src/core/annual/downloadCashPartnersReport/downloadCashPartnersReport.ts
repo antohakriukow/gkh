@@ -103,11 +103,7 @@ export const downloadCashPartnersReport = async (report: IAnnualReport) => {
 			;[accountOperations.incoming, accountOperations.outgoing].map(
 				groupedOperations => {
 					// Для всех направлений кроме капремонта добавляем строки "Доходы, всего" и "Расходы, всего"
-					if (
-						groupedOperations.total !== 0 &&
-						data.direction !== 'renovation' &&
-						data.tableAccounts.length === 1
-					) {
+					if (groupedOperations.total !== 0) {
 						const totalRow = worksheet.addRow(
 							getTotalOperationsRow(groupedOperations)
 						)
@@ -126,7 +122,7 @@ export const downloadCashPartnersReport = async (report: IAnnualReport) => {
 								getCompanyRow(group.name, group.total)
 							)
 							companyRow.outlineLevel = 1
-							companyRow.hidden = group.total > 0
+							// companyRow.hidden = group.total > 0
 							companyRow.getCell(1).style = firstSimpleCell
 							companyRow.getCell(2).style = simpleCell
 							companyRow.getCell(3).style = simpleCell

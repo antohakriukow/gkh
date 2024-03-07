@@ -13,8 +13,9 @@
 }
 
 .buttons {
-	> button:nth-of-type(2) {
-		@apply ml-4 mt-16;
+	@apply flex flex-row justify-between flex-wrap mt-4;
+	> button {
+		@apply mt-2;
 	}
 }
 
