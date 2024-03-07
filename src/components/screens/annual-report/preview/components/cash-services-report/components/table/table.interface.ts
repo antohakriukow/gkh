@@ -32,4 +32,6 @@ export interface IResultsRow {
 	isReportPayed: boolean
 }
 
-export interface IAccountRow extends IResultsRow, Pick<IRow, 'operations'> {}
+export interface IAccountRow extends IResultsRow, Pick<IRow, 'operations'> {
+	isMain?: boolean
+}

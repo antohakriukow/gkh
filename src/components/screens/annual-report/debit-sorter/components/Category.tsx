@@ -9,6 +9,7 @@ import {
 } from '~/shared/types/annual.interface'
 
 import {
+	getOperationsByCategory,
 	groupOperationsByRecipientName,
 	sortOperationsGroupsArrayByRecipientName
 } from '~/utils/annual.utils'
@@ -55,6 +56,8 @@ const Category: FC<{
 
 		const disabled = selectedOperations.length === 0
 
+		console.log(`${category.value} operations: `, operations)
+
 		return (
 			<Fragment>
 				<div
@@ -82,9 +85,7 @@ const Category: FC<{
 										<Category
 											key={cat.id}
 											category={cat}
-											operations={operations.filter(
-												op => op.categoryId === cat.id
-											)}
+											operations={getOperationsByCategory(operations, category)}
 											toggleOperationSelection={toggleOperationSelection}
 											selectedOperations={selectedOperations}
 											handleSubmit={handleSubmit}

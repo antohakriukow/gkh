@@ -55,7 +55,7 @@ export const useDataUploader = () => {
 		;(['renovation', 'target', 'commerce'] as TypeDefinedAnnualDirection[]).map(
 			direction => {
 				if (getExistingDirections(annualState.accounts).includes(direction)) {
-					categoriesData.renovation = createMockCategoriesFromAccounts(
+					categoriesData[direction] = createMockCategoriesFromAccounts(
 						annualState.accounts,
 						direction
 					)

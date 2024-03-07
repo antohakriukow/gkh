@@ -17,11 +17,14 @@ const AccountRow: FC<IAccountRow> = ({
 	income,
 	costs,
 	operations,
-	isReportPayed
+	isReportPayed,
+	isMain
 }) => {
 	const [isVisible, setIsVisible] = useState(false)
-	const { getGroupedByCompaniesOutgoingOperations } =
-		useBankCashServicesTable(operations)
+	const {
+		getGroupedByCompaniesOutgoingOperations,
+		getGroupedByCompaniesIncomingOperations
+	} = useBankCashServicesTable(operations)
 
 	const toggleVisible = () => setIsVisible(!isVisible)
 
@@ -60,6 +63,16 @@ const AccountRow: FC<IAccountRow> = ({
 			</div>
 			{isVisible && (
 				<Fragment>
+					{!isMain &&
+						Object.values(getGroupedByCompaniesIncomingOperations()).map(
+							group => (
+								<CompanyRow
+									key={group.name}
+									group={group}
+									isReportPayed={isReportPayed}
+								/>
+							)
+						)}
 					{Object.values(getGroupedByCompaniesOutgoingOperations()).map(
 						group => (
 							<CompanyRow

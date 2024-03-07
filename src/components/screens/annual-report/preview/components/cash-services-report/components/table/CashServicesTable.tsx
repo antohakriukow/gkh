@@ -45,6 +45,7 @@ const CashServicesTable: FC<{
 				).toFixed(2)}
 				costs={totalCosts}
 				isReportPayed={isReportPayed}
+				isMain={false}
 			/>
 		</div>
 	)

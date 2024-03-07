@@ -189,13 +189,15 @@ export const getGroupedByCompaniesIncomingOperations = (
 export const calculateOperationsSum = (operations: IExtendedBankOperation[]) =>
 	operations.reduce((sum, operation) => sum + operation.amount, 0)
 
-export const calculateIncomePart = (
+export const calculateMainIncomePart = (
 	operations: IExtendedBankOperation[],
 	category: IAnnualCategory,
 	totalAccruals: number
 ) => {
 	const totalIncome = calculateOperationsSum(
-		operations.filter(operation => operation.tag === '')
+		operations.filter(
+			op => op.direction === 'main' && op.amount > 0 && op.tag === ''
+		)
 	)
 	const accruals = category.amount ?? 0
 

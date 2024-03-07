@@ -1,3 +1,5 @@
+@import '../../../styles/colors.scss';
+
 .container {
 	min-width: 330px;
 }
@@ -8,23 +10,27 @@
 }
 
 .menu {
-	@apply flex justify-start  text-primary-700 items-center;
+	@apply flex justify-start text-primary-700 items-center;
 	height: 26px;
 
 	.menuItem {
-		@apply flex flex-row items-center justify-center cursor-pointer px-2 h-full transition-colors box-border;
-		min-width: 82px;
+		@apply flex flex-row items-center justify-center cursor-pointer px-2 mr-2 h-full transition-colors box-border;
+		// min-width: 82px;
 
 		> p {
 			@apply m-0;
 		}
 
 		&:hover {
-			@apply bg-primary-200;
+			border-bottom: $primary-300 solid 1px;
 		}
 
 		&.active {
-			@apply font-bold bg-primary-500 text-gray-0;
+			@apply font-bold bg-primary-300 text-gray-0 rounded-sm;
+		}
+
+		@media (max-width: 400px) {
+			@apply text-sm;
 		}
 	}
 }

@@ -58,7 +58,7 @@ const Form: FC<IFormProps> = ({
 						/>
 					)
 				})}
-				{categories && (
+				{/* {categories && (
 					<p>
 						Итого начислено:{' '}
 						{formatNumber(
@@ -69,7 +69,7 @@ const Form: FC<IFormProps> = ({
 							)
 						)}
 					</p>
-				)}
+				)} */}
 			</div>
 		</form>
 	)

@@ -34,6 +34,7 @@ const Loader: FC<{ loaderType?: TypeLoader }> = ({ loaderType }) => {
 						wrapperClass=''
 						colors={['#23c3ab', '#df4956']}
 					/>
+					<p>Пожалуйста, подождите...</p>
 				</div>
 			</div>
 		)

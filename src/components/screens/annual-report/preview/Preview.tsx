@@ -90,7 +90,11 @@ const Preview: FC = () => {
 			handleCloseReport={closeAnnualReport}
 			handleDeleteReport={deleteAnnualReport}
 		>
-			<Body annualReportInDB={annualReportInDB} />
+			{!!annualReportInDB ? (
+				<Body annualReportInDB={annualReportInDB} />
+			) : (
+				<Loader loaderType='fullscreen' />
+			)}
 		</Container>
 	)
 }

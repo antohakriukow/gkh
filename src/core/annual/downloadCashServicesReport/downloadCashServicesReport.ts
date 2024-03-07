@@ -91,8 +91,6 @@ export const downloadCashServicesReport = async (report: IAnnualReport) => {
 	})
 
 	dataSeparatedByDirection.map(data => {
-		// console.log(`${data.direction} data: `, data)
-
 		if (!data.operationGroups.incoming && !data.operationGroups.outgoing)
 			return null
 
@@ -157,20 +155,21 @@ export const downloadCashServicesReport = async (report: IAnnualReport) => {
 				(data.direction === 'target' || data.direction === 'renovation') &&
 				data.tableCategories
 			) {
-				data.tableCategories.map(category => {
-					const modifiedOperations = operations.filter(
-						op =>
-							op.payerAccount === category.value ||
-							op.recipientAccount === category.value
-					)
-					getTotalAccountRow(
-						worksheet,
-						category,
-						modifiedOperations,
-						category.amount ?? 0
-					)
-					getCategory(worksheet, category, data.tableOperations, 1)
-				})
+				const category =
+					data.tableCategories.find(cat => cat.value === tableAccount.number) ??
+					({} as IAnnualCategory)
+				const modifiedOperations = operations.filter(
+					op =>
+						(op.amount < 0 && op.payerAccount === tableAccount.number) ||
+						(op.amount > 0 && op.recipientAccount === tableAccount.number)
+				)
+				getTotalAccountRow(
+					worksheet,
+					category,
+					modifiedOperations,
+					category.amount ?? 0
+				)
+				getCategory(worksheet, category, data.tableOperations, 1)
 
 				getDetailRows(
 					worksheet,

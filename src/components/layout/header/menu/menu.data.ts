@@ -3,3 +3,9 @@ export const menuItems = [
 	{ title: 'Исполнение сметы', path: '/annual-reports' },
 	{ title: 'Цены', path: '/prices' }
 ]
+
+export const mobileMenuItems = [
+	{ title: '22-ЖКХ', path: '/reports' },
+	{ title: 'ОИС', path: '/annual-reports' },
+	{ title: 'Цены', path: '/prices' }
+]

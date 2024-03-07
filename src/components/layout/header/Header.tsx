@@ -1,5 +1,5 @@
 import FAQButton from './menu/buttons/FAQButton'
-import { menuItems } from './menu/menu.data'
+import { menuItems, mobileMenuItems } from './menu/menu.data'
 import { FC } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -8,6 +8,7 @@ import SupportButton from '~/components/layout/header/menu/buttons/SupportButton
 
 import { useActions } from '~/hooks/useActions'
 import { useAuth } from '~/hooks/useAuth'
+import { useWindowWidth } from '~/hooks/useWindowWidth'
 
 import styles from './Header.module.scss'
 
@@ -19,6 +20,7 @@ interface IMenuItem {
 const Header: FC = () => {
 	const { user } = useAuth()
 	const navigate = useNavigate()
+	const { width } = useWindowWidth()
 	// const goHome = () => navigate(`/reports`)
 	const location = useLocation()
 	const { setCurrentAnnualReport, setCurrentReport } = useActions()
@@ -31,11 +33,13 @@ const Header: FC = () => {
 		navigate(item.path)
 	}
 
+	const menuData = width > 480 ? menuItems : mobileMenuItems
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.header}>
 				<div className={styles.menu}>
-					{menuItems.map(item => (
+					{menuData.map(item => (
 						<div
 							key={item.path}
 							className={`${styles.menuItem} ${

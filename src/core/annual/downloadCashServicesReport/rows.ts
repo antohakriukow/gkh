@@ -9,7 +9,7 @@ import {
 } from './styles'
 import { ICompanyOperations, IGroupedOperations } from './types'
 import {
-	calculateIncomePart,
+	calculateMainIncomePart,
 	calculateOperationsSum,
 	getCategoryOperations,
 	getGroupedByCompaniesOutgoingOperations
@@ -95,7 +95,7 @@ export const getTotalCategoryRow = (
 						operation => operation.amount > 0 && operation.tag !== ''
 					)
 			  )
-			: calculateIncomePart(
+			: calculateMainIncomePart(
 					operations.filter(operation => operation.amount > 0),
 					category,
 					totalAccruals
@@ -123,7 +123,7 @@ export const getTotalAccountRow = (
 ) => {
 	const row = worksheet.addRow([
 		category.value,
-		category.amount,
+		totalAccruals,
 		operations.reduce((sum, op) => (op.amount > 0 ? sum + op.amount : sum), 0),
 		operations.reduce((sum, op) => (op.amount < 0 ? sum + op.amount : sum), 0)
 	])
