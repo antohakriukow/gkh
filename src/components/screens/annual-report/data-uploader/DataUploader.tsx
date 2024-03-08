@@ -4,8 +4,11 @@ import Resume from './components/resume/Resume'
 import StructureSelector from './components/structure-selector/StructureSelector'
 import { useDataUploader } from './useDataUploader'
 import { FC, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { Loader } from '~/components/ui'
+
+import { useWindowWidth } from '~/hooks/useWindowWidth'
 
 import {
 	IAccount,
@@ -15,6 +18,7 @@ import {
 } from '~/shared/types/annual.interface'
 
 import Container from '../shared/container/Container'
+import NarrowAttention from '../shared/narrow-attention/NarrowAttention'
 import StepStatus from '../shared/step-status/StepStatus'
 import { useAnnualReport } from '../useAnnualReport'
 
@@ -24,8 +28,14 @@ const DataUploader: FC = () => {
 	const { saveReportData, redirectToCategoriesSetter, redirectToPreview } =
 		useDataUploader()
 
-	const { isReportPayed, closeAnnualReport, deleteAnnualReport } =
-		useAnnualReport()
+	const {
+		isReportPayed,
+		closeAnnualReport,
+		deleteAnnualReport,
+		annualReportInDB
+	} = useAnnualReport()
+	const { width } = useWindowWidth()
+	const isNarrow = width < 600
 
 	// data-importer state
 	const [annualOperations, setAnnualOperations] = useState<
@@ -83,6 +93,13 @@ const DataUploader: FC = () => {
 			? redirectToCategoriesSetter()
 			: redirectToPreview()
 	}
+
+	if (annualReportInDB?.data?.settings?.structure)
+		structure === 'cash/services'
+			? redirectToCategoriesSetter()
+			: redirectToPreview()
+
+	if (isNarrow) return <NarrowAttention />
 
 	return (
 		<Container

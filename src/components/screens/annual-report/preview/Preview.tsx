@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router-dom'
 
 import { Loader } from '~/components/ui'
 
+import { useWindowWidth } from '~/hooks/useWindowWidth'
+
 import Container from '../shared/container/Container'
+import NarrowAttention from '../shared/narrow-attention/NarrowAttention'
 import { useAnnualReport } from '../useAnnualReport'
 
 const Preview: FC = () => {
@@ -18,6 +21,8 @@ const Preview: FC = () => {
 		downloadXLSX
 	} = useAnnualReport()
 	const navigate = useNavigate()
+	const { width } = useWindowWidth()
+	const isNarrow = width < 600
 
 	const isCashServicesStructure =
 		annualReportInDB?.data?.settings?.structure === 'cash/services'
@@ -27,6 +32,8 @@ const Preview: FC = () => {
 
 	const handleNext = () =>
 		isReportPayed ? downloadXLSX() : paymentButtonData.onClick()
+
+	if (isNarrow) return <NarrowAttention />
 
 	return (
 		<Container

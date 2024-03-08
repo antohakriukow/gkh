@@ -6,12 +6,15 @@ import { FC, useState } from 'react'
 
 import { Loader, SubHeading } from '~/components/ui'
 
+import { useWindowWidth } from '~/hooks/useWindowWidth'
+
 import {
 	IAnnualCategoryState,
 	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
 
 import Container from '../shared/container/Container'
+import NarrowAttention from '../shared/narrow-attention/NarrowAttention'
 import { useAnnualReport } from '../useAnnualReport'
 
 import styles from './categories-setter.module.scss'
@@ -28,6 +31,8 @@ const CategoriesSetter: FC<{}> = () => {
 		closeAnnualReport,
 		deleteAnnualReport
 	} = useAnnualReport()
+	const { width } = useWindowWidth()
+	const isNarrow = width < 600
 
 	const direction = 'main' as TypeAnnualDirection
 
@@ -37,6 +42,8 @@ const CategoriesSetter: FC<{}> = () => {
 		setIsLoading(false)
 		redirectToAccrualsSetter()
 	}
+
+	if (isNarrow) return <NarrowAttention />
 
 	if (isLoading || isDataLoading) return <Loader loaderType='fullscreen' />
 

@@ -10,6 +10,7 @@ import { toast } from 'react-toastify'
 import Loader from '~/components/ui/loader/Loader'
 
 import { useAuth } from '~/hooks/useAuth'
+import { useWindowWidth } from '~/hooks/useWindowWidth'
 
 import {
 	IAnnualCategory,
@@ -21,6 +22,7 @@ import { AnnualService } from '~/services/annual.service'
 import { getExistingDirections } from '~/utils/annual.utils'
 
 import Container from '../shared/container/Container'
+import NarrowAttention from '../shared/narrow-attention/NarrowAttention'
 import { useAnnualReport } from '../useAnnualReport'
 
 const AccrualsSetter: FC = () => {
@@ -36,6 +38,8 @@ const AccrualsSetter: FC = () => {
 		deleteAnnualReport
 	} = useAnnualReport()
 	const { user } = useAuth()
+	const { width } = useWindowWidth()
+	const isNarrow = width < 600
 
 	const { register, control, handleSubmit, setValue } =
 		useForm<IAnnualReportCategoriesFormInput>({
@@ -104,6 +108,8 @@ const AccrualsSetter: FC = () => {
 
 	const onBack = () =>
 		step !== 0 ? setStep(step - 1) : redirectToCategoriesSetter()
+
+	if (isNarrow) return <NarrowAttention />
 
 	if (isLoading || isDataLoading)
 		return (

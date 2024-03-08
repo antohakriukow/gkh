@@ -9,6 +9,7 @@ import { Loader } from '~/components/ui'
 
 import { useAuth } from '~/hooks/useAuth'
 import { useModal } from '~/hooks/useModal'
+import { useWindowWidth } from '~/hooks/useWindowWidth'
 
 import {
 	IExtendedBankOperation,
@@ -20,6 +21,7 @@ import { AnnualService } from '~/services/annual.service'
 import { areArraysEqualByKey } from '~/utils/array.utils'
 
 import Container from '../shared/container/Container'
+import NarrowAttention from '../shared/narrow-attention/NarrowAttention'
 import { useAnnualReport } from '../useAnnualReport'
 
 import styles from './credit-sorter.module.scss'
@@ -36,6 +38,8 @@ const CreditSorter: FC = () => {
 	const { showModal } = useModal()
 	const { user } = useAuth()
 	const navigate = useNavigate()
+	const { width } = useWindowWidth()
+	const isNarrow = width < 600
 
 	const redirectToAccrualsSetter = () =>
 		navigate(`/annual-reports/edit/${annualReportInDB?._id}/accruals-setter`)
@@ -166,6 +170,8 @@ const CreditSorter: FC = () => {
 		await setIsLoading(false)
 		redirectToDebitSorter()
 	}
+
+	if (isNarrow) return <NarrowAttention />
 
 	if (isLoading || isDataLoading)
 		return (

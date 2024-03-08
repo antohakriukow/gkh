@@ -8,6 +8,7 @@ import { Loader } from '~/components/ui'
 
 import { useAuth } from '~/hooks/useAuth'
 import { useModal } from '~/hooks/useModal'
+import { useWindowWidth } from '~/hooks/useWindowWidth'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
@@ -20,6 +21,7 @@ import {
 import { areArraysEqualByKey } from '~/utils/array.utils'
 
 import Container from '../shared/container/Container'
+import NarrowAttention from '../shared/narrow-attention/NarrowAttention'
 import { useAnnualReport } from '../useAnnualReport'
 
 import styles from './debit-sorter.module.scss'
@@ -36,6 +38,8 @@ const DebitSorter: FC = memo(() => {
 	const { showModal } = useModal()
 	const { user } = useAuth()
 	const navigate = useNavigate()
+	const { width } = useWindowWidth()
+	const isNarrow = width < 600
 
 	const redirectToCreditSorter = () =>
 		navigate(`/annual-reports/edit/${annualReportInDB?._id}/credit-sorter`)
@@ -181,6 +185,8 @@ const DebitSorter: FC = memo(() => {
 		await setIsLoading(false)
 		redirectToPreview()
 	}
+
+	if (isNarrow) return <NarrowAttention />
 
 	if (isLoading || isDataLoading)
 		return (
