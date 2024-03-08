@@ -18,7 +18,7 @@ const Issues: FC = () => {
 		navigate('/reports')
 	}
 
-	if (isLoading) return <Loader />
+	if (isLoading) return <Loader loaderType='small' />
 
 	return (
 		<div className={styles.container}>

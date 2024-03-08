@@ -68,7 +68,9 @@ const AccrualsSetter: FC = () => {
 					const existingCategory = annualReportInDB?.data?.categories?.[
 						directions[step]
 					]?.find(category => category.id === id)
-					return existingCategory ? { ...existingCategory, amount } : null
+					return existingCategory
+						? { ...existingCategory, amount: amount ? amount : 0 }
+						: null
 				})
 				.filter(Boolean)
 

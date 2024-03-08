@@ -29,7 +29,7 @@ const ReportDeleteModal: FC<{ deleteAnnualReport: () => void }> = ({
 	return (
 		<div className={styles.container}>
 			{isLoading ? (
-				<Loader />
+				<Loader loaderType='small' />
 			) : (
 				<Fragment>
 					<h3 className={styles.title}>

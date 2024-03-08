@@ -49,7 +49,8 @@ const Reports: FC = () => {
 			}))
 	}
 
-	if (isReportsLoading || isCompaniesLoading) return <Loader />
+	if (isReportsLoading || isCompaniesLoading)
+		return <Loader loaderType='small' />
 
 	return (
 		<div className={cn(styles.container, 'introAnchor')}>

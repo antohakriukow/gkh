@@ -50,7 +50,7 @@ const ReportEditor: FC = () => {
 	if (isLoading)
 		return (
 			<div className={styles.container}>
-				<Loader loaderType='large' />
+				<Loader loaderType='small' />
 			</div>
 		)
 
@@ -98,7 +98,7 @@ const ReportEditor: FC = () => {
 				downloadReportXML={downloadReportXML}
 			/>
 			{isDataLoading ? (
-				<Loader loaderType='large' />
+				<Loader loaderType='small' />
 			) : (
 				<>
 					<div className={styles.report}>

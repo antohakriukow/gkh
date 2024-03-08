@@ -34,7 +34,7 @@ const CheckReportModal: FC<ICheckReportModal> = ({
 	}, [checkReport])
 
 	return checkResults === null ? (
-		<Loader loaderType='large' />
+		<Loader loaderType='small' />
 	) : (
 		<div>
 			<h2 className={styles.title}>Протокол логического контроля</h2>

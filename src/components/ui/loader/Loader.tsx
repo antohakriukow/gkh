@@ -19,7 +19,7 @@ const Loader: FC<{ loaderType?: TypeLoader }> = ({ loaderType }) => {
 		}
 	}
 
-	const size = loaderType ? getSize(loaderType) : 48
+	const size = loaderType ? getSize(loaderType) : 24
 
 	if (loaderType === 'fullscreen')
 		return (

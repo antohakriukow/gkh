@@ -51,6 +51,6 @@ const ReportBody: FC<{
 			/>
 		)
 
-	return <Loader />
+	return <Loader loaderType='small' />
 }
 export default ReportBody

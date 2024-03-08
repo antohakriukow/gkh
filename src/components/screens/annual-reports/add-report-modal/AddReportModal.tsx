@@ -36,7 +36,7 @@ const ReportModal: FC<IReportModalProps> = ({ handleOpenReport }) => {
 	return (
 		<div className={styles.container}>
 			{isLoading ? (
-				<Loader />
+				<Loader loaderType='small' />
 			) : (
 				<Fragment>
 					<h3 className={styles.title}>{currentCompany?.name.short}</h3>
