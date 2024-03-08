@@ -57,7 +57,7 @@ export const useAnnualReport = () => {
 
 	const paymentButtonData = createPaymentButtonData({
 		cost: AnnualReportPrice,
-		invoiceId: payments.length + 1,
+		invoiceId: Math.floor(Date.now() / 1000),
 		description: 'Плата за генерацию отчета в сервисе 22gkh.ru',
 		receipt: annualReceipt,
 		isTest: 0,
