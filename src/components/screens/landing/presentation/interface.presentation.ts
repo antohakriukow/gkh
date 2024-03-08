@@ -1,5 +1,5 @@
-export interface IBenefit {
+export interface IService {
 	title: string
-	subTitle: string
-	key?: string
+	bullets: string[]
+	link: string
 }
