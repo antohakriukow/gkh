@@ -13,4 +13,11 @@
 	@media (max-width: 410px) {
 		height: 180px;
 	}
+
+	@media (max-width: 370px) {
+		@apply self-center;
+		width: calc(100% + 30px);
+		transform: translateX(-15px);
+		height: 160px;
+	}
 }

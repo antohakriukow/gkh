@@ -21,7 +21,7 @@ const Presentation: FC = () => {
 		<div className={styles.container}>
 			<div className={styles.presentation}>
 				<h3 className={styles.heading}>22gkh.ru</h3>
-				<p className={styles.description}>Личный помощник бухгалтера ЖКХ</p>
+				<p className={styles.description}>Сервис для бухгалтера ЖКХ</p>
 				<ul>
 					{servicesData.map(service => (
 						<Service
