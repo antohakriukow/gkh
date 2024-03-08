@@ -66,6 +66,9 @@
 }
 
 @media (max-width: 430px) {
+	.presentation {
+		@apply pb-20;
+	}
 	.heading {
 		@apply text-2xl;
 	}
