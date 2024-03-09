@@ -11,6 +11,11 @@ export type TypeIssueSubject =
 	| 'report/error'
 	| 'report/declined'
 	| 'report/other'
+	| 'annual/upload'
+	| 'annual/process'
+	| 'annual/download'
+	| 'annual/payment'
+	| 'annual/result'
 	| 'auth'
 	| 'other'
 

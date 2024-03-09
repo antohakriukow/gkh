@@ -1,4 +1,5 @@
-import { tips } from './data/faq.data'
+import Video from './components/Video'
+import { tips, videos } from './data/faq.data'
 import { FC } from 'react'
 import { AiOutlineCloseSquare } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
@@ -28,18 +29,11 @@ const FAQ: FC = () => {
 				</div>
 			</div>
 			<div className={styles.faq}>
-				<p className={styles.title}>Видеоинструкция</p>
-				<iframe
-					// width='100%'
-					// height='100%'
-					className={styles.video}
-					src='https://www.youtube.com/embed/JGUO_0oV5AA'
-					title='YouTube video player'
-					frameBorder='0'
-					allow='autoplay; encrypted-media'
-					allowFullScreen
-				></iframe>
-				<p className={styles.title}>Правила заполнения</p>
+				{videos.map(video => (
+					<Video title={video.title} link={video.link} />
+				))}
+
+				<p className={styles.title}>Правила заполнения 22-ЖКХ</p>
 				{tips.map((tip, index) => (
 					<Tip key={index} title={tip.title} text={tip.text} />
 				))}

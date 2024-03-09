@@ -1,3 +1,19 @@
+export const videos = [
+	{
+		title: 'Видеоинструкция ОИС (Кассовый метод в разрезе контрагентов)',
+		link: 'https://www.youtube.com/embed/lqgpLNk4GRY'
+	},
+	{
+		title: 'Видеоинструкция ОИС (Кассовый метод в разрезе статей сметы)',
+		link: 'https://www.youtube.com/embed/qxgDCMPe-vU'
+	},
+
+	{
+		title: 'Видеоинструкция 22-ЖКХ',
+		link: 'https://www.youtube.com/embed/JGUO_0oV5AA'
+	}
+]
+
 export const tips = [
 	{
 		title: 'Кому нужно заполнять отчет?',
