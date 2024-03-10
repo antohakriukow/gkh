@@ -28,7 +28,7 @@ const StepStatus: FC<PropsWithChildren<IStepDoneProps>> = ({
 		>
 			<div>
 				<p>{title}</p>
-				{isDone && <p>: Завершено</p>}
+				{isDone && <p>Завершено</p>}
 			</div>
 			{isDone && onClick && <Button onClick={onClick}>Вернуться</Button>}
 		</div>

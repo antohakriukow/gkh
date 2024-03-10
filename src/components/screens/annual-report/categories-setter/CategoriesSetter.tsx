@@ -32,7 +32,7 @@ const CategoriesSetter: FC<{}> = () => {
 		deleteAnnualReport
 	} = useAnnualReport()
 	const { width } = useWindowWidth()
-	const isNarrow = width < 600
+	const isNarrow = width < 500
 
 	const direction = 'main' as TypeAnnualDirection
 

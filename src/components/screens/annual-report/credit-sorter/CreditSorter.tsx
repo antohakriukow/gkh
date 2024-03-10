@@ -1,5 +1,6 @@
 import Tag from './components/Tag'
 import SeparateModal from './components/separate-modal/SeparateModal'
+import dayjs from 'dayjs'
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -39,7 +40,7 @@ const CreditSorter: FC = () => {
 	const { user } = useAuth()
 	const navigate = useNavigate()
 	const { width } = useWindowWidth()
-	const isNarrow = width < 600
+	const isNarrow = width < 500
 
 	const redirectToAccrualsSetter = () =>
 		navigate(`/annual-reports/edit/${annualReportInDB?._id}/accruals-setter`)
@@ -164,6 +165,13 @@ const CreditSorter: FC = () => {
 		}
 	}
 
+	const onBack = async () => {
+		await setIsLoading(true)
+		await saveBankOperationsToDB()
+		await setIsLoading(false)
+		redirectToAccrualsSetter()
+	}
+
 	const onNext = async () => {
 		await setIsLoading(true)
 		await saveBankOperationsToDB()
@@ -187,7 +195,7 @@ const CreditSorter: FC = () => {
 	return (
 		<Container
 			onNext={onNext}
-			onBack={redirectToAccrualsSetter}
+			onBack={onBack}
 			isReportPayed={isReportPayed}
 			handleCloseReport={closeAnnualReport}
 			handleDeleteReport={deleteAnnualReport}

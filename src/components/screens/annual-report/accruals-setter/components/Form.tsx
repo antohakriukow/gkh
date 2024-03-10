@@ -34,29 +34,28 @@ const Form: FC<IFormProps> = ({
 	if (!categories) return null
 
 	return (
-		<form>
-			<div className={styles.container}>
-				<SubHeading
-					title={`Введите суммы начислений по направлению "${getAnnualDirectionTitle(
-						direction
-					)}":`}
-				/>
-				{categories.map(category => {
-					const placeholder =
-						direction === 'main'
-							? `${category.value}, руб:`
-							: `Счет №${category.value}`
-					return (
-						<Item
-							key={category.id}
-							register={register}
-							control={control}
-							fieldName={`categories.${category.id}.amount`}
-							placeholder={placeholder}
-						/>
-					)
-				})}
-				{/* {categories && (
+		<div className={styles.container}>
+			<SubHeading
+				title={`Введите суммы начислений по направлению "${getAnnualDirectionTitle(
+					direction
+				)}":`}
+			/>
+			{categories.map(category => {
+				const placeholder =
+					direction === 'main'
+						? `${category.value}, руб:`
+						: `Счет №${category.value}`
+				return (
+					<Item
+						key={category.id}
+						register={register}
+						control={control}
+						fieldName={`categories.${category.id}.amount`}
+						placeholder={placeholder}
+					/>
+				)
+			})}
+			{/* {categories && (
 					<p>
 						Итого начислено:{' '}
 						{formatNumber(
@@ -68,8 +67,7 @@ const Form: FC<IFormProps> = ({
 						)}
 					</p>
 				)} */}
-			</div>
-		</form>
+		</div>
 	)
 }
 export default Form

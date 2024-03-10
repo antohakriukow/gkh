@@ -55,7 +55,9 @@ const OperationsGroup: FC<OperationsGroupProps> = memo(
 							<FaChevronDown color='#262e59' onClick={toggleVisible} />
 						)}
 					</div>
-					<span className={styles.partnerName}>{partnerName}</span>
+					<span className={styles.partnerName} title={partnerName}>
+						{partnerName}
+					</span>
 					<div className={styles.counter}>({operations.length})</div>
 					<input
 						type='checkbox'

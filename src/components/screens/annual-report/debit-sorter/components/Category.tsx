@@ -56,8 +56,6 @@ const Category: FC<{
 
 		const disabled = selectedOperations.length === 0
 
-		console.log(`${category.value} operations: `, operations)
-
 		return (
 			<Fragment>
 				<div

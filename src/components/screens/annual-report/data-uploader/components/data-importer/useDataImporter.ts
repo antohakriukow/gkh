@@ -19,6 +19,7 @@ export const useDataImporter = (
 	setAnnualFileNames: Dispatch<SetStateAction<string[]>>,
 	setAnnualStartDate: Dispatch<SetStateAction<string>>,
 	setAnnualFinalDate: Dispatch<SetStateAction<string>>,
+	setAnnualCompanyNames: Dispatch<SetStateAction<string[]>>,
 	setAnnualError: Dispatch<SetStateAction<string>>
 ) => {
 	const handleFiles = useCallback(
@@ -27,6 +28,7 @@ export const useDataImporter = (
 				setAnnualFileNames(files.map(file => file.name))
 				let allOperations: (IAccountingOperation | IBankOperation)[] = []
 				let allAccounts: IAccount[] = []
+				let companyNames: string[] = []
 
 				for (const file of files) {
 					const fileExtension = file.name.split('.').pop()
@@ -48,14 +50,18 @@ export const useDataImporter = (
 						(structure === 'cash/partners' || structure === 'cash/services') &&
 						fileExtension === 'txt'
 					) {
-						const { operations: txtOperations, accounts: txtAccounts } =
-							await parseTXTFile(file)
+						const {
+							operations: txtOperations,
+							accounts: txtAccounts,
+							companyName: txtCompanyName
+						} = await parseTXTFile(file)
 						allOperations.push(...txtOperations)
 						txtAccounts.forEach(account => {
 							if (!allAccounts.some(acc => acc.number === account.number)) {
 								allAccounts.push(account)
 							}
 						})
+						companyNames.push(txtCompanyName)
 					} else {
 						setAnnualError(
 							`Некорректный тип файла. Загрузите ${
@@ -78,6 +84,7 @@ export const useDataImporter = (
 				)
 
 				setAnnualAccounts(allAccounts)
+				setAnnualCompanyNames(Array.from(new Set(companyNames)))
 			} catch (error) {
 				console.error('Ошибка при обработке файлов:', error)
 			}
@@ -88,6 +95,7 @@ export const useDataImporter = (
 			setAnnualAccounts,
 			setAnnualStartDate,
 			setAnnualFinalDate,
+			setAnnualCompanyNames,
 			setAnnualError,
 			structure
 		]

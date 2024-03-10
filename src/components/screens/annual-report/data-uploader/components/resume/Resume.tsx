@@ -10,6 +10,8 @@ import {
 
 import { getAnnualReportStructureName } from '~/utils/annual.utils'
 
+import ResumeItem from '../shared/resume-item/ResumeItem/ResumeItem'
+
 import styles from './resume.module.scss'
 
 interface IResumeProps {
@@ -18,18 +20,9 @@ interface IResumeProps {
 	annualFileNames: string[]
 	annualStartDate: string
 	annualFinalDate: string
+	annualCompanyNames: string[]
 	structure: TypeAnnualReportStructure | undefined
 }
-
-const Item: FC<{ parameter: string; value: string }> = ({
-	parameter,
-	value
-}) => (
-	<div className={styles.item}>
-		<p>{parameter}: </p>
-		<p>{value}</p>
-	</div>
-)
 
 const Resume: FC<IResumeProps> = ({
 	annualOperations,
@@ -37,8 +30,34 @@ const Resume: FC<IResumeProps> = ({
 	annualFileNames,
 	annualStartDate,
 	annualFinalDate,
+	annualCompanyNames,
 	structure
 }) => {
+	const resumeData = [
+		{
+			parameter: 'Шаблон отчета',
+			value: getAnnualReportStructureName(structure)
+		},
+		{ parameter: 'Загружено файлов', value: String(annualFileNames) },
+		{
+			parameter: 'Распознано компаний',
+			value: String(
+				`${annualCompanyNames.length} (${String(annualCompanyNames)})`
+			)
+		},
+		{
+			parameter: 'Распознано счетов',
+			value: String(`${annualAccounts.length} (
+						${String(annualAccounts.map(acc => ` ***${acc.number.slice(-4)}`))})`)
+		},
+		{
+			parameter: 'Распознано операций',
+			value: String(annualOperations.length)
+		},
+		{ parameter: 'Дата первой операции', value: String(annualStartDate) },
+		{ parameter: 'Дата последней операции', value: String(annualFinalDate) }
+	]
+
 	return (
 		<Fragment>
 			<div className={styles.danger}>
@@ -49,27 +68,13 @@ const Resume: FC<IResumeProps> = ({
 				</p>
 			</div>
 			<div className={styles.list}>
-				<Item
-					parameter='Шаблон отчета'
-					value={getAnnualReportStructureName(structure)}
-				/>
-				<Item parameter='Загружены файлы' value={String(annualFileNames)} />
-				<Item
-					parameter='Распознано счетов'
-					value={String(annualAccounts.length)}
-				/>
-				<Item
-					parameter='Распознано операций'
-					value={String(annualOperations.length)}
-				/>
-				<Item
-					parameter='Дата первой операции'
-					value={String(annualStartDate)}
-				/>
-				<Item
-					parameter='Дата последней операции'
-					value={String(annualFinalDate)}
-				/>
+				{resumeData.map(item => (
+					<ResumeItem
+						key={item.parameter}
+						parameter={item.parameter}
+						value={item.value ?? ''}
+					/>
+				))}
 			</div>
 		</Fragment>
 	)

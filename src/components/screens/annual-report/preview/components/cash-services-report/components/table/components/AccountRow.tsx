@@ -65,18 +65,18 @@ const AccountRow: FC<IAccountRow> = ({
 				<Fragment>
 					{!isMain &&
 						Object.values(getGroupedByCompaniesIncomingOperations()).map(
-							group => (
+							(group, index) => (
 								<CompanyRow
-									key={group.name}
+									key={`${group.name}-${index}`}
 									group={group}
 									isReportPayed={isReportPayed}
 								/>
 							)
 						)}
 					{Object.values(getGroupedByCompaniesOutgoingOperations()).map(
-						group => (
+						(group, index) => (
 							<CompanyRow
-								key={group.name}
+								key={`${group.name}-${index}`}
 								group={group}
 								isReportPayed={isReportPayed}
 							/>

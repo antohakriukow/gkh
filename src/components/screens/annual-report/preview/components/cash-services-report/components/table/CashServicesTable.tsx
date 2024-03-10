@@ -23,6 +23,12 @@ const CashServicesTable: FC<{
 
 	if (!operations || operations.length === 0) return null
 
+	console.log(
+		operations.map(op => {
+			if (op.amount > 100000) return op
+		})
+	)
+
 	const totalAccruals = categories.reduce(
 		(sum, cat) => sum + (cat.amount ?? 0),
 		0

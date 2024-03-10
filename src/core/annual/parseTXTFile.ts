@@ -23,6 +23,7 @@ export const parseTXTFile = async (
 ): Promise<{
 	operations: IBankOperation[]
 	accounts: IAccount[]
+	companyName: string
 }> => {
 	const reader = new FileReader()
 	reader.readAsArrayBuffer(file)
@@ -81,7 +82,14 @@ export const parseTXTFile = async (
 				}
 			})
 
-			resolve({ operations, accounts })
+			//Парсинг имени компании
+			const companyName = accounts
+				.map(acc => acc.number)
+				.includes(operations[0].payerAccount)
+				? operations[0].payerName
+				: operations[0].recipientName
+
+			resolve({ operations, accounts, companyName })
 		}
 
 		reader.onerror = () => {

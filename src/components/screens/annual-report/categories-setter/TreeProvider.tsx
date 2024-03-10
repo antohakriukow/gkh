@@ -45,7 +45,7 @@ export const TreeProvider: FC<PropsWithChildren<ITreeProvider>> = ({
 		direction !== undefined &&
 		direction !== ''
 			? annualReportInDB.data.categories[direction]
-			: undefined
+			: []
 
 	const [items, setItems] = useState<IAnnualCategoryState[]>(
 		createDeepCopy(initialCategories)

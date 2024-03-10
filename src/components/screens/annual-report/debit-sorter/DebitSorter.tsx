@@ -39,7 +39,7 @@ const DebitSorter: FC = memo(() => {
 	const { user } = useAuth()
 	const navigate = useNavigate()
 	const { width } = useWindowWidth()
-	const isNarrow = width < 600
+	const isNarrow = width < 500
 
 	const redirectToCreditSorter = () =>
 		navigate(`/annual-reports/edit/${annualReportInDB?._id}/credit-sorter`)
@@ -179,6 +179,13 @@ const DebitSorter: FC = memo(() => {
 		}
 	}
 
+	const onBack = async () => {
+		await setIsLoading(true)
+		await saveBankOperationsToDB()
+		await setIsLoading(false)
+		redirectToCreditSorter()
+	}
+
 	const onNext = async () => {
 		await setIsLoading(true)
 		await saveBankOperationsToDB()
@@ -202,7 +209,7 @@ const DebitSorter: FC = memo(() => {
 	return (
 		<Container
 			onNext={onNext}
-			onBack={redirectToCreditSorter}
+			onBack={onBack}
 			isReportPayed={isReportPayed}
 			handleCloseReport={closeAnnualReport}
 			handleDeleteReport={deleteAnnualReport}

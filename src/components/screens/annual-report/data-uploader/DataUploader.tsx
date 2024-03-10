@@ -3,7 +3,7 @@ import DirectionSelector from './components/direction-selector/DirectionSelector
 import Resume from './components/resume/Resume'
 import StructureSelector from './components/structure-selector/StructureSelector'
 import { useDataUploader } from './useDataUploader'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Loader } from '~/components/ui'
@@ -35,7 +35,7 @@ const DataUploader: FC = () => {
 		annualReportInDB
 	} = useAnnualReport()
 	const { width } = useWindowWidth()
-	const isNarrow = width < 600
+	const isNarrow = width < 500
 
 	// data-importer state
 	const [annualOperations, setAnnualOperations] = useState<
@@ -45,6 +45,7 @@ const DataUploader: FC = () => {
 	const [annualFileNames, setAnnualFileNames] = useState<string[]>([])
 	const [annualStartDate, setAnnualStartDate] = useState<string>('')
 	const [annualFinalDate, setAnnualFinalDate] = useState<string>('')
+	const [annualCompanyNames, setAnnualCompanyNames] = useState<string[]>([])
 	const [annualError, setAnnualError] = useState<string>('')
 
 	//structure-selector state
@@ -94,10 +95,17 @@ const DataUploader: FC = () => {
 			: redirectToPreview()
 	}
 
-	if (annualReportInDB?.data?.settings?.structure)
-		structure === 'cash/services'
-			? redirectToCategoriesSetter()
-			: redirectToPreview()
+	useEffect(() => {
+		if (annualReportInDB?.data?.settings?.structure)
+			structure === 'cash/services'
+				? redirectToCategoriesSetter()
+				: redirectToPreview()
+	}, [
+		annualReportInDB,
+		structure,
+		redirectToCategoriesSetter,
+		redirectToPreview
+	])
 
 	if (isNarrow) return <NarrowAttention />
 
@@ -137,6 +145,7 @@ const DataUploader: FC = () => {
 							annualFileNames={annualFileNames}
 							annualStartDate={annualStartDate}
 							annualFinalDate={annualFinalDate}
+							annualCompanyNames={annualCompanyNames}
 							annualError={annualError}
 							structure={structure}
 							setAnnualOperations={setAnnualOperations}
@@ -144,6 +153,7 @@ const DataUploader: FC = () => {
 							setAnnualFileNames={setAnnualFileNames}
 							setAnnualStartDate={setAnnualStartDate}
 							setAnnualFinalDate={setAnnualFinalDate}
+							setAnnualCompanyNames={setAnnualCompanyNames}
 							setAnnualError={setAnnualError}
 						/>
 					</StepStatus>
@@ -183,6 +193,7 @@ const DataUploader: FC = () => {
 							annualFileNames={annualFileNames}
 							annualStartDate={annualStartDate}
 							annualFinalDate={annualFinalDate}
+							annualCompanyNames={annualCompanyNames}
 							structure={structure}
 						/>
 					</StepStatus>

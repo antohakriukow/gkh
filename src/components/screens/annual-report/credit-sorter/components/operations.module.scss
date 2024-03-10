@@ -21,7 +21,7 @@
 }
 
 .partnerName {
-	@apply whitespace-nowrap overflow-hidden overflow-ellipsis;
+	@apply whitespace-nowrap overflow-hidden overflow-ellipsis select-none;
 }
 
 .operation {
@@ -30,11 +30,11 @@
 	border: solid 1px $gray-200;
 
 	> div {
-		@apply text-sm text-center;
+		@apply text-sm text-center select-none;
 	}
 
 	.description {
-		@apply whitespace-nowrap overflow-hidden overflow-ellipsis;
+		@apply whitespace-nowrap overflow-hidden overflow-ellipsis select-none;
 	}
 
 	> input {
@@ -57,7 +57,7 @@
 
 	> h2,
 	h4 {
-		@apply block m-0 whitespace-nowrap overflow-hidden overflow-ellipsis ml-2 text-primary-700 font-semibold;
+		@apply block m-0 whitespace-nowrap overflow-hidden overflow-ellipsis ml-2 text-primary-700 font-semibold select-none;
 		max-width: 420px;
 	}
 

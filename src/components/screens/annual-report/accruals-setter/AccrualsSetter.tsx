@@ -39,7 +39,7 @@ const AccrualsSetter: FC = () => {
 	} = useAnnualReport()
 	const { user } = useAuth()
 	const { width } = useWindowWidth()
-	const isNarrow = width < 600
+	const isNarrow = width < 500
 
 	const { register, control, handleSubmit, setValue } =
 		useForm<IAnnualReportCategoriesFormInput>({
@@ -66,17 +66,17 @@ const AccrualsSetter: FC = () => {
 		if (!user || !reportId) return
 
 		try {
-			const categoriesToUpdate = Object.entries(data.categories)
-				.map(([key, { amount }]) => {
-					const id = String(parseInt(key))
-					const existingCategory = annualReportInDB?.data?.categories?.[
-						directions[step]
-					]?.find(category => category.id === id)
-					return existingCategory
-						? { ...existingCategory, amount: amount ? amount : 0 }
-						: null
-				})
-				.filter(Boolean)
+			const categoriesToUpdate = [
+				...(annualReportInDB?.data?.categories?.[directions[step]] || [])
+			]
+
+			// Обновляем категории в копии массива на основе данных формы
+			categoriesToUpdate.forEach(category => {
+				const formCategory = data.categories[String(category.id)]
+				if (formCategory) {
+					category.amount = formCategory.amount ? formCategory.amount : 0
+				}
+			})
 
 			if (categoriesToUpdate.length > 0) {
 				await AnnualService.updateCategories(

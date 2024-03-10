@@ -139,12 +139,17 @@ export const downloadCashServicesReport = async (report: IAnnualReport) => {
 						0
 					)
 
+				//Прочие доходы
 				getDetailRows(
 					worksheet,
-					{
-						...getGroupedByCompaniesOutgoingOperations(otherCosts),
-						...getGroupedByCompaniesIncomingOperations(otherIncome)
-					},
+					getGroupedByCompaniesIncomingOperations(otherIncome),
+					1
+				)
+
+				//Прочие расходы]
+				getDetailRows(
+					worksheet,
+					getGroupedByCompaniesOutgoingOperations(otherCosts),
 					1
 				)
 

@@ -22,7 +22,7 @@ const Preview: FC = () => {
 	} = useAnnualReport()
 	const navigate = useNavigate()
 	const { width } = useWindowWidth()
-	const isNarrow = width < 600
+	const isNarrow = width < 500
 
 	const isCashServicesStructure =
 		annualReportInDB?.data?.settings?.structure === 'cash/services'

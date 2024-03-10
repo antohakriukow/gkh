@@ -29,7 +29,7 @@ export const useBankCashServicesTable = (
 	)
 
 	const totalIncome = operations
-		.filter(operation => operation.tag === '')
+		.filter(operation => operation.tag === '' || !operation.tag)
 		.reduce(
 			(acc, operation) => (operation.amount > 0 ? acc + operation.amount : acc),
 			0
@@ -37,7 +37,6 @@ export const useBankCashServicesTable = (
 		.toFixed(2)
 
 	const totalCosts = operations
-		// .filter(operation => operation.tag === '')
 		.reduce(
 			(acc, operation) => (operation.amount < 0 ? acc + operation.amount : acc),
 			0
