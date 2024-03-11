@@ -1,8 +1,6 @@
 import * as admin from 'firebase-admin'
 import * as functions from 'firebase-functions'
 
-admin.initializeApp()
-
 export const addShortIdToUser = functions.https.onCall(
 	async (data, context) => {
 		const uid = context.auth?.uid
