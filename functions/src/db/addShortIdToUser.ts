@@ -1,6 +1,8 @@
 import * as admin from 'firebase-admin'
 import * as functions from 'firebase-functions'
 
+admin.initializeApp()
+
 export const addShortIdToUser = functions.https.onCall(
 	async (data, context) => {
 		const uid = context.auth?.uid
@@ -8,7 +10,7 @@ export const addShortIdToUser = functions.https.onCall(
 		if (!uid) {
 			throw new functions.https.HttpsError(
 				'unauthenticated',
-				'User must be authenticated'
+				'The user must be authenticated to add a short ID.'
 			)
 		}
 
@@ -16,35 +18,30 @@ export const addShortIdToUser = functions.https.onCall(
 
 		try {
 			const snapshot = await usersRefMap.once('value')
-			let newShortId
+			let newShortIdNumber
 
 			if (snapshot.exists()) {
 				const usersMap = snapshot.val()
-				const lastKey = Object.keys(usersMap).sort().pop()
-				const lastShortId = usersMap[lastKey as string].shortId
-				const shortIdNumber = parseInt(lastShortId.substring(1)) + 1
-				newShortId = `A${shortIdNumber}`
+				const lastShortId = Object.keys(usersMap).sort().pop() // Получаем последний shortId как ключ
+				newShortIdNumber = parseInt((lastShortId as string).substring(1)) + 1 // Инкрементируем числовую часть shortId
 			} else {
-				// Если users-ref не существует, создаем с начальным shortId
-				newShortId = 'A1625'
+				// Если users-ref не существует, начинаем сначала
+				newShortIdNumber = 1001
 			}
 
-			// Добавляем новый shortId в users-ref и обновляем shortId пользователя
-			await usersRefMap.child(uid).set({ _id: uid, shortId: newShortId })
+			const newShortId = `A${newShortIdNumber}`
+
+			// Добавляем новый shortId в users-ref с UID пользователя в качестве значения
+			await usersRefMap.child(newShortId).set(uid)
+
+			// Обновляем shortId пользователя
 			await admin.database().ref(`users/${uid}`).update({ shortId: newShortId })
 		} catch (error) {
-			console.error('Error updating shortId: ', error)
+			console.error('Error adding shortId to user:', error)
 			throw new functions.https.HttpsError(
 				'unknown',
-				'Failed to update shortId'
+				'Failed to add shortId to user.'
 			)
 		}
-
-		const usersRef = admin.database().ref(`users/${uid}`)
-		const snapshot = await admin.database().ref('users').once('value')
-		const usersCount = snapshot.numChildren()
-		const shortId = `A${1000 + usersCount}`
-
-		await usersRef.update({ shortId })
 	}
 )
