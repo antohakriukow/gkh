@@ -58,7 +58,7 @@ const Reports: FC = () => {
 				<Heading title='Отчеты 22-ЖКХ' className={styles.heading} />
 			</div>
 			{!!companies && companies.length > 0 ? (
-				<Button onClick={handleAddReport}>Создать отчет</Button>
+				<Button onClick={handleAddReport}>Создать отчет 22-ЖКХ</Button>
 			) : (
 				<Button
 					className={cn('addReportButtonAnchor')}

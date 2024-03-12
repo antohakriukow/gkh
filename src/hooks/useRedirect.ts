@@ -8,7 +8,7 @@ export const useRedirect = () => {
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		if (user) navigate('/reports')
+		if (user) navigate('/annual-reports')
 	}, [user, navigate])
 
 	const navigateToHome = () => navigate('/')

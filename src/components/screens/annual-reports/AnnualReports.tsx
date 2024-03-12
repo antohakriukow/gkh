@@ -94,7 +94,9 @@ const AnnualReports: FC = () => {
 				/>
 			</div>
 			{!!companies && companies.length > 0 ? (
-				<Button onClick={handleAddReport}>Создать отчет</Button>
+				<Button onClick={handleAddReport}>
+					Создать отчет об исполнении сметы
+				</Button>
 			) : (
 				<Button
 					className={cn('addReportButtonAnchor')}
