@@ -46,7 +46,7 @@ export const ReportService = {
 			_id: reportId,
 			createdAt: reportId,
 			updatedAt: reportId,
-			template: '22gkh2023'
+			template: `22gkh${data.year}`
 		}
 
 		try {

@@ -286,20 +286,20 @@ export const getConstants = async (userId: string, reportId: string) => {
 	})
 
 	//Строка отчета №66. Вынесена в константу, так как используется в коде несколько раз
-	const row66 = typicalRow(
+	const totalMaintenanceRow = typicalRow(
 		accrualsMaintenance,
 		commonAndMaintenancePayments,
 		area.residentialArea
 	)
 
 	//Строка отчета №76. Вынесена в константу, так как используется в коде несколько раз
-	const row76 = typicalRow(
+	const totalElectricityRow = typicalRow(
 		accruals.electricity,
 		payments.electricity,
 		calculatedAreas.electricity
 	)
 
-	const row86 = {
+	const naturalElectricityRow = {
 		4: !!natural.electricityCommon ? natural.electricityCommon : 0,
 		6: area.commonArea ? area.commonArea : 0,
 		7:
@@ -308,7 +308,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 				: totalArea
 	}
 
-	const row87 = {
+	const naturalHeatRow = {
 		3: natural.heat,
 		5:
 			settings.areasAreDifferent === 'yes' && !!calculatedAreas.heat
@@ -335,14 +335,14 @@ export const getConstants = async (userId: string, reportId: string) => {
 			(row === 67 && elevator.status === 'yes') ||
 			(row === 68 && elevator.status === 'no')
 		) {
-			return row66
+			return totalMaintenanceRow
 		}
 
 		if (!elevatorCopy.areaWith) elevatorCopy.areaWith = 0
 		if (!elevatorCopy.areaWithout) elevatorCopy.areaWithout = 0
 
 		const results = distributeValues(
-			row66,
+			totalMaintenanceRow,
 			elevatorCopy.areaWith,
 			elevatorCopy.areaWithout
 		)
@@ -360,13 +360,13 @@ export const getConstants = async (userId: string, reportId: string) => {
 			(row === 77 && stove.status === 'gas') ||
 			(row === 78 && stove.status === 'electro')
 		)
-			return row76
+			return totalElectricityRow
 
 		if (!stoveCopy.areaGas) stoveCopy.areaGas = 0
 		if (!stoveCopy.areaElectro) stoveCopy.areaElectro = 0
 
 		const results = distributeValues(
-			row76,
+			totalElectricityRow,
 			stoveCopy.areaGas,
 			stoveCopy.areaElectro
 		)
@@ -413,13 +413,13 @@ export const getConstants = async (userId: string, reportId: string) => {
 		natural,
 
 		typicalRow,
-		row66,
-		row76,
+		totalMaintenanceRow,
+		totalElectricityRow,
 		distributeMaintenance,
 		distributeElectricity,
 
-		row86,
-		row87,
+		naturalElectricityRow,
+		naturalHeatRow,
 
 		renovation,
 		stove,

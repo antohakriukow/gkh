@@ -16,7 +16,8 @@ export const getReportInitialData = (previousReport?: IReport) => {
 		waterHeating: previousReport.data.waterHeating,
 		budgetFinancing: previousReport.data.budgetFinancing,
 		renovationCosts: previousReport.data.renovationCosts,
-		accruals: clear22gkhReportData
+		accruals: clear22gkhReportData,
+		vat: { status: previousReport?.data?.vat?.status ?? 'no' }
 	} as IReport22gkhData
 
 	if (previousReport.period !== 4)

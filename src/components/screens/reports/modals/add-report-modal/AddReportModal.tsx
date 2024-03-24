@@ -24,9 +24,11 @@ const ReportModal: FC<{ handleOpenReport: (_id: string) => void }> = ({
 	const now = new Date()
 	const currentYear = now.getFullYear()
 
-	const newReportYear = now.getMonth() <= 2 ? currentYear - 1 : currentYear
+	// const newReportYear = now.getMonth() <= 2 ? currentYear - 1 : currentYear
+	const newReportYear = 2024
 
-	const newReportPeriod = Math.floor(((now.getMonth() + 9) % 12) / 3) + 1
+	// const newReportPeriod = Math.floor(((now.getMonth() + 9) % 12) / 3) + 1
+	const newReportPeriod = 1
 
 	const existingReport = reports.find(
 		report =>
@@ -35,7 +37,11 @@ const ReportModal: FC<{ handleOpenReport: (_id: string) => void }> = ({
 			report.company.inn === currentCompany?.inn
 	)
 
-	const previousReport = reports.find(
+	const previousReport = [...reports]
+		.reverse()
+		.find(report => report.company.inn === currentCompany?.inn)
+
+	const previousReportInThisYear = reports.find(
 		report =>
 			report.period === newReportPeriod - 1 &&
 			report.year === newReportYear &&
