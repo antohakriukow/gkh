@@ -1,9 +1,15 @@
+import {
+	getReportCode,
+	getReportForm,
+	getReportTitle,
+	getReportVersion
+} from './utils'
 import dayjs from 'dayjs'
 import { XmlElement, toXML } from 'jstoxml'
 
 import { IReport } from '~/shared/types/report.interface'
 
-import { getReportTitle, readReportSchema } from '~/utils/report.utils'
+import { readReportSchema } from '~/utils/report.utils'
 import { convertXmlAttributes } from '~/utils/string.utils'
 
 const _prepareToXML = (report: IReport) => {
@@ -12,12 +18,12 @@ const _prepareToXML = (report: IReport) => {
 	return {
 		_name: 'report',
 		_attrs: {
-			code: '609226005004',
-			form: '5',
+			code: getReportCode(report.year),
+			form: getReportForm(report.year),
 			shifr: 'jx_22jkxj',
 			year: report.year,
 			period: `040${report.period}`,
-			version: '21-11-2022',
+			version: getReportVersion(report.year),
 			formatVersion: '1.3'
 		},
 		_content: [
@@ -70,9 +76,9 @@ export const downloadXML = (report: IReport) => {
 
 	const downloadLink = document.createElement('a')
 	downloadLink.href = url
-	downloadLink.download = `0609226_005_004_${report.company.okpo}_${
-		report.year
-	}_040${report.period}__${now.format('YYYYMMDD')}.xml`
+	downloadLink.download = `0609226_00${getReportForm(report.year)}_004_${
+		report.company.okpo
+	}_${report.year}_040${report.period}__${now.format('YYYYMMDD')}.xml`
 
 	downloadLink.click()
 
