@@ -3,6 +3,7 @@
 Сервис доступен по ссылке: https://22gkh.ru
 
 ## Стек:
+
 - React
 - Typescript
 - SCSS + Tailwind
@@ -13,9 +14,9 @@
 
 ### Инструкции по работе с сервисом:
 
-https://youtu.be/qxgDCMPe-vU
-https://youtu.be/lqgpLNk4GRY
-https://youtu.be/JGUO_0oV5AA
+- https://youtu.be/qxgDCMPe-vU
+- https://youtu.be/lqgpLNk4GRY
+- https://youtu.be/JGUO_0oV5AA
 
 ### Моковые данные для входа:
 
@@ -23,5 +24,5 @@ login: test1@test.com
 password: test1@test.com
 
 ### Для добавления компании используйте ИНН российской компании, например:
-8203011669, 8203011651, 3721002761, 5507043995, 2317039868
 
+8203011669, 8203011651, 3721002761, 5507043995, 2317039868
