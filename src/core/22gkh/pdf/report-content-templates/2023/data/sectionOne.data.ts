@@ -1,4 +1,4 @@
-import { ISectionNames } from '../pdf.interface'
+import { ISectionNames } from '../../../pdf.interface'
 
 export const sectionOneNames: ISectionNames = {
 	section:

@@ -5,7 +5,7 @@ import {
 } from '../../../utils/report.utils'
 import { getConstants } from '../../utils/getConstants'
 
-export const generate22gkhReport = async (
+export const generate22gkhReport2023 = async (
 	userId: string,
 	reportId: string
 ): Promise<IFinalReport> => {
@@ -43,14 +43,14 @@ export const generate22gkhReport = async (
 		renovationCosts,
 
 		typicalRow,
-		row66,
-		row76,
+		totalMaintenanceRow,
+		totalElectricityRow,
 		distributeMaintenance,
 		distributeElectricity,
 
 		gasBoiler,
-		row86,
-		row87
+		naturalElectricityRow,
+		naturalHeatRow
 	} = await getConstants(userId, reportId)
 
 	// Секция отчета №1
@@ -163,7 +163,7 @@ export const generate22gkhReport = async (
 	//prettier-ignore
 	const sectionThree = removeZeroAndUndefined({
 		64: typicalRow(accrualsMaintenance, commonAndMaintenancePayments),
-		66: row66,
+		66: totalMaintenanceRow,
 		67: distributeMaintenance(67),
 		68: distributeMaintenance(68),
 		69: typicalRow(accrualsCommon, commonPayments, accrualsCommonArea),
@@ -193,7 +193,7 @@ export const generate22gkhReport = async (
 				? calculatedAreas.heat
 				: calculatedAreas.heatToHotWater
 		),
-		76: row76,
+		76: totalElectricityRow,
 		77: distributeElectricity(77),
 		78: distributeElectricity(78),
 		79: typicalRow(
@@ -231,12 +231,12 @@ export const generate22gkhReport = async (
 
 	// Секция отчета №4.
 	const sectionFour = removeZeroAndUndefined({
-		86: row86,
+		86: naturalElectricityRow,
 		87:
 			accruals.heat === 0 &&
 			(gasBoiler.status === 'both' || gasBoiler.status === 'yes')
 				? {}
-				: row87
+				: naturalHeatRow
 	})
 
 	return {

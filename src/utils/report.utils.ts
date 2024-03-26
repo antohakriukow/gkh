@@ -37,40 +37,6 @@ export const replaceUndefinedAndNaNWithZero = (obj: any): void => {
 }
 
 /**
- * Генерирует заголовок отчета на основе данных компании.
- *
- * @param data - Объект отчета.
- * @returns Массив объектов с информацией для заголовка отчета.
- */
-export const getReportTitle = (data: IReport) => [
-	{ _name: 'item', _attrs: { name: 'okpo', value: data.company.okpo } },
-	{
-		_name: 'item',
-		_attrs: { name: 'name', value: data.company.name.full }
-	},
-	{
-		_name: 'item',
-		_attrs: { name: 'leader_fio', value: data.company.leader_name }
-	},
-	{
-		_name: 'item',
-		_attrs: { name: 'responsible_post', value: data.company.leader_post }
-	},
-	{
-		_name: 'item',
-		_attrs: { name: 'responsible_fio', value: data.company.leader_name }
-	},
-	{
-		_name: 'item',
-		_attrs: { name: 'phone', value: data.company.phone.toString() }
-	},
-	{
-		_name: 'item',
-		_attrs: { name: 'mail', value: data.company.email.toString() }
-	}
-]
-
-/**
  * Читает схему отчета и возвращает структурированный массив данных.
  *
  * @param schema - Схема отчета.
