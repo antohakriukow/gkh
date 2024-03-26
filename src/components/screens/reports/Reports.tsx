@@ -3,6 +3,7 @@ import cn from 'clsx'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import Introduction from '~/components/intro/Introduction'
 import ReportModal from '~/components/screens/reports/modals/add-report-modal/AddReportModal'
 import { Button, Heading, Loader, Table } from '~/components/ui'
 import { IRow } from '~/components/ui/table/table.interface'
@@ -12,7 +13,6 @@ import { useReportsData } from '~/hooks/firebase-hooks/useReportsData'
 import { useModal } from '~/hooks/useModal'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
 
-import Intro from '~/shared/Intro'
 import { IReport } from '~/shared/types/report.interface'
 
 import { convertPeriod, convertTypeReport } from '~/utils/report.utils'
@@ -76,7 +76,7 @@ const Reports: FC = () => {
 					height={90}
 				/>
 			)}
-			<Intro />
+			<Introduction />
 		</div>
 	)
 }

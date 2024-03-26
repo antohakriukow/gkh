@@ -1,4 +1,4 @@
-import { introSteps, russianLocale } from './intro/intro'
+import { introSteps, russianLocale } from './intro.data'
 import { FC } from 'react'
 import ReactJoyride, { CallBackProps } from 'react-joyride'
 
@@ -7,19 +7,19 @@ import { useAuth } from '~/hooks/useAuth'
 
 import { UserService } from '~/services/user.service'
 
-const Intro: FC = () => {
+const Introduction: FC = () => {
 	const { user } = useAuth()
 	const { needToShowIntro } = useUserData()
 
 	const handleFinishIntro = (data: CallBackProps) => {
-		const { status } = data
-		const finishedStatuses: string[] = ['finished', 'skipped']
+		if (!user) return
 
-		if (finishedStatuses.includes(status)) {
-			if (!user) return
-			UserService.setNeedToShowIntro(user.uid)
-		}
+		const finishedStatuses = ['finished', 'skipped']
+
+		if (finishedStatuses.includes(data.status))
+			UserService.setDoNotShowIntroAgain(user.uid)
 	}
+
 	return (
 		<ReactJoyride
 			steps={introSteps}
@@ -36,4 +36,4 @@ const Intro: FC = () => {
 		/>
 	)
 }
-export default Intro
+export default Introduction

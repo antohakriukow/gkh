@@ -1,6 +1,6 @@
 import { Locale } from 'react-joyride'
 
-const russianLocale: Locale = {
+export const russianLocale: Locale = {
 	back: 'Назад',
 	close: 'Закрыть',
 	last: 'Завершить',
@@ -9,7 +9,7 @@ const russianLocale: Locale = {
 	skip: 'Пропустить'
 }
 
-const introSteps = [
+export const introSteps = [
 	{
 		target: '.addReportButtonAnchor',
 		content:
@@ -56,5 +56,3 @@ const introSteps = [
 		placement: 'bottom' as const
 	}
 ]
-
-export { introSteps, russianLocale }

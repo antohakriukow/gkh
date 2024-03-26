@@ -20,7 +20,7 @@ export const UserService = {
 		await cloudFunction.addShortIdToUser()
 	},
 
-	async setNeedToShowIntro(userId: string) {
+	async setDoNotShowIntroAgain(userId: string) {
 		await update(ref(db, `users/${userId}`), {
 			needToShowIntro: false
 		})

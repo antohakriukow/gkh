@@ -3,6 +3,7 @@ import cn from 'clsx'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import Introduction from '~/components/intro/Introduction'
 import { Button, Heading, Table } from '~/components/ui'
 import { IRow } from '~/components/ui/table/table.interface'
 
@@ -13,7 +14,6 @@ import { usePaymentsData } from '~/hooks/firebase-hooks/usePaymentsData'
 import { useModal } from '~/hooks/useModal'
 import { useTypedSelector } from '~/hooks/useTypedSelector'
 
-import Intro from '~/shared/Intro'
 import { IAnnualReportDetails } from '~/shared/types/annual.interface'
 
 import { getAnnualReportStructureName } from '~/utils/annual.utils'
@@ -114,7 +114,7 @@ const AnnualReports: FC = () => {
 					height={85}
 				/>
 			)}
-			<Intro />
+			<Introduction />
 		</div>
 	)
 }
