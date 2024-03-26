@@ -1,4 +1,5 @@
 import { useResetPassword } from './useResetPassword'
+import { FC } from 'react'
 import { FieldError, SubmitHandler, useForm } from 'react-hook-form'
 
 import {
@@ -15,7 +16,7 @@ import { IAuthInput } from '../landing/auth/auth.interface'
 
 import styles from './ResetPassword.module.scss'
 
-const ResetPassword = () => {
+const ResetPassword: FC = () => {
 	const { isLoading, handleResetPassword } = useResetPassword()
 	const { register, handleSubmit, formState } = useForm<IAuthInput>({
 		mode: 'onChange'
