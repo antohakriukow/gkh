@@ -1,5 +1,3 @@
-import { useAuth } from './useAuth'
-import { useModal } from './useModal'
 import { FirebaseError } from 'firebase/app'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -12,7 +10,10 @@ import { ReportService } from '~/services/report.service'
 
 import { handleDBErrors } from '~/utils/error.utils'
 
-export const useReport = () => {
+import { useAuth } from '../../../hooks/useAuth'
+import { useModal } from '../../../hooks/useModal'
+
+export const useReports = () => {
 	const { user } = useAuth()
 	const { hideModal } = useModal()
 	const [isLoading, setIsLoading] = useState(false)
