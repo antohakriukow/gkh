@@ -300,7 +300,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 	)
 
 	const naturalElectricityRow = {
-		4: !!natural.electricityCommon ? natural.electricityCommon : 0,
+		4: !!natural?.electricityCommon ? natural?.electricityCommon : 0,
 		6: area.commonArea ? area.commonArea : 0,
 		7:
 			settings.areasAreDifferent === 'yes' && !!calculatedAreas.electricity
@@ -309,7 +309,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 	}
 
 	const naturalHeatRow = {
-		3: natural.heat,
+		3: natural?.heat,
 		5:
 			settings.areasAreDifferent === 'yes' && !!calculatedAreas.heat
 				? calculatedAreas.heat

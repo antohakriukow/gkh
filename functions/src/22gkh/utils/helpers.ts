@@ -47,7 +47,9 @@ export const removeNonResidentialShare = (
 	residentialArea: number,
 	nonResidentialArea: number
 ) =>
-	Math.ceil((value * residentialArea) / (residentialArea + nonResidentialArea))
+	Math.ceil(
+		(value * residentialArea) / (residentialArea + nonResidentialArea)
+	) ?? 0
 
 export const distributePayments = (
 	income: number,

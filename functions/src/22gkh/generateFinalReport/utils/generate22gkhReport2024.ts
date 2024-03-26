@@ -35,7 +35,6 @@ export const generate22gkhReport2024 = async (
 		maintenanceDebts,
 		communalDebts,
 		commonDebts,
-		organizationDebts,
 		totalOrganizationDebts,
 
 		income,
@@ -45,7 +44,6 @@ export const generate22gkhReport2024 = async (
 		typicalRow,
 		totalMaintenanceRow,
 		totalElectricityRow,
-		distributeMaintenance,
 		distributeElectricity,
 
 		gasBoiler,
