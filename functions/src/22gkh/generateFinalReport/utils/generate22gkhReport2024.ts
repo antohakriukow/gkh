@@ -10,6 +10,7 @@ export const generate22gkhReport2024 = async (
 	reportId: string
 ): Promise<IFinalReport> => {
 	const {
+		period,
 		calculatedAreas,
 		accrualsCommonArea,
 		renovationArea,
@@ -184,7 +185,7 @@ export const generate22gkhReport2024 = async (
 		1: sectionOne,
 		2: sectionTwo,
 		3: sectionThree,
-		4: sectionFour,
+		4: period === 4 ? sectionFour : {},
 		generatedAt: Date.now().toString()
 	}
 }
