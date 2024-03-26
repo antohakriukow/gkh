@@ -10,19 +10,6 @@ import { db } from '~/services/_firebase'
 import { replaceUndefinedAndNaNWithZero } from '~/utils/report.utils'
 
 export const ReportService = {
-	async _getAll(userId: string) {
-		try {
-			const snapshot = await get(child(ref(db), `users/${userId}/reports`))
-			if (snapshot.exists()) {
-				return Object.values(snapshot.val())
-			} else {
-				return []
-			}
-		} catch (error) {
-			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
-		}
-	},
-
 	async getById(userId: string, reportId: string) {
 		try {
 			const snapshot = await get(

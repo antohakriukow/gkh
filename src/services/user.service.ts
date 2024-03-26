@@ -26,17 +26,17 @@ export const UserService = {
 		})
 	},
 
+	async restorePassword(email: string) {
+		if (!email) return
+		await resetPassword(email)
+	},
+
 	async updateUserEmail(user: User, newEmail: string, currentPassword: string) {
 		if (!user || !user.email) return
 		const credential = EmailAuthProvider.credential(user.email, currentPassword)
 
 		await reauthenticateWithCredential(user, credential)
 		updateEmail(user, newEmail)
-	},
-
-	async restorePassword(email: string) {
-		if (!email) return
-		await resetPassword(email)
 	},
 
 	async updateUserPassword(

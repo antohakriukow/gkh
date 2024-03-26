@@ -1,7 +1,7 @@
 import { IIssue, IIssueCreate } from './../shared/types/issue.interface'
 import { IOwner } from './../shared/types/shared.types'
 import { cloudFunction } from './_functions'
-import { child, get, push, ref, set, update } from 'firebase/database'
+import { child, get, push, ref, set } from 'firebase/database'
 import { toast } from 'react-toastify'
 
 import { db } from '~/services/_firebase'
@@ -63,25 +63,6 @@ export const IssuesService = {
 		} catch (error) {
 			cloudFunction.createLog(user._id, 'error', 'issues/error', {
 				data: issue,
-				error
-			})
-		}
-	},
-
-	async close(user: IOwner, issueId: string, message: string) {
-		if (!user._id || !issueId || !message) return
-		const timestamp = Date.now().toString()
-
-		const data = {
-			status: 'closed',
-			updatedAt: timestamp
-		}
-
-		try {
-			await update(ref(db, `issues/${user._id}/${issueId}`), data)
-		} catch (error) {
-			cloudFunction.createLog(user._id, 'error', 'issues/error', {
-				data,
 				error
 			})
 		}
