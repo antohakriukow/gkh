@@ -22,14 +22,12 @@ const Header: FC = () => {
 	const { user } = useAuth()
 	const navigate = useNavigate()
 	const { width } = useWindowWidth()
-	// const goHome = () => navigate(`/reports`)
 	const location = useLocation()
-	const { setCurrentAnnualReport, setCurrentReport } = useActions()
+	const { setCurrentReport } = useActions()
 
 	const isActive = (path: string) => location.pathname === path
 
 	function handleClick(item: IMenuItem) {
-		setCurrentAnnualReport(null)
 		setCurrentReport(null)
 		navigate(item.path)
 	}
@@ -65,7 +63,6 @@ const Header: FC = () => {
 					</div>
 				)}
 			</div>
-			{/* <SubHeader menuItems={menuItems} /> */}
 		</div>
 	)
 }

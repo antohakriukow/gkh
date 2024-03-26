@@ -1,6 +1,5 @@
 import { getDirectionAccountNumbers, isAccountingOperation } from './shared'
-
-import { AnnualState } from '~/store/annual/annual.interface'
+import { AnnualState } from './types'
 
 const createCategoriesGraph = (
 	pairs: Array<{ debitAccount1: string; debitAccount2?: string }>

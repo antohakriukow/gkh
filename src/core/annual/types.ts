@@ -1,12 +1,9 @@
 import {
-	IAnnualCategoryState,
-	TypeAnnualReportStructure
-} from './../../shared/types/annual.interface'
-
-import {
 	IAccount,
 	IAccountingOperation,
-	IBankOperation
+	IAnnualCategoryState,
+	IBankOperation,
+	TypeAnnualReportStructure
 } from '~/shared/types/annual.interface'
 
 export interface AnnualState {

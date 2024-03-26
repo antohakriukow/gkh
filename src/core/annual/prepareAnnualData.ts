@@ -1,9 +1,8 @@
 import { unifyAccountingOperations } from './prepareAccountingData'
 import { unifyBankOperations } from './prepareBankData'
+import { AnnualState } from './types'
 
 import { GetDateIntervalBoundaries } from '~/utils/time.utils'
-
-import { AnnualState } from '~/store/annual/annual.interface'
 
 import { IOperation } from '../../shared/types/annual.interface'
 import { createDeepCopy } from '../../utils/object.utils'

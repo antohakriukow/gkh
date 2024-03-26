@@ -1,3 +1,5 @@
+import { AnnualState } from './types'
+
 import {
 	IAccountingOperation,
 	IAnnualCategory,
@@ -7,8 +9,6 @@ import {
 	IExtendedBankOperation,
 	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
-
-import { AnnualState } from '~/store/annual/annual.interface'
 
 /**
  * Проверяет, является ли переданная операция бухгалтерской операцией.

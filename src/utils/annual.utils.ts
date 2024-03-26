@@ -144,24 +144,6 @@ export const sortOperationsGroupsArrayByPayerName = (groupedOperations: {
 		.map(([payerName, operations]) => ({ payerName, operations }))
 		.sort((a, b) => b.operations.length - a.operations.length)
 
-// export const getOperationsByCategory = (
-// 	operations: IExtendedBankOperation[],
-// 	category: IAnnualCategory
-// ) => {
-// 	const categoryIds = getCategoriesWithoutChildren([category]).map(
-// 		cat => cat.value
-// 	)
-// 	return operations.reduce(
-// 		(result: IExtendedBankOperation[], operation: IExtendedBankOperation) => {
-// 			if (categoryIds.includes(operation.categoryId.toString())) {
-// 				return [...result, operation]
-// 			}
-// 			return result
-// 		},
-// 		[] as IExtendedBankOperation[]
-// 	)
-// }
-
 // Функция для получения идентификаторов текущей категории и всех её дочерних категорий
 const getAllCategoryIds = (
 	category: IAnnualCategory,
