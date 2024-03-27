@@ -1,20 +1,16 @@
-import { data } from './data'
+import { WATCH_EXAMPLE, data } from './structure-selector.data'
 import cn from 'clsx'
-import { Dispatch, FC, SetStateAction } from 'react'
+import { FC } from 'react'
 
 import { TypeAnnualReportStructure } from '~/shared/types/annual.interface'
 
+import { useDataUploaderContext } from '../../provider/provider'
+
 import styles from './structure-selector.module.scss'
 
-interface IStructureSelectorProps {
-	structure: TypeAnnualReportStructure | undefined
-	setStructure: Dispatch<SetStateAction<TypeAnnualReportStructure | undefined>>
-}
+const StructureSelector: FC = () => {
+	const { structure, setStructure } = useDataUploaderContext()
 
-const StructureSelector: FC<IStructureSelectorProps> = ({
-	structure,
-	setStructure
-}) => {
 	const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
 		setStructure(event.currentTarget.id as TypeAnnualReportStructure)
 	}
@@ -45,7 +41,7 @@ const StructureSelector: FC<IStructureSelectorProps> = ({
 						target='_blank'
 						rel='noopener noreferrer'
 					>
-						Смотреть образец
+						{WATCH_EXAMPLE}
 					</a>
 				</div>
 			))}

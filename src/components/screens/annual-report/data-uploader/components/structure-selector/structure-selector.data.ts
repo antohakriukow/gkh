@@ -21,6 +21,8 @@ export const data: IStructureTypes[] = [
 			'Потребуется загрузить банковские выписки в формате 1С 8.3. Также потребуется внести список статей, по которым УО производит начисление и распределить списания с расчетных счетов по статьям.',
 		link: 'https://disk.yandex.ru/i/CRzKuDLdRxlxGg'
 	}
+	// INFO: функционал на стадии разработки
+
 	// {
 	// 	type: 'accruals/services',
 	// 	title: 'Метод начислений: в разрезе услуг',
@@ -29,3 +31,5 @@ export const data: IStructureTypes[] = [
 	// 	link: ''
 	// }
 ]
+
+export const WATCH_EXAMPLE = 'Смотреть образец'
