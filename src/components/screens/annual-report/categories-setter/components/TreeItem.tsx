@@ -8,7 +8,7 @@ import { MdClose } from 'react-icons/md'
 
 import { IAnnualCategoryState } from '~/shared/types/annual.interface'
 
-import { useTreeContext } from '../TreeProvider'
+import { useTreeContext } from '../provider/TreeProvider'
 
 import styles from './tree.module.scss'
 

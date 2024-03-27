@@ -18,7 +18,7 @@ import {
 
 import { createDeepCopy } from '~/utils/object.utils'
 
-import { useAnnualReport } from '../useAnnualReport'
+import { useAnnualReport } from '../../useAnnualReport'
 
 interface ITreeContext {
 	items: IAnnualCategoryState[]

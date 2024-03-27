@@ -4,7 +4,9 @@ import { FC } from 'react'
 
 import { IAnnualCategoryState } from '~/shared/types/annual.interface'
 
-import { useTreeContext } from '../TreeProvider'
+import { useTreeContext } from '../provider/TreeProvider'
+
+import styles from './tree.module.scss'
 
 const Tree: FC = () => {
 	const { setItems, items } = useTreeContext()
@@ -15,12 +17,14 @@ const Tree: FC = () => {
 		}
 	}
 	return (
-		<SortableTree
-			items={(items as TreeItems<IAnnualCategoryState>) ?? []}
-			onItemsChanged={setItems}
-			TreeItemComponent={TreeItem}
-			pointerSensorOptions={pointerSensorOptions}
-		/>
+		<div className={styles.container}>
+			<SortableTree
+				items={(items as TreeItems<IAnnualCategoryState>) ?? []}
+				onItemsChanged={setItems}
+				TreeItemComponent={TreeItem}
+				pointerSensorOptions={pointerSensorOptions}
+			/>
+		</div>
 	)
 }
 export default Tree

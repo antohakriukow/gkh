@@ -1,6 +1,6 @@
-import { TreeProvider } from './TreeProvider'
 import ItemCreator from './components/ItemCreator'
 import Tree from './components/Tree'
+import { TreeProvider } from './provider/TreeProvider'
 import { useCategoriesSetter } from './useCategoriesSetter'
 import { FC, useState } from 'react'
 
