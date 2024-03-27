@@ -11,11 +11,9 @@ const AddCompanyButton: FC<{ onClick?: () => void }> = ({ onClick }) => {
 	const navigate = useNavigate()
 	const { showModal } = useModal()
 
-	const goHome = () => navigate(`/reports`)
-
 	const handleAdd = () => {
 		if (!!onClick) onClick()
-		goHome()
+		navigate(`/reports`)
 		showModal(<AddCompanyModal />)
 	}
 

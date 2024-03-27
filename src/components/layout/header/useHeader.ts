@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { useCompaniesData } from '~/hooks/firebase-hooks/useCompaniesData'
 import { useCurrentCompanyInnData } from '~/hooks/firebase-hooks/useCurrentCompanyInnData'
@@ -18,8 +18,17 @@ export const useHeader = () => {
 	const { userId } = useUserData()
 	const { currentCompany } = useTypedSelector(state => state.ui)
 	const { setCurrentCompany, setCurrentReport } = useActions()
+	const location = useLocation()
 
 	const navigate = useNavigate()
+
+	const handleGoToHomePage = () => navigate('/')
+
+	const handleRedirect = () => {
+		if (location.pathname.includes('/reports/edit')) navigate('/reports')
+		if (location.pathname.includes('/annual-reports/edit'))
+			navigate('/annual-reports')
+	}
 
 	const handleLogout = () => {
 		if (!user) return
@@ -27,7 +36,7 @@ export const useHeader = () => {
 		setCurrentCompany(null)
 		try {
 			logout()
-			navigate('/')
+			handleGoToHomePage()
 			cloudFunction.createLog(user.uid, 'info', 'auth/logout')
 		} catch (error) {
 			cloudFunction.createLog(user.uid, 'error', 'auth/logout', { error })
@@ -40,14 +49,14 @@ export const useHeader = () => {
 	}
 
 	return {
-		isCompaniesDataLoading,
-		isCurrentCompanyInnLoading,
+		isLoading: isCompaniesDataLoading && isCurrentCompanyInnLoading,
 		userId,
 		currentCompanyInn,
 		companies,
 		currentCompany,
 		setCurrentCompany,
 		handleSetCurrentCompany,
-		handleLogout
+		handleLogout,
+		handleRedirect
 	}
 }
