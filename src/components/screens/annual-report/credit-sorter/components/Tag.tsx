@@ -45,7 +45,7 @@ const Tag: FC<ITagProps> = ({
 
 	const onSubmit = () => handleSubmit(tag.value)
 
-	const disabled = selectedOperations.length === 0
+	const isDisabled = selectedOperations.length === 0
 
 	return (
 		<div className={styles.tag}>
@@ -61,7 +61,7 @@ const Tag: FC<ITagProps> = ({
 					)}
 				</div>
 				<h4>{tag.title}</h4>
-				<ToolBar onSubmit={onSubmit} disabled={disabled} />
+				<ToolBar onSubmit={onSubmit} disabled={isDisabled} />
 			</div>
 
 			{isVisible && (

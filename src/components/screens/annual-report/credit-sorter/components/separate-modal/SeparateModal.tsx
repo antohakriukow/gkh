@@ -1,8 +1,9 @@
-import Operation from './Operation'
+import Operation from './components/Operation'
+import OperationInfo from './components/OperationInfo'
 import { useSeparateModal } from './useSeparateModal'
 import { Dispatch, FC, SetStateAction } from 'react'
 
-import { Button } from '~/components/ui'
+import { Button, SubHeading } from '~/components/ui'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
@@ -40,10 +41,22 @@ const SeparateModal: FC<ISeparateModal> = ({
 		setLocalOperations
 	)
 
+	const operationTitle = `${
+		operation.amount > 0 ? 'Поступление' : 'Списание'
+	} №${operation.documentNumber} от ${operation.date}: `
+	const partnerName =
+		operation.amount > 0 ? operation.payerName : operation.recipientName
+
 	return (
 		<div className={styles.container}>
+			<SubHeading title='Разделение операции' />
+			<OperationInfo title='Контрагент: ' description={partnerName} />
+			<OperationInfo
+				title={operationTitle}
+				description={operation.paymentPurpose}
+			/>
 			<div className={styles.header}>
-				<p>Контрагент</p>
+				<p>№ операции</p>
 				<p>Сумма</p>
 			</div>
 			{operations.map((operation, index) => (
