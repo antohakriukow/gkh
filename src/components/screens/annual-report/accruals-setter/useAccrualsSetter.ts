@@ -1,16 +1,96 @@
 import { IAnnualReportCategoriesFormInput } from './accruals-setter.interface'
-import { useEffect } from 'react'
-import { UseFormSetValue } from 'react-hook-form'
+import { useEffect, useState } from 'react'
+import {
+	SubmitHandler,
+	UseFormHandleSubmit,
+	UseFormSetValue
+} from 'react-hook-form'
+import { useParams } from 'react-router-dom'
 
+import { useAuth } from '~/hooks/useAuth'
+import { useWindowWidth } from '~/hooks/useWindowWidth'
+
+import {
+	showErrorByDataUpdatingNotification,
+	showSuccessDataUpdatedNotification
+} from '~/shared/notifications/toast'
 import { TypeDefinedAnnualDirection } from '~/shared/types/annual.interface'
+
+import { AnnualService } from '~/services/annual.service'
+
+import { getExistingDirections } from '~/utils/annual.utils'
 
 import { useAnnualReport } from '../useAnnualReport'
 
 export const useAccrualsSetter = (
 	setValue: UseFormSetValue<IAnnualReportCategoriesFormInput>,
-	direction: TypeDefinedAnnualDirection
+	handleSubmit: UseFormHandleSubmit<IAnnualReportCategoriesFormInput, undefined>
 ) => {
-	const { annualReportInDB } = useAnnualReport()
+	const [isLoading, setIsLoading] = useState(false)
+	const [step, setStep] = useState<number>(0) // 0, 1, 2, 3
+	const { reportId } = useParams<{ reportId: string }>()
+	const {
+		isDataLoading,
+		isReportPayed,
+		annualReportInDB,
+		closeAnnualReport,
+		deleteAnnualReport,
+		redirectToCategoriesSetter,
+		redirectToCreditSorter
+	} = useAnnualReport()
+	const { user } = useAuth()
+	const { width } = useWindowWidth()
+	const isNarrow = width < 500
+
+	const existingDirections = (
+		['main', 'renovation', 'target', 'commerce'] as TypeDefinedAnnualDirection[]
+	).filter(step =>
+		getExistingDirections(annualReportInDB?.data?.accounts ?? []).includes(step)
+	)
+
+	const direction = existingDirections[step]
+
+	const onSubmit: SubmitHandler<
+		IAnnualReportCategoriesFormInput
+	> = async data => {
+		if (!user || !reportId) return
+
+		try {
+			const categoriesInDirection = [
+				...(annualReportInDB?.data?.categories?.[direction] ?? [])
+			]
+			categoriesInDirection.forEach(
+				category =>
+					(category.amount = data.categories[category.id]?.amount ?? 0)
+			)
+
+			if (!categoriesInDirection.length) return
+
+			await AnnualService.updateCategories(
+				user.uid,
+				reportId,
+				direction,
+				categoriesInDirection
+			)
+			showSuccessDataUpdatedNotification()
+		} catch (error) {
+			showErrorByDataUpdatingNotification()
+		}
+	}
+
+	const onNext = async () => {
+		if (step === existingDirections.length) return redirectToCreditSorter()
+		setIsLoading(true)
+		await handleSubmit(onSubmit)().then(() => setIsLoading(false))
+		setStep(step + 1)
+	}
+
+	const onBack = async () => {
+		if (step === 0) return redirectToCategoriesSetter()
+		setIsLoading(true)
+		await handleSubmit(onSubmit)().then(() => setIsLoading(false))
+		setStep(step - 1)
+	}
 
 	useEffect(() => {
 		if (annualReportInDB?.data?.categories) {
@@ -20,5 +100,17 @@ export const useAccrualsSetter = (
 		}
 	}, [annualReportInDB, setValue, direction])
 
-	return { annualReportInDB }
+	return {
+		isLoading,
+		isDataLoading,
+		isReportPayed,
+		isNarrow,
+		step,
+		directions: existingDirections,
+		annualReportInDB,
+		closeAnnualReport,
+		deleteAnnualReport,
+		onNext,
+		onBack
+	}
 }

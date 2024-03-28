@@ -55,18 +55,6 @@ const Form: FC<IFormProps> = ({
 					/>
 				)
 			})}
-			{/* {categories && (
-					<p>
-						Итого начислено:{' '}
-						{formatNumber(
-							categories.reduce(
-								(sum, category) =>
-									category.amount ? sum + category.amount : sum,
-								0
-							)
-						)}
-					</p>
-				)} */}
 		</div>
 	)
 }
