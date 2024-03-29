@@ -1,5 +1,3 @@
-import Tag from './components/Tag'
-import SeparateModal from './components/separate-modal/SeparateModal'
 import { useCreditSorter } from './useCreditSorter'
 import { FC, useCallback } from 'react'
 
@@ -7,8 +5,7 @@ import { Loader } from '~/components/ui'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
-import Container from '../shared/container/Container'
-import NarrowAttention from '../shared/narrow-attention/NarrowAttention'
+import { Container, NarrowAttention, SeparateModal, Tag } from '../shared'
 
 import styles from './credit-sorter.module.scss'
 

@@ -42,7 +42,7 @@
 	}
 }
 
-.category {
+.container {
 	@apply grid items-center mb-0.5 px-2 bg-primary-100;
 	grid-template-columns: 24px 1fr 24px;
 	border: solid 1px $gray-200;

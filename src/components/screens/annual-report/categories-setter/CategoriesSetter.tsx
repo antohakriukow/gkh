@@ -13,8 +13,7 @@ import {
 	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
 
-import Container from '../shared/container/Container'
-import NarrowAttention from '../shared/narrow-attention/NarrowAttention'
+import { Container, NarrowAttention } from '../shared'
 import { useAnnualReport } from '../useAnnualReport'
 
 import styles from './categories-setter.module.scss'

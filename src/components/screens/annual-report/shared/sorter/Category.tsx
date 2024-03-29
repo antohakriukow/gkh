@@ -1,6 +1,5 @@
-import OperationsGroup from './OperationsGroup'
-import ToolBar from './ToolBar'
-import { FC, Fragment, memo, useState } from 'react'
+import { OperationsGroup, ToolBar } from '..'
+import { FC, memo, useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa6'
 
 import {
@@ -14,7 +13,7 @@ import {
 	sortOperationsGroupsArrayByRecipientName
 } from '~/utils/annual.utils'
 
-import styles from './operations.module.scss'
+import styles from './sorter.module.scss'
 
 const Category: FC<{
 	category: IAnnualCategory
@@ -35,12 +34,13 @@ const Category: FC<{
 		showSeparateModal
 	}) => {
 		const [isVisible, setIsVisible] = useState(true)
-
 		const toggleVisible = () => setIsVisible(!isVisible)
+
+		const otherDebitOperationsCategoryId = '10000'
 
 		const groupedOperations = category.children
 			? []
-			: category.id === '10000'
+			: category.id === otherDebitOperationsCategoryId
 			? sortOperationsGroupsArrayByRecipientName(
 					groupOperationsByRecipientName(operations)
 			  )
@@ -57,9 +57,9 @@ const Category: FC<{
 		const disabled = selectedOperations.length === 0
 
 		return (
-			<Fragment>
+			<>
 				<div
-					className={styles.category}
+					className={styles.container}
 					style={{ marginLeft: `${level * 16}px` }}
 				>
 					<div>
@@ -76,7 +76,7 @@ const Category: FC<{
 				</div>
 
 				{isVisible && (
-					<Fragment>
+					<>
 						{category.children
 							? category.children.map((cat, index) => {
 									return (
@@ -101,11 +101,12 @@ const Category: FC<{
 										selectedOperations={selectedOperations}
 										level={level + 1}
 										showSeparateModal={showSeparateModal}
+										type='debit'
 									/>
 							  ))}
-					</Fragment>
+					</>
 				)}
-			</Fragment>
+			</>
 		)
 	}
 )

@@ -1,6 +1,5 @@
-import OperationsGroup from './OperationsGroup'
-import ToolBar from './ToolBar'
-import { FC, Fragment, useState } from 'react'
+import { OperationsGroup, ToolBar } from '..'
+import { FC, useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa6'
 import { IAnnualOperationTagData } from '~/data/annual-tag-variations'
 
@@ -14,7 +13,7 @@ import {
 	sortOperationsGroupsArrayByPayerName
 } from '~/utils/annual.utils'
 
-import styles from './operations.module.scss'
+import styles from './sorter.module.scss'
 
 interface ITagProps {
 	tag: IAnnualOperationTagData
@@ -48,9 +47,9 @@ const Tag: FC<ITagProps> = ({
 	const isDisabled = selectedOperations.length === 0
 
 	return (
-		<div className={styles.tag}>
+		<>
 			<div
-				className={styles.category}
+				className={styles.container}
 				style={{ marginLeft: `${level * 16}px` }}
 			>
 				<div>
@@ -65,7 +64,7 @@ const Tag: FC<ITagProps> = ({
 			</div>
 
 			{isVisible && (
-				<Fragment>
+				<>
 					{groupedOperations.map(group => (
 						<OperationsGroup
 							key={group.payerName}
@@ -75,11 +74,12 @@ const Tag: FC<ITagProps> = ({
 							selectedOperations={selectedOperations}
 							level={level + 1}
 							showSeparateModal={showSeparateModal}
+							type='credit'
 						/>
 					))}
-				</Fragment>
+				</>
 			)}
-		</div>
+		</>
 	)
 }
 export default Tag

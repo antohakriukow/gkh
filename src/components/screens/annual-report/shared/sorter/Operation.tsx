@@ -6,7 +6,7 @@ import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
 import { formatNumber } from '~/utils/number.utils'
 
-import styles from './operations.module.scss'
+import styles from './sorter.module.scss'
 
 interface IOperationProps {
 	operation: IExtendedBankOperation

@@ -7,8 +7,7 @@ import { useForm } from 'react-hook-form'
 
 import Loader from '~/components/ui/loader/Loader'
 
-import Container from '../shared/container/Container'
-import NarrowAttention from '../shared/narrow-attention/NarrowAttention'
+import { Container, NarrowAttention } from '../shared'
 
 const AccrualsSetter: FC = () => {
 	const { register, control, handleSubmit, setValue } =

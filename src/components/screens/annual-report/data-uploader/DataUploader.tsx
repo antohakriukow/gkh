@@ -10,9 +10,7 @@ import { FC } from 'react'
 
 import { Loader } from '~/components/ui'
 
-import Container from '../shared/container/Container'
-import NarrowAttention from '../shared/narrow-attention/NarrowAttention'
-import StepStatus from '../shared/step-status/StepStatus'
+import { Container, NarrowAttention, StepStatus } from '../shared'
 
 const DataUploader: FC = () => {
 	const {

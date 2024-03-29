@@ -6,8 +6,7 @@ import { Loader } from '~/components/ui'
 
 import { useWindowWidth } from '~/hooks/useWindowWidth'
 
-import Container from '../shared/container/Container'
-import NarrowAttention from '../shared/narrow-attention/NarrowAttention'
+import { Container, NarrowAttention } from '../shared'
 import { useAnnualReport } from '../useAnnualReport'
 
 const Preview: FC = () => {

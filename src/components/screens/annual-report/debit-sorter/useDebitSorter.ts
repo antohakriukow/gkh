@@ -1,22 +1,19 @@
 import { useMemo } from 'react'
-import { getAnnualTagVariationsData } from '~/data/annual-tag-variations'
 
 import {
 	showErrorByDataUpdatingNotification,
 	showSuccessDataUpdatedNotification
 } from '~/shared/notifications/toast'
-import {
-	IExtendedBankOperation,
-	TypeAnnualOperationTag
-} from '~/shared/types/annual.interface'
+import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
 import { AnnualService } from '~/services/annual.service'
 
+import { getAllLeafCategoryIds } from '~/utils/annual.utils'
 import { areArraysEqualByKey } from '~/utils/array.utils'
 
 import { useSorter } from '../shared'
 
-export const useCreditSorter = () => {
+export const useDebitSorter = () => {
 	const {
 		isLoading,
 		isDataLoading,
@@ -34,51 +31,65 @@ export const useCreditSorter = () => {
 		showModal,
 		closeAnnualReport,
 		deleteAnnualReport,
-		redirectToAccrualsSetter,
-		redirectToDebitSorter
+		redirectToCreditSorter,
+		redirectToPreview
 	} = useSorter()
 
-	const tags = getAnnualTagVariationsData('main')
-
-	const handleSubmit = (tag: TypeAnnualOperationTag) => {
+	const handleSubmit = (categoryId: string) => {
 		setLocalOperations(
 			localOperations.map(operation =>
 				selectedOperations.includes(operation._id)
-					? { ...operation, tag }
+					? { ...operation, categoryId }
 					: operation
 			)
 		)
+
 		setSelectedOperations([])
 	}
 
-	const { operationsWithTag, operationsWithoutTag } = useMemo(() => {
-		let operationsWithTag = [] as IExtendedBankOperation[]
-		let operationsWithoutTag = [] as IExtendedBankOperation[]
+	const categoriesWithoutChildrenIds = useMemo(() => {
+		const mainCategories = annualReportInDB?.data?.categories?.main ?? []
+		return getAllLeafCategoryIds(mainCategories)
+	}, [annualReportInDB?.data?.categories])
+
+	const { sortedOperations, unsortedOperations } = useMemo(() => {
+		let sortedOps = [] as IExtendedBankOperation[]
+		let unsortedOps = [] as IExtendedBankOperation[]
 
 		localOperations
-			.filter(operation => operation.amount > 0)
+			.filter(operation => operation.amount < 0)
 			.forEach(operation => {
-				operation.tag === undefined || operation.tag === ''
-					? operationsWithoutTag.push(operation)
-					: operationsWithTag.push(operation)
+				!categoriesWithoutChildrenIds.includes(operation.categoryId) ||
+				operation.categoryId === '' ||
+				operation.categoryId === undefined
+					? unsortedOps.push(operation)
+					: sortedOps.push(operation)
 			})
 
 		return {
-			operationsWithTag,
-			operationsWithoutTag
+			sortedOperations: sortedOps,
+			unsortedOperations: unsortedOps
 		}
-	}, [localOperations])
+	}, [localOperations, categoriesWithoutChildrenIds])
+
+	const mockUnsortedCategory = {
+		value: 'ЖКУ: Прочие списания',
+		id: ''
+	}
 
 	const saveBankOperationsToDB = async () => {
 		if (!user || !annualReportInDB) return
-		const localOperationsInDB = annualReportInDB.data.bankOperations ?? []
-		const notMainBankOperations = localOperationsInDB.filter(
+		const bankOperationsInDB = annualReportInDB.data.bankOperations ?? []
+		const notMainBankOperations = bankOperationsInDB.filter(
 			op => op.direction !== 'main'
 		)
 
 		const resultArray = [...localOperations, ...notMainBankOperations]
-		if (areArraysEqualByKey(localOperationsInDB, resultArray, '_id', 'tag'))
+		if (
+			areArraysEqualByKey(bankOperationsInDB, resultArray, '_id', 'categoryId')
+		) {
 			return
+		}
 
 		setIsLoading(true)
 
@@ -98,32 +109,33 @@ export const useCreditSorter = () => {
 
 	const onBack = async () => {
 		await saveBankOperationsToDB()
-		redirectToAccrualsSetter()
+		redirectToCreditSorter()
 	}
 
 	const onNext = async () => {
 		await saveBankOperationsToDB()
-		redirectToDebitSorter()
+		redirectToPreview()
 	}
 
 	return {
-		isNarrow,
 		isLoading,
 		isDataLoading,
+		isNarrow,
 		isReportPayed,
+		annualReportInDB,
 		localOperations,
 		selectedOperations,
-		operationsWithoutTag,
-		operationsWithTag,
+		sortedOperations,
+		unsortedOperations,
 		lastBankOperationId,
-		tags,
-		showModal,
+		mockUnsortedCategory,
 		setLocalOperations,
 		toggleOperationSelection,
+		showModal,
 		closeAnnualReport,
 		deleteAnnualReport,
-		handleSubmit,
 		onNext,
-		onBack
+		onBack,
+		handleSubmit
 	}
 }
