@@ -35,6 +35,7 @@ const DirectionSelector: FC = () => {
 			<div className={styles.accounts}>
 				{sortedAccounts.map(account => (
 					<Selector
+						key={account.number}
 						account={account}
 						handleDirectionChange={handleDirectionChange}
 						isAccrualsStructure={isAccrualsStructure}

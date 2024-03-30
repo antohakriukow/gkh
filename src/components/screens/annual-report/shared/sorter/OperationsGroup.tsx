@@ -1,4 +1,5 @@
 import Operation from './Operation'
+import { IOperationsGroupProps } from './sorter.interface'
 import { FC, memo, useCallback, useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa6'
 
@@ -6,25 +7,14 @@ import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
 import styles from './sorter.module.scss'
 
-interface OperationsGroupProps {
-	partnerName: string
-	operations: IExtendedBankOperation[]
-	toggleOperationSelection: (id: string) => void
-	selectedOperations: string[]
-	showSeparateModal: (operation: IExtendedBankOperation) => void
-	level?: number
-	type: 'debit' | 'credit'
-}
-
-const OperationsGroup: FC<OperationsGroupProps> = memo(
+const OperationsGroup: FC<IOperationsGroupProps> = memo(
 	({
 		partnerName,
 		operations,
 		toggleOperationSelection,
 		selectedOperations,
 		showSeparateModal,
-		level = 1,
-		type
+		level = 1
 	}) => {
 		const [isVisible, setIsVisible] = useState(false)
 
@@ -42,16 +32,9 @@ const OperationsGroup: FC<OperationsGroupProps> = memo(
 
 		const toggleVisible = () => setIsVisible(!isVisible)
 
-		const isThisSelected = (operation: IExtendedBankOperation) => {
-			const isDebit = operation.amount < 0
-			const isCredit = operation.amount > 0
-
-			return selectedOperations.includes(operation._id) &&
-				selectedOperations.length === 1 &&
-				type === 'debit'
-				? isDebit
-				: isCredit
-		}
+		const isThisSelected = (operation: IExtendedBankOperation) =>
+			selectedOperations.includes(operation._id) &&
+			selectedOperations.length === 1
 
 		return (
 			<div className={styles.group} style={{ marginLeft: `${level * 16}px` }}>
