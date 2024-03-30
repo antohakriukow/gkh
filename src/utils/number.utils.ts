@@ -44,7 +44,7 @@ export const divideAndRoundNumbers = (
 
 export const formatNumber = (number: number | string | undefined) => {
 	// Обработка случая, когда значение не определено
-	if (number === undefined) {
+	if (number === undefined || number === 0) {
 		return ''
 	}
 

@@ -67,16 +67,6 @@ export const useAnnualReport = () => {
 		instanceId: annualReportInDB ? String(annualReportInDB._id) : ''
 	})
 
-	const downloadXLSX = () => {
-		if (!annualReportInDB || !annualReportInDB.data.bankOperations) return
-
-		if (annualReportInDB.data.settings?.structure === 'cash/partners')
-			downloadCashPartnersReport(annualReportInDB)
-
-		if (annualReportInDB.data.settings?.structure === 'cash/services')
-			downloadCashServicesReport(annualReportInDB)
-	}
-
 	const isReportPayed = payments.some(
 		payment =>
 			payment.type === 'annual' &&
@@ -95,7 +85,6 @@ export const useAnnualReport = () => {
 		redirectToCreditSorter,
 		redirectToDebitSorter,
 		redirectToPreview,
-		paymentButtonData,
-		downloadXLSX
+		paymentButtonData
 	}
 }
