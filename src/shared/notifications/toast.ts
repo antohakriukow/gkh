@@ -17,3 +17,9 @@ export const showSuccessDataUpdatedNotification = () =>
 
 export const showErrorByDataUpdatingNotification = () =>
 	showErrorNotificationWithText('Ошибка при обновлении данных')
+
+export const showSuccessReportCreatedNotification = () =>
+	showSuccessNotificationWithText('Отчет создан')
+
+export const showErrorByReportCreatingNotification = () =>
+	showErrorNotificationWithText('Ошибка при создании отчета')
