@@ -1,4 +1,8 @@
-import { accrualsFieldsData } from './data/accruals.fields.data'
+import {
+	accrualsFieldsData,
+	renovationAccrualsData,
+	requiredAccrualsFieldsData
+} from './data/accruals.fields.data'
 import { FC, useCallback, useEffect, useState } from 'react'
 
 import { IServices } from '~/shared/types/report22gkh.interface'
@@ -24,6 +28,7 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 	watch
 }) => {
 	const [providedServices, setProvidedServices] = useState<IFieldData[]>([])
+	const CURRENT_PERIOD_ACCRUALS = 'Начисления ЖКУ за отчетный период'
 
 	const errors = formState?.errors
 	const isRenovationRequired = watch('data.renovation.status') !== 'no'
@@ -55,7 +60,7 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 
 	return (
 		<>
-			<h3 className={styles.blockTitle}>Начисления ЖКУ за отчетный период</h3>
+			<h3 className={styles.blockTitle}>{CURRENT_PERIOD_ACCRUALS}</h3>
 			<div className={styles.fieldSet}>
 				{providedServices.map(field => (
 					<ReportFieldNumber
@@ -67,44 +72,25 @@ const AccrualsFieldSet: FC<IAccrualsFieldSet> = ({
 						tooltip={field?.tooltip ? field?.tooltip : undefined}
 					/>
 				))}
-				<ReportFieldNumber
-					control={control}
-					fieldName='data.accruals.management'
-					placeholder='Управление МКД, руб'
-					register={register}
-					error={errors?.data?.accruals?.management}
-					isRequired
-					tooltip='См. инструкции (Нажмите на вопрос вверху)'
-				/>
-				<ReportFieldNumber
-					control={control}
-					fieldName='data.accruals.maintenance'
-					placeholder='Содержание и текущий ремонт ОИ, руб'
-					register={register}
-					error={errors?.data?.accruals?.maintenance}
-					isRequired
-					tooltip='См. инструкции (Нажмите на вопрос вверху)'
-				/>
-				<ReportFieldNumber
-					control={control}
-					fieldName='data.accruals.other'
-					placeholder='Прочие услуги, руб'
-					register={register}
-					error={errors?.data?.accruals?.other}
-					isRequired
-					tooltip='См. инструкции (Нажмите на вопрос вверху)'
-				/>
+
+				{requiredAccrualsFieldsData.map(field => (
+					<ReportFieldNumber
+						key={field.name}
+						control={control}
+						fieldName={field.name}
+						placeholder={field.placeholder}
+						register={register}
+						tooltip={field?.tooltip ? field?.tooltip : undefined}
+					/>
+				))}
+
 				{isRenovationRequired && (
 					<ReportFieldNumber
 						control={control}
-						fieldName='data.accruals.renovation'
-						placeholder='Взносы на капремонт, руб'
+						fieldName={renovationAccrualsData.name}
+						placeholder={renovationAccrualsData.placeholder}
 						register={register}
-						error={
-							isRenovationRequired
-								? errors?.data?.accruals?.renovation
-								: undefined
-						}
+						error={errors?.data?.accruals?.renovation}
 						isRequired={isRenovationRequired}
 					/>
 				)}

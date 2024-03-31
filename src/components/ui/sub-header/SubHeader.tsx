@@ -2,7 +2,7 @@ import { FC, PropsWithChildren } from 'react'
 
 import SubHeading from '../heading/SubHeading'
 
-import styles from './styles.module.scss'
+import styles from './subHeader.module.scss'
 
 const SubHeader: FC<PropsWithChildren<{ title: string }>> = ({
 	children,

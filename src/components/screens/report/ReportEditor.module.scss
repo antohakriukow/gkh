@@ -1,7 +1,8 @@
 @import '../../../styles/colors.scss';
 
 .container {
-	@apply flex flex-col justify-center items-start bg-white p-4  box-border select-none;
+	@apply w-full flex flex-col box-border;
+
 	height: calc(100% - 100px);
 }
 
@@ -17,7 +18,6 @@
 
 .report {
 	@apply p-2 rounded-sm w-full box-border;
-	border: 1px solid $primary-200;
 	overflow-y: scroll;
 	scrollbar-width: thin;
 	-ms-overflow-style: -ms-autohiding-scrollbar;

@@ -1,12 +1,12 @@
 import { toast } from 'react-toastify'
 
-const showSuccessNotificationWithText = (text: string) =>
+export const showSuccessNotificationWithText = (text: string) =>
 	toast(text, {
 		type: 'success',
 		autoClose: 1500
 	})
 
-const showErrorNotificationWithText = (text: string) =>
+export const showErrorNotificationWithText = (text: string) =>
 	toast(text, {
 		type: 'error',
 		autoClose: 1500
@@ -23,3 +23,9 @@ export const showSuccessReportCreatedNotification = () =>
 
 export const showErrorByReportCreatingNotification = () =>
 	showErrorNotificationWithText('Ошибка при создании отчета')
+
+export const showSuccessDataSavedNotification = () =>
+	showSuccessNotificationWithText('Данные сохранены')
+
+export const showSuccessReportGeneratedNotification = () =>
+	showSuccessNotificationWithText('Генерация отчета завершена')

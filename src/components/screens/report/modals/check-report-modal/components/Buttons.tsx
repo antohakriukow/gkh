@@ -13,6 +13,8 @@ interface IButtons {
 
 const Buttons: FC<IButtons> = ({ generateReport, isDanger }) => {
 	const { showModal, hideModal } = useModal()
+	const CONTINUE = 'Продолжить'
+	const MAKE_EDITS = 'Внести правки'
 
 	const handleShowReportConfirmationModal = () => {
 		showModal(<ConfirmGenerationModal generateReport={generateReport} />)
@@ -21,15 +23,16 @@ const Buttons: FC<IButtons> = ({ generateReport, isDanger }) => {
 	return (
 		<div className={styles.buttons}>
 			<Button
+				title={CONTINUE}
 				onClick={handleShowReportConfirmationModal}
 				className={styles.button}
 				color={isDanger ? 'danger' : 'success'}
-			>
-				Продолжить
-			</Button>
-			<Button onClick={hideModal} className={styles.button}>
-				Внести правки
-			</Button>
+			/>
+			<Button
+				title={MAKE_EDITS}
+				onClick={hideModal}
+				className={styles.button}
+			/>
 		</div>
 	)
 }

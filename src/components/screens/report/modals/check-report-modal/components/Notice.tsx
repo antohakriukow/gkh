@@ -10,29 +10,34 @@ interface INotice {
 }
 
 const Notice: FC<INotice> = ({ errors, warnings }) => {
+	const NOTIFICATION = `Внимание! Форма содержит ошибки${
+		!!warnings && warnings.length
+			? ' и потенциальные ошибки (см. предупреждения)'
+			: ''
+	}. Высока вероятность получения отрицательного протокола от Росстата.`
+	const CONTINUE_GENERATION = 'Продолжить генерацию отчета?'
+	const PLEASE_READ_NOTIFICATIONS =
+		'Просим внимательно ознакомиться с предупреждениями перед генерацией отчета.'
+	const LOGIC_ERRORS_NOT_FOUND = 'Логических ошибок не обнаружено.'
+
 	return (
 		<>
 			{errors.length > 0 && (
 				<>
-					<p className={styles.notice}>{`Внимание! Форма содержит ошибки${
-						!!warnings && warnings.length
-							? ' и потенциальные ошибки (см. предупреждения)'
-							: ''
-					}. Высока вероятность получения отрицательного протокола от Росстата.`}</p>
-					<p className={styles.noticeWarning}>Продолжить генерацию отчета?</p>
+					<p className={styles.notice}>{NOTIFICATION}</p>
+					<p className={styles.noticeWarning}>{CONTINUE_GENERATION}</p>
 				</>
 			)}
 			{errors.length === 0 && warnings.length > 0 && (
 				<p className={styles.notice}>
-					Просим внимательно ознакомиться с предупреждениями перед генерацией
-					отчета.
-					<p className={styles.noticeWarning}>Продолжить генерацию отчета?</p>
+					{PLEASE_READ_NOTIFICATIONS}
+					<p className={styles.noticeWarning}>{CONTINUE_GENERATION}</p>
 				</p>
 			)}
 			{errors.length === 0 && warnings.length === 0 && (
 				<p className={styles.notice}>
-					Логических ошибок не обнаружено.
-					<p className={styles.noticeWarning}>Продолжить генерацию отчета?</p>
+					{LOGIC_ERRORS_NOT_FOUND}
+					<p className={styles.noticeWarning}>{CONTINUE_GENERATION}</p>
 				</p>
 			)}
 		</>

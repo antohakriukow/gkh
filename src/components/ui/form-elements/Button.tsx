@@ -4,7 +4,13 @@ import { FC } from 'react'
 
 import styles from './form.module.scss'
 
-const Button: FC<IButton> = ({ children, className, color, ...props }) => {
+const Button: FC<IButton> = ({
+	children,
+	className,
+	color,
+	title,
+	...props
+}) => {
 	return (
 		<button
 			disabled={props.disabled}
@@ -15,6 +21,7 @@ const Button: FC<IButton> = ({ children, className, color, ...props }) => {
 			})}
 			{...props}
 		>
+			{title}
 			{children}
 		</button>
 	)

@@ -19,6 +19,7 @@ const OrganizationDebtsFieldSet: FC<IOrganizationDebtsFieldSet> = ({
 	watch
 }) => {
 	const errors = formState?.errors
+	const ORGANIZATION_COMMUNAL_DEBTS = 'Долги УО за коммунальные ресурсы'
 
 	const fieldsToShow = organizationDebtsFieldsData.filter(field => {
 		const service = extractLastLink(field.name)
@@ -31,7 +32,7 @@ const OrganizationDebtsFieldSet: FC<IOrganizationDebtsFieldSet> = ({
 
 	return (
 		<>
-			<h3 className={styles.blockTitle}>Долги УО за коммунальные ресурсы</h3>
+			<h3 className={styles.blockTitle}>{ORGANIZATION_COMMUNAL_DEBTS}</h3>
 			<div className={styles.fieldSet}>
 				{fieldsToShow.map(field => (
 					<ReportFieldNumber

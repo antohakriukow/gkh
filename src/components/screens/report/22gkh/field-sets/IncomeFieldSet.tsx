@@ -12,12 +12,14 @@ const IncomeFieldSet: FC<IIncomeFieldSet> = ({
 	formState,
 	watch
 }) => {
+	const CURRENT_YEAR_RECEIVED = 'Поступления за отчетный период'
+
 	const errors = formState?.errors
 	const isRenovationRequired = watch('data.renovation.status') !== 'no'
 
 	return (
 		<>
-			<h3 className={styles.blockTitle}>Поступления за отчетный период</h3>
+			<h3 className={styles.blockTitle}>{CURRENT_YEAR_RECEIVED}</h3>
 			<div className={styles.fieldSet}>
 				<ReportFieldNumber
 					control={control}
@@ -41,13 +43,6 @@ const IncomeFieldSet: FC<IIncomeFieldSet> = ({
 						isRequired={isRenovationRequired}
 					/>
 				)}
-				{/* <ReportFieldNumber
-					control={control}
-					fieldName='data.income.commerce'
-					placeholder='Поступления от деятельности, руб'
-					register={register}
-					error={errors?.data?.income?.commerce}
-				/> */}
 			</div>
 		</>
 	)

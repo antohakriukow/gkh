@@ -46,3 +46,28 @@ export const accrualsFieldsData = [
 		placeholder: 'Электроэнергия СОИ, руб'
 	}
 ]
+
+const defaultTooltip = 'См. инструкции (Нажмите на вопрос вверху)'
+
+export const requiredAccrualsFieldsData = [
+	{
+		name: 'data.accruals.management',
+		placeholder: 'Управление МКД, руб',
+		tooltip: defaultTooltip
+	},
+	{
+		name: 'data.accruals.maintenance',
+		placeholder: 'Содержание и текущий ремонт ОИ, руб',
+		tooltip: defaultTooltip
+	},
+	{
+		name: 'data.accruals.other',
+		placeholder: 'Прочие услуги, руб',
+		tooltip: defaultTooltip
+	}
+]
+
+export const renovationAccrualsData = {
+	name: 'data.accruals.renovation',
+	placeholder: 'Взносы на капремонт, руб'
+}
