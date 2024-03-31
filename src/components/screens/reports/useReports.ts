@@ -1,6 +1,7 @@
 import { FirebaseError } from 'firebase/app'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { useAuth, useModal } from '~/hooks'
 
 import { validEmail, validPhone } from '~/shared/regex'
 import { IReportCreate } from '~/shared/types/report.interface'
@@ -9,9 +10,6 @@ import { CompanyService } from '~/services/company.service'
 import { ReportService } from '~/services/report.service'
 
 import { handleDBErrors } from '~/utils/error.utils'
-
-import { useAuth } from '../../../hooks/useAuth'
-import { useModal } from '../../../hooks/useModal'
 
 export const useReports = () => {
 	const { user } = useAuth()

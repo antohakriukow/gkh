@@ -3,9 +3,7 @@ import { useDataUploaderContext } from './provider/provider'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { prepareAnnualState } from '~/core/annual/prepareAnnualData'
-
-import { useAuth } from '~/hooks/useAuth'
-import { useWindowWidth } from '~/hooks/useWindowWidth'
+import { useAuth, useWindowWidth } from '~/hooks'
 
 import {
 	IAccount,

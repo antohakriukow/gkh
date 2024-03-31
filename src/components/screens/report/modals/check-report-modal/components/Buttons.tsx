@@ -1,8 +1,7 @@
 import { FC } from 'react'
+import { useModal } from '~/hooks'
 
 import { Button } from '~/components/ui'
-
-import { useModal } from '~/hooks/useModal'
 
 import ConfirmGenerationModal from '../../confirm-report-generation-module/ConfirmGenerationModal'
 import styles from '../CheckReportModal.module.scss'

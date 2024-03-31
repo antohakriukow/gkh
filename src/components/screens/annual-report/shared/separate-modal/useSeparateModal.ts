@@ -1,7 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react'
-
-import { useAuth } from '~/hooks/useAuth'
-import { useModal } from '~/hooks/useModal'
+import { useAuth, useModal } from '~/hooks'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 

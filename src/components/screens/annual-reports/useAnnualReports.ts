@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom'
+import {
+	useAnnualReportsData,
+	useAnnualReportsKeys,
+	useCompaniesData,
+	useModal,
+	usePaymentsData,
+	useTypedSelector
+} from '~/hooks'
 
 import { IRow } from '~/components/ui/table/table.interface'
-
-import { useAnnualReportsData } from '~/hooks/firebase-hooks/useAnnualReportsData'
-import { useAnnualReportsKeys } from '~/hooks/firebase-hooks/useAnnualReportsKeys'
-import { useCompaniesData } from '~/hooks/firebase-hooks/useCompaniesData'
-import { usePaymentsData } from '~/hooks/firebase-hooks/usePaymentsData'
-import { useModal } from '~/hooks/useModal'
-import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { IAnnualReportDetails } from '~/shared/types/annual.interface'
 

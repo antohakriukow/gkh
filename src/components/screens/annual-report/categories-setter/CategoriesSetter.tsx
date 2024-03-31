@@ -3,10 +3,9 @@ import Tree from './components/Tree'
 import { TreeProvider } from './provider/TreeProvider'
 import { useCategoriesSetter } from './useCategoriesSetter'
 import { FC, useState } from 'react'
+import { useWindowWidth } from '~/hooks'
 
 import { Loader, SubHeading } from '~/components/ui'
-
-import { useWindowWidth } from '~/hooks/useWindowWidth'
 
 import {
 	IAnnualCategoryState,

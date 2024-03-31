@@ -1,8 +1,7 @@
 import { IService } from './interface.presentation'
 import { FC } from 'react'
 import { FaYoutube } from 'react-icons/fa'
-
-import { useModal } from '~/hooks/useModal'
+import { useModal } from '~/hooks'
 
 import VideoModal from '../modals/VideoModal'
 

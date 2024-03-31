@@ -1,8 +1,7 @@
 import { FirebaseError } from 'firebase/app'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { useRedirect } from '~/hooks/useRedirect'
+import { useRedirect } from '~/hooks'
 
 import { UserService } from '~/services/user.service'
 

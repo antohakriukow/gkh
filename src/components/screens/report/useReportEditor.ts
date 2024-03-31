@@ -5,11 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { downloadPDF } from '~/core/22gkh/pdf/pdf.download'
 import { downloadXML } from '~/core/22gkh/xml/xml.download'
-
-import { useReportsData } from '~/hooks/firebase-hooks/useReportsData'
-import { useActions } from '~/hooks/useActions'
-import { useAuth } from '~/hooks/useAuth'
-import { useTypedSelector } from '~/hooks/useTypedSelector'
+import { useActions, useAuth, useReportsData, useTypedSelector } from '~/hooks'
 
 import { ICheckReportResult, IReport } from '~/shared/types/report.interface'
 

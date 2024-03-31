@@ -1,9 +1,8 @@
 import ReportDeleteModal from './report-delete-modal/ReportDeleteModal'
 import { FC } from 'react'
+import { useModal } from '~/hooks'
 
 import { Button, SubHeading } from '~/components/ui'
-
-import { useModal } from '~/hooks/useModal'
 
 import styles from './toolbar.module.scss'
 

@@ -3,13 +3,10 @@ import { menuItems, mobileMenuItems } from './menu/menu.data'
 import cn from 'clsx'
 import { FC, useCallback, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useActions, useAuth, useWindowWidth } from '~/hooks'
 
 import HeaderMenu from '~/components/layout/header/menu/HeaderMenu'
 import SupportButton from '~/components/layout/header/menu/buttons/SupportButton'
-
-import { useActions } from '~/hooks/useActions'
-import { useAuth } from '~/hooks/useAuth'
-import { useWindowWidth } from '~/hooks/useWindowWidth'
 
 import styles from './Header.module.scss'
 

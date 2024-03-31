@@ -1,7 +1,6 @@
 import { FirebaseError } from 'firebase/app'
 import { useState } from 'react'
-
-import { useTypedSelector } from '~/hooks/useTypedSelector'
+import { useAuth, useModal, useTypedSelector } from '~/hooks'
 
 import {
 	showErrorByReportCreatingNotification,
@@ -12,9 +11,6 @@ import { IAnnualReportCreate } from '~/shared/types/annual.interface'
 import { AnnualService } from '~/services/annual.service'
 
 import { handleDBErrors } from '~/utils/error.utils'
-
-import { useAuth } from '../../../../hooks/useAuth'
-import { useModal } from '../../../../hooks/useModal'
 
 export const useAddReportModal = (
 	handleOpenReport: (reportId: string) => void

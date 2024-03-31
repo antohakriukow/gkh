@@ -2,16 +2,17 @@ import AddCompanyModal from './modals/add-company-modal/AddCompanyModal'
 import cn from 'clsx'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
+import {
+	useCompaniesData,
+	useModal,
+	useReportsData,
+	useTypedSelector
+} from '~/hooks'
 
 import Introduction from '~/components/intro/Introduction'
 import ReportModal from '~/components/screens/reports/modals/add-report-modal/AddReportModal'
 import { Button, Heading, Loader, Table } from '~/components/ui'
 import { IRow } from '~/components/ui/table/table.interface'
-
-import { useCompaniesData } from '~/hooks/firebase-hooks/useCompaniesData'
-import { useReportsData } from '~/hooks/firebase-hooks/useReportsData'
-import { useModal } from '~/hooks/useModal'
-import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { IReport } from '~/shared/types/report.interface'
 

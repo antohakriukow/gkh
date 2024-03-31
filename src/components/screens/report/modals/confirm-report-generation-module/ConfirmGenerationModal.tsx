@@ -1,9 +1,8 @@
 import { ReportManifest } from './reportManifest.data'
 import { FC } from 'react'
+import { useModal } from '~/hooks'
 
 import { Button } from '~/components/ui'
-
-import { useModal } from '~/hooks/useModal'
 
 import styles from './ConfirmGenerationModal.module.scss'
 

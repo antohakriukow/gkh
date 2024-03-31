@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { FaChevronCircleLeft } from 'react-icons/fa'
-
-import { useRedirect } from '~/hooks/useRedirect'
+import { useRedirect } from '~/hooks'
 
 import style from './HomeButton.module.scss'
 

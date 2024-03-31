@@ -1,8 +1,6 @@
 import cn from 'clsx'
 import { FC } from 'react'
-
-import { useMessagesData } from '~/hooks/firebase-hooks/useMessagesData'
-import { useAuth } from '~/hooks/useAuth'
+import { useAuth, useMessagesData } from '~/hooks'
 
 import { convertTimestampToDateWithTime } from '~/utils/time.utils'
 

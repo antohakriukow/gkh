@@ -1,9 +1,7 @@
 import { introSteps, russianLocale } from './intro.data'
 import { FC } from 'react'
 import ReactJoyride, { CallBackProps } from 'react-joyride'
-
-import { useUserData } from '~/hooks/firebase-hooks/useUserData'
-import { useAuth } from '~/hooks/useAuth'
+import { useAuth, useUserData } from '~/hooks'
 
 import { UserService } from '~/services/user.service'
 

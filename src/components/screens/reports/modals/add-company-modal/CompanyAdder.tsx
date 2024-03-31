@@ -1,10 +1,7 @@
 import { FC } from 'react'
+import { useActions, useCompany, useModal } from '~/hooks'
 
 import { Button } from '~/components/ui'
-
-import { useActions } from '~/hooks/useActions'
-import { useCompany } from '~/hooks/useCompany'
-import { useModal } from '~/hooks/useModal'
 
 import { ICompany } from '~/shared/types/company.interface'
 

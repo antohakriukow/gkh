@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import { FaMinus, FaPlus } from 'react-icons/fa'
-
-import { usePeriod } from '~/hooks/usePeriod'
+import { usePeriod } from '~/hooks'
 
 import styles from './PeriodSetter.module.scss'
 

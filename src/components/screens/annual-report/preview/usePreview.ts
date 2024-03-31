@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { downloadCashPartnersReport } from '~/core/annual/downloadCashPartnersReport/downloadCashPartnersReport'
 import { downloadCashServicesReport } from '~/core/annual/downloadCashServicesReport/downloadCashServicesReport'
-
-import { useWindowWidth } from '~/hooks/useWindowWidth'
+import { useWindowWidth } from '~/hooks'
 
 import { useAnnualReport } from '../useAnnualReport'
 

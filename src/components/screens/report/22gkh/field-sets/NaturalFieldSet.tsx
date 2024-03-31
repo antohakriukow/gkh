@@ -1,6 +1,5 @@
 import { FC } from 'react'
-
-import { useTypedSelector } from '~/hooks/useTypedSelector'
+import { useTypedSelector } from '~/hooks'
 
 import { IReportForm } from '../../report-editor.interface'
 import styles from '../ReportForm.module.scss'

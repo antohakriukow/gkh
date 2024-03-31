@@ -1,11 +1,8 @@
 import { getReportInitialData } from './getReportInitialData'
 import { FC, useState } from 'react'
+import { useModal, useReportsData, useTypedSelector } from '~/hooks'
 
 import { Button } from '~/components/ui'
-
-import { useReportsData } from '~/hooks/firebase-hooks/useReportsData'
-import { useModal } from '~/hooks/useModal'
-import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import { IReport } from '~/shared/types/report.interface'
 

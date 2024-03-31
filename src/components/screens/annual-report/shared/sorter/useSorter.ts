@@ -1,8 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-
-import { useAuth } from '~/hooks/useAuth'
-import { useModal } from '~/hooks/useModal'
-import { useWindowWidth } from '~/hooks/useWindowWidth'
+import { useAuth, useModal, useWindowWidth } from '~/hooks'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 

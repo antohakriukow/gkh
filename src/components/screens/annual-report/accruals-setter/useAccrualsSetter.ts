@@ -6,9 +6,7 @@ import {
 	UseFormSetValue
 } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
-
-import { useAuth } from '~/hooks/useAuth'
-import { useWindowWidth } from '~/hooks/useWindowWidth'
+import { useAuth, useWindowWidth } from '~/hooks'
 
 import {
 	showErrorByDataUpdatingNotification,

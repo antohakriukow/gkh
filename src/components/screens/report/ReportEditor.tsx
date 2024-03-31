@@ -7,11 +7,9 @@ import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AiOutlineCloseSquare } from 'react-icons/ai'
 import { useParams } from 'react-router-dom'
+import { useModal, useReportsData } from '~/hooks'
 
 import { Heading, Loader } from '~/components/ui'
-
-import { useReportsData } from '~/hooks/firebase-hooks/useReportsData'
-import { useModal } from '~/hooks/useModal'
 
 import { IReport } from '~/shared/types/report.interface'
 

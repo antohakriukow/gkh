@@ -1,11 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-
-import { useCompaniesData } from '~/hooks/firebase-hooks/useCompaniesData'
-import { useCurrentCompanyInnData } from '~/hooks/firebase-hooks/useCurrentCompanyInnData'
-import { useUserData } from '~/hooks/firebase-hooks/useUserData'
-import { useActions } from '~/hooks/useActions'
-import { useAuth } from '~/hooks/useAuth'
-import { useTypedSelector } from '~/hooks/useTypedSelector'
+import {
+	useActions,
+	useAuth,
+	useCompaniesData,
+	useCurrentCompanyInnData,
+	useTypedSelector,
+	useUserData
+} from '~/hooks'
 
 import { cloudFunction } from '~/services/_functions'
 import { CompanyService } from '~/services/company.service'

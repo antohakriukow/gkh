@@ -3,10 +3,9 @@ import IssueCreator from './IssueItem/components/IssueCreator'
 import { FC } from 'react'
 import { AiOutlineCloseSquare } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
+import { useIssuesData } from '~/hooks'
 
 import { Heading, Loader } from '~/components/ui'
-
-import { useIssuesData } from '~/hooks/firebase-hooks/useIssuesData'
 
 import styles from './Issues.module.scss'
 
