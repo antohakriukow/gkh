@@ -29,3 +29,8 @@ export const showSuccessDataSavedNotification = () =>
 
 export const showSuccessReportGeneratedNotification = () =>
 	showSuccessNotificationWithText('Генерация отчета завершена')
+
+export const showEmailConfirmationWasSendedNotification = () =>
+	showSuccessNotificationWithText(
+		'`На Ваш email отправлено письмо для восстановления пароля.`'
+	)
