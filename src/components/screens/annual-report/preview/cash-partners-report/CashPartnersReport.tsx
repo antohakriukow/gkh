@@ -1,7 +1,6 @@
 import BankOperationsTable from './table/BankOperationsTable'
 import { useCashPartnersReport } from './useCashPartnersReport'
 import { FC } from 'react'
-import { getAnnualDirectionTitle } from '~/core/annual/shared'
 
 import { SubHeading } from '~/components/ui'
 
@@ -9,6 +8,8 @@ import {
 	IExtendedBankOperation,
 	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
+
+import { getAnnualDirectionTitle } from '~/utils/annual.utils'
 
 import styles from '../shared/table-parts/table.module.scss'
 

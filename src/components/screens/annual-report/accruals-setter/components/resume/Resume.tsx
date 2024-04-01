@@ -1,8 +1,10 @@
 import { FC } from 'react'
 import { CgDanger } from 'react-icons/cg'
-import { getAnnualDirectionTitle } from '~/core/annual/shared'
 
-import { getExistingDirections } from '~/utils/annual.utils'
+import {
+	getAnnualDirectionTitle,
+	getExistingDirections
+} from '~/utils/annual.utils'
 import { formatNumber } from '~/utils/number.utils'
 
 import { useAnnualReport } from '../../../useAnnualReport'

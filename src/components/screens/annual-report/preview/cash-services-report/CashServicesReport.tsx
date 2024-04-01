@@ -1,7 +1,6 @@
 import CashServicesTable from './table/CashServicesTable'
 import MainCashServicesTable from './table/MainCashServicesTable'
 import { FC } from 'react'
-import { getAnnualDirectionTitle } from '~/core/annual/shared'
 
 import { SubHeading } from '~/components/ui'
 
@@ -10,6 +9,8 @@ import {
 	TypeCategoriesMap,
 	TypeDefinedAnnualDirection
 } from '~/shared/types/annual.interface'
+
+import { getAnnualDirectionTitle } from '~/utils/annual.utils'
 
 import { useCashPartnersReport } from '../cash-partners-report/useCashPartnersReport'
 import styles from '../shared/table-parts/table.module.scss'

@@ -4,7 +4,6 @@ import {
 	firstSimpleCell,
 	headerCell,
 	isBold,
-	isBoldAndCentered,
 	resultCell,
 	simpleCell
 } from './styles'
@@ -24,9 +23,8 @@ import { saveAs } from 'file-saver'
 
 import { IAnnualReport } from '~/shared/types/annual.interface'
 
+import { getAnnualDirectionTitle } from '~/utils/annual.utils'
 import { convertTimestampToDate } from '~/utils/time.utils'
-
-import { getAnnualDirectionTitle } from '../shared'
 
 export const downloadCashPartnersReport = async (report: IAnnualReport) => {
 	const operations = report.data.bankOperations ?? []
@@ -63,7 +61,7 @@ export const downloadCashPartnersReport = async (report: IAnnualReport) => {
 		}
 	})
 
-	dataSeparatedByDirection.map(data => {
+	dataSeparatedByDirection.forEach(data => {
 		if (!data.operationGroups.incoming && !data.operationGroups.outgoing)
 			return null
 
@@ -83,7 +81,7 @@ export const downloadCashPartnersReport = async (report: IAnnualReport) => {
 		tableHeaderRow.getCell(3).style = headerCell
 
 		// Внесение данных по каждому счету в таблицу
-		data.tableAccounts.map(tableAccount => {
+		data.tableAccounts.forEach(tableAccount => {
 			const accountOperations = filterOperationsByAccount(
 				data.operationGroups,
 				tableAccount.number
@@ -100,7 +98,7 @@ export const downloadCashPartnersReport = async (report: IAnnualReport) => {
 			}
 
 			// Блоки доходов и расходов
-			;[accountOperations.incoming, accountOperations.outgoing].map(
+			;[accountOperations.incoming, accountOperations.outgoing].forEach(
 				groupedOperations => {
 					// Для всех направлений кроме капремонта добавляем строки "Доходы, всего" и "Расходы, всего"
 					if (groupedOperations.total !== 0) {
@@ -116,7 +114,7 @@ export const downloadCashPartnersReport = async (report: IAnnualReport) => {
 					// Группы операций
 					Object.values(groupedOperations.groups)
 						.sort((a, b) => Math.abs(b.total) - Math.abs(a.total))
-						.map((group, index) => {
+						.forEach((group, index) => {
 							// Строка контрагента
 							const companyRow = worksheet.addRow(
 								getCompanyRow(group.name, group.total)
@@ -128,7 +126,7 @@ export const downloadCashPartnersReport = async (report: IAnnualReport) => {
 							companyRow.getCell(3).style = simpleCell
 
 							// Строки операций
-							group.operations.map(operation => {
+							group.operations.forEach(operation => {
 								const operationRow = worksheet.addRow(
 									getOperationRow(operation)
 								)

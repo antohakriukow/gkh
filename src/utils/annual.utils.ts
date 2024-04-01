@@ -1,13 +1,23 @@
 import {
+	AnnualState,
 	IAccount,
+	IAccountingOperation,
 	IAnnualCategory,
 	IAnnualCategoryState,
+	IBankOperation,
+	IExtendedAccountingOperation,
 	IExtendedBankOperation,
 	TypeAnnualDirection,
 	TypeAnnualReportStructure,
 	TypeDefinedAnnualDirection
 } from '~/shared/types/annual.interface'
 
+/**
+ * Возвращает название структуры отчёта по его типу.
+ *
+ * @param name - Тип структуры отчёта.
+ * @returns Название структуры отчёта.
+ */
 export const getAnnualReportStructureName = (
 	name: TypeAnnualReportStructure | undefined
 ) => {
@@ -23,6 +33,33 @@ export const getAnnualReportStructureName = (
 	}
 }
 
+/**
+ * Возвращает название направления отчёта по его типу.
+ *
+ * @param direction - Тип направления отчёта.
+ * @returns Название направления отчёта.
+ */
+export const getAnnualDirectionTitle = (direction: TypeAnnualDirection) => {
+	switch (direction) {
+		case 'main':
+			return 'ЖКУ'
+		case 'renovation':
+			return 'Капитальный ремонт'
+		case 'commerce':
+			return 'Коммерческая деятельность'
+		case 'target':
+			return 'Целевые взносы'
+		default:
+			return ''
+	}
+}
+
+/**
+ * Удаляет свойство collapsed из категорий и возвращает новый массив категорий без этого свойства.
+ *
+ * @param categories - Массив категорий с состоянием collapsed.
+ * @returns Новый массив категорий без свойства collapsed.
+ */
 export const removeCollapsedFromCategories = (
 	categories: IAnnualCategoryState[]
 ): IAnnualCategory[] => {
@@ -45,6 +82,12 @@ export const removeCollapsedFromCategories = (
 	return response
 }
 
+/**
+ * Получает список уникальных направлений из массива счетов.
+ *
+ * @param accounts - Массив счетов.
+ * @returns Массив уникальных направлений.
+ */
 export const getExistingDirections = (accounts: IAccount[]) =>
 	accounts.reduce(
 		(directions: TypeAnnualDirection[], account) =>
@@ -54,6 +97,13 @@ export const getExistingDirections = (accounts: IAccount[]) =>
 		[]
 	)
 
+/**
+ * Создаёт макет категорий на основе существующих счетов для указанного направления.
+ *
+ * @param accounts - Массив счетов.
+ * @param direction - Направление для фильтрации счетов.
+ * @returns Массив макетов категорий.
+ */
 export const createMockCategoriesFromAccounts = (
 	accounts: IAccount[],
 	direction: TypeDefinedAnnualDirection
@@ -74,6 +124,12 @@ export const createMockCategoriesFromAccounts = (
 	}
 }
 
+/**
+ * Группирует операции по имени получателя.
+ *
+ * @param operations - Массив банковских операций.
+ * @returns Объект с операциями, сгруппированными по имени получателя.
+ */
 export const groupOperationsByRecipientName = (
 	operations: IExtendedBankOperation[]
 ) =>
@@ -90,6 +146,12 @@ export const groupOperationsByRecipientName = (
 		{}
 	)
 
+/**
+ * Группирует операции по имени плательщика.
+ *
+ * @param operations - Массив банковских операций.
+ * @returns Объект с операциями, сгруппированными по имени плательщика.
+ */
 export const groupOperationsByPayerName = (
 	operations: IExtendedBankOperation[]
 ) =>
@@ -106,6 +168,12 @@ export const groupOperationsByPayerName = (
 		{}
 	)
 
+/**
+ * Сортирует группы операций по имени получателя по убыванию количества операций.
+ *
+ * @param groupedOperations - Объект с операциями, сгруппированными по имени получателя.
+ * @returns Отсортированный массив групп операций.
+ */
 export const sortOperationsGroupsArrayByRecipientName = (groupedOperations: {
 	[key: string]: IExtendedBankOperation[]
 }) =>
@@ -113,6 +181,12 @@ export const sortOperationsGroupsArrayByRecipientName = (groupedOperations: {
 		.map(([recipientName, operations]) => ({ recipientName, operations }))
 		.sort((a, b) => b.operations.length - a.operations.length)
 
+/**
+ * Сортирует группы операций по имени плательщика по убыванию количества операций.
+ *
+ * @param groupedOperations - Объект с операциями, сгруппированными по имени плательщика.
+ * @returns Отсортированный массив групп операций.
+ */
 export const sortOperationsGroupsArrayByPayerName = (groupedOperations: {
 	[key: string]: IExtendedBankOperation[]
 }) =>
@@ -120,6 +194,13 @@ export const sortOperationsGroupsArrayByPayerName = (groupedOperations: {
 		.map(([payerName, operations]) => ({ payerName, operations }))
 		.sort((a, b) => b.operations.length - a.operations.length)
 
+/**
+ * Возвращает все ID категорий, включая ID дочерних категорий.
+ *
+ * @param category - Категория для анализа.
+ * @param ids - Начальный массив ID для рекурсии.
+ * @returns Массив всех ID категорий.
+ */
 const getAllCategoryIds = (
 	category: IAnnualCategory,
 	ids: string[] = []
@@ -131,6 +212,13 @@ const getAllCategoryIds = (
 	return ids
 }
 
+/**
+ * Фильтрует операции по категории, включая все дочерние категории.
+ *
+ * @param operations - Массив банковских операций.
+ * @param category - Категория для фильтрации операций.
+ * @returns Массив операций, соответствующих категории.
+ */
 export const getOperationsByCategory = (
 	operations: IExtendedBankOperation[],
 	category: IAnnualCategory
@@ -143,6 +231,30 @@ export const getOperationsByCategory = (
 	return result
 }
 
+/**
+ * Возвращает массив номеров счетов для заданного направления.
+ *
+ * @param state - объект типа AnnualState.
+ * @param direction - направление типа TypeAnnualDirection.
+ * @returns Возвращает массив строк, представляющих номера счетов, соответствующих заданному направлению.
+ */
+export const getDirectionAccountNumbers = (
+	state: AnnualState,
+	direction: TypeAnnualDirection
+): string[] => {
+	if (!state.accounts) return []
+	return state.accounts
+		.filter(account => account.type === direction)
+		.map(account => account.number)
+}
+
+/**
+ * Возвращает ID всех листовых категорий.
+ *
+ * @param categories - Массив категорий для анализа.
+ * @param leafIds - Начальный массив ID листовых категорий для рекурсии.
+ * @returns Массив ID всех листовых категорий.
+ */
 export const getAllLeafCategoryIds = (
 	categories: IAnnualCategory[],
 	leafIds: string[] = []
@@ -156,4 +268,40 @@ export const getAllLeafCategoryIds = (
 	})
 
 	return leafIds
+}
+
+/**
+ * Проверяет объект на соответствие типу IAccountingOperation.
+ *
+ * @param operation - операция типа IAccountingOperation | IBankOperation.
+ * @returns Возвращает true, если тип операции IAccountingOperation, иначе false.
+ */
+export const isAccountingOperation = (
+	operation: IAccountingOperation | IBankOperation
+): operation is IAccountingOperation => {
+	return (operation as IAccountingOperation).debitAccount !== undefined
+}
+
+/**
+ * Проверяет объект на соответствие типу IBankOperation.
+ *
+ * @param operation - операция типа IAccountingOperation | IBankOperation.
+ * @returns Возвращает true, если тип операции IBankOperation, иначе false.
+ */
+export const isBankOperation = (
+	operation: IAccountingOperation | IBankOperation
+): operation is IBankOperation => {
+	return (operation as IBankOperation).paymentPurpose !== undefined
+}
+
+/**
+ * Проверяет объект на соответствие типу IExtendedBankOperation.
+ *
+ * @param operation - операция типа IExtendedAccountingOperation | IExtendedBankOperation.
+ * @returns Возвращает true, если тип операции IExtendedBankOperation, иначе false.
+ */
+export const isExtendedBankOperation = (
+	operation: IExtendedAccountingOperation | IExtendedBankOperation
+): operation is IExtendedBankOperation => {
+	return (operation as IExtendedBankOperation).paymentPurpose !== undefined
 }
