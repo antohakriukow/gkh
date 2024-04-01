@@ -43,21 +43,17 @@ export const divideAndRoundNumbers = (
 }
 
 export const formatNumber = (number: number | string | undefined) => {
-	// Обработка случая, когда значение не определено
 	if (number === undefined || number === 0) {
 		return ''
 	}
 
-	// Приведение строкового значения к числу, если это возможно
 	const num = typeof number === 'string' ? parseFloat(number) : number
 
-	// Проверка на NaN, в случае если преобразование не удалось
 	if (isNaN(num)) {
 		console.error('Provided value cannot be converted to a number.')
 		return ''
 	}
 
-	// Форматирование числа
 	return num.toLocaleString('ru-RU', {
 		style: 'decimal',
 		minimumFractionDigits: 2,

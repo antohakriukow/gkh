@@ -27,15 +27,12 @@ export const removeCollapsedFromCategories = (
 	categories: IAnnualCategoryState[]
 ): IAnnualCategory[] => {
 	const response = categories.map(({ id, value, amount, children }) => {
-		// Инициализируем объект категории только с обязательными полями
 		const categoryObject: IAnnualCategory = { id, value }
 
-		// Динамически добавляем amount, если он существует
 		if (amount !== undefined) {
 			categoryObject.amount = amount
 		}
 
-		// Рекурсивно обрабатываем дочерние элементы, если они существуют
 		if (children) {
 			categoryObject.children = removeCollapsedFromCategories(
 				children as IAnnualCategoryState[]
@@ -46,27 +43,6 @@ export const removeCollapsedFromCategories = (
 	})
 
 	return response
-}
-
-export const getCategoriesWithoutChildren = (
-	categories: IAnnualCategory[]
-): { title: string; value: string }[] => {
-	function traverse(
-		categories: IAnnualCategory[],
-		acc: { title: string; value: string }[]
-	): void {
-		categories.forEach(category => {
-			if (!category.children) {
-				acc.push({ title: category.value, value: category.id.toString() })
-			} else {
-				traverse(category.children, acc)
-			}
-		})
-	}
-
-	const result: { title: string; value: string }[] = []
-	traverse(categories, result)
-	return result
 }
 
 export const getExistingDirections = (accounts: IAccount[]) =>
@@ -144,19 +120,17 @@ export const sortOperationsGroupsArrayByPayerName = (groupedOperations: {
 		.map(([payerName, operations]) => ({ payerName, operations }))
 		.sort((a, b) => b.operations.length - a.operations.length)
 
-// Функция для получения идентификаторов текущей категории и всех её дочерних категорий
 const getAllCategoryIds = (
 	category: IAnnualCategory,
 	ids: string[] = []
 ): string[] => {
-	ids.push(category.id) // Теперь TypeScript знает, что id это строка
+	ids.push(category.id)
 	if (category.children && category.children.length > 0) {
-		category.children.forEach(child => getAllCategoryIds(child, ids)) // Рекурсивно добавляем идентификаторы дочерних категорий
+		category.children.forEach(child => getAllCategoryIds(child, ids))
 	}
 	return ids
 }
 
-// Обновлённая функция getOperationsByCategory
 export const getOperationsByCategory = (
 	operations: IExtendedBankOperation[],
 	category: IAnnualCategory
