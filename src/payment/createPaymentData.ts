@@ -5,7 +5,6 @@ import {
 	IPaymentData
 } from '../shared/types/payment.interface'
 
-// Функция, принимающая параметры оплаты и возвращающая объект с заголовком кнопки и функцией onClick
 const createPaymentButtonData = ({
 	cost,
 	invoiceId,
@@ -18,7 +17,6 @@ const createPaymentButtonData = ({
 	instanceId
 }: IPaymentData): IPaymentButtonData => {
 	const handlePayment = () => {
-		// Генерация URL для перенаправления на страницу оплаты
 		const paymentUrl = generatePaymentLink({
 			cost,
 			invoiceId,
@@ -32,10 +30,8 @@ const createPaymentButtonData = ({
 		})
 
 		if (paymentUrl) {
-			// Перенаправление пользователя на страницу оплаты
 			window.open(paymentUrl, '_blank')
 		} else {
-			// Обработка ошибки
 			console.error('Ошибка при генерации ссылки на оплату.')
 		}
 	}

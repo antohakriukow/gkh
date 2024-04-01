@@ -3,7 +3,7 @@ import { FaPlus } from 'react-icons/fa6'
 
 import { Button } from '~/components/ui'
 
-import { useTreeContext } from '../TreeProvider'
+import { useTreeContext } from '../provider/TreeProvider'
 
 import styles from './tree.module.scss'
 

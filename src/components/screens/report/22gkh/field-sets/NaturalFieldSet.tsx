@@ -1,6 +1,5 @@
 import { FC } from 'react'
-
-import { useTypedSelector } from '~/hooks/useTypedSelector'
+import { useTypedSelector } from '~/hooks'
 
 import { IReportForm } from '../../report-editor.interface'
 import styles from '../ReportForm.module.scss'
@@ -15,6 +14,7 @@ const NaturalFieldSet: FC<INaturalFieldSet> = ({
 	watch
 }) => {
 	const { currentReport } = useTypedSelector(state => state.ui)
+	const YEAR_NATURAL_INDICATORS = 'Натуральные показатели за год'
 
 	if (currentReport?.period !== 4) return null
 
@@ -24,7 +24,7 @@ const NaturalFieldSet: FC<INaturalFieldSet> = ({
 
 	return (
 		<>
-			<h3 className={styles.blockTitle}>Натуральные показатели за год</h3>
+			<h3 className={styles.blockTitle}>{YEAR_NATURAL_INDICATORS}</h3>
 			<div className={styles.fieldSet}>
 				<ReportFieldNumber
 					control={control}

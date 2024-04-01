@@ -6,7 +6,9 @@ import {
 import { ControllerRenderProps, FieldError } from 'react-hook-form'
 import { Options } from 'react-select'
 
-export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {}
+export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
+	title?: string
+}
 
 export interface IFieldProps {
 	placeholder?: string

@@ -1,9 +1,5 @@
 import { useState } from 'react'
-
-import { useActions } from '~/hooks/useActions'
-import { useCompany } from '~/hooks/useCompany'
-import { useModal } from '~/hooks/useModal'
-import { useTypedSelector } from '~/hooks/useTypedSelector'
+import { useActions, useCompany, useModal, useTypedSelector } from '~/hooks'
 
 import { ICompany, ICompanyInn } from '~/shared/types/company.interface'
 

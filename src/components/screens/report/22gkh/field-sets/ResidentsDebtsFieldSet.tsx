@@ -12,14 +12,15 @@ const ResidentsDebtsFieldSet: FC<IResidentsDebtsFieldSet> = ({
 	formState,
 	watch
 }) => {
+	const INITIAL_RESIDENTIAL_DEBTS =
+		'Долги собственников перед УО на начало отчетного периода'
+
 	const errors = formState?.errors
 	const isRenovationRequired = watch('data.renovation.status') !== 'no'
 
 	return (
 		<>
-			<h3 className={styles.blockTitle}>
-				Долги собственников перед УО на начало отчетного периода
-			</h3>
+			<h3 className={styles.blockTitle}>{INITIAL_RESIDENTIAL_DEBTS}</h3>
 			<div className={styles.fieldSet}>
 				<ReportFieldNumber
 					control={control}

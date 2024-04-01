@@ -2,112 +2,32 @@ import { IAnnualReportCategoriesFormInput } from './accruals-setter.interface'
 import Form from './components/Form'
 import Resume from './components/resume/Resume'
 import { useAccrualsSetter } from './useAccrualsSetter'
-import { FC, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { useNavigate, useParams } from 'react-router-dom'
-import { toast } from 'react-toastify'
+import { FC } from 'react'
+import { useForm } from 'react-hook-form'
 
 import Loader from '~/components/ui/loader/Loader'
 
-import { useAuth } from '~/hooks/useAuth'
-import { useWindowWidth } from '~/hooks/useWindowWidth'
-
-import {
-	IAnnualCategory,
-	TypeDefinedAnnualDirection
-} from '~/shared/types/annual.interface'
-
-import { AnnualService } from '~/services/annual.service'
-
-import { getExistingDirections } from '~/utils/annual.utils'
-
-import Container from '../shared/container/Container'
-import NarrowAttention from '../shared/narrow-attention/NarrowAttention'
-import { useAnnualReport } from '../useAnnualReport'
+import { Container, NarrowAttention } from '../shared'
 
 const AccrualsSetter: FC = () => {
-	const [isLoading, setIsLoading] = useState(false)
-	const [step, setStep] = useState<number>(0) // 0, 1, 2, 3
-	const { reportId } = useParams<{ reportId: string }>()
-	const navigate = useNavigate()
-	const {
-		isDataLoading,
-		annualReportInDB,
-		isReportPayed,
-		closeAnnualReport,
-		deleteAnnualReport
-	} = useAnnualReport()
-	const { user } = useAuth()
-	const { width } = useWindowWidth()
-	const isNarrow = width < 500
-
 	const { register, control, handleSubmit, setValue } =
 		useForm<IAnnualReportCategoriesFormInput>({
 			mode: 'onSubmit'
 		})
 
-	const directions = (
-		['main', 'renovation', 'target', 'commerce'] as TypeDefinedAnnualDirection[]
-	).filter(step =>
-		getExistingDirections(annualReportInDB?.data?.accounts ?? []).includes(step)
-	)
-
-	const {} = useAccrualsSetter(setValue, directions[step]) // активация useEffect
-
-	const redirectToCategoriesSetter = () =>
-		navigate(`/annual-reports/edit/${reportId}/categories-setter`)
-
-	const redirectToCreditSorter = () =>
-		navigate(`/annual-reports/edit/${reportId}/credit-sorter`)
-
-	const onSubmit: SubmitHandler<
-		IAnnualReportCategoriesFormInput
-	> = async data => {
-		if (!user || !reportId) return
-
-		try {
-			const categoriesToUpdate = [
-				...(annualReportInDB?.data?.categories?.[directions[step]] || [])
-			]
-
-			// Обновляем категории в копии массива на основе данных формы
-			categoriesToUpdate.forEach(category => {
-				const formCategory = data.categories[String(category.id)]
-				if (formCategory) {
-					category.amount = formCategory.amount ? formCategory.amount : 0
-				}
-			})
-
-			if (categoriesToUpdate.length > 0) {
-				await AnnualService.updateCategories(
-					user.uid,
-					reportId,
-					directions[step],
-					categoriesToUpdate as IAnnualCategory[]
-				).then(() =>
-					toast('Данные успешно обновлены', {
-						type: 'success',
-						autoClose: 1500
-					})
-				)
-			}
-		} catch (error) {
-			toast('Ошибка при обновлении данных', { type: 'error' })
-		}
-	}
-
-	const onNext = async () => {
-		if (step < directions.length) {
-			setIsLoading(true)
-			await handleSubmit(onSubmit)().then(() => setIsLoading(false))
-			setStep(step + 1)
-		} else {
-			redirectToCreditSorter()
-		}
-	}
-
-	const onBack = () =>
-		step !== 0 ? setStep(step - 1) : redirectToCategoriesSetter()
+	const {
+		isLoading,
+		isDataLoading,
+		isReportPayed,
+		isNarrow,
+		step,
+		directions,
+		annualReportInDB,
+		closeAnnualReport,
+		deleteAnnualReport,
+		onNext,
+		onBack
+	} = useAccrualsSetter(setValue, handleSubmit)
 
 	if (isNarrow) return <NarrowAttention />
 

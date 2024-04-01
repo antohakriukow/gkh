@@ -20,10 +20,15 @@ export const UserService = {
 		await cloudFunction.addShortIdToUser()
 	},
 
-	async setNeedToShowIntro(userId: string) {
+	async setDoNotShowIntroAgain(userId: string) {
 		await update(ref(db, `users/${userId}`), {
 			needToShowIntro: false
 		})
+	},
+
+	async restorePassword(email: string) {
+		if (!email) return
+		await resetPassword(email)
 	},
 
 	async updateUserEmail(user: User, newEmail: string, currentPassword: string) {
@@ -32,11 +37,6 @@ export const UserService = {
 
 		await reauthenticateWithCredential(user, credential)
 		updateEmail(user, newEmail)
-	},
-
-	async restorePassword(email: string) {
-		if (!email) return
-		await resetPassword(email)
 	},
 
 	async updateUserPassword(

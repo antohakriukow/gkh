@@ -2,13 +2,10 @@ import AuthFields from './AuthFields'
 import { IAuthInput } from './auth.interface'
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useAuth, useRedirect } from '~/hooks'
 
 import { Button, Heading } from '~/components/ui'
 import SubHeading from '~/components/ui/heading/SubHeading'
-
-import { useAuth } from '~/hooks/useAuth'
-
-import { useRedirect } from '../../../../hooks/useRedirect'
 
 import styles from './Auth.module.scss'
 

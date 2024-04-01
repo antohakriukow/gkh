@@ -1,37 +1,27 @@
-import ReportBody from './components/ReportBody'
+import ReportBody from './ReportBody'
+import { ReportFooter, ReportHeader } from './shared'
+import { usePreview } from './usePreview'
 import { FC } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { Loader } from '~/components/ui'
 
-import { useWindowWidth } from '~/hooks/useWindowWidth'
-
-import Container from '../shared/container/Container'
-import NarrowAttention from '../shared/narrow-attention/NarrowAttention'
-import { useAnnualReport } from '../useAnnualReport'
+import { Container, NarrowAttention } from '../shared'
 
 const Preview: FC = () => {
 	const {
 		isDataLoading,
-		annualReportInDB,
+		isCashPartnersStructure,
+		isNarrow,
 		isReportPayed,
+		annualReportInDB,
+		paymentButtonData,
 		closeAnnualReport,
 		deleteAnnualReport,
-		paymentButtonData,
-		downloadXLSX
-	} = useAnnualReport()
-	const navigate = useNavigate()
-	const { width } = useWindowWidth()
-	const isNarrow = width < 500
+		redirectToCategoriesSetter,
+		handleNext
+	} = usePreview()
 
-	const isCashServicesStructure =
-		annualReportInDB?.data?.settings?.structure === 'cash/services'
-
-	const redirectToCategoriesSetter = () =>
-		navigate(`/annual-reports/edit/${annualReportInDB?._id}/debit-sorter`)
-
-	const handleNext = () =>
-		isReportPayed ? downloadXLSX() : paymentButtonData.onClick()
+	if (!annualReportInDB.company) return null
 
 	if (isNarrow) return <NarrowAttention />
 
@@ -42,7 +32,7 @@ const Preview: FC = () => {
 			NextButtonText={
 				isReportPayed ? 'Скачать отчет' : paymentButtonData.buttonTitle
 			}
-			hasNoBackButton={!isCashServicesStructure}
+			hasNoBackButton={isCashPartnersStructure}
 			isReportPayed={isReportPayed}
 			handleCloseReport={closeAnnualReport}
 			handleDeleteReport={deleteAnnualReport}
@@ -50,7 +40,11 @@ const Preview: FC = () => {
 			{isDataLoading ? (
 				<Loader loaderType='fullscreen' />
 			) : (
-				<ReportBody annualReportInDB={annualReportInDB} />
+				<div>
+					<ReportHeader company={annualReportInDB.company} />
+					<ReportBody annualReportInDB={annualReportInDB} />
+					<ReportFooter company={annualReportInDB.company} />
+				</div>
 			)}
 		</Container>
 	)

@@ -1,7 +1,8 @@
 import { FC, useEffect, useState } from 'react'
 import { FaMinus, FaPlus } from 'react-icons/fa'
+import { usePeriod } from '~/hooks'
 
-import { usePeriod } from '~/hooks/usePeriod'
+import { convertPeriod } from '~/utils/report.utils'
 
 import styles from './PeriodSetter.module.scss'
 
@@ -56,21 +57,6 @@ const PeriodSetter: FC<IPeriodSetter> = ({ type }) => {
 			decrementYear()
 		} else if (type === 'period') {
 			decrementPeriod()
-		}
-	}
-
-	const convertPeriod = (period: TypePeriod | TypeYear) => {
-		switch (period) {
-			case 1:
-				return '1 квартал'
-			case 2:
-				return '1 полугодие'
-			case 3:
-				return '9 месяцев'
-			case 4:
-				return 'год'
-			default:
-				return period
 		}
 	}
 

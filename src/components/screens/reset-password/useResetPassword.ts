@@ -1,8 +1,8 @@
 import { FirebaseError } from 'firebase/app'
 import { useState } from 'react'
-import { toast } from 'react-toastify'
+import { useRedirect } from '~/hooks'
 
-import { useRedirect } from '~/hooks/useRedirect'
+import { showEmailConfirmationWasSendedNotification } from '~/shared/notifications/toast'
 
 import { UserService } from '~/services/user.service'
 
@@ -18,10 +18,7 @@ export const useResetPassword = () => {
 			if (!email) return
 			await UserService.restorePassword(email)
 			navigateToHome()
-			toast.success(
-				`На Ваш email отправлено письмо для восстановления пароля.`,
-				{ autoClose: 3000 }
-			)
+			showEmailConfirmationWasSendedNotification()
 		} catch (error) {
 			if (error instanceof FirebaseError) handleAuthErrors(error)
 		} finally {

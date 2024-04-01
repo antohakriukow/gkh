@@ -4,10 +4,9 @@ import { FC } from 'react'
 import { FaRegFilePdf } from 'react-icons/fa'
 import { personalDataPolicy } from '~/data/law-docs/personal-data-policy'
 import { saasContract } from '~/data/law-docs/saas-contract'
+import { usePDF } from '~/hooks'
 
 import { Heading, Tip } from '~/components/ui'
-
-import { usePDF } from '~/hooks/usePDF'
 
 import styles from './Prices.module.scss'
 

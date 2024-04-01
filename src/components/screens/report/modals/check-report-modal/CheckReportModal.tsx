@@ -1,7 +1,8 @@
 import Buttons from './components/Buttons'
 import Notice from './components/Notice'
 import Results from './components/Results'
-import { FC, useEffect, useState } from 'react'
+import { useCheckReportModal } from './useCheckReportModal'
+import { FC } from 'react'
 
 import { Loader } from '~/components/ui'
 
@@ -18,33 +19,19 @@ const CheckReportModal: FC<ICheckReportModal> = ({
 	checkReport,
 	generateReport
 }) => {
-	const [checkResults, setCheckResults] = useState<ICheckReportResult[] | null>(
-		null
-	)
+	const { checkResults, errors, warnings, isDanger } =
+		useCheckReportModal(checkReport)
+	const LOGIC_CONTROL_PROTOCOL = 'Протокол логического контроля'
 
-	const warnings = checkResults
-		? checkResults.filter(result => result.type === 'warning')
-		: []
-	const errors = checkResults
-		? checkResults.filter(result => result.type === 'error')
-		: []
+	if (checkResults === null) return <Loader loaderType='small' />
 
-	useEffect(() => {
-		checkReport().then(data => setCheckResults(data ?? []))
-	}, [checkReport])
-
-	return checkResults === null ? (
-		<Loader loaderType='small' />
-	) : (
+	return (
 		<div>
-			<h2 className={styles.title}>Протокол логического контроля</h2>
+			<h2 className={styles.title}>{LOGIC_CONTROL_PROTOCOL}</h2>
 			<Results type='error' data={errors} />
 			<Results type='warning' data={warnings} />
 			<Notice warnings={warnings} errors={errors} />
-			<Buttons
-				generateReport={generateReport}
-				isDanger={!!errors || (!!warnings && warnings.length > 3)}
-			/>
+			<Buttons generateReport={generateReport} isDanger={isDanger} />
 		</div>
 	)
 }

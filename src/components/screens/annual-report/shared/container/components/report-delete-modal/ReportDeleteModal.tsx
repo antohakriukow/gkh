@@ -1,9 +1,8 @@
 import { FC, Fragment, useState } from 'react'
 import { toast } from 'react-toastify'
+import { useModal } from '~/hooks'
 
 import { Button, Loader } from '~/components/ui'
-
-import { useModal } from '~/hooks/useModal'
 
 import styles from './ReportDeleteModal.module.scss'
 

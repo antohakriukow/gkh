@@ -1,14 +1,13 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-
-import { useAuth } from '~/hooks/useAuth'
+import { useAuth } from '~/hooks'
 
 export const useRedirect = () => {
 	const { user } = useAuth()
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		if (user) navigate('/annual-reports')
+		if (user) navigate('/reports')
 	}, [user, navigate])
 
 	const navigateToHome = () => navigate('/')

@@ -1,11 +1,9 @@
 import ReportDeleteModal from './report-delete-modal/ReportDeleteModal'
 import { FC } from 'react'
+import { useModal } from '~/hooks'
 
-import { Button, SubHeading } from '~/components/ui'
-
-import { useModal } from '~/hooks/useModal'
-
-import styles from './toolbar.module.scss'
+import { Button } from '~/components/ui'
+import SubHeader from '~/components/ui/sub-header/SubHeader'
 
 interface IToolbarProps {
 	isReportPayed: boolean
@@ -23,18 +21,19 @@ const Toolbar: FC<IToolbarProps> = ({
 		showModal(<ReportDeleteModal deleteAnnualReport={handleDeleteReport} />)
 	}
 
+	const title = 'Отчет об исполнении сметы'
+	const DELETE = 'Удалить'
+	const CLOSE = 'Закрыть'
+
 	return (
-		<div className={styles.container}>
-			<SubHeading title='Отчет об исполнении сметы' />
-			<div>
-				{!isReportPayed && (
-					<Button color='danger' onClick={handleShowReportDeleteModal}>
-						Удалить
-					</Button>
-				)}
-				<Button onClick={handleCloseReport}>Закрыть</Button>
-			</div>
-		</div>
+		<SubHeader title={title}>
+			{!isReportPayed && (
+				<Button color='danger' onClick={handleShowReportDeleteModal}>
+					{DELETE}
+				</Button>
+			)}
+			<Button onClick={handleCloseReport}>{CLOSE}</Button>
+		</SubHeader>
 	)
 }
 export default Toolbar

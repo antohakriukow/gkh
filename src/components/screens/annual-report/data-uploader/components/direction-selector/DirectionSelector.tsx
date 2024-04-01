@@ -1,29 +1,24 @@
-import { ChangeEvent, Dispatch, FC, Fragment, SetStateAction } from 'react'
+import Selector from './components/Selector'
+import { accrualsNotice } from './direction-selector.data'
+import { ChangeEvent, FC, Fragment } from 'react'
 
-import {
-	IAccount,
-	TypeAnnualDirection,
-	TypeAnnualReportStructure
-} from '~/shared/types/annual.interface'
+import { IAccount, TypeAnnualDirection } from '~/shared/types/annual.interface'
+
+import { useDataUploaderContext } from '../../provider/provider'
 
 import styles from './direction-selector.module.scss'
 
-interface IDirectionSelectorProps {
-	annualAccounts: IAccount[]
-	setAnnualAccounts: Dispatch<SetStateAction<IAccount[]>>
-	structure: TypeAnnualReportStructure | undefined
-}
+const DirectionSelector: FC = () => {
+	const { annualAccounts, setAnnualAccounts, structure } =
+		useDataUploaderContext()
 
-const DirectionSelector: FC<IDirectionSelectorProps> = ({
-	annualAccounts,
-	setAnnualAccounts,
-	structure
-}) => {
+	const isAccrualsStructure = structure === 'accruals/services'
+	const sortedAccounts = annualAccounts.sort((a, b) => +a.number - +b.number)
+
 	const setAccountDirection = (account: IAccount) => {
-		const updatedAccounts = annualAccounts.map(acc =>
+		const updatedAccounts = annualAccounts.map((acc: IAccount) =>
 			acc.number === account.number ? { ...acc, type: account.type } : acc
 		)
-
 		setAnnualAccounts(updatedAccounts)
 	}
 
@@ -38,35 +33,20 @@ const DirectionSelector: FC<IDirectionSelectorProps> = ({
 	return (
 		<Fragment>
 			<div className={styles.accounts}>
-				{[...annualAccounts]
-					.sort((a, b) => +a.number - +b.number)
-					.map(account => (
-						<div key={account.number} className={styles.account}>
-							<p>{account.number}</p>
-							<select
-								value={account.type || ''}
-								onChange={e => handleDirectionChange(account.number, e)}
-							>
-								<option value=''>Не указано</option>
-								<option value='main'>ЖКУ</option>
-								<option value='renovation'>Капремонт</option>
-								<option value='target'>Целевые взносы</option>
-								{structure === 'accruals/services' && (
-									<option value='commerce'>Коммерция</option>
-								)}
-							</select>
-						</div>
-					))}
+				{sortedAccounts.map(account => (
+					<Selector
+						key={account.number}
+						account={account}
+						handleDirectionChange={handleDirectionChange}
+						isAccrualsStructure={isAccrualsStructure}
+					/>
+				))}
 			</div>
-			<div className={styles.resume}>
-				{structure === 'accruals/services' && (
-					<p>
-						В выборку попали счета бухгалтерского учета c 80 по 86. Убедитесь,
-						что на конец отчетного периода отсутствует сальдо по счетам 20-29,
-						40-46, 90, 91, 94, 97, 98, 99.
-					</p>
-				)}
-			</div>
+			{isAccrualsStructure && (
+				<div className={styles.resume}>
+					<p>{accrualsNotice}</p>
+				</div>
+			)}
 		</Fragment>
 	)
 }

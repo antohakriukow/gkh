@@ -1,7 +1,6 @@
 import Item from './Item'
 import { FC } from 'react'
 import { Control, UseFormRegister } from 'react-hook-form'
-import { getAnnualDirectionTitle } from '~/core/annual/shared'
 
 import { SubHeading } from '~/components/ui'
 
@@ -9,6 +8,8 @@ import {
 	TypeCategoriesMap,
 	TypeDefinedAnnualDirection
 } from '~/shared/types/annual.interface'
+
+import { getAnnualDirectionTitle } from '~/utils/annual.utils'
 
 import { IAnnualReportCategoriesFormInput } from '../accruals-setter.interface'
 
@@ -55,18 +56,6 @@ const Form: FC<IFormProps> = ({
 					/>
 				)
 			})}
-			{/* {categories && (
-					<p>
-						Итого начислено:{' '}
-						{formatNumber(
-							categories.reduce(
-								(sum, category) =>
-									category.amount ? sum + category.amount : sum,
-								0
-							)
-						)}
-					</p>
-				)} */}
 		</div>
 	)
 }

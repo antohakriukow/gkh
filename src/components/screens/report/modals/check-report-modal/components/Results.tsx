@@ -14,11 +14,13 @@ interface IResults {
 
 const Results: FC<IResults> = ({ type, data }) => {
 	if (!data || data.length === 0) return null
+	const ERRORS = 'Ошибки'
+	const WARNINGS = 'Предупреждения'
 
 	return (
 		<div className={type === 'error' ? styles.errors : styles.warnings}>
 			<h3 className={styles.subTitle}>
-				{type === 'error' ? 'Ошибки' : 'Предупреждения'}
+				{type === 'error' ? ERRORS : WARNINGS}
 			</h3>
 			<ul className={styles.list}>
 				{data.map((result: ICheckReportResult, index: number) => (

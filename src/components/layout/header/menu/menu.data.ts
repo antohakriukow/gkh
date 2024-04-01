@@ -1,11 +1,15 @@
 export const menuItems = [
-	{ title: '22-ЖКХ', path: '/reports' },
-	{ title: 'Исполнение сметы', path: '/annual-reports' },
-	{ title: 'Цены', path: '/prices' }
+	{ title: '22-ЖКХ', path: '/reports', className: 'reportsAnchor' },
+	{
+		title: 'Исполнение сметы',
+		path: '/annual-reports',
+		className: 'annualsAnchor'
+	},
+	{ title: 'Цены', path: '/prices', className: 'priceAnchor' }
 ]
 
 export const mobileMenuItems = [
-	{ title: '22-ЖКХ', path: '/reports' },
-	{ title: 'ОИС', path: '/annual-reports' },
-	{ title: 'Цены', path: '/prices' }
+	{ title: '22-ЖКХ', path: '/reports', className: 'reportsAnchor' },
+	{ title: 'ОИС', path: '/annual-reports', className: 'annualsAnchor' },
+	{ title: 'Цены', path: '/prices', className: 'priceAnchor' }
 ]

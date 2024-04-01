@@ -161,3 +161,14 @@ export interface IAnnualStepData {
 	title: string
 	direction: TypeDefinedAnnualDirection
 }
+
+export interface AnnualState {
+	fileNames: string[]
+	accounts: IAccount[]
+	operations: IAccountingOperation[] | IBankOperation[]
+	categories: IAnnualCategoryState[]
+	structure?: TypeAnnualReportStructure
+	startDate?: string
+	finalDate?: string
+	error?: string
+}

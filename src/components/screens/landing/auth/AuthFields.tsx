@@ -8,10 +8,9 @@ import {
 } from 'react-hook-form'
 import { personalDataPolicy } from '~/data/law-docs/personal-data-policy'
 import { saasContract } from '~/data/law-docs/saas-contract'
+import { usePDF } from '~/hooks'
 
 import { AuthField } from '~/components/ui'
-
-import { usePDF } from '~/hooks/usePDF'
 
 import { validEmail } from '~/shared/regex'
 

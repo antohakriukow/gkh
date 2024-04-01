@@ -1,10 +1,7 @@
-import { FC, Fragment, useState } from 'react'
-import { toast } from 'react-toastify'
+import { FC, Fragment } from 'react'
 
 import { useAddReportModal } from '~/components/screens/annual-reports/add-report-modal/useAddReportModal'
 import { Button, Loader } from '~/components/ui'
-
-import { useTypedSelector } from '~/hooks/useTypedSelector'
 
 import styles from './AddReportModal.module.scss'
 
@@ -13,25 +10,14 @@ interface IReportModalProps {
 }
 
 const ReportModal: FC<IReportModalProps> = ({ handleOpenReport }) => {
-	const [isLoading, setIsLoading] = useState(false)
-	const { create } = useAddReportModal()
-	const { currentCompany } = useTypedSelector(state => state.ui)
+	const {
+		isLoading,
+		currentCompanyName,
+		handleCreateReport,
 
-	const handleCreateReport = async () => {
-		if (!currentCompany) return
-
-		try {
-			setIsLoading(true)
-			create({
-				type: 'annual',
-				company: currentCompany
-			}).then(response => handleOpenReport(response._id))
-		} catch (error) {
-			toast('Ошибка при создании отчета', { type: 'error' })
-		} finally {
-			setIsLoading(false)
-		}
-	}
+		DO_YOU_WANT_TO_CREATE_ANNUAL,
+		CREATE
+	} = useAddReportModal(handleOpenReport)
 
 	return (
 		<div className={styles.container}>
@@ -39,12 +25,12 @@ const ReportModal: FC<IReportModalProps> = ({ handleOpenReport }) => {
 				<Loader loaderType='small' />
 			) : (
 				<Fragment>
-					<h3 className={styles.title}>{currentCompany?.name.short}</h3>
+					<h3 className={styles.title}>{currentCompanyName}</h3>
 					<p className={styles.reportSubtitle}>
-						Создать отчет об исполнении сметы?
+						{DO_YOU_WANT_TO_CREATE_ANNUAL}
 					</p>
 					<Button onClick={handleCreateReport} style={{ marginTop: 20 }}>
-						Создать
+						{CREATE}
 					</Button>
 				</Fragment>
 			)}

@@ -1,7 +1,6 @@
 import { FC, MouseEvent, ReactNode, useCallback, useEffect } from 'react'
 import { MdClose } from 'react-icons/md'
-
-import { useModal } from '~/hooks/useModal'
+import { useModal } from '~/hooks'
 
 import styles from './Modal.module.scss'
 
