@@ -20,8 +20,6 @@ const Table: FC<ITable> = ({
 }) => {
 	const [filters, setFilters] = useState<IFilters>({})
 
-	// const calculatedHeight = `calc(${height ? `${height}vh` : '100vh'} - 200px)`
-
 	const handleFilterChange = useCallback(
 		(title: string, value: string) => {
 			setFilters({

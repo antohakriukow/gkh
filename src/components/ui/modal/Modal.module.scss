@@ -15,10 +15,6 @@
 		@apply w-3/4;
 	}
 
-	// @media (max-width: 450) {
-	// 	@apply px-2;
-	// }
-
 	@media (max-width: 360) {
 		@apply w-3/5 px-2;
 		> div {
