@@ -1,11 +1,10 @@
 import { issueSubjectOptions } from './create-issue.data'
 import { FC, useEffect, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { useIssue } from '~/hooks'
 
 import { Button, Select } from '~/components/ui'
 import TextArea from '~/components/ui/form-elements/TextArea/TextArea'
-
-import { useIssue } from '~/hooks/useIssue'
 
 import { IIssue, TypeIssueSubject } from '~/shared/types/issue.interface'
 

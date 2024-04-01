@@ -1,10 +1,9 @@
-import { calculateSignature } from './utils'
+import { calculateSignature } from './calculateSignature'
 
 import { IPaymentData } from '../shared/types/payment.interface'
 
 /**
  * Генерирует URL для перенаправления пользователя на страницу оплаты RoboKassa.
- * Использует переменные окружения для получения логина мерчанта и пароля, добавляет данные чека (receipt).
  * @param cost Стоимость товаров.
  * @param invoiceId Идентификатор счета.
  * @param description Описание покупки.
@@ -36,11 +35,9 @@ export const generatePaymentLink = ({
 		return ''
 	}
 
-	// Преобразование receipt в строку JSON и кодирование для URL
 	const receiptString = JSON.stringify(receipt)
 	const encodedReceipt = encodeURIComponent(receiptString)
 
-	// Подпись может потребовать обновления, чтобы включить новые параметры
 	const signature = calculateSignature(
 		merchantLogin,
 		cost,
@@ -53,7 +50,6 @@ export const generatePaymentLink = ({
 		`Shp_userId=${userId}`
 	)
 
-	// Добавляем новые параметры в запрос
 	const queryParams = new URLSearchParams({
 		MerchantLogin: merchantLogin,
 		OutSum: cost.toString(),

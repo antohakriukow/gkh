@@ -92,11 +92,13 @@ const ServicesFieldSet: FC<IServicesFieldSet> = ({
 		setProvidedServices(newFieldsToRender)
 	}, [renderConditions, setValue])
 
+	const CURRENT_SERVICES = `Действующие услуги (Начисляет УО) ${
+		isAdvancedModeOn ? 'и площади' : ''
+	}`
+
 	return (
 		<>
-			<h3 className={styles.blockTitle}>
-				Действующие услуги (Начисляет УО) {isAdvancedModeOn ? 'и площади' : ''}
-			</h3>
+			<h3 className={styles.blockTitle}>{CURRENT_SERVICES}</h3>
 			<div className={styles.fieldSet}>{renderFields(providedServices)}</div>
 		</>
 	)

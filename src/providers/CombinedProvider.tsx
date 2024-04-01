@@ -10,10 +10,9 @@ import React, {
 	useState
 } from 'react'
 import { toast } from 'react-toastify'
+import { useActions } from '~/hooks'
 
 import Modal from '~/components/ui/modal/Modal'
-
-import { useActions } from '~/hooks/useActions'
 
 import {
 	auth,

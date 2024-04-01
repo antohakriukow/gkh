@@ -1,20 +1,18 @@
-import { TreeProvider } from './TreeProvider'
 import ItemCreator from './components/ItemCreator'
 import Tree from './components/Tree'
+import { TreeProvider } from './provider/TreeProvider'
 import { useCategoriesSetter } from './useCategoriesSetter'
 import { FC, useState } from 'react'
+import { useWindowWidth } from '~/hooks'
 
 import { Loader, SubHeading } from '~/components/ui'
-
-import { useWindowWidth } from '~/hooks/useWindowWidth'
 
 import {
 	IAnnualCategoryState,
 	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
 
-import Container from '../shared/container/Container'
-import NarrowAttention from '../shared/narrow-attention/NarrowAttention'
+import { Container, NarrowAttention } from '../shared'
 import { useAnnualReport } from '../useAnnualReport'
 
 import styles from './categories-setter.module.scss'

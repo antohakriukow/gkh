@@ -1,0 +1,65 @@
+@import '../../../../../../styles/colors.scss';
+
+.container {
+	@apply px-4;
+	> div {
+		@apply pt-2;
+	}
+}
+
+.table {
+	@apply w-full grid gap-0 box-border;
+	border: 1px solid $primary-800;
+}
+
+.fourColumnsGrid {
+	grid-template-columns: auto 1fr auto auto;
+}
+
+.fiveColumnsGrid {
+	grid-template-columns: 30px 1fr auto auto auto;
+}
+
+.row:nth-of-type(1) {
+	@apply font-semibold;
+	> div {
+		background: $primary-100;
+	}
+}
+
+.row {
+	display: contents;
+
+	> div {
+		@apply p-1.5;
+		border: 1px solid $primary-800;
+		background-color: white;
+	}
+
+	> div:nth-of-type(1) {
+		@apply cursor-pointer;
+	}
+
+	> div:nth-of-type(2) {
+		@apply whitespace-nowrap overflow-hidden overflow-ellipsis;
+	}
+
+	> div:nth-of-type(3),
+	> div:nth-of-type(4),
+	> div:nth-of-type(5) {
+		@apply text-center;
+		min-width: 112px;
+		> p {
+			@apply text-center m-0;
+		}
+	}
+}
+
+.cell {
+	@apply m-0;
+}
+
+.blurred {
+	@apply filter m-0;
+	filter: blur(4px);
+}

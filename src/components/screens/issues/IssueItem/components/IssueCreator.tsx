@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
-
-import { useModal } from '~/hooks/useModal'
+import { useModal } from '~/hooks'
 
 import CreateIssueModal from '../../modals/create-issue-modal/CreateIssueModal'
 import styles from '../IssueItem.module.scss'

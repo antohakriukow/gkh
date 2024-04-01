@@ -1,7 +1,5 @@
 import {
-	getAccountRow,
 	getCategory,
-	getCategoryRow,
 	getDetailRows,
 	getDirectionTitle,
 	getReportTableHeader,
@@ -29,7 +27,6 @@ import {
 	IAccount,
 	IAnnualCategory,
 	IAnnualReport,
-	IExtendedBankOperation,
 	TypeDefinedAnnualDirection
 } from '~/shared/types/annual.interface'
 
@@ -90,7 +87,7 @@ export const downloadCashServicesReport = async (report: IAnnualReport) => {
 		}
 	})
 
-	dataSeparatedByDirection.map(data => {
+	dataSeparatedByDirection.forEach(data => {
 		if (!data.operationGroups.incoming && !data.operationGroups.outgoing)
 			return null
 
@@ -104,7 +101,7 @@ export const downloadCashServicesReport = async (report: IAnnualReport) => {
 		getReportTableHeader(worksheet, data.direction)
 
 		// Внесение данных по каждому счету в таблицу
-		data.tableAccounts.map(tableAccount => {
+		data.tableAccounts.forEach(tableAccount => {
 			const accountOperationGroups = filterOperationsByAccount(
 				data.operationGroups,
 				tableAccount.number
@@ -117,7 +114,7 @@ export const downloadCashServicesReport = async (report: IAnnualReport) => {
 					0
 				)
 
-				data.tableCategories.map(category => {
+				data.tableCategories.forEach(category => {
 					getTotalCategoryRow(worksheet, category, operations, totalAccruals)
 
 					getCategory(worksheet, category, data.tableOperations, 1)

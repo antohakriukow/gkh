@@ -7,19 +7,6 @@ import { ICompany } from '~/shared/types/company.interface'
 import { db } from '~/services/_firebase'
 
 export const CompanyService = {
-	async _getAll(userId: string) {
-		try {
-			const snapshot = await get(child(ref(db), `users/${userId}/companies`))
-			if (snapshot.exists()) {
-				return Object.values(snapshot.val())
-			} else {
-				return []
-			}
-		} catch (error) {
-			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
-		}
-	},
-
 	async getByInn(userId: string, companyInn: string) {
 		try {
 			const snapshot = await get(

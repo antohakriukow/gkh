@@ -31,6 +31,8 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 	formState,
 	watch
 }) => {
+	const ORGANIZATION_PARAMETERS = 'Параметры Управляющей организации (УО)'
+
 	const errors = formState?.errors
 	const isElevatorBoth = watch('data.elevator.status') === 'both'
 	const isStoveBoth = watch('data.stove.status') === 'both'
@@ -44,9 +46,7 @@ const ParametersFieldSet: FC<IParametersFieldSet> = ({
 
 	return (
 		<>
-			<h3 className={styles.blockTitle}>
-				Параметры Управляющей организации (УО)
-			</h3>
+			<h3 className={styles.blockTitle}>{ORGANIZATION_PARAMETERS}</h3>
 			<div className={styles.fieldSet}>
 				<ReportSelect
 					control={control}

@@ -1,25 +1,19 @@
 import ReportForm from './22gkh/ReportForm'
-import ReportButtons from './buttons/ReportButtons'
 import NoReportFound from './components/NoReportFound'
+import Toolbar from './components/Toolbar'
 import CheckReportModal from './modals/check-report-modal/CheckReportModal'
 import { useReportEditor } from './useReportEditor'
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import { AiOutlineCloseSquare } from 'react-icons/ai'
-import { useParams } from 'react-router-dom'
+import { useModal } from '~/hooks'
 
-import { Heading, Loader } from '~/components/ui'
-
-import { useReportsData } from '~/hooks/firebase-hooks/useReportsData'
-import { useModal } from '~/hooks/useModal'
+import { Loader } from '~/components/ui'
 
 import { IReport } from '~/shared/types/report.interface'
 
 import styles from './ReportEditor.module.scss'
 
 const ReportEditor: FC = () => {
-	const { reports, isLoading: isDataLoading } = useReportsData()
-	const [isLoading, setIsLoading] = useState(true)
 	const { register, setValue, control, formState, watch, reset, handleSubmit } =
 		useForm<IReport>({
 			mode: 'onSubmit'
@@ -27,43 +21,21 @@ const ReportEditor: FC = () => {
 	const { showModal } = useModal()
 
 	const {
+		isLoading,
+		isReportNotExists,
+		isReadyToGenerate,
+		isReadyToDownload,
+		reportId,
 		reportEditorHeading,
 		saveReport,
-		currentReport,
-		downloadReportXML,
-		downloadReportPDF,
 		checkReport,
 		generateReport,
+		downloadReportPDF,
+		downloadReportXML,
 		closeReport
-	} = useReportEditor(setValue, reset)
+	} = useReportEditor(setValue, reset, formState)
 
-	const { reportId } = useParams()
-
-	useEffect(() => {
-		const timer = setTimeout(() => {
-			setIsLoading(false)
-		}, 1000)
-
-		return () => clearTimeout(timer)
-	}, [])
-
-	if (isLoading)
-		return (
-			<div className={styles.container}>
-				<Loader loaderType='small' />
-			</div>
-		)
-
-	const reportExists = reports.some(
-		report => report?._id?.toString() === reportId?.toString()
-	)
-
-	if (!reportExists) return <NoReportFound />
-
-	const isReadyToGenerate = !formState.isDirty && formState.isValid
-	const isReadyToDownload =
-		currentReport?.finalReport?.generatedAt &&
-		currentReport?.finalReport?.generatedAt >= currentReport?.updatedAt
+	if (isReportNotExists) return <NoReportFound />
 
 	const handleShowCheckReportModal = () => {
 		if (!!reportId && checkReport() !== undefined)
@@ -75,43 +47,31 @@ const ReportEditor: FC = () => {
 			)
 	}
 
+	if (isLoading) return <Loader loaderType='fullscreen' />
+
 	return (
 		<div className={styles.container} key={reportId}>
-			<div className={styles.header}>
-				<Heading title={reportEditorHeading} className={styles.title} />
-				<div className={styles.tools}>
-					<AiOutlineCloseSquare
-						className={styles.close}
-						onClick={closeReport}
-						color='#e25a66'
-						size={40}
-					/>
-				</div>
-			</div>
-			<ReportButtons
+			<Toolbar
+				title={reportEditorHeading}
+				handleCloseReport={closeReport}
 				isReadyToGenerate={isReadyToGenerate}
 				isReadyToDownload={isReadyToDownload}
 				handleSubmit={handleSubmit}
+				handleShowCheckReportModal={handleShowCheckReportModal}
 				saveReport={saveReport}
-				handleShowReportConfirmationModal={handleShowCheckReportModal}
 				downloadReportPDF={downloadReportPDF}
 				downloadReportXML={downloadReportXML}
 			/>
-			{isDataLoading ? (
-				<Loader loaderType='small' />
-			) : (
-				<>
-					<div className={styles.report}>
-						<ReportForm
-							register={register}
-							control={control}
-							formState={formState}
-							watch={watch}
-							setValue={setValue}
-						/>
-					</div>
-				</>
-			)}
+
+			<div className={styles.report}>
+				<ReportForm
+					register={register}
+					control={control}
+					formState={formState}
+					watch={watch}
+					setValue={setValue}
+				/>
+			</div>
 		</div>
 	)
 }

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import React from 'react'
 
-import { debounce } from '~/utils/debounce'
+import { debounce } from '~/components/ui/table/table.utils'
 
 import styles from '../Table.module.scss'
 import { ITableHeader } from '../table.interface'

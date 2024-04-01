@@ -1,10 +1,9 @@
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { BsSendFill } from 'react-icons/bs'
+import { useMessage } from '~/hooks'
 
 import TextArea from '~/components/ui/form-elements/TextArea/TextArea'
-
-import { useMessage } from '~/hooks/useMessage'
 
 import { IMessageCreate } from '~/shared/types/message.interface'
 

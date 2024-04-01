@@ -1,11 +1,9 @@
-import { annualReducer } from './annual/annual.slice'
 import { uiReducer } from './ui/ui.slice'
 import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({
 	reducer: {
-		ui: uiReducer,
-		annual: annualReducer
+		ui: uiReducer
 	}
 })
 

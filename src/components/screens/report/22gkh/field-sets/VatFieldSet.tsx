@@ -24,29 +24,28 @@ const VatFieldSet: FC<IVatFieldSet> = ({
 }) => {
 	const [providedServices, setProvidedServices] = useState<IFieldData[]>([])
 
+	const INCLUDING_VAT = 'В том числе НДС в начислениях ЖКУ за отчетный период'
+
 	const hasVat = watch('data.vat.status') === 'yes'
 	const settingsServices = watch('data.settings.services')
 
 	const checkServices = useCallback(() => {
 		if (!settingsServices) return []
 
-		// Добавляем услуги управления и обслуживания
 		const services = {
 			...settingsServices,
 			management: { status: true },
 			maintenance: { status: true }
 		}
 
-		const vatValues = watch('data.vat.values') // Получаем значения НДС
+		const vatValues = watch('data.vat.values')
 
 		const result = vatFieldsData.filter(field => {
 			const serviceKey = field.name.split('.').pop() as keyof IServices
 			const service = services[serviceKey]
 
-			// Доступ к значениям НДС для каждой услуги
 			const vatValue = vatValues ? vatValues[serviceKey] : null
 
-			// Проверяем статус услуги и наличие значения НДС
 			if (!service || !service.status || !hasVat || vatValue === null) {
 				setValue(field.name as keyof IReport, 0)
 				return false
@@ -70,9 +69,7 @@ const VatFieldSet: FC<IVatFieldSet> = ({
 
 	return (
 		<>
-			<h3 className={styles.blockTitle}>
-				В том числе НДС в начислениях ЖКУ за отчетный период
-			</h3>
+			<h3 className={styles.blockTitle}>{INCLUDING_VAT}</h3>
 			<div className={styles.fieldSet}>
 				{providedServices.map(field => (
 					<ReportFieldNumber

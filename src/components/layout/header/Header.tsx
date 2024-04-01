@@ -1,15 +1,12 @@
 import FAQButton from './menu/buttons/FAQButton'
 import { menuItems, mobileMenuItems } from './menu/menu.data'
 import cn from 'clsx'
-import { FC } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useActions, useAuth, useWindowWidth } from '~/hooks'
 
 import HeaderMenu from '~/components/layout/header/menu/HeaderMenu'
 import SupportButton from '~/components/layout/header/menu/buttons/SupportButton'
-
-import { useActions } from '~/hooks/useActions'
-import { useAuth } from '~/hooks/useAuth'
-import { useWindowWidth } from '~/hooks/useWindowWidth'
 
 import styles from './Header.module.scss'
 
@@ -22,19 +19,26 @@ const Header: FC = () => {
 	const { user } = useAuth()
 	const navigate = useNavigate()
 	const { width } = useWindowWidth()
-	// const goHome = () => navigate(`/reports`)
 	const location = useLocation()
-	const { setCurrentAnnualReport, setCurrentReport } = useActions()
+	const { setCurrentReport } = useActions()
 
-	const isActive = (path: string) => location.pathname === path
+	const isActive = useCallback(
+		(path: string) => location.pathname === path,
+		[location.pathname]
+	)
 
-	function handleClick(item: IMenuItem) {
-		setCurrentAnnualReport(null)
-		setCurrentReport(null)
-		navigate(item.path)
-	}
+	const handleClick = useCallback(
+		(item: IMenuItem) => {
+			setCurrentReport(null)
+			navigate(item.path)
+		},
+		[navigate, setCurrentReport]
+	)
 
-	const menuData = width > 480 ? menuItems : mobileMenuItems
+	const menuData = useMemo(
+		() => (width > 480 ? menuItems : mobileMenuItems),
+		[width]
+	)
 
 	return (
 		<div className={styles.container}>
@@ -43,13 +47,8 @@ const Header: FC = () => {
 					{menuData.map(item => (
 						<div
 							key={item.path}
-							className={cn(styles.menuItem, {
-								[styles.active]: isActive(item.path),
-								['reportsAnchor']: item.title.includes('22-ЖКХ'),
-								['annualsAnchor']:
-									item.title.includes('ОИС') ||
-									item.title.includes('Исполнение сметы'),
-								['priceAnchor']: item.title.includes('Цены')
+							className={cn(styles.menuItem, item.className, {
+								[styles.active]: isActive(item.path)
 							})}
 							onClick={() => handleClick(item)}
 						>
@@ -65,7 +64,6 @@ const Header: FC = () => {
 					</div>
 				)}
 			</div>
-			{/* <SubHeader menuItems={menuItems} /> */}
 		</div>
 	)
 }

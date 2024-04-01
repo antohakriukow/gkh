@@ -1,16 +1,21 @@
 import { FirebaseError } from 'firebase/app'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { SubmitHandler, UseFormReset, UseFormSetValue } from 'react-hook-form'
+import { useCallback, useEffect, useState } from 'react'
+import {
+	FormState,
+	SubmitHandler,
+	UseFormReset,
+	UseFormSetValue
+} from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
-import { toast } from 'react-toastify'
 import { downloadPDF } from '~/core/22gkh/pdf/pdf.download'
 import { downloadXML } from '~/core/22gkh/xml/xml.download'
+import { useActions, useAuth, useReportsData, useTypedSelector } from '~/hooks'
 
-import { useReportsData } from '~/hooks/firebase-hooks/useReportsData'
-import { useActions } from '~/hooks/useActions'
-import { useAuth } from '~/hooks/useAuth'
-import { useTypedSelector } from '~/hooks/useTypedSelector'
-
+import {
+	showErrorNotificationWithText,
+	showSuccessDataSavedNotification,
+	showSuccessReportGeneratedNotification
+} from '~/shared/notifications/toast'
 import { ICheckReportResult, IReport } from '~/shared/types/report.interface'
 
 import { cloudFunction } from '~/services/_functions'
@@ -21,22 +26,31 @@ import { convertPeriod } from '~/utils/report.utils'
 
 export const useReportEditor = (
 	setValue: UseFormSetValue<IReport>,
-	reset: UseFormReset<IReport>
+	reset: UseFormReset<IReport>,
+	formState: FormState<IReport>
 ) => {
 	const { user } = useAuth()
-	const { reports } = useReportsData()
+	const { reports, isLoading: isDataLoading } = useReportsData()
 	const [isLoading, setIsLoading] = useState(false)
 	const { currentReport } = useTypedSelector(state => state.ui)
 	const { setCurrentReport } = useActions()
+	const { reportId } = useParams<{ reportId: string }>()
+
 	const navigate = useNavigate()
+	const closeReport = useCallback(() => navigate(`/reports`), [navigate])
+
+	const isReportExists = reports.some(
+		report => report?._id?.toString() === reportId?.toString()
+	)
+	const isReadyToGenerate = !formState.isDirty && formState.isValid
+	const isReadyToDownload = Boolean(
+		currentReport?.finalReport?.generatedAt &&
+			currentReport?.finalReport?.generatedAt >= currentReport?.updatedAt
+	)
 
 	const reportEditorHeading = currentReport
-		? `Отчет 22-ЖКХ (Жилище) за ${convertPeriod(
-				currentReport?.period
-		  )} ${currentReport?.year}`
+		? `22-ЖКХ за ${convertPeriod(currentReport?.period)} ${currentReport?.year}`
 		: ''
-
-	const { reportId } = useParams<{ reportId: string }>()
 
 	useEffect(() => {
 		const reportFromUrl = reportId
@@ -72,8 +86,6 @@ export const useReportEditor = (
 		[setValue]
 	)
 
-	const closeReport = useCallback(() => navigate(`/reports`), [navigate])
-
 	useEffect(() => {
 		if (currentReport) {
 			setReportValues(currentReport)
@@ -97,7 +109,7 @@ export const useReportEditor = (
 
 				reset(newReportData)
 
-				toast.success('Данные сохранены', { autoClose: 3000 })
+				showSuccessDataSavedNotification()
 			} catch (error) {
 				if (error instanceof FirebaseError) handleDBErrors(error)
 			} finally {
@@ -115,13 +127,10 @@ export const useReportEditor = (
 				currentReport._id.toString(),
 				user.uid
 			)
+
 			return checkResult.data as ICheckReportResult[]
 		} catch (error) {
-			if (error instanceof FirebaseError) {
-				handleDBErrors(error)
-			} else {
-				console.log(error)
-			}
+			if (error instanceof FirebaseError) handleDBErrors(error)
 		} finally {
 			setIsLoading(false)
 		}
@@ -129,9 +138,9 @@ export const useReportEditor = (
 
 	const generateReport = useCallback(async () => {
 		if (!user || !currentReport) return
-		setIsLoading(true)
 
 		try {
+			setIsLoading(true)
 			const newReportData = (await cloudFunction.generateFinalReport(
 				currentReport._id.toString(),
 				user.uid
@@ -139,11 +148,7 @@ export const useReportEditor = (
 
 			setCurrentReport(newReportData.data)
 
-			cloudFunction.createLog(user.uid, 'info', 'report22/generate', {
-				data: newReportData.data.finalReport
-			})
-
-			toast.success('Генерация отчета завершена', { autoClose: 3000 })
+			showSuccessReportGeneratedNotification()
 		} catch (error) {
 			if (error instanceof FirebaseError) handleDBErrors(error)
 		} finally {
@@ -153,22 +158,17 @@ export const useReportEditor = (
 
 	const downloadReportPDF = useCallback(async () => {
 		if (!user || !currentReport) return
-		setIsLoading(true)
 		try {
+			setIsLoading(true)
+
 			const report = await ReportService.getById(
 				user.uid,
 				currentReport._id.toString()
 			)
+
 			downloadPDF(report)
-			cloudFunction.createLog(user.uid, 'info', 'report22/pdf', {
-				data: report
-			})
 		} catch (error) {
-			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
-			cloudFunction.createLog(user.uid, 'error', 'report22/pdf', {
-				data: currentReport,
-				error
-			})
+			if (error instanceof Error) showErrorNotificationWithText(error.message)
 		} finally {
 			setIsLoading(false)
 		}
@@ -176,50 +176,33 @@ export const useReportEditor = (
 
 	const downloadReportXML = useCallback(async () => {
 		if (!user || !currentReport) return
-		setIsLoading(true)
 		try {
+			setIsLoading(true)
 			const report = await ReportService.getById(
 				user.uid,
 				currentReport._id.toString()
 			)
 
 			downloadXML(report)
-			cloudFunction.createLog(user.uid, 'info', 'report22/xml', {
-				data: report
-			})
 		} catch (error) {
-			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
-			cloudFunction.createLog(user.uid, 'error', 'report22/xml', {
-				data: currentReport,
-				error
-			})
+			if (error instanceof Error) showErrorNotificationWithText(error.message)
 		} finally {
 			setIsLoading(false)
 		}
 	}, [user, currentReport])
 
-	return useMemo(
-		() => ({
-			isLoading,
-			reportEditorHeading,
-			saveReport,
-			checkReport,
-			generateReport,
-			downloadReportPDF,
-			downloadReportXML,
-			currentReport,
-			closeReport
-		}),
-		[
-			isLoading,
-			reportEditorHeading,
-			saveReport,
-			checkReport,
-			generateReport,
-			downloadReportPDF,
-			downloadReportXML,
-			currentReport,
-			closeReport
-		]
-	)
+	return {
+		isLoading: isLoading && isDataLoading,
+		isReportNotExists: !isReportExists,
+		isReadyToGenerate,
+		isReadyToDownload,
+		reportId,
+		reportEditorHeading,
+		saveReport,
+		checkReport,
+		generateReport,
+		downloadReportPDF,
+		downloadReportXML,
+		closeReport
+	}
 }

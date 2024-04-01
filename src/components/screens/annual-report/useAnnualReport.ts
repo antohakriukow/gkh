@@ -1,14 +1,13 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { downloadCashPartnersReport } from '~/core/annual/downloadCashPartnersReport/downloadCashPartnersReport'
-import { downloadCashServicesReport } from '~/core/annual/downloadCashServicesReport/downloadCashServicesReport'
+import {
+	useAuth,
+	usePaymentsData,
+	useSingleAnnualReportData,
+	useUserData
+} from '~/hooks'
 import { AnnualReportPrice } from '~/payment/_prices'
 import createPaymentButtonData from '~/payment/createPaymentData'
 import { annualReceipt } from '~/payment/receipts/annualReceipt'
-
-import { usePaymentsData } from '~/hooks/firebase-hooks/usePaymentsData'
-import { useSingleAnnualReportData } from '~/hooks/firebase-hooks/useSingleAnnualReportData'
-import { useUserData } from '~/hooks/firebase-hooks/useUserData'
-import { useAuth } from '~/hooks/useAuth'
 
 import { AnnualService } from '~/services/annual.service'
 
@@ -67,16 +66,6 @@ export const useAnnualReport = () => {
 		instanceId: annualReportInDB ? String(annualReportInDB._id) : ''
 	})
 
-	const downloadXLSX = () => {
-		if (!annualReportInDB || !annualReportInDB.data.bankOperations) return
-
-		if (annualReportInDB.data.settings?.structure === 'cash/partners')
-			downloadCashPartnersReport(annualReportInDB)
-
-		if (annualReportInDB.data.settings?.structure === 'cash/services')
-			downloadCashServicesReport(annualReportInDB)
-	}
-
 	const isReportPayed = payments.some(
 		payment =>
 			payment.type === 'annual' &&
@@ -95,7 +84,6 @@ export const useAnnualReport = () => {
 		redirectToCreditSorter,
 		redirectToDebitSorter,
 		redirectToPreview,
-		paymentButtonData,
-		downloadXLSX
+		paymentButtonData
 	}
 }

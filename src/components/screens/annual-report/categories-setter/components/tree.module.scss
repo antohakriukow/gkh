@@ -1,7 +1,12 @@
 @import '../../../../../styles/colors.scss';
 
+.container {
+	max-width: 500px;
+}
+
 .itemCreator {
 	@apply mt-3 flex flex-row items-center justify-between box-border;
+	max-width: 500px;
 
 	> input {
 		@apply pl-5 pr-2 mr-1 w-full h-10 m-0 text-base text-primary-900 bg-transparent outline-none box-border;
@@ -16,7 +21,7 @@
 .item {
 	@apply flex flex-row my-0.5 box-border cursor-pointer;
 	border: solid 1px $gray-200;
-	padding: 4px 6px !important;
+	padding: 4px 6px;
 
 	> button:nth-of-type(1) {
 		@apply mt-0;

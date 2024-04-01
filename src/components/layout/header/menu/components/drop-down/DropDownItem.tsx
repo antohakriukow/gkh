@@ -1,17 +1,11 @@
 import { IDropDownItem } from './drop-down.interface'
-import cn from 'clsx'
 import { FC } from 'react'
 
 import styles from './DropDown.module.scss'
 
-const DropDownItem: FC<IDropDownItem> = ({ inn, name, onClick, noHover }) => {
+const DropDownItem: FC<IDropDownItem> = ({ inn, name, onClick }) => {
 	return (
-		<div
-			onClick={() => onClick(inn)}
-			className={cn(styles.item, {
-				[styles.noHover]: noHover
-			})}
-		>
+		<div onClick={() => onClick(inn)} className={styles.item}>
 			<p className={styles.title}>{name.short}</p>
 		</div>
 	)

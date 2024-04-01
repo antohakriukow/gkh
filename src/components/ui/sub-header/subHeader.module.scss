@@ -1,0 +1,26 @@
+.container {
+	@apply flex flex-row flex-wrap items-center justify-between mb-2 bg-primary-100 px-4 py-2;
+
+	> h2 {
+		@apply block whitespace-nowrap overflow-hidden overflow-ellipsis;
+		min-width: 270px;
+	}
+
+	> div {
+		@apply flex flex-row items-center;
+		> button {
+			@apply mr-2 py-0.5 px-3;
+		}
+		> button:last-of-type {
+			@apply mr-0;
+		}
+		> div {
+			> button {
+				@apply mr-2 py-0.5 px-3;
+			}
+			> button:last-of-type {
+				@apply mr-0;
+			}
+		}
+	}
+}

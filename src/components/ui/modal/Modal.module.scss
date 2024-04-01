@@ -5,7 +5,7 @@
 
 .container {
 	@apply relative top-1/2 left-1/2 bg-white w-2/3 max-w-xl inline-flex justify-center items-center py-6 px-4 rounded-md;
-	min-height: 200px;
+	min-height: 120px;
 	max-height: 80vh;
 	transform: translate(-50%, -50%);
 	> div {
@@ -14,10 +14,6 @@
 	@media (max-width: 500px) {
 		@apply w-3/4;
 	}
-
-	// @media (max-width: 450) {
-	// 	@apply px-2;
-	// }
 
 	@media (max-width: 360) {
 		@apply w-3/5 px-2;

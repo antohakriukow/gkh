@@ -29,10 +29,6 @@
 	@apply px-4 flex flex-row items-center justify-between hover:bg-primary-200 cursor-pointer;
 }
 
-.noHover {
-	@apply bg-primary-100 hover:bg-transparent;
-}
-
 .title {
 	@apply pr-1 text-base whitespace-nowrap overflow-hidden overflow-ellipsis text-primary-800 m-0 py-1 w-full select-none;
 }

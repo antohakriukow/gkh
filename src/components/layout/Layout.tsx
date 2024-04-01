@@ -2,8 +2,7 @@ import Footer from './footer/Footer'
 import Header from './header/Header'
 import { FC, PropsWithChildren } from 'react'
 import { Outlet } from 'react-router-dom'
-
-import { useAuth } from '~/hooks/useAuth'
+import { useAuth } from '~/hooks'
 
 import styles from './Layout.module.scss'
 
