@@ -1,4 +1,4 @@
-export const companyData = [
+export const companyFieldsData = [
 	{ name: 'name.full', placeholder: 'Полное наименование' },
 	{ name: 'name.short', placeholder: 'Краткое наименование' },
 	{ name: 'address', placeholder: 'Юридический адрес' },

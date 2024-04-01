@@ -18,7 +18,7 @@ export const ReportService = {
 			if (snapshot.exists()) {
 				return snapshot.val()
 			} else {
-				return []
+				return null
 			}
 		} catch (error) {
 			if (error instanceof Error) toast(error.message, { autoClose: 3000 })

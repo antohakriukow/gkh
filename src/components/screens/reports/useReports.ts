@@ -1,20 +1,39 @@
 import { FirebaseError } from 'firebase/app'
 import { useState } from 'react'
-import { toast } from 'react-toastify'
-import { useAuth, useModal } from '~/hooks'
+import {
+	useAuth,
+	useCompaniesData,
+	useModal,
+	useReportsData,
+	useTypedSelector
+} from '~/hooks'
 
+import { IRow } from '~/components/ui/table/table.interface'
+
+import { showSuccessReportCreatedNotification } from '~/shared/notifications/toast'
 import { validEmail, validPhone } from '~/shared/regex'
-import { IReportCreate } from '~/shared/types/report.interface'
+import { IReport, IReportCreate } from '~/shared/types/report.interface'
 
 import { CompanyService } from '~/services/company.service'
 import { ReportService } from '~/services/report.service'
 
 import { handleDBErrors } from '~/utils/error.utils'
+import { convertPeriod, convertTypeReport } from '~/utils/report.utils'
+import { convertTimestampToDate } from '~/utils/time.utils'
 
 export const useReports = () => {
 	const { user } = useAuth()
 	const { hideModal } = useModal()
 	const [isLoading, setIsLoading] = useState(false)
+	const { reports, isLoading: isReportsLoading } = useReportsData()
+	const { companies, isLoading: isCompaniesLoading } = useCompaniesData()
+	const { currentCompany } = useTypedSelector(state => state.ui)
+
+	const ADD_COMPANY = 'Добавить компанию'
+	const CREATE_REPORT = 'Создать отчет 22-ЖКХ'
+	const REPORTS = 'Отчеты 22-ЖКХ'
+	const tableTitles = ['Наименование', 'Период', 'Дата изменения']
+	const tableColumnWidths = [5, 5, 5]
 
 	const create = async (data: IReportCreate) => {
 		setIsLoading(true)
@@ -48,7 +67,7 @@ export const useReports = () => {
 			const createdReport = await ReportService.getById(user.uid, reportId)
 
 			if (!!createdReport) {
-				toast.success('Отчет создан', { autoClose: 3000 })
+				showSuccessReportCreatedNotification()
 				return createdReport
 			}
 		} catch (error) {
@@ -59,5 +78,32 @@ export const useReports = () => {
 		}
 	}
 
-	return { isLoading, create }
+	const convertReportsData = (reports: IReport[]): IRow[] => {
+		return Object.values(reports)
+			.filter(report => report.company.inn === currentCompany?.inn)
+			.map(report => ({
+				_id: report._id.toString(),
+				data: [
+					convertTypeReport(report.type),
+					`${convertPeriod(report.period)} ${report.year} г.`,
+					convertTimestampToDate(+report.updatedAt)
+				]
+			}))
+	}
+
+	return {
+		isLoading,
+		isReportsLoading,
+		isCompaniesLoading,
+		companies,
+		reports,
+		convertReportsData,
+		create,
+
+		ADD_COMPANY,
+		CREATE_REPORT,
+		REPORTS,
+		tableTitles,
+		tableColumnWidths
+	}
 }

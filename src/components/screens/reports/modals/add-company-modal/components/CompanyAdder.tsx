@@ -5,13 +5,20 @@ import { Button } from '~/components/ui'
 
 import { ICompany } from '~/shared/types/company.interface'
 
-import styles from './CompanyModal.module.scss'
+import styles from './add-company-modal.module.scss'
 
 const CompanyAdder: FC<{ company: ICompany }> = ({ company }) => {
 	const { setNewCompany } = useActions()
 	const { hideModal } = useModal()
 	const { create, update, companyIsAlreadyExists, handleSetCurrentCompany } =
 		useCompany()
+
+	const ALREADY_IS_IN_YOUR_LIST = 'уже в Вашем списке.'
+	const REFRESH_DATA = 'обновить данные?'
+	const ADD = 'Добавить'
+	const TO_COMPANIES_LIST = 'в список компаний?'
+	const YES = 'Да'
+	const NO = 'Нет'
 
 	const handleAddCompany = () => {
 		companyIsAlreadyExists(company.inn.toString())
@@ -32,24 +39,20 @@ const CompanyAdder: FC<{ company: ICompany }> = ({ company }) => {
 			{companyIsAlreadyExists(company.inn.toString()) ? (
 				<>
 					<p className={styles.adder__company}>{company.name.short}</p>
-					<p className={styles.adder__title}>уже в Вашем списке.</p>
-					<p className={styles.adder__title}>обновить данные?</p>
+					<p className={styles.adder__title}>{ALREADY_IS_IN_YOUR_LIST}</p>
+					<p className={styles.adder__title}>{REFRESH_DATA}</p>
 				</>
 			) : (
 				<>
-					<p className={styles.adder__title}>Добавить</p>
+					<p className={styles.adder__title}>{ADD}</p>
 					<p className={styles.adder__company}>{company.name.short}</p>
-					<p className={styles.adder__title}>в список компаний?</p>
+					<p className={styles.adder__title}>{TO_COMPANIES_LIST}</p>
 				</>
 			)}
 
 			<div className={styles.adder__buttons}>
-				<Button color='success' onClick={handleAddCompany}>
-					Да
-				</Button>
-				<Button color='danger' onClick={handleAbort}>
-					Нет
-				</Button>
+				<Button title={YES} color='success' onClick={handleAddCompany} />
+				<Button title={NO} color='danger' onClick={handleAbort} />
 			</div>
 		</div>
 	)

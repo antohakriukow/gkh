@@ -1,29 +1,15 @@
-import { companyData } from './company.data'
+import { IAddCompanyDetailsFormProps } from './add-company-modal.interface'
+import { companyFieldsData } from './companyFieldsData'
 import { FC, useEffect } from 'react'
-import {
-	FieldError,
-	FieldErrors,
-	UseFormHandleSubmit,
-	UseFormRegister,
-	UseFormSetValue
-} from 'react-hook-form'
+import { FieldError } from 'react-hook-form'
 
 import { Button, Field } from '~/components/ui'
 
 import { ICompany } from '~/shared/types/company.interface'
 
-import styles from './CompanyModal.module.scss'
+import styles from './add-company-modal.module.scss'
 
-interface IAddCompanyForm {
-	register: UseFormRegister<ICompany>
-	handleSubmit: UseFormHandleSubmit<ICompany, undefined>
-	onSubmit: (data: ICompany) => Promise<void>
-	errors: FieldErrors<ICompany>
-	initialValues?: Partial<ICompany>
-	setValue: UseFormSetValue<ICompany>
-}
-
-const AddCompanyDetailsForm: FC<IAddCompanyForm> = ({
+const AddCompanyDetailsForm: FC<IAddCompanyDetailsFormProps> = ({
 	register,
 	handleSubmit,
 	onSubmit,
@@ -31,6 +17,11 @@ const AddCompanyDetailsForm: FC<IAddCompanyForm> = ({
 	initialValues,
 	setValue
 }) => {
+	const REQUIRED_FIELD = 'Обязательное поле'
+	const CONTINUE = 'Продолжить'
+	const FILL_MISSING_DATA =
+		'Внесите недостающие данные, иначе отчет будет не полным'
+
 	useEffect(() => {
 		if (initialValues) {
 			Object.keys(initialValues).forEach(key => {
@@ -41,16 +32,16 @@ const AddCompanyDetailsForm: FC<IAddCompanyForm> = ({
 
 	return (
 		<div className={styles.formContainer}>
-			<h3>Внесите недостающие данные, иначе отчет будет не полным</h3>
+			<h3>{FILL_MISSING_DATA}</h3>
 			<div className={styles.form} key={Field.name} style={{ padding: 24 }}>
-				{companyData.map(
+				{companyFieldsData.map(
 					field =>
 						field.name !== 'phone' &&
 						field.name !== 'email' && (
 							<Field
 								key={field.name}
 								{...register(field.name as keyof ICompany, {
-									required: 'Обязательное поле'
+									required: REQUIRED_FIELD
 								})}
 								error={errors[field.name as keyof ICompany] as FieldError}
 								disabled={
@@ -65,7 +56,7 @@ const AddCompanyDetailsForm: FC<IAddCompanyForm> = ({
 						)
 				)}
 			</div>
-			<Button onClick={handleSubmit(onSubmit)}>Продолжить</Button>
+			<Button onClick={handleSubmit(onSubmit)}>{CONTINUE}</Button>
 		</div>
 	)
 }
