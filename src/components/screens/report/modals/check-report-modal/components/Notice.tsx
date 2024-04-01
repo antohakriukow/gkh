@@ -29,16 +29,16 @@ const Notice: FC<INotice> = ({ errors, warnings }) => {
 				</>
 			)}
 			{errors.length === 0 && warnings.length > 0 && (
-				<p className={styles.notice}>
-					{PLEASE_READ_NOTIFICATIONS}
+				<>
+					<p className={styles.notice}>{PLEASE_READ_NOTIFICATIONS}</p>
 					<p className={styles.noticeWarning}>{CONTINUE_GENERATION}</p>
-				</p>
+				</>
 			)}
 			{errors.length === 0 && warnings.length === 0 && (
-				<p className={styles.notice}>
-					{LOGIC_ERRORS_NOT_FOUND}
+				<>
+					<p className={styles.notice}>{LOGIC_ERRORS_NOT_FOUND}</p>
 					<p className={styles.noticeWarning}>{CONTINUE_GENERATION}</p>
-				</p>
+				</>
 			)}
 		</>
 	)

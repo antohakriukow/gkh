@@ -47,6 +47,8 @@ const ReportEditor: FC = () => {
 			)
 	}
 
+	if (isLoading) return <Loader loaderType='fullscreen' />
+
 	return (
 		<div className={styles.container} key={reportId}>
 			<Toolbar
@@ -61,21 +63,15 @@ const ReportEditor: FC = () => {
 				downloadReportXML={downloadReportXML}
 			/>
 
-			{isLoading ? (
-				<Loader loaderType='small' />
-			) : (
-				<>
-					<div className={styles.report}>
-						<ReportForm
-							register={register}
-							control={control}
-							formState={formState}
-							watch={watch}
-							setValue={setValue}
-						/>
-					</div>
-				</>
-			)}
+			<div className={styles.report}>
+				<ReportForm
+					register={register}
+					control={control}
+					formState={formState}
+					watch={watch}
+					setValue={setValue}
+				/>
+			</div>
 		</div>
 	)
 }

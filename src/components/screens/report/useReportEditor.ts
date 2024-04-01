@@ -138,9 +138,9 @@ export const useReportEditor = (
 
 	const generateReport = useCallback(async () => {
 		if (!user || !currentReport) return
-		setIsLoading(true)
 
 		try {
+			setIsLoading(true)
 			const newReportData = (await cloudFunction.generateFinalReport(
 				currentReport._id.toString(),
 				user.uid
