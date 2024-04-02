@@ -9,7 +9,7 @@ import {
 
 import { AnnualService } from '~/services/annual.service'
 
-import { removeCollapsedFromCategories } from '~/utils/annual.utils'
+import { removeCollapsedFromCategories } from '~/utils/annual/utils'
 
 export const useCategoriesSetter = () => {
 	const { user } = useAuth()

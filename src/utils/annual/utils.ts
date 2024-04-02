@@ -201,7 +201,7 @@ export const sortOperationsGroupsArrayByPayerName = (groupedOperations: {
  * @param ids - Начальный массив ID для рекурсии.
  * @returns Массив всех ID категорий.
  */
-const getAllCategoryIds = (
+export const getAllCategoryIds = (
 	category: IAnnualCategory,
 	ids: string[] = []
 ): string[] => {

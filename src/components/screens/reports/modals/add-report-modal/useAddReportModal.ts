@@ -4,7 +4,7 @@ import { useModal, useReportsData, useTypedSelector } from '~/hooks'
 
 import { IReport } from '~/shared/types/report.interface'
 
-import { convertPeriod } from '~/utils/report.utils'
+import { convertPeriod } from '~/utils/report/utils'
 
 import { useReports } from '../../useReports'
 

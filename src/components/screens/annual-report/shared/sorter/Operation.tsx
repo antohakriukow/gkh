@@ -3,7 +3,7 @@ import cn from 'clsx'
 import { FC, memo, useCallback } from 'react'
 import { PiCopyBold } from 'react-icons/pi'
 
-import { formatNumber } from '~/utils/number.utils'
+import { formatNumber } from '~/utils/number/utils'
 
 import styles from './sorter.module.scss'
 

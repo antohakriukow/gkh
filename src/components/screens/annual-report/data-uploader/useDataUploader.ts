@@ -19,7 +19,7 @@ import { AnnualService } from '~/services/annual.service'
 import {
 	createMockCategoriesFromAccounts,
 	getExistingDirections
-} from '~/utils/annual.utils'
+} from '~/utils/annual/utils'
 
 import { useAnnualReport } from '../useAnnualReport'
 

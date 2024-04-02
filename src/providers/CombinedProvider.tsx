@@ -24,7 +24,7 @@ import {
 import { cloudFunction } from '~/services/_functions'
 import { UserService } from '~/services/user.service'
 
-import { handleAuthErrors } from '~/utils/error.utils'
+import { handleAuthErrors } from '~/utils/error/utils'
 
 // Определение интерфейсов для каждого контекста
 interface IAuthContext {

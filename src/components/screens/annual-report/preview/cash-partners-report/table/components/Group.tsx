@@ -1,7 +1,7 @@
 import Row from './Row'
 import { FC, useState } from 'react'
 
-import { trimStringAtSymbol } from '~/utils/string.utils'
+import { trimStringAtSymbol } from '~/utils/string/utils'
 
 import { Cell, CellWithToggle } from '../../../shared'
 import styles from '../../../shared/table-parts/table.module.scss'

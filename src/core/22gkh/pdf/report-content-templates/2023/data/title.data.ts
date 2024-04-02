@@ -1,6 +1,6 @@
 import { IReport } from '~/shared/types/report.interface'
 
-import { convertPeriod } from '~/utils/report.utils'
+import { convertPeriod } from '~/utils/report/utils'
 
 export const getTitleSection = (report: IReport) => [
 	{

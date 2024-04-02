@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { getIssueColor } from '~/utils/issue.utils'
+import { getIssueColor } from '~/utils/issue/utils'
 
 import styles from '../IssueItem.module.scss'
 import { IIssueItem } from '../issue-item.interface'

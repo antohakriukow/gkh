@@ -1,4 +1,4 @@
-const _camelCaseToKebabCase = (str: string): string => {
+export const camelCaseToKebabCase = (str: string): string => {
 	return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 }
 
@@ -16,12 +16,17 @@ export const convertXmlAttributes = (xmlStr: string): string => {
 	return xmlStr.replace(
 		/([a-zA-Z]+)="([^"]*)"/g,
 		(_, p1: string, p2: string) => {
-			return `${_camelCaseToKebabCase(p1)}="${p2}"`
+			return `${camelCaseToKebabCase(p1)}="${p2}"`
 		}
 	)
 }
 
-export const extractLastLink = (string: string) => string.split('.').pop()
+export const extractLastLink = (input: unknown): string | undefined => {
+	if (typeof input !== 'string') {
+		throw new TypeError('Expected a string')
+	}
+	return input.split('.').pop()
+}
 
 export const convertLineBreaksToHTML = (text: string) => {
 	return text.replace(/\n/g, '<br/>')

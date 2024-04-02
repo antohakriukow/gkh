@@ -5,7 +5,7 @@ import { Loader } from '~/components/ui'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
-import { getOperationsByCategory } from '~/utils/annual.utils'
+import { getOperationsByCategory } from '~/utils/annual/utils'
 
 import { Category, Container, NarrowAttention, SeparateModal } from '../shared'
 

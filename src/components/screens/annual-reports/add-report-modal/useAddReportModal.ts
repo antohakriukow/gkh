@@ -10,7 +10,7 @@ import { IAnnualReportCreate } from '~/shared/types/annual.interface'
 
 import { AnnualService } from '~/services/annual.service'
 
-import { handleDBErrors } from '~/utils/error.utils'
+import { handleDBErrors } from '~/utils/error/utils'
 
 export const useAddReportModal = (
 	handleOpenReport: (reportId: string) => void

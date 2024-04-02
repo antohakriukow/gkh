@@ -9,8 +9,8 @@ import { XmlElement, toXML } from 'jstoxml'
 
 import { IReport } from '~/shared/types/report.interface'
 
-import { readReportSchema } from '~/utils/report.utils'
-import { convertXmlAttributes } from '~/utils/string.utils'
+import { readReportSchema } from '~/utils/report/utils'
+import { convertXmlAttributes } from '~/utils/string/utils'
 
 const _prepareToXML = (report: IReport) => {
 	if (!report.finalReport) return

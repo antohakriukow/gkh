@@ -4,7 +4,7 @@ import { FieldError } from 'react-hook-form'
 
 import { IServices } from '~/shared/types/report22gkh.interface'
 
-import { extractLastLink } from '~/utils/string.utils'
+import { extractLastLink } from '~/utils/string/utils'
 
 import { IReportForm } from '../../report-editor.interface'
 import styles from '../ReportForm.module.scss'

@@ -42,7 +42,7 @@ export const divideAndRoundNumbers = (
 		| IRenovationCosts
 }
 
-export const formatNumber = (number: number | string | undefined) => {
+export const formatNumber = (number: number | string | undefined): string => {
 	if (number === undefined || number === 0) {
 		return ''
 	}

@@ -10,7 +10,7 @@ import {
 	TypeDefinedAnnualDirection
 } from '~/shared/types/annual.interface'
 
-import { getAnnualDirectionTitle } from '~/utils/annual.utils'
+import { getAnnualDirectionTitle } from '~/utils/annual/utils'
 
 import { useCashPartnersReport } from '../cash-partners-report/useCashPartnersReport'
 import styles from '../shared/table-parts/table.module.scss'

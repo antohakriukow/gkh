@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
-import { getIssueStatus, getIssueSubject } from '~/utils/issue.utils'
-import { convertTimestampToDate } from '~/utils/time.utils'
+import { getIssueStatus, getIssueSubject } from '~/utils/issue/utils'
+import { convertTimestampToDate } from '~/utils/time/utils'
 
 import { IIssueItem } from '../../../IssueItem/issue-item.interface'
 import styles from '../IssueModal.module.scss'

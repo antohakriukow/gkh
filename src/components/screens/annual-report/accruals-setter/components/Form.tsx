@@ -9,7 +9,7 @@ import {
 	TypeDefinedAnnualDirection
 } from '~/shared/types/annual.interface'
 
-import { getAnnualDirectionTitle } from '~/utils/annual.utils'
+import { getAnnualDirectionTitle } from '~/utils/annual/utils'
 
 import { IAnnualReportCategoriesFormInput } from '../accruals-setter.interface'
 

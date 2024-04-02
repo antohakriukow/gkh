@@ -3,7 +3,7 @@ import { AnnualState } from '~/shared/types/annual.interface'
 import {
 	getDirectionAccountNumbers,
 	isAccountingOperation
-} from '~/utils/annual.utils'
+} from '~/utils/annual/utils'
 
 const createCategoriesGraph = (
 	pairs: Array<{ debitAccount1: string; debitAccount2?: string }>
