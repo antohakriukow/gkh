@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 import { MessageService } from '~/services/message.service'
 
-import { handleDBErrors } from '~/utils/error.utils'
+import { handleDBErrors } from '~/utils/error/utils'
 
 export const useMessage = () => {
 	const { user } = useAuth()

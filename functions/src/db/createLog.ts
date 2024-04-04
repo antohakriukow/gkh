@@ -2,15 +2,13 @@ import * as admin from 'firebase-admin'
 import * as functions from 'firebase-functions'
 import { CallableContext } from 'firebase-functions/v1/https'
 
-import { ILogDTO } from '../types/log.interface'
-import { generateLogMessage } from '../utils/log.utils'
+import { ILogDTO } from '../../../src/shared/types/log.interface'
+import { generateLogMessage } from '../utils/log/utils'
 
 export const createLog = functions.https.onCall(
 	(data: ILogDTO, context: CallableContext) => {
-		// Проверяем аутентификацию пользователя
 		if (!context.auth) return
 
-		// Проверяем наличие необходимых данных
 		if (!data || !data.level || !data.code || !data.user) {
 			throw new functions.https.HttpsError(
 				'invalid-argument',
@@ -18,7 +16,6 @@ export const createLog = functions.https.onCall(
 			)
 		}
 
-		// Формируем объект лога
 		const logEntry = {
 			timestamp: admin.database.ServerValue.TIMESTAMP,
 			level: data.level,
@@ -28,7 +25,6 @@ export const createLog = functions.https.onCall(
 			data: data.data || {}
 		}
 
-		// Записываем лог в базу данных
 		return admin
 			.database()
 			.ref(`logs/${data.user.id}`)

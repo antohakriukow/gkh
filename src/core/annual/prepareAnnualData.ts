@@ -3,8 +3,8 @@ import { unifyBankOperations } from './prepareBankData'
 
 import { AnnualState, IOperation } from '~/shared/types/annual.interface'
 
-import { createDeepCopy } from '~/utils/object.utils'
-import { GetDateIntervalBoundaries } from '~/utils/time.utils'
+import { createDeepCopy } from '~/utils/object/utils'
+import { GetDateIntervalBoundaries } from '~/utils/time/utils'
 
 export const prepareAnnualState = (state: AnnualState) => {
 	const internalState = createDeepCopy(state)

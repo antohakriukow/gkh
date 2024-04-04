@@ -8,7 +8,7 @@ import { ICompany } from '~/shared/types/company.interface'
 
 import { CompanyService } from '~/services/company.service'
 
-import { handleDBErrors } from '~/utils/error.utils'
+import { handleDBErrors } from '~/utils/error/utils'
 
 export const useCompany = () => {
 	const { user } = useAuth()

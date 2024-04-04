@@ -4,7 +4,7 @@ import {
 	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
 
-import { trimStringAtSymbol } from '~/utils/string.utils'
+import { trimStringAtSymbol } from '~/utils/string/utils'
 
 export interface IOperationGroup {
 	name: string

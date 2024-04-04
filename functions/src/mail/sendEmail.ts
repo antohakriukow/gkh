@@ -30,14 +30,11 @@ export const sendEmail = functions.https.onCall(
 
 		try {
 			const info = await transporter.sendMail(data)
-			console.log('Message sent: %s', info.messageId)
 			return { messageId: info.messageId }
 		} catch (error) {
 			if (error instanceof Error) {
-				console.error('Error sending email:', error)
 				throw new functions.https.HttpsError('internal', error.message)
 			} else {
-				console.error('Unexpected error', error)
 				throw new functions.https.HttpsError(
 					'internal',
 					'An unexpected error occurred'

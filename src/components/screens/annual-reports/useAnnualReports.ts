@@ -12,9 +12,9 @@ import { IRow } from '~/components/ui/table/table.interface'
 
 import { IAnnualReportDetails } from '~/shared/types/annual.interface'
 
-import { getAnnualReportStructureName } from '~/utils/annual.utils'
-import { convertTypeReport } from '~/utils/report.utils'
-import { convertTimestampToDate } from '~/utils/time.utils'
+import { getAnnualReportStructureName } from '~/utils/annual/utils'
+import { convertTypeReport } from '~/utils/report/utils'
+import { convertTimestampToDate } from '~/utils/time/utils'
 
 export const useAnnualReports = () => {
 	const { companies, isLoading: isCompaniesLoading } = useCompaniesData()

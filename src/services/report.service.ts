@@ -7,7 +7,7 @@ import { IReport } from '~/shared/types/report.interface'
 
 import { db } from '~/services/_firebase'
 
-import { replaceUndefinedAndNaNWithZero } from '~/utils/report.utils'
+import { replaceUndefinedAndNaNWithZero } from '~/utils/report/utils'
 
 export const ReportService = {
 	async getById(userId: string, reportId: string) {

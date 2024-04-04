@@ -16,7 +16,7 @@ import { TypeDefinedAnnualDirection } from '~/shared/types/annual.interface'
 
 import { AnnualService } from '~/services/annual.service'
 
-import { getExistingDirections } from '~/utils/annual.utils'
+import { getExistingDirections } from '~/utils/annual/utils'
 
 import { useAnnualReport } from '../useAnnualReport'
 

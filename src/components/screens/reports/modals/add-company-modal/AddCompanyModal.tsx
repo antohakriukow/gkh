@@ -9,7 +9,7 @@ import { Loader } from '~/components/ui'
 
 import { ICompany, ICompanyInn } from '~/shared/types/company.interface'
 
-import { hasEmptyFields } from '~/utils/company.utils'
+import { hasEmptyFields } from '~/utils/company/utils'
 
 const AddCompanyModal: FC = () => {
 	const {

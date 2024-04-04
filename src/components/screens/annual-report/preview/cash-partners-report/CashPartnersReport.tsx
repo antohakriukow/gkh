@@ -9,7 +9,7 @@ import {
 	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
 
-import { getAnnualDirectionTitle } from '~/utils/annual.utils'
+import { getAnnualDirectionTitle } from '~/utils/annual/utils'
 
 import styles from '../shared/table-parts/table.module.scss'
 

@@ -6,7 +6,7 @@ import { FaChevronDown, FaChevronUp } from 'react-icons/fa6'
 import {
 	groupOperationsByPayerName,
 	sortOperationsGroupsArrayByPayerName
-} from '~/utils/annual.utils'
+} from '~/utils/annual/utils'
 
 import styles from './sorter.module.scss'
 

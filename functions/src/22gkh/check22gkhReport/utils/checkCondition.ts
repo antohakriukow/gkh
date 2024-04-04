@@ -1,7 +1,7 @@
 import {
 	ICheckListItem,
 	TypeCheckResult
-} from '../../../types/report.interface'
+} from '../../../../../src/shared/types/report.interface'
 
 export const checkCondition = (
 	condition: boolean,

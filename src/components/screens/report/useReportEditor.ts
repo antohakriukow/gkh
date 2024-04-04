@@ -21,8 +21,8 @@ import { ICheckReportResult, IReport } from '~/shared/types/report.interface'
 import { cloudFunction } from '~/services/_functions'
 import { ReportService } from '~/services/report.service'
 
-import { handleDBErrors } from '~/utils/error.utils'
-import { convertPeriod } from '~/utils/report.utils'
+import { handleDBErrors } from '~/utils/error/utils'
+import { convertPeriod } from '~/utils/report/utils'
 
 export const useReportEditor = (
 	setValue: UseFormSetValue<IReport>,

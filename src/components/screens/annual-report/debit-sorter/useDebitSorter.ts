@@ -8,8 +8,8 @@ import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
 import { AnnualService } from '~/services/annual.service'
 
-import { getAllLeafCategoryIds } from '~/utils/annual.utils'
-import { areArraysEqualByKey } from '~/utils/array.utils'
+import { getAllLeafCategoryIds } from '~/utils/annual/utils'
+import { areArraysEqualByKey } from '~/utils/array/utils'
 
 import { useSorter } from '../shared'
 

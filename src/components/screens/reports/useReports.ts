@@ -17,9 +17,9 @@ import { IReport, IReportCreate } from '~/shared/types/report.interface'
 import { CompanyService } from '~/services/company.service'
 import { ReportService } from '~/services/report.service'
 
-import { handleDBErrors } from '~/utils/error.utils'
-import { convertPeriod, convertTypeReport } from '~/utils/report.utils'
-import { convertTimestampToDate } from '~/utils/time.utils'
+import { handleDBErrors } from '~/utils/error/utils'
+import { convertPeriod, convertTypeReport } from '~/utils/report/utils'
+import { convertTimestampToDate } from '~/utils/time/utils'
 
 export const useReports = () => {
 	const { user } = useAuth()

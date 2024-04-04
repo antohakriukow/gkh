@@ -1,7 +1,6 @@
 import * as functions from 'firebase-functions'
 
 export const getCompanyByInn = functions.https.onCall(async (data, context) => {
-	// Проверяем, передан ли INN
 	if (!data.inn) {
 		throw new functions.https.HttpsError('invalid-argument', 'INN is required')
 	}

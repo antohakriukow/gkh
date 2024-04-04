@@ -16,7 +16,7 @@ import {
 	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
 
-import { createDeepCopy } from '~/utils/object.utils'
+import { createDeepCopy } from '~/utils/object/utils'
 
 import { useAnnualReport } from '../../useAnnualReport'
 

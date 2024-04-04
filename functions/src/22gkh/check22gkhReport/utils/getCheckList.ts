@@ -1,6 +1,6 @@
 import { checkCondition } from './checkCondition'
 
-import { ICheckListItem } from '../../../types/report.interface'
+import { ICheckListItem } from '../../../../../src/shared/types/report.interface'
 import { getConstants } from '../../utils/getConstants'
 
 export const getCheckList = async (

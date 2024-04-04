@@ -1,6 +1,6 @@
 import { cloudFunction } from './_functions'
 
-import { prepareCompanyData } from '~/utils/company.utils'
+import { prepareCompanyData } from '~/utils/company/utils'
 
 export const DadataService = {
 	async getByInn(inn: string) {

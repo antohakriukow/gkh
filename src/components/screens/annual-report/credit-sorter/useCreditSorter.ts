@@ -12,7 +12,7 @@ import {
 
 import { AnnualService } from '~/services/annual.service'
 
-import { areArraysEqualByKey } from '~/utils/array.utils'
+import { areArraysEqualByKey } from '~/utils/array/utils'
 
 import { useSorter } from '../shared'
 

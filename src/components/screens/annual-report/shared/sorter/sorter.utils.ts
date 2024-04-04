@@ -6,7 +6,7 @@ import {
 import {
 	groupOperationsByRecipientName,
 	sortOperationsGroupsArrayByRecipientName
-} from '~/utils/annual.utils'
+} from '~/utils/annual/utils'
 
 const otherDebitOperationsCategoryId = '10000'
 
