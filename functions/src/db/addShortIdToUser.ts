@@ -20,19 +20,17 @@ export const addShortIdToUser = functions.https.onCall(
 
 			if (snapshot.exists()) {
 				const usersMap = snapshot.val()
-				const lastShortId = Object.keys(usersMap).sort().pop() // Получаем последний shortId как ключ
-				newShortIdNumber = parseInt((lastShortId as string).substring(1)) + 1 // Инкрементируем числовую часть shortId
+				const lastShortId = Object.keys(usersMap).sort().pop()
+
+				newShortIdNumber = parseInt((lastShortId as string).substring(1)) + 1
 			} else {
-				// Если users-ref не существует, начинаем сначала
 				newShortIdNumber = 1001
 			}
 
 			const newShortId = `A${newShortIdNumber}`
 
-			// Добавляем новый shortId в users-ref с UID пользователя в качестве значения
 			await usersRefMap.child(newShortId).set(uid)
 
-			// Обновляем shortId пользователя
 			await admin.database().ref(`users/${uid}`).update({ shortId: newShortId })
 		} catch (error) {
 			console.error('Error adding shortId to user:', error)

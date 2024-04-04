@@ -1,4 +1,7 @@
-import { TypeLogCode, TypeLogLevel } from '../types/log.interface'
+import {
+	TypeLogCode,
+	TypeLogLevel
+} from '../../../../src/shared/types/log.interface'
 
 //prettier-ignore
 export const generateLogMessage = (level: TypeLogLevel, code: TypeLogCode) => {

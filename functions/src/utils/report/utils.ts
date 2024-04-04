@@ -7,7 +7,7 @@ import {
 	IResidentsDebts,
 	IServices,
 	ISettings
-} from '../types/report22gkh.interface'
+} from '../../../../src/shared/types/report22gkh.interface'
 
 /**
  * Удаляет из объекта все поля со значением 0 или undefined.

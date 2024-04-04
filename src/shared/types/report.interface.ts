@@ -11,9 +11,9 @@ import {
 	IWaterHeating,
 	Type22gkhReportTemplate
 } from './report22gkh.interface'
-import { TypeAnnualReportTemplate } from './reportAnnual.interface'
 
 export type TypeReport = '22gkh' | 'annual'
+export type TypeAnnualReportTemplate = 'annual-cash' | 'annual-accrual'
 
 interface ISubSection {
 	[key: number]: any
