@@ -9,7 +9,7 @@ import { toast } from 'react-toastify'
 import { IssuesService } from '~/services/issue.service'
 import { MessageService } from '~/services/message.service'
 
-import { handleDBErrors } from '~/utils/error.utils'
+import { handleDBErrors } from '~/utils/error/utils'
 
 export const useIssue = () => {
 	const { user } = useAuth()

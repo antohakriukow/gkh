@@ -2,7 +2,7 @@ import cn from 'clsx'
 import { FC } from 'react'
 import { useAuth, useMessagesData } from '~/hooks'
 
-import { convertTimestampToDateWithTime } from '~/utils/time.utils'
+import { convertTimestampToDateWithTime } from '~/utils/time/utils'
 
 import { IIssueItem } from '../../../IssueItem/issue-item.interface'
 import styles from '../IssueModal.module.scss'

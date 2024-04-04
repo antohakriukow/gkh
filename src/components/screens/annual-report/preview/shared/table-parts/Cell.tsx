@@ -4,7 +4,7 @@ import { FC } from 'react'
 import {
 	formatNumber,
 	replaceAmountWithFakeIfFalse
-} from '~/utils/number.utils'
+} from '~/utils/number/utils'
 
 import styles from './table.module.scss'
 

@@ -30,7 +30,7 @@ import {
 	TypeDefinedAnnualDirection
 } from '~/shared/types/annual.interface'
 
-import { convertTimestampToDate } from '~/utils/time.utils'
+import { convertTimestampToDate } from '~/utils/time/utils'
 
 export const downloadCashServicesReport = async (report: IAnnualReport) => {
 	const operations = replaceAccountNumbersInMainOperations(

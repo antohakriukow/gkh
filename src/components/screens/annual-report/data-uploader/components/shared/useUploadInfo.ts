@@ -1,6 +1,6 @@
 import { IAccount } from '~/shared/types/annual.interface'
 
-import { getAnnualReportStructureName } from '~/utils/annual.utils'
+import { getAnnualReportStructureName } from '~/utils/annual/utils'
 
 import { useDataUploaderContext } from '../../provider/provider'
 

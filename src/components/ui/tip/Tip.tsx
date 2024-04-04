@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { convertLineBreaksToHTML } from '~/utils/string.utils'
+import { convertLineBreaksToHTML } from '~/utils/string/utils'
 
 import styles from './Tip.module.scss'
 

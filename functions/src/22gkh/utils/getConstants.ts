@@ -20,15 +20,19 @@ import {
 	IOrganizationDebts,
 	IRenovationCosts,
 	IResidentsDebts
-} from '../../types/report22gkh.interface'
+} from '../../../../src/shared/types/report22gkh.interface'
 import {
 	calculatePreviousPayments,
 	distributeValues,
 	divideAndRoundNumbers,
 	generateServicesArea
-} from '../../utils/report.utils'
+} from '../../utils/report/utils'
+import { IConstants } from '../types'
 
-export const getConstants = async (userId: string, reportId: string) => {
+export const getConstants = async (
+	userId: string,
+	reportId: string
+): Promise<IConstants> => {
 	const report = await getReportData(userId, reportId)
 	if (!report?.data) {
 		throw new Error('Отсутствуют данные отчета')
@@ -83,7 +87,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 		accrualsInitial.renovation -
 		sumValues(calculatedAccruals)
 
-	const accruals = {
+	const accruals: IAccruals = {
 		...calculatedAccruals,
 		renovation: accrualsInitial.renovation,
 		other: accrualsInitial.other + nonResidentialAccrualsShare
@@ -108,7 +112,7 @@ export const getConstants = async (userId: string, reportId: string) => {
 		vatInitial.other -
 		sumValues(calculatedVat)
 
-	const vat = {
+	const vat: Record<TypeServiceKey, number> = {
 		...calculatedVat,
 		other: vatInitial.other + nonResidentialVatShare
 	}
@@ -163,10 +167,9 @@ export const getConstants = async (userId: string, reportId: string) => {
 	// Сумма НДС в начислениях за коммунальные услуги и жилищные услуги
 	const totalVat = vatCommunal + vatMaintenance + vat.other
 
-	const totalOrganizationDebts = Object.values(organizationDebts).reduce(
-		(sum, value) => sum + value,
-		0
-	)
+	const totalOrganizationDebts: number = Object.values(
+		organizationDebts
+	).reduce((sum, value) => sum + value, 0)
 
 	// Распределяем платежи за ЖКУ по услугам пропорционально суммам начисления
 	let payments: Record<TypeServiceKey, number> = {} as Record<

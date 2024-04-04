@@ -4,8 +4,8 @@ import { CgDanger } from 'react-icons/cg'
 import {
 	getAnnualDirectionTitle,
 	getExistingDirections
-} from '~/utils/annual.utils'
-import { formatNumber } from '~/utils/number.utils'
+} from '~/utils/annual/utils'
+import { formatNumber } from '~/utils/number/utils'
 
 import { useAnnualReport } from '../../../useAnnualReport'
 

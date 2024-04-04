@@ -1,6 +1,6 @@
 import { IReport } from '~/shared/types/report.interface'
 
-import { convertTimestampToDate } from '~/utils/time.utils'
+import { convertTimestampToDate } from '~/utils/time/utils'
 
 export const getSignature = (report: IReport) => [
 	[

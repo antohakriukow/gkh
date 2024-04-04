@@ -6,7 +6,7 @@ import { showEmailConfirmationWasSendedNotification } from '~/shared/notificatio
 
 import { UserService } from '~/services/user.service'
 
-import { handleAuthErrors } from '~/utils/error.utils'
+import { handleAuthErrors } from '~/utils/error/utils'
 
 export const useResetPassword = () => {
 	const [isLoading, setIsLoading] = useState(false)

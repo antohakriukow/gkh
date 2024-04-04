@@ -23,8 +23,8 @@ import { saveAs } from 'file-saver'
 
 import { IAnnualReport } from '~/shared/types/annual.interface'
 
-import { getAnnualDirectionTitle } from '~/utils/annual.utils'
-import { convertTimestampToDate } from '~/utils/time.utils'
+import { getAnnualDirectionTitle } from '~/utils/annual/utils'
+import { convertTimestampToDate } from '~/utils/time/utils'
 
 export const downloadCashPartnersReport = async (report: IAnnualReport) => {
 	const operations = report.data.bankOperations ?? []

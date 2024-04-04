@@ -23,8 +23,8 @@ import {
 	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
 
-import { getAnnualDirectionTitle } from '~/utils/annual.utils'
-import { trimStringAtSymbol } from '~/utils/string.utils'
+import { getAnnualDirectionTitle } from '~/utils/annual/utils'
+import { trimStringAtSymbol } from '~/utils/string/utils'
 
 export const getReportTitle = (
 	worksheet: ExcelJS.Worksheet,

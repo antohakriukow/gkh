@@ -20,9 +20,14 @@ export interface IUserDetails {
 	id: string
 }
 
-export interface ILogDTO {
+export interface ILog {
+	timestamp: number
 	level: TypeLogLevel
 	code: TypeLogCode
+	message: string
 	user: IUserDetails
 	data?: Object
 }
+
+export interface ILogDTO
+	extends Pick<ILog, 'level' | 'code' | 'user' | 'data'> {}
