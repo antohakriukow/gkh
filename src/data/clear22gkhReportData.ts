@@ -1,4 +1,4 @@
-export const clear22gkhReportData = {
+export const clear22gkhReportAccrualsData = {
 	coldWater: 0,
 	coldToHotWater: 0,
 	hotWater: 0,
@@ -19,4 +19,9 @@ export const clear22gkhReportData = {
 	maintenance: 0,
 	renovation: 0,
 	other: 0
+}
+
+export const clear22gkhReportFinanceData = {
+	housing: 0,
+	renovation: 0
 }
