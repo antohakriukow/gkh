@@ -3,9 +3,10 @@ import { generate22gkhReport2024 } from './utils/generate22gkhReport2024'
 import * as admin from 'firebase-admin'
 import * as functions from 'firebase-functions'
 
+import { getReportYear } from '../utils/getReportYear'
+
 export const generateFinalReport = functions.https.onCall(
 	async (data, context) => {
-		// Проверка аутентификации пользователя
 		if (!context.auth) {
 			throw new functions.https.HttpsError(
 				'unauthenticated',
@@ -31,27 +32,21 @@ export const generateFinalReport = functions.https.onCall(
 		}
 
 		try {
-			const currentReportYear = await admin
-				.database()
-				.ref(`/users/${userId}/reports/${reportId}/year`)
-				.get()
-				.then(snapshot => snapshot.val())
+			const currentReportYear = await getReportYear(userId, reportId)
 
-			// Предполагается, что generate22gkhReport2023 возвращает Promise<IFinalReport>
-			const finalReport =
-				currentReportYear === 2024
+			let finalReport = {}
+
+			finalReport =
+				currentReportYear?.toFixed(0) === '2024'
 					? await generate22gkhReport2024(userId, reportId)
 					: await generate22gkhReport2023(userId, reportId)
 
-			// Проверяем, что результат является IFinalReport
 			if (typeof finalReport === 'object' && finalReport !== null) {
-				// Записываем результат в Realtime Database
 				await admin
 					.database()
 					.ref(`/users/${userId}/reports/${reportId}/finalReport`)
 					.set(finalReport)
 
-				// Получаем обновленные данные отчета
 				const reportRef = admin
 					.database()
 					.ref(`/users/${userId}/reports/${reportId}`)
@@ -67,7 +62,8 @@ export const generateFinalReport = functions.https.onCall(
 		} catch (error) {
 			throw new functions.https.HttpsError(
 				'unknown',
-				'Произошла ошибка при генерации отчета'
+				'Ошибка при генерации отчета',
+				error
 			)
 		}
 	}
