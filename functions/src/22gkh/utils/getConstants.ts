@@ -128,7 +128,7 @@ export const getConstants = async (
 	//Площадь, на которую начисляется капремонт
 	const renovationArea =
 		renovation.status === 'yes'
-			? calculatedAreas.renovation
+			? area.residentialArea
 			: renovation.status === 'both'
 			? renovation.areaWith
 			: 0
