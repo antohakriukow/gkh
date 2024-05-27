@@ -66,11 +66,13 @@ export const useAnnualReport = () => {
 		instanceId: annualReportInDB ? String(annualReportInDB._id) : ''
 	})
 
-	const isReportPayed = payments.some(
-		payment =>
-			payment.type === 'annual' &&
-			payment.instanceId === String(annualReportInDB?._id)
-	)
+	// const isReportPayed = payments.some(
+	// 	payment =>
+	// 		payment.type === 'annual' &&
+	// 		payment.instanceId === String(annualReportInDB?._id)
+	// )
+
+	const isReportPayed = true
 
 	return {
 		isDataLoading,
