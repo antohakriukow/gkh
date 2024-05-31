@@ -5,11 +5,13 @@ export const menuItems = [
 		path: '/annual-reports',
 		className: 'annualsAnchor'
 	},
-	{ title: 'Цены', path: '/prices', className: 'priceAnchor' }
+	{ title: 'Взыскания', path: '/debts', className: 'debtsAnchor' }
+	// { title: 'Цены', path: '/prices', className: 'priceAnchor' }
 ]
 
 export const mobileMenuItems = [
 	{ title: '22-ЖКХ', path: '/reports', className: 'reportsAnchor' },
 	{ title: 'ОИС', path: '/annual-reports', className: 'annualsAnchor' },
-	{ title: 'Цены', path: '/prices', className: 'priceAnchor' }
+	{ title: 'Взыскания', path: '/debts', className: 'debtsAnchor' }
+	// { title: 'Цены', path: '/prices', className: 'priceAnchor' }
 ]
