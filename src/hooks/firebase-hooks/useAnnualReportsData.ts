@@ -7,7 +7,7 @@ import { IAnnualReportDetails } from '~/shared/types/annual.interface'
 import { auth, db } from '~/services/_firebase'
 
 export const useAnnualReportsData = (keys: string[]) => {
-	const [isLoading, setIsLoading] = useState(true)
+	const [isLoading, setIsLoading] = useState(false)
 	const [annuals, setAnnuals] = useState<IAnnualReportDetails[]>([])
 
 	useEffect(() => {

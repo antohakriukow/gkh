@@ -34,6 +34,7 @@ const Preview = lazy(
 )
 
 const Debts = lazy(() => import('~/components/screens/debts/Debts'))
+const Debt = lazy(() => import('~/components/screens/debt/Debt'))
 
 export const protectedRoutesMap = [
 	{ path: '/reports', component: Reports },
@@ -63,6 +64,7 @@ export const protectedRoutesMap = [
 	{ path: '/annual-reports/edit/:reportId/preview', component: Preview },
 
 	{ path: '/debts', component: Debts },
+	{ path: '/debts/edit/:debtId', component: Debt },
 
 	{ path: '/issues', component: Issues },
 	{ path: '/faq', component: FAQ },

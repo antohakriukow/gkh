@@ -6,7 +6,7 @@ import { FC } from 'react'
 import Introduction from '~/components/intro/Introduction'
 import { Button, Heading, Loader, Table } from '~/components/ui'
 
-import AddCompanyModal from '../reports/modals/add-company-modal/AddCompanyModal'
+import AddCompanyModal from '../../shared/add-company-modal/AddCompanyModal'
 
 import styles from './AnnualReports.module.scss'
 

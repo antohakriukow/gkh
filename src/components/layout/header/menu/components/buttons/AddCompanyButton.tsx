@@ -3,7 +3,7 @@ import { BsHouseAddFill } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
 import { useModal } from '~/hooks'
 
-import AddCompanyModal from '~/components/screens/reports/modals/add-company-modal/AddCompanyModal'
+import AddCompanyModal from '~/components/shared/add-company-modal/AddCompanyModal'
 
 import styles from '../../HeaderMenu.module.scss'
 

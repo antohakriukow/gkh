@@ -1,3 +1,5 @@
+export { useDebtsData } from './firebase-hooks/useDebtsData'
+export { useDebtsKeys } from './firebase-hooks/useDebtsKeys'
 export { useAnnualReportsData } from './firebase-hooks/useAnnualReportsData'
 export { useAnnualReportsKeys } from './firebase-hooks/useAnnualReportsKeys'
 export { useCompaniesData } from './firebase-hooks/useCompaniesData'
