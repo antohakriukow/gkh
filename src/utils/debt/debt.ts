@@ -1,5 +1,5 @@
 import { ICompany } from '~/shared/types/company.interface'
-import { IDebtCreate, IDebtData } from '~/shared/types/debts'
+import { IAddress, IDebtCreate, IDebtData } from '~/shared/types/debts'
 
 export const calculateTotalDebt = (debts: IDebtData[]) =>
 	debts?.reduce((total, debt) => total + +debt.value, 0).toString()
@@ -21,3 +21,6 @@ export const extractCollectorData = (company: ICompany): IDebtCreate => ({
 		leader_name: company.leader_name
 	}
 })
+
+export const getFullAddress = (data: IAddress) =>
+	`${data.house.address}, ${data.room}`

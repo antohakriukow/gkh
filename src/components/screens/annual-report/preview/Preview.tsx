@@ -5,7 +5,7 @@ import { FC } from 'react'
 
 import { Loader } from '~/components/ui'
 
-import { Container, NarrowAttention } from '../shared'
+import { Container, NarrowAttention } from '../../../shared'
 
 const Preview: FC = () => {
 	const {
@@ -33,9 +33,9 @@ const Preview: FC = () => {
 				isReportPayed ? 'Скачать отчет' : paymentButtonData.buttonTitle
 			}
 			hasNoBackButton={isCashPartnersStructure}
-			isReportPayed={isReportPayed}
-			handleCloseReport={closeAnnualReport}
-			handleDeleteReport={deleteAnnualReport}
+			isDeleteButtonDisabled={isReportPayed}
+			handleClose={closeAnnualReport}
+			handleDelete={deleteAnnualReport}
 		>
 			{isDataLoading ? (
 				<Loader loaderType='fullscreen' />

@@ -17,7 +17,11 @@ import { IDebt } from '~/shared/types/debts'
 
 import { DebtService } from '~/services/debt.service'
 
-import { calculateTotalDebt, getDebtPeriod } from '~/utils/debt/debt'
+import {
+	calculateTotalDebt,
+	getDebtPeriod,
+	getFullAddress
+} from '~/utils/debt/debt'
 import { extractCollectorData } from '~/utils/debt/debt'
 import { handleDBErrors } from '~/utils/error/utils'
 import { convertTimestampToDate } from '~/utils/time/utils'
@@ -80,7 +84,7 @@ export const useDebts = () => {
 			.map(debt => ({
 				_id: debt._id.toString(),
 				data: [
-					debt.address ?? '-',
+					getFullAddress(debt.address) ?? '-',
 					getDebtPeriod(debt?.main),
 					calculateTotalDebt(debt?.main) ?? '-',
 					calculateTotalDebt(debt?.penalties) ?? '-',

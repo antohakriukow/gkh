@@ -6,33 +6,34 @@ import { Button } from '~/components/ui'
 import SubHeader from '~/components/ui/sub-header/SubHeader'
 
 interface IToolbarProps {
-	isReportPayed: boolean
-	handleCloseReport: () => void
-	handleDeleteReport: () => void
+	title: string
+	isDeleteButtonDisabled: boolean
+	handleClose: () => void
+	handleDelete: () => void
 }
 
 const Toolbar: FC<IToolbarProps> = ({
-	isReportPayed,
-	handleCloseReport,
-	handleDeleteReport
+	title,
+	isDeleteButtonDisabled,
+	handleClose,
+	handleDelete
 }) => {
 	const { showModal } = useModal()
-	const handleShowReportDeleteModal = () => {
-		showModal(<ReportDeleteModal deleteAnnualReport={handleDeleteReport} />)
+	const handleShowDeleteModal = () => {
+		showModal(<ReportDeleteModal handleDelete={handleDelete} title={title} />)
 	}
 
-	const title = 'Отчет об исполнении сметы'
 	const DELETE = 'Удалить'
 	const CLOSE = 'Закрыть'
 
 	return (
 		<SubHeader title={title}>
-			{!isReportPayed && (
-				<Button color='danger' onClick={handleShowReportDeleteModal}>
+			{!isDeleteButtonDisabled && (
+				<Button color='danger' onClick={handleShowDeleteModal}>
 					{DELETE}
 				</Button>
 			)}
-			<Button onClick={handleCloseReport}>{CLOSE}</Button>
+			<Button onClick={handleClose}>{CLOSE}</Button>
 		</SubHeader>
 	)
 }

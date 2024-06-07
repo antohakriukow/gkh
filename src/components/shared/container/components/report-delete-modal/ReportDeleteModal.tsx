@@ -6,8 +6,9 @@ import { Button, Loader } from '~/components/ui'
 
 import styles from './ReportDeleteModal.module.scss'
 
-const ReportDeleteModal: FC<{ deleteAnnualReport: () => void }> = ({
-	deleteAnnualReport
+const ReportDeleteModal: FC<{ handleDelete: () => void; title?: string }> = ({
+	handleDelete,
+	title = 'отчет'
 }) => {
 	const [isLoading, setIsLoading] = useState(false)
 
@@ -16,10 +17,10 @@ const ReportDeleteModal: FC<{ deleteAnnualReport: () => void }> = ({
 	const accept = async () => {
 		try {
 			setIsLoading(true)
-			await deleteAnnualReport()
+			await handleDelete()
 			hideModal()
 		} catch (error) {
-			toast('Ошибка при создании отчета', { type: 'error' })
+			toast('Ошибка', { type: 'error' })
 		} finally {
 			setIsLoading(false)
 		}
@@ -32,11 +33,13 @@ const ReportDeleteModal: FC<{ deleteAnnualReport: () => void }> = ({
 			) : (
 				<Fragment>
 					<h3 className={styles.title}>
-						Вы действительно хотите удалить отчет?
+						Вы уверены, что хотите удалить {title.toLowerCase()}?
 					</h3>
-					<p className={styles.text}>Восстановление будет невозможно.</p>
+					<p className={styles.text}>
+						Восстановить {title.toLowerCase()} после удаление невозможно.
+					</p>
 					<div className={styles.buttons}>
-						<Button onClick={hideModal}>Вернуться к отчету</Button>
+						<Button onClick={hideModal}>Вернуться назад</Button>
 						<Button color='danger' onClick={accept}>
 							Удалить безвозвратно
 						</Button>

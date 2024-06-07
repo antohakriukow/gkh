@@ -1,5 +1,6 @@
 import { ICollector } from './collector.interface'
 import { IDebtor } from './debtor.interface'
+import { IAddress } from './house.interface'
 
 import { TypeDayOfMonth, TypeMonth } from '../period.interface'
 
@@ -24,7 +25,7 @@ export interface IDebtData {
 
 export interface IDebt {
 	_id: string
-	address: string
+	address: IAddress
 	collector: ICollector
 	debtor: IDebtor[]
 	main: IDebtData[]

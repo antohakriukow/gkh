@@ -6,6 +6,7 @@ import { Button } from '~/components/ui'
 import styles from './container.module.scss'
 
 interface IContainerProps {
+	title?: string
 	onNext?: () => void
 	onBack?: () => void
 	NextButtonText?: string
@@ -14,12 +15,13 @@ interface IContainerProps {
 	backButtonDisabled?: boolean
 	hasNoBackButton?: boolean
 	hasNoNextButton?: boolean
-	isReportPayed: boolean
-	handleCloseReport: () => void
-	handleDeleteReport: () => void
+	isDeleteButtonDisabled?: boolean
+	handleClose: () => void
+	handleDelete: () => void
 }
 
 const Container: FC<PropsWithChildren<IContainerProps>> = ({
+	title = 'Отчет об исполнении сметы',
 	children,
 	onNext,
 	onBack,
@@ -29,16 +31,17 @@ const Container: FC<PropsWithChildren<IContainerProps>> = ({
 	backButtonDisabled,
 	hasNoBackButton,
 	hasNoNextButton,
-	isReportPayed,
-	handleCloseReport,
-	handleDeleteReport
+	isDeleteButtonDisabled = false,
+	handleClose,
+	handleDelete
 }) => {
 	return (
 		<div className={styles.container}>
 			<Toolbar
-				isReportPayed={isReportPayed}
-				handleCloseReport={handleCloseReport}
-				handleDeleteReport={handleDeleteReport}
+				title={title}
+				isDeleteButtonDisabled={isDeleteButtonDisabled}
+				handleClose={handleClose}
+				handleDelete={handleDelete}
 			/>
 			<div className={styles.children}>{children}</div>
 			<div className={styles.buttons}>

@@ -8,9 +8,8 @@ import withDataUploaderContext from './provider/withDataUploaderContext'
 import { useDataUploader } from './useDataUploader'
 import { FC } from 'react'
 
+import { Container, NarrowAttention, StepStatus } from '~/components/shared'
 import { Loader } from '~/components/ui'
-
-import { Container, NarrowAttention, StepStatus } from '../shared'
 
 const DataUploader: FC = () => {
 	const {
@@ -66,9 +65,9 @@ const DataUploader: FC = () => {
 			hasNoBackButton
 			nextButtonDisabled={isNextButtonDisabled}
 			NextButtonText={step === 4 ? SAVE_AND_CONTINUE : GO_NEXT}
-			isReportPayed={isReportPayed}
-			handleCloseReport={closeAnnualReport}
-			handleDeleteReport={deleteAnnualReport}
+			isDeleteButtonDisabled={isReportPayed}
+			handleClose={closeAnnualReport}
+			handleDelete={deleteAnnualReport}
 		>
 			<div>
 				{steps.map(({ id, title, component, isDone, color }) =>

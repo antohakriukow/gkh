@@ -6,9 +6,8 @@ import { useModal } from '~/hooks'
 
 import Introduction from '~/components/intro/Introduction'
 import AddReportModal from '~/components/screens/reports/modals/add-report-modal/AddReportModal'
+import { AddCompanyModal } from '~/components/shared'
 import { Button, Heading, Loader, Table } from '~/components/ui'
-
-import AddCompanyModal from '../../shared/add-company-modal/AddCompanyModal'
 
 import styles from './Reports.module.scss'
 

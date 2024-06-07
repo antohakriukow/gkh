@@ -5,7 +5,7 @@ import { Loader } from '~/components/ui'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
-import { Container, NarrowAttention, SeparateModal, Tag } from '../shared'
+import { Container, NarrowAttention, SeparateModal, Tag } from '../../../shared'
 
 import styles from './credit-sorter.module.scss'
 
@@ -57,9 +57,9 @@ const CreditSorter: FC = () => {
 	if (isLoading || isDataLoading)
 		return (
 			<Container
-				isReportPayed={isReportPayed}
-				handleCloseReport={closeAnnualReport}
-				handleDeleteReport={deleteAnnualReport}
+				isDeleteButtonDisabled={isReportPayed}
+				handleClose={closeAnnualReport}
+				handleDelete={deleteAnnualReport}
 			>
 				<Loader loaderType='fullscreen' />
 			</Container>
@@ -69,9 +69,9 @@ const CreditSorter: FC = () => {
 		<Container
 			onNext={onNext}
 			onBack={onBack}
-			isReportPayed={isReportPayed}
-			handleCloseReport={closeAnnualReport}
-			handleDeleteReport={deleteAnnualReport}
+			isDeleteButtonDisabled={isReportPayed}
+			handleClose={closeAnnualReport}
+			handleDelete={deleteAnnualReport}
 		>
 			<div className={styles.container}>
 				<div className={styles.leftSide}>

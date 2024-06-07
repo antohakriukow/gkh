@@ -3,7 +3,7 @@ import { useAuth, useModal, useWindowWidth } from '~/hooks'
 
 import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
-import { useAnnualReport } from '../../useAnnualReport'
+import { useAnnualReport } from '../../screens/annual-report/useAnnualReport'
 
 const useSorter = () => {
 	const [isLoading, setIsLoading] = useState(false)

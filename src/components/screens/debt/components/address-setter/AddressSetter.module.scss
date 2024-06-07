@@ -1,0 +1,21 @@
+.container {
+	@apply h-full;
+	max-width: 616px;
+}
+
+.house {
+	@apply flex flex-row items-center justify-between pr-2;
+
+	> p {
+		@apply whitespace-nowrap overflow-hidden overflow-ellipsis py-0 px-2;
+		// max-width: 200px;
+	}
+	> button {
+		min-width: 164px;
+
+		@media (max-width: 450px) {
+			@apply text-xs;
+			min-width: 138px;
+		}
+	}
+}

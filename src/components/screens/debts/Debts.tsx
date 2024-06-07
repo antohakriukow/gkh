@@ -4,7 +4,7 @@ import { FC } from 'react'
 import { useModal } from '~/hooks'
 
 import Introduction from '~/components/intro/Introduction'
-import AddCompanyModal from '~/components/shared/add-company-modal/AddCompanyModal'
+import { AddCompanyModal } from '~/components/shared'
 import { Button, Heading, Loader, Table } from '~/components/ui'
 
 import styles from './Debts.module.scss'
