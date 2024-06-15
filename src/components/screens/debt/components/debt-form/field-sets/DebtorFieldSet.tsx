@@ -38,6 +38,7 @@ const DebtorFieldSet: FC = () => {
 				label='Тип должника'
 				fullWidth
 				required
+				size='small'
 				FormHelperTextProps={{
 					style: { display: 'none' }
 				}}
@@ -59,6 +60,7 @@ const DebtorFieldSet: FC = () => {
 						fullWidth
 						margin='normal'
 						required
+						size='small'
 						FormHelperTextProps={{
 							style: { display: 'none' }
 						}}
@@ -80,6 +82,7 @@ const DebtorFieldSet: FC = () => {
 						fullWidth
 						margin='normal'
 						required={key !== 'birthDate' && key !== 'birthPlace'}
+						size='small'
 						FormHelperTextProps={{
 							style: { display: 'none' }
 						}}
@@ -92,6 +95,7 @@ const DebtorFieldSet: FC = () => {
 					label='Тип идентификатора'
 					fullWidth
 					required
+					size='small'
 					FormHelperTextProps={{
 						style: { display: 'none' }
 					}}
@@ -107,6 +111,7 @@ const DebtorFieldSet: FC = () => {
 					fullWidth
 					margin='normal'
 					required
+					size='small'
 					FormHelperTextProps={{
 						style: { display: 'none' }
 					}}

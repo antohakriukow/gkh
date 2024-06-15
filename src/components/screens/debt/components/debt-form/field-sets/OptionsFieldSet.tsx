@@ -14,6 +14,7 @@ const OptionsFieldSet: FC = () => {
 				label='Направление'
 				fullWidth
 				required
+				size='small'
 				FormHelperTextProps={{
 					style: { display: 'none' }
 				}}
@@ -27,6 +28,7 @@ const OptionsFieldSet: FC = () => {
 				enforceAtLeastOneSelected
 				color='primary'
 				required
+				size='small'
 				rules={{
 					required: 'Обязательное поле'
 				}}

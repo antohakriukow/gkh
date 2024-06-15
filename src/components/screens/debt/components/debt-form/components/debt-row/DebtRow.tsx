@@ -26,17 +26,20 @@ const DebtRow: FC<Props> = ({ index, monthOptions, yearOptions, remove }) => {
 				name={`main.data[${index}].period.month`}
 				label='Месяц'
 				required
+				size='small'
 			/>
 			<SelectElement
 				options={yearOptions}
 				name={`main.data[${index}].period.year`}
 				label='Год'
 				required
+				size='small'
 			/>
 			<TextFieldElement
 				name={`main.data[${index}].value`}
 				label='Сумма'
 				required
+				size='small'
 				placeholder='0000.00'
 				rules={{
 					validate: validateNumber,
@@ -48,6 +51,7 @@ const DebtRow: FC<Props> = ({ index, monthOptions, yearOptions, remove }) => {
 					name={`main.data[${index}].startDate`}
 					label='Первый день просрочки'
 					required
+					size='small'
 					placeholder='ДД.ММ.ГГГГ'
 					rules={{
 						validate: validateDate,

@@ -23,6 +23,7 @@ const AddressFieldSet: FC = () => {
 					name='address'
 					label='Адрес помещения, по которому имеется долг'
 					variant='outlined'
+					size='small'
 					fullWidth
 					required
 					error={!!errors.address}

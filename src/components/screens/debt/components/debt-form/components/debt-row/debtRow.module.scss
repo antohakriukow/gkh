@@ -17,9 +17,9 @@
 		}
 	}
 
-	@media (max-width: 630px) {
+	@media (max-width: 565px) {
 		@apply mb-3 pb-3;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: 2fr 3fr;
 		border-bottom: 2px dotted $gray-300;
 	}
 }

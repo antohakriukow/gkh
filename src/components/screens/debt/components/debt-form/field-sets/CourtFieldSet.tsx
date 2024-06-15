@@ -20,6 +20,7 @@ const CourtFieldSet: FC = () => {
 				label='Тип суда'
 				fullWidth
 				required
+				size='small'
 				FormHelperTextProps={{
 					style: { display: 'none' }
 				}}
@@ -35,6 +36,7 @@ const CourtFieldSet: FC = () => {
 						fullWidth
 						margin='normal'
 						required
+						size='small'
 						FormHelperTextProps={{
 							style: { display: 'none' }
 						}}
@@ -46,6 +48,7 @@ const CourtFieldSet: FC = () => {
 						fullWidth
 						margin='normal'
 						required
+						size='small'
 						FormHelperTextProps={{
 							style: { display: 'none' }
 						}}

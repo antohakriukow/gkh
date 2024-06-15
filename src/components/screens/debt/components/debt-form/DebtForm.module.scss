@@ -11,7 +11,11 @@
 		@apply flex flex-row items-center;
 
 		> label {
-			@apply mx-4;
+			@apply mr-4 mb-0;
+
+			@media (min-width: 865px) {
+				@apply ml-4;
+			}
 		}
 	}
 
