@@ -1,8 +1,16 @@
 import { ICompany } from '~/shared/types/company.interface'
-import { IAddress, IDebtCreate, IDebtData } from '~/shared/types/debts'
+import { TypeIdentifier } from '~/shared/types/debts/counter-party.interface'
+import {
+	IDebtCreate,
+	IDebtData,
+	IPenaltyData
+} from '~/shared/types/debts/debt.interface'
+import { IAddress } from '~/shared/types/debts/house.interface'
 
-export const calculateTotalDebt = (debts: IDebtData[]) =>
-	debts?.reduce((total, debt) => total + +debt.value, 0).toString()
+import { generateEnumKeyMap } from '../enum/enum.utils'
+
+export const calculateTotalDebt = (debts: (IDebtData | IPenaltyData)[]) =>
+	debts?.reduce((total, debt) => total + +debt.value, 0).toFixed(2)
 
 export const getDebtPeriod = (debts: IDebtData[]) =>
 	debts
@@ -13,7 +21,7 @@ export const getDebtPeriod = (debts: IDebtData[]) =>
 
 export const extractCollectorData = (company: ICompany): IDebtCreate => ({
 	collector: {
-		name: company.name,
+		name: company.name.short ?? company.name.full,
 		inn: company.inn,
 		ogrn: company.ogrn,
 		address: company.address,
@@ -23,4 +31,34 @@ export const extractCollectorData = (company: ICompany): IDebtCreate => ({
 })
 
 export const getFullAddress = (data: IAddress) =>
-	`${data.house.address}, ${data.room}`
+	!!data?.house?.address && data?.room
+		? `${data?.house?.address}, ${data?.room}`
+		: '-'
+
+export const getIdentifierValueName = (identifierType: TypeIdentifier) => {
+	const types = generateEnumKeyMap(TypeIdentifier)
+
+	switch (identifierType) {
+		case types.snils:
+			return 'Номер'
+		case types.inn:
+			return 'ИНН'
+		case types.ogrnip:
+			return 'ОГРНИП'
+		default:
+			return 'Серия и номер'
+	}
+}
+
+export const replaceUndefinedAndNaNWithZString = (obj: any): void => {
+	Object.keys(obj).forEach(key => {
+		if (typeof obj[key] === 'object' && obj[key] !== null) {
+			replaceUndefinedAndNaNWithZString(obj[key])
+		} else if (
+			obj[key] === undefined ||
+			(typeof obj[key] === 'number' && Number.isNaN(obj[key]))
+		) {
+			obj[key] = ''
+		}
+	})
+}

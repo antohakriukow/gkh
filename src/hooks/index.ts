@@ -12,6 +12,7 @@ export { useSingleAnnualReportData } from './firebase-hooks/useSingleAnnualRepor
 export { useSingleDebtData } from './firebase-hooks/useSingleDebtData'
 export { useUserData } from './firebase-hooks/useUserData'
 export { useHousesData } from './firebase-hooks/useHousesData'
+export { useCounterPartiesData } from './firebase-hooks/useCounterPartiesData'
 
 export { useActions } from './useActions'
 export { useAuth } from './useAuth'

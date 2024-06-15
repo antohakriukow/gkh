@@ -1,71 +1,33 @@
-import AddressSetter from './components/address-setter/AddressSetter'
-import DebtorSetter from './components/debtor-setter/DebtorSetter'
-import { STEP_TITLE } from './debt.data'
-import { IStep } from './debt.interface'
-import withDebtContext from './provider/withDebtContext'
+import DebtForm from './components/debt-form/DebtForm'
 import { useDebt } from './useDebt'
 import { FC } from 'react'
 
-import { Container, StepStatus } from '~/components/shared'
-import { Loader } from '~/components/ui'
+import { Container } from '~/components/shared'
 
 const Debt: FC = () => {
-	const {
-		isLoading,
-		step,
-		navigateToDebts,
-		handleDeleteDebt,
-		setStep,
-		handleNext,
-		handleBack,
-		stepOneDone
-	} = useDebt()
+	const { navigateToDebts, handleDeleteDebt, saveDebt, formMethods } = useDebt()
 
-	const steps = [
-		{
-			id: 1,
-			title: STEP_TITLE.ONE,
-			component: <AddressSetter />,
-			isDone: stepOneDone
-		},
-		{
-			id: 2,
-			title: STEP_TITLE.TWO,
-			component: <DebtorSetter />,
-			isDone: false
-		}
-	] as IStep[]
+	const {
+		formState: { isValid }
+	} = formMethods
 
 	return (
 		<Container
 			title='Взыскание'
 			handleClose={navigateToDebts}
 			handleDelete={handleDeleteDebt}
-			onNext={handleNext}
-			onBack={handleBack}
-			hasNoBackButton={step === 1}
+			onNext={formMethods.handleSubmit(saveDebt)}
+			nextButtonDisabled={!isValid}
+			NextButtonText='Сохранить'
+			hasNoBackButton
 		>
-			<>
-				{steps.map(({ id, title, component, isDone, color }) =>
-					step === id ? (
-						<StepStatus key={id} title={title} color={color}>
-							{component}
-						</StepStatus>
-					) : (
-						id < step &&
-						isDone && (
-							<StepStatus
-								key={id}
-								title={title}
-								isDone={isDone}
-								onClick={() => setStep(id)}
-							/>
-						)
-					)
-				)}
-				{isLoading && <Loader loaderType='fullscreen' />}
-			</>
+			<DebtForm
+				methods={formMethods}
+				onSuccess={saveDebt}
+				onError={errors => console.log(errors)}
+			/>
 		</Container>
 	)
 }
-export default withDebtContext(Debt)
+
+export default Debt

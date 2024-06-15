@@ -1,8 +1,13 @@
-import { ICollector } from './collector.interface'
-import { IDebtor } from './debtor.interface'
-import { IAddress } from './house.interface'
+import { IEntity as ICollector } from './counter-party.interface'
+import { ICounterParty } from './counter-party.interface'
+import { ICourt } from './court.interface'
 
-import { TypeDayOfMonth, TypeMonth } from '../period.interface'
+import { TypeMonth, TypeYear } from '../period.interface'
+
+export enum TypePseudoBoolean {
+	yes = 'да',
+	no = 'нет'
+}
 
 export enum TypeDebt {
 	main = 'основной долг',
@@ -10,9 +15,19 @@ export enum TypeDebt {
 	duty = 'госпошлина'
 }
 
+export enum TypeDebtDirection {
+	maintenance = 'ЖКУ',
+	renovation = 'Капремонт'
+}
+
 export interface IPeriod {
 	month: TypeMonth
-	year: TypeDayOfMonth
+	year: TypeYear
+}
+
+export interface IDebtOptions {
+	direction: TypeDebtDirection
+	withPenalties: TypePseudoBoolean
 }
 
 export interface IDebtData {
@@ -23,13 +38,34 @@ export interface IDebtData {
 	endDate?: string
 }
 
+export interface IDebts {
+	data: IDebtData[]
+	total: string
+}
+
+export interface IPenaltyData {
+	period: IPeriod
+	startDate: string
+	endDate: string
+	daysCount: string
+	rate: string
+	value: string
+}
+
+export interface IPenalties {
+	data: IPenaltyData[]
+	total: string
+}
+
 export interface IDebt {
 	_id: string
-	address: IAddress
+	address: string
 	collector: ICollector
-	debtor: IDebtor[]
-	main: IDebtData[]
-	penalties: IDebtData[]
+	debtor: ICounterParty
+	court: ICourt
+	main: IDebts
+	penalties: IPenalties
+	options: IDebtOptions
 	duty: string
 	createdAt: string
 	updatedAt: string

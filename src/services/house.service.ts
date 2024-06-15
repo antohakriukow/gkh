@@ -1,7 +1,7 @@
 import { child, get, ref, remove, set, update } from 'firebase/database'
 import { toast } from 'react-toastify'
 
-import { IHouse } from '~/shared/types/debts'
+import { IHouse } from '~/shared/types/debts/house.interface'
 
 import { db } from '~/services/_firebase'
 

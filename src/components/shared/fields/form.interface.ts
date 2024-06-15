@@ -40,7 +40,7 @@ export interface IFieldWithSwitch<T extends FieldValues> extends IField<T> {
 
 export interface ISelect<T extends FieldValues> {
 	control: Control<T>
-	placeholder: string
+	placeholder?: string
 	fieldName: string
 	options: IOption[]
 	isRequired?: boolean

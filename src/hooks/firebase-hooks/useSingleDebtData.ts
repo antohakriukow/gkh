@@ -2,7 +2,7 @@ import { NextOrObserver, User, onAuthStateChanged } from 'firebase/auth'
 import { off, onValue, ref } from 'firebase/database'
 import { useEffect, useMemo, useState } from 'react'
 
-import { IDebt } from '~/shared/types/debts'
+import { IDebt } from '~/shared/types/debts/debt.interface'
 
 import { auth, db } from '~/services/_firebase'
 

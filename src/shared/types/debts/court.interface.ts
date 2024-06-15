@@ -1,8 +1,10 @@
-// import { ICompany } from "../company.interface";
-
-// export interface ICourt extends Pick<ICompany, 'name' | 'address'> {}
+export enum TypeCourt {
+	court = 'Суд',
+	magistrate = 'Мировой суд'
+}
 
 export interface ICourt {
-	courtName: string
-	courtAddress: string
+	type: TypeCourt
+	name: string
+	address: string
 }

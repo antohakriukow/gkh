@@ -1,0 +1,33 @@
+@import '../../../../../styles/colors.scss';
+
+.form {
+	@apply w-full h-full pt-2;
+}
+
+.fieldSet {
+	@apply grid gap-x-1 gap-y-2;
+
+	:has(.selector) {
+		@apply flex flex-row items-center;
+
+		> label {
+			@apply mx-4;
+		}
+	}
+
+	> div {
+		@apply m-0;
+	}
+
+	@media (min-width: 865px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@media (min-width: 1270px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	@media (min-width: 1950px) {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}

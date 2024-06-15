@@ -1,8 +1,8 @@
 import { ICompany } from '../company.interface'
 
-export enum TypeLitigant {
-	individual = 'физическое лицо',
-	entity = 'юридическое лицо'
+export enum TypeCounterParty {
+	individual = 'Физическое лицо',
+	entity = 'Юридическое лицо'
 }
 
 export enum TypeIdentifier {
@@ -21,13 +21,27 @@ export interface IIdentifier {
 export interface IEntity
 	extends Pick<
 		ICompany,
-		'name' | 'inn' | 'ogrn' | 'address' | 'leader_post' | 'leader_name'
-	> {}
+		'inn' | 'ogrn' | 'address' | 'leader_post' | 'leader_name'
+	> {
+	name: string
+}
 
 export interface IIndividual {
 	name: string
 	birthDate?: string
 	birthPlace?: string
 	livingAddress?: string
-	identifiers: IIdentifier[]
+	identifier: IIdentifier
 }
+
+interface IIndividualCounterParty {
+	type: TypeCounterParty.individual
+	data: IIndividual
+}
+
+interface IEntityCounterParty {
+	type: TypeCounterParty.entity
+	data: IEntity
+}
+
+export type ICounterParty = IIndividualCounterParty | IEntityCounterParty

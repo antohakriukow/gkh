@@ -1,83 +1,76 @@
-import { IStep, TypeStep } from './debt.interface'
-import { useDebtContext } from './provider/provider'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAuth, useWindowWidth } from '~/hooks'
+import { calculatePenalties } from '~/core/debts/calculatePenalties'
+import { useAuth, useSingleDebtData, useWindowWidth } from '~/hooks'
+
+import { IDebt, TypeDebtDirection } from '~/shared/types/debts/debt.interface'
 
 import { DebtService } from '~/services/debt.service'
 
-export const useDebt = () => {
-	const { user } = useAuth()
-	const navigate = useNavigate()
+import { calculateTotalDebt } from '~/utils/debt/debt'
+import { generateEnumKeyMap } from '~/utils/enum/enum.utils'
 
-	const {
-		debtId,
-		isLoading,
-		step,
-		house,
-		room,
-		debtor,
-		main,
-		penalties,
-		duty,
-		setIsLoading,
-		setStep,
-		setHouse,
-		setRoom,
-		setDebtor,
-		setMain,
-		setPenalties,
-		setDuty
-	} = useDebtContext()
+export const useDebt = () => {
+	const navigate = useNavigate()
+	const { user } = useAuth()
+	const { debtId } = useParams<{ debtId: string }>()
+	const { debt, isLoading: isInitialDataLoading } = useSingleDebtData(
+		debtId as string
+	)
+
+	const [isLoading, setIsLoading] = useState(isInitialDataLoading)
 	const { width } = useWindowWidth()
 	const isNarrow = width < 500
 
-	const stepOneDone = !!house && !!room
+	const formMethods = useForm<IDebt>({
+		mode: 'onSubmit',
+		defaultValues: debt,
+		reValidateMode: 'onSubmit'
+	})
+
+	const debtDirectionTypes = generateEnumKeyMap(TypeDebtDirection)
 
 	const navigateToDebts = useCallback(() => navigate(`/debts`), [navigate])
 
 	const handleDeleteDebt = useCallback(async () => {
-		if (!user || !debtId) return
+		if (!user || !debt._id) return
 
 		try {
-			await DebtService.remove(user?.uid, debtId)
+			await DebtService.remove(user?.uid, debt._id)
 			navigateToDebts()
 		} catch (error) {
 			console.log('error: ', error)
 		}
-	}, [debtId, user, navigateToDebts])
+	}, [debt._id, user, navigateToDebts])
 
-	const handleBack = useCallback(() => {
-		if (step > 1) setStep((+step - 1) as TypeStep)
-	}, [step, setStep])
+	const saveDebt = async (data: IDebt) => {
+		if (!user || !debt._id) return
 
-	const handleNext = useCallback(() => {
-		if (step > 0) setStep((step + 1) as TypeStep)
-	}, [step, setStep])
+		const finalData = JSON.parse(JSON.stringify(data))
+		const isMain = data.options.direction === debtDirectionTypes.maintenance
+		const penalties = calculatePenalties(data.main.data, isMain)
+		if (finalData.options.withPenalties === 'yes') {
+			finalData.penalties = {
+				data: penalties,
+				total: calculateTotalDebt(penalties)
+			}
+		}
+		finalData.main.total = calculateTotalDebt(finalData.main.data)
+
+		console.log(finalData)
+
+		try {
+			await DebtService.update(user?.uid, debt._id, finalData)
+		} catch (error) {
+			console.log('error: ', error)
+		}
+	}
 
 	return {
-		debtId,
-		isLoading,
-		isNarrow,
-		step,
-		house,
-		room,
-		debtor,
-		main,
-		penalties,
-		duty,
-		setIsLoading,
 		navigateToDebts,
 		handleDeleteDebt,
-		setStep,
-		setHouse,
-		setRoom,
-		setDebtor,
-		setMain,
-		setPenalties,
-		setDuty,
-		handleBack,
-		handleNext,
-		stepOneDone
+		saveDebt,
+		formMethods
 	}
 }

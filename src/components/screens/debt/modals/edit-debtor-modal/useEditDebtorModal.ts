@@ -8,7 +8,7 @@ import { HouseService } from '~/services/house.service'
 
 import { handleDBErrors } from '~/utils/error/utils'
 
-export const useEditHouseModal = () => {
+export const useEditDebtorModal = () => {
 	const { user } = useAuth()
 	const { hideModal } = useModal()
 	const [isLoading, setIsLoading] = useState(false)

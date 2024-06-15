@@ -1,9 +1,11 @@
 import { child, get, ref, remove, set, update } from 'firebase/database'
 import { toast } from 'react-toastify'
 
-import { IDebtCreate } from '~/shared/types/debts'
+import { IDebt, IDebtCreate } from '~/shared/types/debts/debt.interface'
 
 import { db } from '~/services/_firebase'
+
+import { replaceUndefinedAndNaNWithZString } from '~/utils/debt/debt'
 
 export const DebtService = {
 	async getById(userId: string, debtId: string) {
@@ -43,13 +45,14 @@ export const DebtService = {
 		}
 	},
 
-	async update(userId: string, debtId: string, data: unknown) {
+	async update(userId: string, debtId: string, data: IDebt) {
 		if (!data) return
 		const updatedAt = Date.now().toString()
+		replaceUndefinedAndNaNWithZString(data)
 
 		try {
 			await update(ref(db, `users/${userId}/debts/${debtId}`), {
-				data,
+				...data,
 				updatedAt
 			})
 		} catch (error) {

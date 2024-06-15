@@ -1,4 +1,7 @@
-import { IDebtDetails } from './../../../shared/types/debts/debt.interface'
+import {
+	IDebt,
+	IDebtDetails
+} from './../../../shared/types/debts/debt.interface'
 import { FirebaseError } from 'firebase/app'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -13,15 +16,10 @@ import {
 import { IRow } from '~/components/ui/table/table.interface'
 
 import { showSuccessReportCreatedNotification } from '~/shared/notifications/toast'
-import { IDebt } from '~/shared/types/debts'
 
 import { DebtService } from '~/services/debt.service'
 
-import {
-	calculateTotalDebt,
-	getDebtPeriod,
-	getFullAddress
-} from '~/utils/debt/debt'
+import { calculateTotalDebt, getDebtPeriod } from '~/utils/debt/debt'
 import { extractCollectorData } from '~/utils/debt/debt'
 import { handleDBErrors } from '~/utils/error/utils'
 import { convertTimestampToDate } from '~/utils/time/utils'
@@ -70,7 +68,7 @@ export const useDebts = () => {
 				return createdDebt
 			}
 
-			return {} as IDebt | undefined
+			return {} as IDebt
 		} catch (error) {
 			if (error instanceof FirebaseError) handleDBErrors(error)
 		} finally {
@@ -84,10 +82,10 @@ export const useDebts = () => {
 			.map(debt => ({
 				_id: debt._id.toString(),
 				data: [
-					getFullAddress(debt.address) ?? '-',
-					getDebtPeriod(debt?.main),
-					calculateTotalDebt(debt?.main) ?? '-',
-					calculateTotalDebt(debt?.penalties) ?? '-',
+					debt.address,
+					getDebtPeriod(debt?.main.data),
+					debt.main.total ?? '-',
+					debt.penalties.total ?? '-',
 					debt.duty ?? '-',
 					convertTimestampToDate(+debt?.updatedAt)
 				]

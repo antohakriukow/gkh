@@ -1,5 +1,5 @@
-import { jurisdiction, tooltips } from './edit-house-modal.data'
-import { useEditHouseModal } from './useEditHouseModal'
+import { jurisdiction, tooltips } from './edit-debtor-modal.data'
+import { useEditDebtorModal } from './useEditDebtorModal'
 import { FC, Fragment } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -8,10 +8,10 @@ import { Button, Loader } from '~/components/ui'
 
 import { IHouse } from '~/shared/types/debts/house.interface'
 
-import styles from './EditHouseModal.module.scss'
+import styles from './EditDebtorModal.module.scss'
 
-const EditHouseModal: FC = () => {
-	const { isLoading, createHouse } = useEditHouseModal()
+const EditDebtorModal: FC = () => {
+	const { isLoading, createHouse } = useEditDebtorModal()
 
 	const { register, control, handleSubmit } = useForm<IHouse>({
 		mode: 'onSubmit'
@@ -80,4 +80,4 @@ const EditHouseModal: FC = () => {
 		</div>
 	)
 }
-export default EditHouseModal
+export default EditDebtorModal
