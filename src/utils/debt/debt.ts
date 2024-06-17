@@ -23,6 +23,7 @@ export const extractCollectorData = (company: ICompany): IDebtCreate => ({
 	collector: {
 		name: company.name.short ?? company.name.full,
 		inn: company.inn,
+		kpp: company.kpp,
 		ogrn: company.ogrn,
 		address: company.address,
 		leader_post: company.leader_post,

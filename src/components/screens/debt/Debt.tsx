@@ -3,13 +3,22 @@ import { useDebt } from './useDebt'
 import { FC } from 'react'
 
 import { Container } from '~/components/shared'
+import { Loader } from '~/components/ui'
 
 const Debt: FC = () => {
-	const { navigateToDebts, handleDeleteDebt, saveDebt, formMethods } = useDebt()
+	const {
+		isLoading,
+		navigateToDebts,
+		handleDeleteDebt,
+		saveDebt,
+		formMethods
+	} = useDebt()
 
 	const {
 		formState: { isValid }
 	} = formMethods
+
+	if (isLoading) return <Loader />
 
 	return (
 		<Container
@@ -18,7 +27,7 @@ const Debt: FC = () => {
 			handleDelete={handleDeleteDebt}
 			onNext={formMethods.handleSubmit(saveDebt)}
 			nextButtonDisabled={!isValid}
-			NextButtonText='Сохранить'
+			NextButtonText='Сформировать'
 			hasNoBackButton
 		>
 			<DebtForm

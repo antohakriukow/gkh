@@ -10,6 +10,10 @@ export const extractSelectorOptionsFromEnum = (enumObj: any): Option[] => {
 	}))
 }
 
+export const getEnumValue = (enumObj: any, key: string): string => {
+	return enumObj[key]
+}
+
 export const generateEnumKeyMap = <T extends object>(
 	enumObj: T
 ): { [key: string]: string } => {

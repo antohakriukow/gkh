@@ -1,5 +1,4 @@
 import {
-	CounterPartyTypes,
 	debtorTypeOptions,
 	entityDebtorInputs,
 	individualDebtorInputs,
@@ -9,6 +8,7 @@ import { FC, useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { SelectElement, TextFieldElement } from 'react-hook-form-mui'
 
+import { CounterPartyTypes } from '~/shared/types/debts/counter-party.interface'
 import { IDebt } from '~/shared/types/debts/debt.interface'
 
 import { getIdentifierValueName } from '~/utils/debt/debt'
@@ -19,7 +19,8 @@ import withToggleHeader from '../components/withToggleHeader/withToggleHeader'
 const DebtorFieldSet: FC = () => {
 	const { watch, setValue } = useFormContext<IDebt>()
 
-	const address = watch('address')
+	const house = watch('address.house')
+	const room = watch('address.room')
 
 	const debtorType = watch('debtor.type')
 	const identifierType = watch('debtor.data.identifier.type')
@@ -27,9 +28,9 @@ const DebtorFieldSet: FC = () => {
 
 	useEffect(() => {
 		debtorType === CounterPartyTypes.individual
-			? setValue('debtor.data.livingAddress', address)
+			? setValue('debtor.data.livingAddress', `${house}, ${room}`)
 			: setValue('debtor.data.livingAddress', '')
-	}, [debtorType, address, setValue])
+	}, [debtorType, house, room, setValue])
 
 	return (
 		<div className={styles.fieldSet}>

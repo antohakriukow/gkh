@@ -1,6 +1,7 @@
-import { debtDirectionOptions, pseudoBooleanOptions } from './data/debtor.data'
+import { attachmentsOptions } from './data/attachments.data'
+import { debtDirectionOptions } from './data/debtor.data'
 import { FC } from 'react'
-import { SelectElement, ToggleButtonGroupElement } from 'react-hook-form-mui'
+import { MultiSelectElement, SelectElement } from 'react-hook-form-mui'
 
 import styles from '../DebtForm.module.scss'
 import withToggleHeader from '../components/withToggleHeader/withToggleHeader'
@@ -10,7 +11,7 @@ const OptionsFieldSet: FC = () => {
 		<div className={styles.fieldSet}>
 			<SelectElement
 				options={debtDirectionOptions}
-				name={`options.direction`}
+				name='options.direction'
 				label='Направление'
 				fullWidth
 				required
@@ -19,19 +20,14 @@ const OptionsFieldSet: FC = () => {
 					style: { display: 'none' }
 				}}
 			/>
-			<ToggleButtonGroupElement
-				className={styles.selector}
-				name='options.withPenalties'
-				label='Начислять пени'
-				options={pseudoBooleanOptions}
-				exclusive
-				enforceAtLeastOneSelected
-				color='primary'
-				required
+			<MultiSelectElement
+				name='options.attachments'
+				label='Приложения к заявлению'
+				options={attachmentsOptions}
 				size='small'
-				rules={{
-					required: 'Обязательное поле'
-				}}
+				showChips
+				showCheckbox
+				menuMaxHeight={128}
 			/>
 		</div>
 	)

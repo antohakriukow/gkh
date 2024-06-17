@@ -1,4 +1,5 @@
 import AddressFieldSet from './field-sets/AddressFieldSet'
+import BankDetailsFieldSet from './field-sets/BankDetailsFieldSet'
 import CourtFieldSet from './field-sets/CourtFieldSet'
 import DebtorFieldSet from './field-sets/DebtorFieldSet'
 import MainDebtsFieldSet from './field-sets/MainDebtsFieldSet'
@@ -27,6 +28,7 @@ const DebtForm: FC<{
 				<DebtorFieldSet />
 				<MainDebtsFieldSet />
 				<CourtFieldSet />
+				<BankDetailsFieldSet />
 				<OptionsFieldSet />
 			</div>
 		</FormContainer>

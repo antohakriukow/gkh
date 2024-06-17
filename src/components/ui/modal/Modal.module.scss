@@ -1,10 +1,10 @@
 .overlay {
-	@apply fixed top-0 left-0 h-screen w-screen select-none;
+	@apply fixed top-0 left-0 h-screen w-screen select-none z-40;
 	background-color: rgba(0, 0, 0, 0.5);
 }
 
 .container {
-	@apply relative top-1/2 left-1/2 bg-white w-2/3 max-w-xl inline-flex justify-center items-center py-6 px-4 rounded-md;
+	@apply relative top-1/2 left-1/2 bg-white w-2/3 max-w-xl inline-flex justify-center items-center py-6 px-4 rounded-md z-50;
 	min-height: 120px;
 	max-height: 80vh;
 	transform: translate(-50%, -50%);

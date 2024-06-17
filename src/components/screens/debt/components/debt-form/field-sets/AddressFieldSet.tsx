@@ -16,17 +16,31 @@ const AddressFieldSet: FC = () => {
 	return (
 		<div className={styles.fieldSet}>
 			<Tooltip
-				title='Например: 100000, г. Москва, Волоколамское шоссе, пом. 12Н'
+				title='Например: 100000, г. Москва, Волоколамское шоссе'
 				placement='bottom'
 			>
 				<TextFieldElement
-					name='address'
-					label='Адрес помещения, по которому имеется долг'
+					name='address.house'
+					label='Адрес дома'
 					variant='outlined'
 					size='small'
 					fullWidth
 					required
-					error={!!errors.address}
+					error={!!errors.address?.house}
+					FormHelperTextProps={{
+						style: { display: 'none' }
+					}}
+				/>
+			</Tooltip>
+			<Tooltip title='Например: пом. 12Н или кв. 42' placement='bottom'>
+				<TextFieldElement
+					name='address.room'
+					label='Номер квартиры (помещения)'
+					variant='outlined'
+					size='small'
+					fullWidth
+					required
+					error={!!errors.address?.room}
 					FormHelperTextProps={{
 						style: { display: 'none' }
 					}}

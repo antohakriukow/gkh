@@ -1,3 +1,5 @@
+import { generateEnumKeyMap } from '~/utils/enum/enum.utils'
+
 import { ICompany } from '../company.interface'
 
 export enum TypeCounterParty {
@@ -21,7 +23,7 @@ export interface IIdentifier {
 export interface IEntity
 	extends Pick<
 		ICompany,
-		'inn' | 'ogrn' | 'address' | 'leader_post' | 'leader_name'
+		'inn' | 'kpp' | 'ogrn' | 'address' | 'leader_post' | 'leader_name'
 	> {
 	name: string
 }
@@ -45,3 +47,5 @@ interface IEntityCounterParty {
 }
 
 export type ICounterParty = IIndividualCounterParty | IEntityCounterParty
+
+export const CounterPartyTypes = generateEnumKeyMap(TypeCounterParty)

@@ -1,6 +1,7 @@
-import { IEntity as ICollector } from './counter-party.interface'
+import { IEntity } from './counter-party.interface'
 import { ICounterParty } from './counter-party.interface'
 import { ICourt } from './court.interface'
+import { IAddress } from './house.interface'
 
 import { TypeMonth, TypeYear } from '../period.interface'
 
@@ -28,6 +29,7 @@ export interface IPeriod {
 export interface IDebtOptions {
 	direction: TypeDebtDirection
 	withPenalties: TypePseudoBoolean
+	attachments: string[]
 }
 
 export interface IDebtData {
@@ -57,9 +59,22 @@ export interface IPenalties {
 	total: string
 }
 
+export interface IBankDetails {
+	account: string
+	bank: {
+		name: string
+		bik: string
+		correspondentAccount: string
+	}
+}
+
+export interface ICollector extends IEntity {
+	bankDetails?: IBankDetails
+}
+
 export interface IDebt {
 	_id: string
-	address: string
+	address: IAddress
 	collector: ICollector
 	debtor: ICounterParty
 	court: ICourt

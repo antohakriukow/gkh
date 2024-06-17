@@ -31,7 +31,6 @@ export const pseudoBooleanOptions = [
 	{ id: 'no', label: 'Нет' }
 ]
 
-export const CounterPartyTypes = generateEnumKeyMap(TypeCounterParty)
 export const individualIdentifiersOptions =
 	extractSelectorOptionsFromEnum(TypeIdentifier)
 export const debtorTypeOptions =

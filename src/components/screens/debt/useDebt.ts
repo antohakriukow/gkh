@@ -1,9 +1,12 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
+import { calculateDuty } from '~/core/debts/calculateDuty'
 import { calculatePenalties } from '~/core/debts/calculatePenalties'
-import { useAuth, useSingleDebtData, useWindowWidth } from '~/hooks'
+import { downloadPDF } from '~/core/debts/pdf/pdf.download'
+import { useAuth, useSingleDebtData } from '~/hooks'
 
+import { CourtTypes } from '~/shared/types/debts/court.interface'
 import { IDebt, TypeDebtDirection } from '~/shared/types/debts/debt.interface'
 
 import { DebtService } from '~/services/debt.service'
@@ -15,19 +18,19 @@ export const useDebt = () => {
 	const navigate = useNavigate()
 	const { user } = useAuth()
 	const { debtId } = useParams<{ debtId: string }>()
-	const { debt, isLoading: isInitialDataLoading } = useSingleDebtData(
-		debtId as string
-	)
-
-	const [isLoading, setIsLoading] = useState(isInitialDataLoading)
-	const { width } = useWindowWidth()
-	const isNarrow = width < 500
-
+	const { debt, isLoading } = useSingleDebtData(debtId as string)
 	const formMethods = useForm<IDebt>({
 		mode: 'onSubmit',
 		defaultValues: debt,
 		reValidateMode: 'onSubmit'
 	})
+
+	// const isReadyToCalculate =
+	// 	!formMethods.formState.isDirty && formMethods.formState.isValid
+
+	// const isReadyToDownload = Boolean(
+	// 	debt?.duty && !formMethods.formState.isDirty
+	// )
 
 	const debtDirectionTypes = generateEnumKeyMap(TypeDebtDirection)
 
@@ -50,24 +53,37 @@ export const useDebt = () => {
 		const finalData = JSON.parse(JSON.stringify(data))
 		const isMain = data.options.direction === debtDirectionTypes.maintenance
 		const penalties = calculatePenalties(data.main.data, isMain)
-		if (finalData.options.withPenalties === 'yes') {
-			finalData.penalties = {
-				data: penalties,
-				total: calculateTotalDebt(penalties)
-			}
+		finalData.penalties = {
+			data: penalties,
+			total: calculateTotalDebt(penalties)
 		}
 		finalData.main.total = calculateTotalDebt(finalData.main.data)
-
-		console.log(finalData)
+		finalData.duty = calculateDuty(
+			+calculateTotalDebt(finalData.main.data) +
+				+calculateTotalDebt(finalData.penalties.data),
+			data.court.type === CourtTypes.magistrate
+		).duty
 
 		try {
-			await DebtService.update(user?.uid, debt._id, finalData)
+			const updatedDebt = await DebtService.update(
+				user?.uid,
+				debt._id,
+				finalData
+			)
+			downloadPDF(updatedDebt)
 		} catch (error) {
 			console.log('error: ', error)
 		}
 	}
 
+	useEffect(() => {
+		if (debt && !isLoading) {
+			formMethods.reset(debt)
+		}
+	}, [debt, isLoading, formMethods])
+
 	return {
+		isLoading,
 		navigateToDebts,
 		handleDeleteDebt,
 		saveDebt,

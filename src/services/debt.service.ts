@@ -55,6 +55,8 @@ export const DebtService = {
 				...data,
 				updatedAt
 			})
+			const updatedDebt = await this.getById(userId, debtId)
+			return updatedDebt
 		} catch (error) {
 			if (error instanceof Error) toast(error.message, { autoClose: 3000 })
 		}

@@ -82,7 +82,7 @@ export const useDebts = () => {
 			.map(debt => ({
 				_id: debt._id.toString(),
 				data: [
-					debt.address,
+					debt.address.house + ', ' + debt.address.room,
 					getDebtPeriod(debt?.main.data),
 					debt.main.total ?? '-',
 					debt.penalties.total ?? '-',
