@@ -1,4 +1,4 @@
-import { requiredAttachments } from './data'
+import { isMainDirection } from './../../../../../../shared/types/debts/debt.interface'
 
 import { IDebt } from '~/shared/types/debts/debt.interface'
 
@@ -9,7 +9,8 @@ import {
 	setBoldText,
 	setEmptyRow,
 	setText
-} from '../../pdf.utils'
+} from '../../../pdf.utils'
+import { requiredAttachments } from '../magistrate.data'
 
 const now = getStringDate(new Date())
 
@@ -22,7 +23,7 @@ export const getBody = (debt: IDebt) => ({
 			`${debt.collector.name} обязательства по предоставлению коммунальных услуг, надлежащему содержанию и ремонту общего имущества в многоквартирном доме выполнило в полном объеме.`
 		),
 		setText(
-			`В свою очередь должник ${debt.debtor.data.name} свои обязательства по оплате услуг, оказанных Общество с ограниченной ответственностью Управление коммунальными системами не исполнил.`
+			`В свою очередь должник ${debt.debtor.data.name} свои обязательства по оплате услуг, оказанных ${debt.collector.name} не исполнил.`
 		),
 		setText(
 			`Собственник помещения в многоквартирном доме обязан участвовать в расходах на содержание общего имущества соразмерно своей доле в праве общей собственности на это имущество путем внесения платы за содержание и ремонт помещения (п. 1 ст. 158 ЖК РФ) и оплачивать коммунальные услуги (ст. 153 ЖК РФ). `
@@ -33,7 +34,7 @@ export const getBody = (debt: IDebt) => ({
 			}, расположенной(ого) по адресу: ${
 				debt.address.house
 			}, имеет задолженность перед ${debt.collector.name} по оплате ${
-				debt.options.direction === 'ЖКУ'
+				isMainDirection(debt.options.direction)
 					? 'расходов на содержание и ремонт общего имущества в многоквартирном доме и коммунальных услуг'
 					: 'взносов на капитальный ремонт'
 			} за период c ${debt.main.data.at(0)
@@ -44,7 +45,7 @@ export const getBody = (debt: IDebt) => ({
 		),
 		setText(
 			`Пени за просрочку исполнения обязательства по оплате ${
-				debt.options.direction === 'ЖКУ'
+				isMainDirection(debt.options.direction)
 					? 'ЖКУ'
 					: 'взносов на капитальный ремонт'
 			} составляют ${convertToRoubles(
@@ -64,7 +65,7 @@ export const getBody = (debt: IDebt) => ({
 			`Выдать судебный приказ о взыскании с должника ${
 				debt.debtor.data.name
 			} в пользу взыскателя ${debt.collector.name} задолженности за ${
-				debt.options.direction === 'ЖКУ'
+				isMainDirection(debt.options.direction)
 					? 'за жилищно-коммунальные услуги'
 					: 'по взносам на капитальный ремонт'
 			} в размере ${convertToRoubles(
@@ -72,7 +73,7 @@ export const getBody = (debt: IDebt) => ({
 			)}, пени за просрочку исполнения обязательства по оплате ЖКУ в размере ${convertToRoubles(
 				debt.penalties.total
 			)}, расходы по уплаченной государственной пошлине в размере ${convertToRoubles(
-				debt.duty
+				debt.duty.value
 			)} на следующие реквизиты:`
 		),
 		setEmptyRow(),

@@ -2,7 +2,7 @@ import { IDebt } from '~/shared/types/debts/debt.interface'
 
 import { getStringDate } from '~/utils/period.utils'
 
-import { setText } from '../../pdf.utils'
+import { setText } from '../../../pdf.utils'
 
 const now = getStringDate(new Date())
 

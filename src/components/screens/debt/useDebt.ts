@@ -62,7 +62,7 @@ export const useDebt = () => {
 			+calculateTotalDebt(finalData.main.data) +
 				+calculateTotalDebt(finalData.penalties.data),
 			data.court.type === CourtTypes.magistrate
-		).duty
+		)
 
 		try {
 			const updatedDebt = await DebtService.update(

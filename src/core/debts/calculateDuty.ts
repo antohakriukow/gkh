@@ -1,9 +1,12 @@
+import { IDuty } from '~/shared/types/debts/debt.interface'
+
 export const calculateDuty = (
-	debtAmount: number,
+	debtValue: number,
 	isMagistrate: boolean
-): { duty: number; formula: string } => {
+): IDuty => {
 	let duty = 0
 	let formula = ''
+	const debtAmount = parseFloat(debtValue.toFixed(2))
 
 	if (debtAmount <= 20000) {
 		duty = Math.max(0.04 * debtAmount, 400)
@@ -29,13 +32,13 @@ export const calculateDuty = (
 	if (isMagistrate) {
 		duty /= 2
 		duty = Math.ceil(duty * 100) / 100
-		formula += ` (уменьшено на половину для мирового судьи: ${duty})`
+		formula += ` (50% = ${duty})`
 	} else {
 		duty = Math.ceil(duty * 100) / 100
 	}
 
 	return {
-		duty: parseFloat(duty.toFixed(2)),
+		value: duty.toFixed(2),
 		formula: formula
 	}
 }

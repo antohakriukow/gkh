@@ -86,7 +86,7 @@ export const useDebts = () => {
 					getDebtPeriod(debt?.main.data),
 					debt.main.total ?? '-',
 					debt.penalties.total ?? '-',
-					debt.duty ?? '-',
+					debt.duty.value ?? '-',
 					convertTimestampToDate(+debt?.updatedAt)
 				]
 			}))

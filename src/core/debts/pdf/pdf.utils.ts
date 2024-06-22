@@ -1,6 +1,8 @@
 export const convertToRoubles = (value: string | number) => {
 	const [roubles, kopecks] = String(value).split('.')
-	return `${roubles ?? 0} руб. ${kopecks ?? 0} коп.`
+	const isInteger = kopecks === '0' || !kopecks
+
+	return `${roubles} руб. ${isInteger ? '00' : kopecks.slice(0, 2)} коп.`
 }
 
 export const setEmptyRow = () => ({ text: ' ' })

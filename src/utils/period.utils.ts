@@ -26,3 +26,22 @@ export const getDayJSObjectFromString = (date: string) =>
 
 export const getPreviousDay = (date: string) =>
 	dayjs(date, 'DD.MM.YYYY').subtract(1, 'day').format('DD.MM.YYYY')
+
+export const getMonthName = (month: TypeMonth): string => {
+	const monthNames = [
+		'Январь',
+		'Февраль',
+		'Март',
+		'Апрель',
+		'Май',
+		'Июнь',
+		'Июль',
+		'Август',
+		'Сентябрь',
+		'Октябрь',
+		'Ноябрь',
+		'Декабрь'
+	]
+
+	return monthNames[month - 1]
+}

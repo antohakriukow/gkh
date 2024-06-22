@@ -3,6 +3,8 @@ import { ICounterParty } from './counter-party.interface'
 import { ICourt } from './court.interface'
 import { IAddress } from './house.interface'
 
+import { generateEnumKeyMap } from '~/utils/enum/enum.utils'
+
 import { TypeMonth, TypeYear } from '../period.interface'
 
 export enum TypePseudoBoolean {
@@ -20,6 +22,11 @@ export enum TypeDebtDirection {
 	maintenance = 'ЖКУ',
 	renovation = 'Капремонт'
 }
+
+export const DebtDirectionTypes = generateEnumKeyMap(TypeDebtDirection)
+
+export const isMainDirection = (value: TypeDebtDirection) =>
+	value === DebtDirectionTypes.maintenance
 
 export interface IPeriod {
 	month: TypeMonth
@@ -59,6 +66,11 @@ export interface IPenalties {
 	total: string
 }
 
+export interface IDuty {
+	value: string
+	formula: string
+}
+
 export interface IBankDetails {
 	account: string
 	bank: {
@@ -81,7 +93,7 @@ export interface IDebt {
 	main: IDebts
 	penalties: IPenalties
 	options: IDebtOptions
-	duty: string
+	duty: IDuty
 	createdAt: string
 	updatedAt: string
 }

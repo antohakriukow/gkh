@@ -4,22 +4,17 @@ import {
 	IIndividual,
 	TypeIdentifier
 } from '~/shared/types/debts/counter-party.interface'
-import { IDebt, TypeDebtDirection } from '~/shared/types/debts/debt.interface'
+import { IDebt, isMainDirection } from '~/shared/types/debts/debt.interface'
 
 import { getEnumValue } from '~/utils/enum/enum.utils'
 
-import {
-	convertToRoubles,
-	setBoldText,
-	setEmptyRow,
-	setText
-} from '../../pdf.utils'
+import { setText } from '../../../pdf.utils'
 
-const getMainDebtString = (
+export const getMainDebtString = (
 	debt: IDebt
 ) => `Пени за просрочку исполнения обязательств по
 оплате ${
-	debt?.options?.direction === 'ЖКУ' ? 'ЖКУ' : 'взносов на капремонт'
+	isMainDirection(debt?.options?.direction) ? 'ЖКУ' : 'взносов на капремонт'
 }: ${debt.penalties.total}`
 
 const getIndividualData = (debt: IDebt) => {
@@ -53,39 +48,7 @@ const getEntityData = (debt: IDebt) => {
 	]
 }
 
-const setDebtorData = (debt: IDebt) =>
+export const getDebtorData = (debt: IDebt) =>
 	debt.debtor.type === CounterPartyTypes.individual
 		? getIndividualData(debt)
 		: getEntityData(debt)
-
-export const getHeaders = (debt: IDebt) => ({
-	columns: [
-		{ width: '40%', text: '' },
-		{
-			stack: [
-				setBoldText(debt.court.name),
-				setBoldText(debt.court.address),
-				setEmptyRow(),
-				setBoldText('Взыскатель:'),
-				setText(`Наименование: ${debt.collector.name}`),
-				setText(`Юридический адрес: ${debt.collector.address}`),
-				setText(`ИНН: ${debt.collector.inn}`),
-				setEmptyRow(),
-				setBoldText('Должник:'),
-				...setDebtorData(debt),
-				setEmptyRow(),
-				setBoldText(
-					`Адрес помещения: ${debt.address.house}, ${debt.address.room}`
-				),
-				setEmptyRow(),
-				setText(`Сумма задолженности: ${convertToRoubles(debt.main.total)}`),
-				setText(convertToRoubles(getMainDebtString(debt))),
-				setText(`Госпошлина: ${convertToRoubles(debt.duty ?? 0.0)}`),
-				setEmptyRow()
-			],
-			alignment: 'right',
-			bold: false,
-			width: '60%'
-		}
-	]
-})

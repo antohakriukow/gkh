@@ -1,4 +1,4 @@
-import { refinancingRates } from '~/components/screens/debt/components/debt-form/field-sets/data/refinancing-rates.data'
+import { refinancingRates } from './rates'
 
 import {
 	getDayJSObjectFromString,
@@ -9,8 +9,10 @@ import {
 export const getCurrentRate = () => refinancingRates.at(-1)?.[1]
 
 export const getFirstRate = (date: string) => {
-	for (let i = refinancingRates.length - 1; i >= 0; i--) {
-		const [rateDate, rateValue] = refinancingRates[i]
+	const rates = [...refinancingRates]
+
+	for (let i = rates.length - 1; i >= 0; i--) {
+		const [rateDate, rateValue] = rates[i]
 		if (new Date(rateDate) <= new Date(date)) {
 			return rateValue
 		}
@@ -19,8 +21,10 @@ export const getFirstRate = (date: string) => {
 }
 
 export const getNearestRateChangeDate = (date: string) => {
-	for (let i = 0; i < refinancingRates.length; i++) {
-		const [rateDate, _] = refinancingRates[i]
+	const rates = [...refinancingRates]
+
+	for (let i = 0; i < rates.length; i++) {
+		const [rateDate, _] = rates[i]
 		if (new Date(rateDate) > new Date(date)) {
 			return rateDate
 		}
@@ -48,8 +52,10 @@ export const calculatePenaltiesForPeriod = (
 	return (value * daysCount * rate) / 300
 }
 
-const getRateTupleIndex = (date: string) =>
-	refinancingRates.findIndex(tuple => tuple[0] === date)
+const getRateTupleIndex = (date: string) => {
+	const rates = [...refinancingRates]
+	return rates.findIndex(tuple => tuple[0] === date)
+}
 
 export const getDebtIntervals = (
 	date: string
@@ -59,8 +65,9 @@ export const getDebtIntervals = (
 	rate: number
 	daysCount: number
 }[] => {
+	const rates = [...refinancingRates]
 	const nearestRateChangeDate = getNearestRateChangeDate(date)
-	const slicedRateArray = refinancingRates.slice(
+	const slicedRateArray = rates.slice(
 		getRateTupleIndex(nearestRateChangeDate!) - 1
 	)
 	slicedRateArray[0][0] = date

@@ -32,7 +32,7 @@ export const calculatePenalties = (
 				value: calculatedPenalties.toFixed(2),
 				startDate: debt.startDate,
 				endDate: currentDate,
-				rate: rate!.toFixed(2),
+				rate: (+rate! * 100).toFixed(2),
 				daysCount: getDaysCount(debt.startDate, currentDate).toFixed()
 			})
 		} else {
@@ -51,7 +51,7 @@ export const calculatePenalties = (
 					value: calculatedPenalties.toFixed(2),
 					startDate: startDate,
 					endDate: endDate,
-					rate: rate.toFixed(2),
+					rate: (rate * 100).toFixed(2),
 					daysCount: daysCount.toFixed()
 				})
 			})
