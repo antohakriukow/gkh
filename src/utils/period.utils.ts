@@ -15,7 +15,9 @@ export const incrementDate = (date: string): string => {
 	const [day, month, year] = date.split('.').map(Number)
 	const newMonth = incrementMonth(month as TypeMonth)
 	const newYear = incrementYear(month as TypeMonth, year as TypeYear)
-	return `${day.toString().padStart(2, '0')}.${newMonth
+	const newDay = Math.min(day, dayjs(`${newYear}-${newMonth}-01`).daysInMonth())
+
+	return `${newDay.toString().padStart(2, '0')}.${newMonth
 		.toString()
 		.padStart(2, '0')}.${newYear}`
 }

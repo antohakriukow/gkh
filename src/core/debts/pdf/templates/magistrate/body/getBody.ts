@@ -1,8 +1,7 @@
 import { isMainDirection } from './../../../../../../shared/types/debts/debt.interface'
+import { now } from '~/core/debts/utils'
 
 import { IDebt } from '~/shared/types/debts/debt.interface'
-
-import { getStringDate } from '~/utils/period.utils'
 
 import {
 	convertToRoubles,
@@ -11,8 +10,6 @@ import {
 	setText
 } from '../../../pdf.utils'
 import { requiredAttachments } from '../magistrate.data'
-
-const now = getStringDate(new Date())
 
 export const getBody = (debt: IDebt) => ({
 	stack: [

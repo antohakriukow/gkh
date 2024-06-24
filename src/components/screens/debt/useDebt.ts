@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { calculateDuty } from '~/core/debts/calculateDuty'
 import { calculatePenalties } from '~/core/debts/calculatePenalties'
+import { generateMagistrate } from '~/core/debts/docx/generateDocx'
 import { downloadPDF } from '~/core/debts/pdf/pdf.download'
 import { useAuth, useSingleDebtData } from '~/hooks'
 
@@ -70,7 +71,8 @@ export const useDebt = () => {
 				debt._id,
 				finalData
 			)
-			downloadPDF(updatedDebt)
+			generateMagistrate()
+			// downloadPDF(updatedDebt)
 		} catch (error) {
 			console.log('error: ', error)
 		}

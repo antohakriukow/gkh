@@ -1,4 +1,4 @@
-export type TypeRateData = [string, number]
+import { TypeRateData } from './types'
 
 export const refinancingRates: TypeRateData[] = [
 	['01.01.2000', 0.55],
@@ -85,3 +85,6 @@ export const refinancingRates: TypeRateData[] = [
 	['30.10.2023', 0.15],
 	['18.12.2023', 0.16]
 ]
+
+export const getRefinancingRates = () =>
+	refinancingRates.map(([date, rate]) => [date, Number(rate)]) as TypeRateData[]

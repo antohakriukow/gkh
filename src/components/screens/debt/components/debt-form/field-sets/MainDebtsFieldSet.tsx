@@ -5,7 +5,6 @@ import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Button } from '~/components/ui'
 
 import { IDebt, TypeDebt } from '~/shared/types/debts/debt.interface'
-import { TypeMonth, TypeYear } from '~/shared/types/period.interface'
 
 import {
 	incrementDate,

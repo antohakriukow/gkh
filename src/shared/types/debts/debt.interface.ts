@@ -23,6 +23,8 @@ export enum TypeDebtDirection {
 	renovation = 'Капремонт'
 }
 
+export type TypeRatePart = 130 | 300 | null
+
 export const DebtDirectionTypes = generateEnumKeyMap(TypeDebtDirection)
 
 export const isMainDirection = (value: TypeDebtDirection) =>
@@ -58,6 +60,7 @@ export interface IPenaltyData {
 	endDate: string
 	daysCount: string
 	rate: string
+	ratePart: TypeRatePart
 	value: string
 }
 

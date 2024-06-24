@@ -1,4 +1,7 @@
-import { FC } from 'react'
+import { formatDateValue } from './formatDateValue'
+import { formatNumberValue } from './formatNumberValue'
+import { FC, useEffect } from 'react'
+import { useFormContext, useWatch } from 'react-hook-form'
 import { SelectElement, TextFieldElement } from 'react-hook-form-mui'
 import { RiDeleteBin2Line } from 'react-icons/ri'
 
@@ -19,6 +22,29 @@ interface Props {
 }
 
 const DebtRow: FC<Props> = ({ index, monthOptions, yearOptions, remove }) => {
+	const { setValue, watch } = useFormContext()
+
+	const startDate = watch(`main.data[${index}].startDate`)
+	const value = watch(`main.data[${index}].value`)
+
+	useEffect(() => {
+		if (startDate) {
+			const formattedValue = formatDateValue(startDate)
+			if (startDate !== formattedValue) {
+				setValue(`main.data[${index}].startDate`, formattedValue)
+			}
+		}
+	}, [startDate, setValue, index])
+
+	useEffect(() => {
+		if (value) {
+			const formattedValue = formatNumberValue(value)
+			if (value !== formattedValue) {
+				setValue(`main.data[${index}].value`, formattedValue)
+			}
+		}
+	}, [value, setValue, index])
+
 	return (
 		<div key={index} className={styles.debtRow}>
 			<SelectElement
@@ -67,4 +93,5 @@ const DebtRow: FC<Props> = ({ index, monthOptions, yearOptions, remove }) => {
 		</div>
 	)
 }
+
 export default DebtRow

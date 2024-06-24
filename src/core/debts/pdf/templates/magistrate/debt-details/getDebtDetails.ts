@@ -1,8 +1,9 @@
 import { getDebtDetailsTitle, getDebtsTable } from './utils'
+import { now } from '~/core/debts/utils'
 
 import { IDebt } from '~/shared/types/debts/debt.interface'
 
-import { getMonthName, getStringDate } from '~/utils/period.utils'
+import { getMonthName } from '~/utils/period.utils'
 
 import {
 	convertToRoubles,
@@ -10,8 +11,6 @@ import {
 	setEmptyRow,
 	setText
 } from '../../../pdf.utils'
-
-const now = getStringDate(new Date())
 
 export const getDebtDetails = (debt: IDebt) => ({
 	stack: [

@@ -1,13 +1,17 @@
 import {
 	IDebt,
 	IDebtData,
-	IPenaltyData
+	IPenaltyData,
+	TypeRatePart
 } from '~/shared/types/debts/debt.interface'
 import { TypeMonth } from '~/shared/types/period.interface'
 
 import { getMonthName } from '~/utils/period.utils'
 
 import { convertToRoubles } from '../../../pdf.utils'
+
+export const getRatePartString = (ratePart: TypeRatePart) =>
+	!!ratePart ? `1/${ratePart}` : '0'
 
 export const getPenaltiesDetailsTitle = (debt: IDebt) => ({
 	text: `Расчет пени по оплате ${
@@ -161,7 +165,6 @@ const getTableRows = (debtItems: IDebtData[], penaltyItems: IPenaltyData[]) => {
 				rows: []
 			})
 		} else {
-			// Суммируем значения долга для периода
 			const existingPeriod = periodMap.get(periodKey)!
 			existingPeriod.totalDebt = (
 				parseFloat(existingPeriod.totalDebt) + parseFloat(debtItem.value)
@@ -203,14 +206,16 @@ const getTableRows = (debtItems: IDebtData[], penaltyItems: IPenaltyData[]) => {
 							alignment: 'center'
 						},
 						{
-							text: '1/300',
+							text: getRatePartString(penaltyRow.ratePart),
 							bold: true,
 							alignment: 'center'
 						},
 						{
 							text: `${debtItem.value} × ${
 								penaltyRow.daysCount
-							} × 1/300 × ${(+penaltyRow.rate).toFixed(2)}%`,
+							} × ${getRatePartString(
+								penaltyRow.ratePart
+							)} × ${(+penaltyRow.rate).toFixed(2)}%`,
 							bold: true,
 							alignment: 'center'
 						},
@@ -268,7 +273,7 @@ const getTableRows = (debtItems: IDebtData[], penaltyItems: IPenaltyData[]) => {
 
 export const getPenaltiesTable = (debt: IDebt) => ({
 	table: {
-		widths: [50, 40, 35, 45, 45, 20, 30, 25, 125, 35],
+		widths: [45, 45, 35, 45, 45, 20, 30, 25, 125, 35],
 		body: [
 			...tableHeader,
 			...getTableRows(debt.main.data, debt.penalties.data),
