@@ -1,17 +1,14 @@
-// @ts-ignore
-import htmlDocx from 'html-docx-js/dist/html-docx'
+import { magistrateClaimTemplate } from './magistrate-claim/template'
+import { Document, Packer } from 'docx'
+import { saveAs } from 'file-saver'
 
-import { htmlTemplate } from '../pdf/templates/magistrate-new/template'
+import { IDebt } from '~/shared/types/debts/debt.interface'
 
-const generateDocx = (template: string) => {
-	const content = template
-	const docx = htmlDocx.asBlob(content)
-	const link = document.createElement('a')
-	link.href = URL.createObjectURL(docx)
-	link.download = 'example.docx'
-	document.body.appendChild(link)
-	link.click()
-	document.body.removeChild(link)
+const generateDocx = (template: (debt: IDebt) => Document, debt: IDebt) => {
+	Packer.toBlob(template(debt) as Document).then(blob => {
+		saveAs(blob, 'example.docx')
+	})
 }
 
-export const generateMagistrate = () => generateDocx(htmlTemplate)
+export const downloadMagistrateClaimDOCX = (debt: IDebt) =>
+	generateDocx(magistrateClaimTemplate, debt)

@@ -10,9 +10,10 @@ import {
 	setBoldText,
 	setEmptyRow,
 	setText
-} from '../../../pdf.utils'
+} from '../../pdf.utils'
+import { getSignature } from '../shared/signature/getSignature'
 
-export const getDebtDetails = (debt: IDebt) => ({
+export const debtDetailsTemplate = (debt: IDebt) => ({
 	stack: [
 		getDebtDetailsTitle(debt),
 		setEmptyRow(),
@@ -42,6 +43,7 @@ export const getDebtDetails = (debt: IDebt) => ({
 			)}`
 		),
 		setText(`(${debt.duty.formula})`),
-		setEmptyRow()
+		setEmptyRow(),
+		...getSignature(debt)
 	]
 })

@@ -1,4 +1,6 @@
-import { getMagistrateClaimContent } from './templates/magistrate/magistrate.template'
+import { debtDetailsTemplate } from './templates/debt-details/template'
+import { magistrateClaimTemplate } from './templates/magistrate-claim/template'
+import { penaltiesDetailsTemplate } from './templates/penalties-details/template'
 // @ts-ignore
 import * as pdfMake from 'pdfmake/build/pdfmake'
 // @ts-ignore
@@ -8,17 +10,21 @@ import { IDebt } from '~/shared/types/debts/debt.interface'
 
 ;(pdfMake as any).vfs = pdfFonts.pdfMake.vfs
 
-/**
- * При вызове функция генерирует шаблон для библиотеки pdfmake, затем на его основе создает PDF и
- * открывает его в новом окне.
- * @param report - объект отчета, содержащий финальные данные.
- */
-export const downloadPDF = (debt: IDebt) => {
+export const downloadPDF = (template: Function, debt: IDebt) => {
 	if (!debt.main.total || (!debt.main.total && !debt.penalties.total)) return
 
 	const document = {
-		content: getMagistrateClaimContent(debt)
+		content: template(debt)
 	}
 
 	pdfMake.createPdf(document).open()
 }
+
+export const downloadMagistrateClaimPDF = (debt: IDebt) =>
+	downloadPDF(magistrateClaimTemplate, debt)
+
+export const downloadDebtDetailsPDF = (debt: IDebt) =>
+	downloadPDF(debtDetailsTemplate, debt)
+
+export const downloadPenaltiesDetailsPDF = (debt: IDebt) =>
+	downloadPDF(penaltiesDetailsTemplate, debt)

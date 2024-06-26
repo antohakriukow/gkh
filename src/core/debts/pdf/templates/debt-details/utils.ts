@@ -14,7 +14,6 @@ export const getDebtDetailsTitle = (debt: IDebt) => ({
 	}`,
 	bold: true,
 	alignment: 'center',
-	pageBreak: 'before',
 	with: '50%'
 })
 

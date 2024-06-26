@@ -3,8 +3,6 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { calculateDuty } from '~/core/debts/calculateDuty'
 import { calculatePenalties } from '~/core/debts/calculatePenalties'
-import { generateMagistrate } from '~/core/debts/docx/generateDocx'
-import { downloadPDF } from '~/core/debts/pdf/pdf.download'
 import { useAuth, useSingleDebtData } from '~/hooks'
 
 import { CourtTypes } from '~/shared/types/debts/court.interface'
@@ -25,13 +23,6 @@ export const useDebt = () => {
 		defaultValues: debt,
 		reValidateMode: 'onSubmit'
 	})
-
-	// const isReadyToCalculate =
-	// 	!formMethods.formState.isDirty && formMethods.formState.isValid
-
-	// const isReadyToDownload = Boolean(
-	// 	debt?.duty && !formMethods.formState.isDirty
-	// )
 
 	const debtDirectionTypes = generateEnumKeyMap(TypeDebtDirection)
 
@@ -71,8 +62,7 @@ export const useDebt = () => {
 				debt._id,
 				finalData
 			)
-			generateMagistrate()
-			// downloadPDF(updatedDebt)
+			return updatedDebt
 		} catch (error) {
 			console.log('error: ', error)
 		}
@@ -86,6 +76,7 @@ export const useDebt = () => {
 
 	return {
 		isLoading,
+		debt,
 		navigateToDebts,
 		handleDeleteDebt,
 		saveDebt,

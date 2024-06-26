@@ -1,4 +1,4 @@
-import { setBoldText, setEmptyRow } from '../../pdf.utils'
+import { setBoldText, setEmptyRow } from '../../../pdf.utils'
 
 export const getTitle = () => ({
 	stack: [

@@ -1,15 +1,15 @@
-import { isMainDirection } from './../../../../../../shared/types/debts/debt.interface'
 import { now } from '~/core/debts/utils'
 
 import { IDebt } from '~/shared/types/debts/debt.interface'
 
+import { isMainDirection } from '../../../../../../shared/types/debts/debt.interface'
 import {
 	convertToRoubles,
 	setBoldText,
 	setEmptyRow,
 	setText
 } from '../../../pdf.utils'
-import { requiredAttachments } from '../magistrate.data'
+import { requiredAttachments } from '../data'
 
 export const getBody = (debt: IDebt) => ({
 	stack: [

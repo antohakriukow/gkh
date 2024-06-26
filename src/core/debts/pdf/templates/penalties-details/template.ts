@@ -2,9 +2,9 @@ import { getPenaltiesDetailsTitle, getPenaltiesTable } from './utils'
 
 import { IDebt } from '~/shared/types/debts/debt.interface'
 
-import { setBoldText, setEmptyRow } from '../../../pdf.utils'
+import { setBoldText, setEmptyRow } from '../../pdf.utils'
 
-export const getPenaltiesDetails = (debt: IDebt) => ({
+export const penaltiesDetailsTemplate = (debt: IDebt) => ({
 	pageMargins: [10, 10, 10, 10],
 	stack: [
 		getPenaltiesDetailsTitle(debt),

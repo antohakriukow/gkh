@@ -8,7 +8,7 @@ import { TypeMonth } from '~/shared/types/period.interface'
 
 import { getMonthName } from '~/utils/period.utils'
 
-import { convertToRoubles } from '../../../pdf.utils'
+import { convertToRoubles } from '../../pdf.utils'
 
 export const getRatePartString = (ratePart: TypeRatePart) =>
 	!!ratePart ? `1/${ratePart}` : '0'
@@ -21,7 +21,6 @@ export const getPenaltiesDetailsTitle = (debt: IDebt) => ({
 	}`,
 	bold: true,
 	alignment: 'center',
-	pageBreak: 'before',
 	with: '50%'
 })
 
