@@ -35,7 +35,7 @@ export const servicesData = [
 		bullets: ['Расчет пени', 'Судебные приказы', 'Бесплатно'],
 		links: [
 			{
-				url: 'https://www.youtube.com/embed/qxgDCMPe-vU',
+				url: 'https://www.youtube.com/embed/I4EGNgSFvUY',
 				title: 'Смотреть видео'
 			}
 		]
