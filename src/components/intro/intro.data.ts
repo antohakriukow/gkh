@@ -47,7 +47,12 @@ export const introSteps = [
 	{
 		target: '.annualsAnchor',
 		content:
-			'А тут находится мощный инструмент для создания отчета об исполнении сметы.',
+			'Тут находится мощный инструмент для создания отчета об исполнении сметы.',
+		placement: 'bottom' as const
+	},
+	{
+		target: '.debtsAnchor',
+		content: 'А тут можно рассчитать пени и сформировать документы в суд.',
 		placement: 'bottom' as const
 	},
 	{

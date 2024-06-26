@@ -48,7 +48,7 @@
 				@apply ml-2;
 			}
 		}
-		> div:last-of-type {
+		.youtube {
 			@apply bg-gray-100 cursor-pointer box-border;
 			outline: #fc0d1b 0.5px dotted;
 			&:hover {

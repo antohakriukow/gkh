@@ -9,20 +9,35 @@ export const servicesData = [
 			'Простой интерфейс',
 			'Бесплатно'
 		],
-		link: 'https://www.youtube.com/embed/JGUO_0oV5AA'
+		links: [
+			{
+				url: 'https://www.youtube.com/embed/JGUO_0oV5AA',
+				title: 'Смотреть видео'
+			}
+		]
 	},
 	{
-		title: 'Отчет об исполнении сметы - режим автозаполнения',
-		bullets: ['Время заполнения - 1 минута', 'Формат XLSX'],
-		link: 'https://www.youtube.com/embed/lqgpLNk4GRY'
+		title: 'Отчет об исполнении сметы',
+		bullets: ['Время заполнения от 1 минуты', 'Формат XLSX', 'Бесплатно'],
+		links: [
+			{
+				url: 'https://www.youtube.com/embed/lqgpLNk4GRY',
+				title: 'Автоматический режим'
+			},
+			{
+				url: 'https://www.youtube.com/embed/qxgDCMPe-vU',
+				title: 'Ручной режим'
+			}
+		]
 	},
 	{
-		title: 'Отчет об исполнении сметы - ручной режим',
-		bullets: [
-			'Время заполнения 10-30 минут',
-			'Формат XLSX',
-			'Удобный редактор отчета'
-		],
-		link: 'https://www.youtube.com/embed/qxgDCMPe-vU'
+		title: 'Генератор документов для суда',
+		bullets: ['Расчет пени', 'Судебные приказы', 'Бесплатно'],
+		links: [
+			{
+				url: 'https://www.youtube.com/embed/qxgDCMPe-vU',
+				title: 'Смотреть видео'
+			}
+		]
 	}
 ] as IService[]
