@@ -4,9 +4,8 @@ import cn from 'clsx'
 import { FC } from 'react'
 
 import Introduction from '~/components/intro/Introduction'
+import { AddCompanyModal } from '~/components/shared'
 import { Button, Heading, Loader, Table } from '~/components/ui'
-
-import AddCompanyModal from '../reports/modals/add-company-modal/AddCompanyModal'
 
 import styles from './AnnualReports.module.scss'
 

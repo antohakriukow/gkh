@@ -14,7 +14,7 @@ import { AnnualService } from '~/services/annual.service'
 
 import { areArraysEqualByKey } from '~/utils/array/utils'
 
-import { useSorter } from '../shared'
+import { useSorter } from '../../../shared'
 
 export const useCreditSorter = () => {
 	const {

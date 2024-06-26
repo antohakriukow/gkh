@@ -1,0 +1,14 @@
+.container {
+	> h3 {
+		@apply mb-4;
+	}
+}
+
+.item {
+	@apply grid items-center rounded-md px-2 py-4 cursor-pointer;
+	grid-template-columns: 40px 1fr;
+
+	&:hover {
+		@apply bg-primary-50;
+	}
+}

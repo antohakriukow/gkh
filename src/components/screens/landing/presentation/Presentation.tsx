@@ -21,14 +21,16 @@ const Presentation: FC = () => {
 		<div className={styles.container}>
 			<div className={styles.presentation}>
 				<h3 className={styles.heading}>22gkh.ru</h3>
-				<p className={styles.description}>Сервис для бухгалтера ЖКХ</p>
+				<p className={styles.description}>
+					Бесплатный сервис для бухгалтера ЖКХ
+				</p>
 				<ul>
-					{servicesData.map(service => (
+					{servicesData.map((service, index) => (
 						<Service
-							key={service.link}
+							key={index}
 							title={service.title}
 							bullets={service.bullets}
-							link={service.link}
+							links={service.links}
 						/>
 					))}
 				</ul>

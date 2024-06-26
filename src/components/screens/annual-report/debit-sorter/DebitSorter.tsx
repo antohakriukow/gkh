@@ -7,7 +7,12 @@ import { IExtendedBankOperation } from '~/shared/types/annual.interface'
 
 import { getOperationsByCategory } from '~/utils/annual/utils'
 
-import { Category, Container, NarrowAttention, SeparateModal } from '../shared'
+import {
+	Category,
+	Container,
+	NarrowAttention,
+	SeparateModal
+} from '../../../shared'
 
 import styles from './debit-sorter.module.scss'
 
@@ -60,9 +65,9 @@ const DebitSorter: FC = memo(() => {
 	if (isLoading || isDataLoading)
 		return (
 			<Container
-				isReportPayed={isReportPayed}
-				handleCloseReport={closeAnnualReport}
-				handleDeleteReport={deleteAnnualReport}
+				isDeleteButtonDisabled={isReportPayed}
+				handleClose={closeAnnualReport}
+				handleDelete={deleteAnnualReport}
 			>
 				<Loader loaderType='fullscreen' />
 			</Container>
@@ -72,9 +77,9 @@ const DebitSorter: FC = memo(() => {
 		<Container
 			onNext={onNext}
 			onBack={onBack}
-			isReportPayed={isReportPayed}
-			handleCloseReport={closeAnnualReport}
-			handleDeleteReport={deleteAnnualReport}
+			isDeleteButtonDisabled={isReportPayed}
+			handleClose={closeAnnualReport}
+			handleDelete={deleteAnnualReport}
 		>
 			<div className={styles.container}>
 				<div className={styles.leftSide}>

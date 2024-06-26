@@ -11,7 +11,7 @@ import { AnnualService } from '~/services/annual.service'
 import { getAllLeafCategoryIds } from '~/utils/annual/utils'
 import { areArraysEqualByKey } from '~/utils/array/utils'
 
-import { useSorter } from '../shared'
+import { useSorter } from '../../../shared'
 
 export const useDebitSorter = () => {
 	const {
