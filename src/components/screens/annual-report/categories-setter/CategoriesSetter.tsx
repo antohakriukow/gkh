@@ -12,7 +12,7 @@ import {
 	TypeAnnualDirection
 } from '~/shared/types/annual.interface'
 
-import { Container, NarrowAttention } from '../shared'
+import { Container, NarrowAttention } from '../../../shared'
 import { useAnnualReport } from '../useAnnualReport'
 
 import styles from './categories-setter.module.scss'
@@ -53,9 +53,9 @@ const CategoriesSetter: FC<{}> = () => {
 			<Container
 				onNext={handleSubmit}
 				hasNoBackButton
-				isReportPayed={isReportPayed}
-				handleCloseReport={closeAnnualReport}
-				handleDeleteReport={deleteAnnualReport}
+				isDeleteButtonDisabled={isReportPayed}
+				handleClose={closeAnnualReport}
+				handleDelete={deleteAnnualReport}
 			>
 				<div className={styles.container}>
 					<SubHeading title='Настройте иерархию услуг:' />

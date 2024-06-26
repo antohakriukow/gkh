@@ -1,0 +1,10 @@
+@import '../../../styles/colors.scss';
+
+.fieldGroup {
+	@apply rounded-sm;
+	border: 1px solid $primary-200;
+
+	&:not(:first-child) {
+		margin-top: 8px;
+	}
+}

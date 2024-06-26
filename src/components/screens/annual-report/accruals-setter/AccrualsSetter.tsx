@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 
 import Loader from '~/components/ui/loader/Loader'
 
-import { Container, NarrowAttention } from '../shared'
+import { Container, NarrowAttention } from '../../../shared'
 
 const AccrualsSetter: FC = () => {
 	const { register, control, handleSubmit, setValue } =
@@ -34,9 +34,9 @@ const AccrualsSetter: FC = () => {
 	if (isLoading || isDataLoading)
 		return (
 			<Container
-				isReportPayed={isReportPayed}
-				handleCloseReport={closeAnnualReport}
-				handleDeleteReport={deleteAnnualReport}
+				isDeleteButtonDisabled={isReportPayed}
+				handleClose={closeAnnualReport}
+				handleDelete={deleteAnnualReport}
 			>
 				<Loader loaderType='fullscreen' />
 			</Container>
@@ -46,9 +46,9 @@ const AccrualsSetter: FC = () => {
 		<Container
 			onNext={onNext}
 			onBack={onBack}
-			isReportPayed={isReportPayed}
-			handleCloseReport={closeAnnualReport}
-			handleDeleteReport={deleteAnnualReport}
+			isDeleteButtonDisabled={isReportPayed}
+			handleClose={closeAnnualReport}
+			handleDelete={deleteAnnualReport}
 		>
 			{step < directions.length ? (
 				<Form

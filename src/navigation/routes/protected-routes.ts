@@ -33,9 +33,13 @@ const Preview = lazy(
 	() => import('~/components/screens/annual-report/preview/Preview')
 )
 
+const Debts = lazy(() => import('~/components/screens/debts/Debts'))
+const Debt = lazy(() => import('~/components/screens/debt/Debt'))
+
 export const protectedRoutesMap = [
 	{ path: '/reports', component: Reports },
 	{ path: '/reports/edit/:reportId', component: ReportEditor },
+
 	{ path: '/annual-reports', component: AnnualReports },
 	{
 		path: '/annual-reports/edit/:reportId/data-uploader',
@@ -58,6 +62,10 @@ export const protectedRoutesMap = [
 		component: DebitSorter
 	},
 	{ path: '/annual-reports/edit/:reportId/preview', component: Preview },
+
+	{ path: '/debts', component: Debts },
+	{ path: '/debts/edit/:debtId', component: Debt },
+
 	{ path: '/issues', component: Issues },
 	{ path: '/faq', component: FAQ },
 	{ path: '/prices', component: Prices }

@@ -1,0 +1,25 @@
+@import '../../../../../../../styles/colors.scss';
+
+.debtRow {
+	@apply grid gap-x-1 gap-y-2 items-start my-2;
+	grid-template-columns: 10fr 10fr 10fr 20fr;
+
+	> h2 {
+		@apply text-center;
+	}
+
+	.inputWithButton {
+		@apply grid items-center;
+		grid-template-columns: 1fr 30px;
+
+		> svg {
+			@apply mx-auto cursor-pointer;
+		}
+	}
+
+	@media (max-width: 565px) {
+		@apply mb-3 pb-3;
+		grid-template-columns: 2fr 3fr;
+		border-bottom: 2px dotted $gray-300;
+	}
+}

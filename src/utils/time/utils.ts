@@ -1,9 +1,11 @@
 import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 import minMax from 'dayjs/plugin/minMax'
 import utc from 'dayjs/plugin/utc'
 
 dayjs.extend(minMax)
 dayjs.extend(utc)
+dayjs.extend(customParseFormat)
 
 export const convertTimestampToDate = (timestamp: number): string =>
 	dayjs.utc(timestamp).format('DD.MM.YYYY')

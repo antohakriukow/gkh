@@ -7,9 +7,9 @@ import VideoModal from '../modals/VideoModal'
 
 import styles from './Presentation.module.scss'
 
-const Service: FC<IService> = ({ title, bullets, link }) => {
+const Service: FC<IService> = ({ title, bullets, links }) => {
 	const { showModal } = useModal()
-	const handleShowVideo = () => showModal(<VideoModal link={link} />)
+
 	return (
 		<li className={styles.service}>
 			<p className={styles.title}>{title}</p>
@@ -17,10 +17,15 @@ const Service: FC<IService> = ({ title, bullets, link }) => {
 				{bullets.map((bullet, index) => (
 					<div key={index}>{bullet}</div>
 				))}
-				<div className={styles.youtube} onClick={handleShowVideo}>
-					<p>{'Смотреть видео -->'}</p>
-					<FaYoutube size={22} color='#fc0d1b' />
-				</div>
+				{links.map(({ url, title }) => (
+					<div
+						className={styles.youtube}
+						onClick={() => showModal(<VideoModal link={url} />)}
+					>
+						<p>{`${title} -->`}</p>
+						<FaYoutube size={22} color='#fc0d1b' />
+					</div>
+				))}
 			</div>
 		</li>
 	)
