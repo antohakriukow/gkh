@@ -1,20 +1,27 @@
+import { formatNumberWithMaxLength } from './validation/formatNumberWithMaxLength'
+import { formatSeriesAndNumber } from './validation/formatSeriesAndNumber'
+import { formatSnilsValue } from './validation/formatSnilsValue'
+import { FC, useEffect } from 'react'
+import { useFormContext } from 'react-hook-form'
+import { SelectElement, TextFieldElement } from 'react-hook-form-mui'
+
+import {
+	CounterPartyTypes,
+	IdentifierTypes,
+	TypeIdentifier
+} from '~/shared/types/debts/counter-party.interface'
+import { IDebt } from '~/shared/types/debts/debt.interface'
+
+import { getIdentifierValueName } from '~/utils/debt/debt'
+
+import styles from '../../DebtForm.module.scss'
+import withToggleHeader from '../../components/withToggleHeader/withToggleHeader'
 import {
 	debtorTypeOptions,
 	entityDebtorInputs,
 	individualDebtorInputs,
 	individualIdentifiersOptions
-} from './data/debtor.data'
-import { FC, useEffect } from 'react'
-import { useFormContext } from 'react-hook-form'
-import { SelectElement, TextFieldElement } from 'react-hook-form-mui'
-
-import { CounterPartyTypes } from '~/shared/types/debts/counter-party.interface'
-import { IDebt } from '~/shared/types/debts/debt.interface'
-
-import { getIdentifierValueName } from '~/utils/debt/debt'
-
-import styles from '../DebtForm.module.scss'
-import withToggleHeader from '../components/withToggleHeader/withToggleHeader'
+} from '../data/debtor.data'
 
 const DebtorFieldSet: FC = () => {
 	const { watch, setValue } = useFormContext<IDebt>()
@@ -24,13 +31,53 @@ const DebtorFieldSet: FC = () => {
 
 	const debtorType = watch('debtor.type')
 	const identifierType = watch('debtor.data.identifier.type')
+	const identifierValue = watch('debtor.data.identifier.value')
 	const identifierValueName = getIdentifierValueName(identifierType)
+
+	const isPassport = identifierType === IdentifierTypes.passport
+	const isDriverLicense = identifierType === IdentifierTypes.driverLicense
+	const isSnils = identifierType === IdentifierTypes.snils
+	const isInn = identifierType === IdentifierTypes.inn
+	const isOgrnip = identifierType === IdentifierTypes.ogrnip
+
+	const isIndividual = debtorType === CounterPartyTypes.individual
+	const isEntity = debtorType === CounterPartyTypes.entity
 
 	useEffect(() => {
 		debtorType === CounterPartyTypes.individual
 			? setValue('debtor.data.livingAddress', `${house}, ${room}`)
 			: setValue('debtor.data.livingAddress', '')
 	}, [debtorType, house, room, setValue])
+
+	useEffect(() => {
+		if (!identifierValue) return
+		let formattedValue
+
+		if (isPassport || isDriverLicense)
+			formattedValue = formatSeriesAndNumber(identifierValue)
+		if (isSnils) formattedValue = formatSnilsValue(identifierValue)
+		if (isInn)
+			formattedValue = formatNumberWithMaxLength(
+				identifierValue,
+				isIndividual ? 12 : 10
+			)
+		if (isOgrnip)
+			formattedValue = formatNumberWithMaxLength(identifierValue, 15)
+
+		if (!!formattedValue && identifierValue !== formattedValue)
+			setValue('debtor.data.identifier.value', formattedValue)
+	}, [
+		isIndividual,
+		isEntity,
+		isPassport,
+		isDriverLicense,
+		isSnils,
+		isInn,
+		isOgrnip,
+		identifierValue,
+		identifierType,
+		setValue
+	])
 
 	return (
 		<div className={styles.fieldSet}>
@@ -46,7 +93,7 @@ const DebtorFieldSet: FC = () => {
 				options={debtorTypeOptions}
 			/>
 
-			{debtorType === CounterPartyTypes.entity &&
+			{isEntity &&
 				(
 					Object.entries(entityDebtorInputs) as [
 						keyof typeof entityDebtorInputs,
@@ -68,7 +115,7 @@ const DebtorFieldSet: FC = () => {
 					/>
 				))}
 
-			{debtorType === CounterPartyTypes.individual &&
+			{isIndividual &&
 				(
 					Object.entries(individualDebtorInputs) as [
 						keyof typeof individualDebtorInputs,
@@ -90,7 +137,7 @@ const DebtorFieldSet: FC = () => {
 					/>
 				))}
 
-			{debtorType === CounterPartyTypes.individual && (
+			{isIndividual && (
 				<SelectElement
 					name='debtor.data.identifier.type'
 					label='Тип идентификатора'
@@ -104,7 +151,7 @@ const DebtorFieldSet: FC = () => {
 				/>
 			)}
 
-			{identifierType && (
+			{identifierType && isIndividual && (
 				<TextFieldElement
 					name='debtor.data.identifier.value'
 					label={identifierValueName}

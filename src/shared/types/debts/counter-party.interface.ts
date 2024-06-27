@@ -49,3 +49,4 @@ interface IEntityCounterParty {
 export type ICounterParty = IIndividualCounterParty | IEntityCounterParty
 
 export const CounterPartyTypes = generateEnumKeyMap(TypeCounterParty)
+export const IdentifierTypes = generateEnumKeyMap(TypeIdentifier)

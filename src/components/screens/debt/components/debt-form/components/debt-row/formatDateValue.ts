@@ -1,4 +1,7 @@
 export const formatDateValue = (value: string) => {
+	const currentYear = new Date().getFullYear()
+	const currentYearLastDigit = currentYear % 10
+
 	let cleanValue = value.replace(/\D/g, '')
 
 	// Проверка первой цифры дня
@@ -41,6 +44,11 @@ export const formatDateValue = (value: string) => {
 		cleanValue = cleanValue.slice(0, 3)
 	}
 
+	// Проверка длины года (не более 4 цифр)
+	if (cleanValue.length > 8) {
+		cleanValue = cleanValue.slice(0, 8)
+	}
+
 	// Проверка первой цифры года
 	if (cleanValue.length > 4 && parseInt(cleanValue[4]) !== 2) {
 		cleanValue = cleanValue.slice(0, 4)
@@ -54,8 +62,15 @@ export const formatDateValue = (value: string) => {
 		cleanValue = cleanValue.slice(0, 6)
 	}
 	// Проверка четвертой цифры года
-	if (cleanValue.length > 7 && parseInt(cleanValue[7]) > 9) {
-		cleanValue = cleanValue.slice(0, 7)
+	if (cleanValue.length > 7) {
+		const thirdDigitYear = parseInt(cleanValue[6])
+		const fourthDigitYear = parseInt(cleanValue[7])
+
+		if (thirdDigitYear === 2 && fourthDigitYear > currentYearLastDigit) {
+			cleanValue = cleanValue.slice(0, 7)
+		} else if (fourthDigitYear > 9) {
+			cleanValue = cleanValue.slice(0, 7)
+		}
 	}
 
 	// Добавить точки для разделения
