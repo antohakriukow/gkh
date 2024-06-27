@@ -50,7 +50,7 @@ const Debt: FC = () => {
 			<DebtForm
 				methods={formMethods}
 				onSuccess={saveDebt}
-				onError={errors => console.log(errors)}
+				onError={errors => {}}
 			/>
 		</Container>
 	)

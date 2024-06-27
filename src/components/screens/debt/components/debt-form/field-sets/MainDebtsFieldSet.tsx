@@ -16,14 +16,15 @@ import DebtRow from '../components/debt-row/DebtRow'
 import withToggleHeader from '../components/withToggleHeader/withToggleHeader'
 
 const MainDebtsFieldSet: FC = () => {
-	const { control } = useFormContext<IDebt>()
+	const { control, getValues } = useFormContext<IDebt>()
 	const { fields, append, remove } = useFieldArray({
 		control,
 		name: 'main.data'
 	})
 
 	const handleAddPeriod = () => {
-		const lastField = fields.at(-1)
+		const values = getValues()
+		const lastField = values.main.data.at(-1)
 		const lastStartDate = lastField?.startDate ?? '01.12.2023'
 		const newStartDate = incrementDate(lastStartDate)
 
