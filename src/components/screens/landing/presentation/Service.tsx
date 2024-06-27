@@ -17,8 +17,9 @@ const Service: FC<IService> = ({ title, bullets, links }) => {
 				{bullets.map((bullet, index) => (
 					<div key={index}>{bullet}</div>
 				))}
-				{links.map(({ url, title }) => (
+				{links.map(({ url, title }, index) => (
 					<div
+						key={index}
 						className={styles.youtube}
 						onClick={() => showModal(<VideoModal link={url} />)}
 					>
