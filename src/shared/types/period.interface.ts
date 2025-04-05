@@ -1,31 +1,13 @@
 export type TypePeriod = 1 | 2 | 3 | 4
 
-export type TypeYear =
-	| 2000
-	| 2001
-	| 2002
-	| 2003
-	| 2004
-	| 2005
-	| 2006
-	| 2007
-	| 2008
-	| 2009
-	| 2010
-	| 2011
-	| 2012
-	| 2013
-	| 2014
-	| 2015
-	| 2016
-	| 2017
-	| 2018
-	| 2019
-	| 2020
-	| 2021
-	| 2022
-	| 2023
-	| 2024
+export type TypeYear = number & { __brand: 'TypeYear' }
+
+export const toTypeYear = (year: number): TypeYear => {
+	if (year < 2000 || year > new Date().getFullYear()) {
+		throw new Error('Invalid TypeYear: ' + year)
+	}
+	return year as TypeYear
+}
 
 export type TypeMonth = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
 

@@ -1,10 +1,11 @@
-import { monthOptions, yearOptions } from './data/main-debts.data'
+import { currentYear, monthOptions, yearOptions } from './data/main-debts.data'
 import { FC } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
 import { Button } from '~/components/ui'
 
 import { IDebt, TypeDebt } from '~/shared/types/debts/debt.interface'
+import { toTypeYear } from '~/shared/types/period.interface'
 
 import {
 	incrementDate,
@@ -23,9 +24,10 @@ const MainDebtsFieldSet: FC = () => {
 	})
 
 	const handleAddPeriod = () => {
+		const previousYear = toTypeYear(currentYear - 1)
 		const values = getValues()
 		const lastField = values.main.data.at(-1)
-		const lastStartDate = lastField?.startDate ?? '01.12.2023'
+		const lastStartDate = lastField?.startDate ?? `01.12.${previousYear}`
 		const newStartDate = incrementDate(lastStartDate)
 
 		append({
@@ -34,7 +36,7 @@ const MainDebtsFieldSet: FC = () => {
 				month: incrementMonth(lastField?.period?.month ?? 12),
 				year: incrementYear(
 					lastField?.period?.month ?? 12,
-					lastField?.period?.year ?? 2023
+					lastField?.period?.year ?? previousYear
 				)
 			},
 			value: '',

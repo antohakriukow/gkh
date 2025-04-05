@@ -13,9 +13,11 @@ export const monthOptions = [
 	{ label: 'Декабрь', id: 12 }
 ]
 
+export const currentYear = new Date().getFullYear()
+
 export const yearOptions = Array.from(
-	{ length: 2024 - 2000 + 1 },
-	(_, i) => 2024 - i
+	{ length: currentYear - 2000 + 1 },
+	(_, i) => currentYear - i
 ).map(year => ({
 	label: String(year),
 	id: year
