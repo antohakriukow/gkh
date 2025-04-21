@@ -17,12 +17,18 @@ import { IReport } from '~/shared/types/report.interface'
 export const downloadPDF = (report: IReport) => {
 	if (!report.finalReport) return
 
+	const getContent = (year: number) => {
+		switch (year) {
+			case 2023:
+				return reportTemplate2024(report)
+			default:
+				return reportTemplate2024(report)
+		}
+	}
+
 	const document = {
 		pageOrientation: 'landscape',
-		content:
-			report.year === 2024
-				? reportTemplate2024(report)
-				: reportTemplate2023(report)
+		content: getContent(report.year)
 	}
 
 	pdfMake.createPdf(document).open()
